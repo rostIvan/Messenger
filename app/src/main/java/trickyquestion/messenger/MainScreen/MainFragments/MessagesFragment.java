@@ -11,7 +11,13 @@ import trickyquestion.messenger.R;
 
 public class MessagesFragment extends Fragment {
 
-    public MessagesFragment() {
+    public static MessagesFragment newInstance() {
+
+        final Bundle args = new Bundle();
+
+        final MessagesFragment fragment = new MessagesFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable

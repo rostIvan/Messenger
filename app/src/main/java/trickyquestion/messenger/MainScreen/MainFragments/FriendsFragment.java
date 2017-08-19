@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import trickyquestion.messenger.R;
 
 public class FriendsFragment extends Fragment {
-
-    public FriendsFragment() {
+    public static FriendsFragment newInstance() {
+        final Bundle args = new Bundle();
+        final FriendsFragment fragment = new FriendsFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable

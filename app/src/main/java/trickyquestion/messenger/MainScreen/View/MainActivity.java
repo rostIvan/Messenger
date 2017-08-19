@@ -1,5 +1,6 @@
 package trickyquestion.messenger.MainScreen.View;
 
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.MainScreen.Adapters.MainPagerAdapter;
+import trickyquestion.messenger.MainScreen.MainFragments.FriendsFragment;
+import trickyquestion.messenger.MainScreen.MainFragments.MessagesFragment;
 import trickyquestion.messenger.MainScreen.Presenter.IMainPresenter;
 import trickyquestion.messenger.MainScreen.Presenter.MainPresenter;
 import trickyquestion.messenger.R;
@@ -50,5 +53,14 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void showTabsWithContent() {
+        final MainPagerAdapter pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
+        pagerAdapter.addFragment(FriendsFragment.newInstance(), "Friends");
+        pagerAdapter.addFragment(MessagesFragment.newInstance(), "Messages");
+        viewPager.setAdapter(pagerAdapter);
+        tabLayout.setViewPager(viewPager);
     }
 }

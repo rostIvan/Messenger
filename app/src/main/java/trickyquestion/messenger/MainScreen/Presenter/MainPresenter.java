@@ -16,6 +16,7 @@ public class MainPresenter implements IMainPresenter{
     public void onCreate() {
         view.customizeToolbar();
         view.setupListeners();
+        view.showTabsWithContent();
     }
 
     @Override
