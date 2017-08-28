@@ -17,6 +17,7 @@ public class MainPresenter implements IMainPresenter{
         view.customizeToolbar();
         view.setupListeners();
         view.showTabsWithContent();
+        view.setPagerAnimation();
     }
 
     @Override

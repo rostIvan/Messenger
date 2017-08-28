@@ -1,4 +1,4 @@
-package trickyquestion.messenger.MainScreen.MainFragments;
+package trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +12,7 @@ import trickyquestion.messenger.R;
 public class MessagesFragment extends Fragment {
 
     public static MessagesFragment newInstance() {
-
         final Bundle args = new Bundle();
-
         final MessagesFragment fragment = new MessagesFragment();
         fragment.setArguments(args);
         return fragment;

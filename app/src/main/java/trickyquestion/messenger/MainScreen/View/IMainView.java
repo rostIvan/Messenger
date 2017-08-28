@@ -5,4 +5,5 @@ public interface IMainView {
     void setupListeners();
     void goBack();
     void showTabsWithContent();
+    void setPagerAnimation();
 }

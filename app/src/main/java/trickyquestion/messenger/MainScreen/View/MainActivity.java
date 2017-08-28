@@ -10,12 +10,12 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.MainScreen.Adapters.MainPagerAdapter;
-import trickyquestion.messenger.MainScreen.MainFragments.FriendsFragment;
-import trickyquestion.messenger.MainScreen.MainFragments.MessagesFragment;
+import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.FriendsFragment;
+import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.MessagesFragment;
 import trickyquestion.messenger.MainScreen.Presenter.IMainPresenter;
 import trickyquestion.messenger.MainScreen.Presenter.MainPresenter;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.Util.MainUtil;
+import trickyquestion.messenger.Util.Constants;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
 
@@ -25,13 +25,12 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     SmartTabLayout tabLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    private MainPagerAdapter mPagerAdapter;
     private IMainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(MainUtil.MAIN_LAYOUT);
+        setContentView(Constants.MAIN_LAYOUT);
         ButterKnife.bind(this);
         if (presenter == null) presenter = new MainPresenter(this);
         presenter.onCreate();
@@ -61,5 +60,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         pagerAdapter.addFragment(MessagesFragment.newInstance(), R.string.messages);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setViewPager(viewPager);
+    }
+
+    @Override
+    public void setPagerAnimation() {
+        // TODO: 28.08.2017 add Animation late
     }
 }
