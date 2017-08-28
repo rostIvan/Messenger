@@ -1,5 +1,6 @@
 package trickyquestion.messenger.MainScreen.Adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -7,13 +8,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainPagerAdapter extends FragmentPagerAdapter {
+import trickyquestion.messenger.R;
 
+public class MainPagerAdapter extends FragmentPagerAdapter {
+    private Context mContext;
     private List<Fragment> pages;
     private List<String> titles;
 
-    public MainPagerAdapter(final FragmentManager fm) {
+    public MainPagerAdapter(final FragmentManager fm, final Context context) {
         super(fm);
+        mContext = context;
         this.pages = new ArrayList<>();
         this.titles = new ArrayList<>();
     }
@@ -38,6 +42,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public void addFragment(final Fragment fragment, final String title) {
         pages.add(fragment);
         titles.add(title);
+    }
+
+    public void addFragment(final Fragment fragment, final int titleResource) {
+        pages.add(fragment);
+        titles.add(mContext.getResources().getString(titleResource));
     }
 
     @Override

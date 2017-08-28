@@ -1,6 +1,5 @@
 package trickyquestion.messenger.MainScreen.View;
 
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -57,9 +56,9 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public void showTabsWithContent() {
-        final MainPagerAdapter pagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(FriendsFragment.newInstance(), "Friends");
-        pagerAdapter.addFragment(MessagesFragment.newInstance(), "Messages");
+        final MainPagerAdapter pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), getApplicationContext());
+        pagerAdapter.addFragment(FriendsFragment.newInstance(), R.string.friends);
+        pagerAdapter.addFragment(MessagesFragment.newInstance(), R.string.messages);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setViewPager(viewPager);
     }
