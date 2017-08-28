@@ -19,7 +19,7 @@ public class FriendPresenter implements IFriendPresenter {
 
     public FriendPresenter(final IFriendsView view) {
         this.view = view;
-        this.friendList = Friend.getFriends(20);
+        this.friendList = Friend.getFriends(40);
     }
 
     @Override

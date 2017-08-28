@@ -21,6 +21,7 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     private IFriendPresenter presenter;
 
+    @BindView(R.id.rv_friends)
     RecyclerView recyclerView;
 
     public static FriendsFragment newInstance() {
@@ -34,7 +35,7 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_friends, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.rv_friends);
+        ButterKnife.bind(this, view);
         if (presenter == null) presenter = new FriendPresenter(this);
         presenter.onCreateView();
         return view;

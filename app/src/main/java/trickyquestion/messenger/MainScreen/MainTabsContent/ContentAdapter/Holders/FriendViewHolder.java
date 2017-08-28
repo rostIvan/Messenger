@@ -11,10 +11,11 @@ import trickyquestion.messenger.R;
 
 public class FriendViewHolder extends RecyclerView.ViewHolder {
 
-    public TextView name;
+    public @BindView(R.id.name)
+    TextView name;
 
     public FriendViewHolder(View itemView) {
         super(itemView);
-        name = (TextView) itemView.findViewById(R.id.name);
+        ButterKnife.bind(this, itemView);
     }
 }

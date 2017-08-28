@@ -2,10 +2,20 @@ package trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holde
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
-public class MessageViewHolder extends RecyclerView.ViewHolder{
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.IMessageView;
+import trickyquestion.messenger.R;
+
+public class MessageViewHolder extends RecyclerView.ViewHolder {
+    public @BindView(R.id.message_text)
+    TextView message;
 
     public MessageViewHolder(View itemView) {
         super(itemView);
+        ButterKnife.bind(this, itemView);
     }
 }
