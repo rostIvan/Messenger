@@ -7,6 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.DragEvent;
 import android.view.View;
 
+import com.eftimoff.viewpagertransformers.AccordionTransformer;
+import com.eftimoff.viewpagertransformers.ParallaxPageTransformer;
+import com.eftimoff.viewpagertransformers.ZoomInTransformer;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public void setPagerAnimation() {
-        // TODO: 28.08.2017 add Animation late
+        viewPager.setPageTransformer(true, new AccordionTransformer());
     }
 
 }

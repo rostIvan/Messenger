@@ -1,25 +1,27 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorBlack"
             android:minHeight="?attr/actionBarSize"
+            android:background="@color/colorBlack"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/view_pager_tab"
@@ -35,7 +37,7 @@
             app:stl_defaultTabTextMinWidth="0dp"
             app:stl_defaultTabTextSize="14sp"
             app:stl_distributeEvenly="true"
-            app:stl_dividerColor="@color/colorGrey"
+            app:stl_dividerColor="@color/colorBlack"
             app:stl_dividerThickness="1dp"
             app:stl_drawDecorationAfterTab="false"
             app:stl_indicatorAlwaysInCenter="false"
@@ -51,13 +53,16 @@
             app:stl_overlineThickness="1dp"
             app:stl_titleOffset="24dp"
             app:stl_underlineColor="@color/colorBlack"
-            app:stl_underlineThickness="0dp" />
+            app:stl_underlineThickness="0dp"/>
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:background="@color/colorBlack"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
