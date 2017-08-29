@@ -13,4 +13,5 @@
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         tools:text="Some message"/>
+
 </LinearLayout>

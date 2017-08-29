@@ -1,5 +1,6 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class FriendPresenter implements IFriendPresenter {
     @Override
     public void onBindViewHolder(FriendViewHolder holder, int position) {
         final Friend friend = friendList.get(position);
-        holder.name.setText(friend.getName());
+        setViewValue(holder, friend);
     }
 
     @Override
@@ -44,5 +45,13 @@ public class FriendPresenter implements IFriendPresenter {
                 R.layout.item_friend, parent, false
         );
         return new FriendViewHolder(itemView);
+    }
+
+    private void setViewValue(final FriendViewHolder holder, Friend friend) {
+        holder.name.setText(friend.getName());
+        holder.id.setText(friend.getId().toString().substring(0, 25).replace("-", ""));
+        holder.onlineStatus.setText(friend.isOnline() ? "online" : "offline");
+        if (friend.isOnline()) holder.onlineStatus.setTextColor(Color.GREEN);
+        else holder.onlineStatus.setTextColor(Color.argb(1000, 1000, 1000, 1000));
     }
 }
