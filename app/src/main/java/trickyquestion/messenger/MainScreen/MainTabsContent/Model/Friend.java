@@ -20,11 +20,6 @@ public class Friend {
         this.image = image;
         this.online = online;
     }
-    public Friend(final String name, final UUID id, final int imageSrc, final boolean online) {
-        this.name = name;
-        this.id = id;
-        this.online = online;
-    }
 
     public String getName() {
         return name;
