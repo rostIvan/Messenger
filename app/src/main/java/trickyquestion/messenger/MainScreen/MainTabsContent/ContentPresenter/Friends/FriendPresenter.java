@@ -4,13 +4,13 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.IFriendsView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Friend;
+import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.FriendsRepository;
 import trickyquestion.messenger.R;
 
 public class FriendPresenter implements IFriendPresenter {
@@ -20,7 +20,7 @@ public class FriendPresenter implements IFriendPresenter {
 
     public FriendPresenter(final IFriendsView view) {
         this.view = view;
-        this.friendList = Friend.getFriends(40);
+        this.friendList = FriendsRepository.getFriends();
     }
 
     @Override
@@ -49,9 +49,9 @@ public class FriendPresenter implements IFriendPresenter {
 
     private void setViewValue(final FriendViewHolder holder, Friend friend) {
         holder.name.setText(friend.getName());
-        holder.id.setText(friend.getId().toString().substring(0, 25).replace("-", ""));
+        holder.id.setText(friend.getId().toString().substring(0, 25).replace("-", "").concat(" ..."));
         holder.onlineStatus.setText(friend.isOnline() ? "online" : "offline");
-        if (friend.isOnline()) holder.onlineStatus.setTextColor(Color.GREEN);
-        else holder.onlineStatus.setTextColor(Color.argb(1000, 1000, 1000, 1000));
+        if (friend.isOnline()) holder.onlineStatus.setTextColor(Color.argb(200, 0, 255, 0));
+        else holder.onlineStatus.setTextColor(Color.argb(190, 255, 255, 255));
     }
 }

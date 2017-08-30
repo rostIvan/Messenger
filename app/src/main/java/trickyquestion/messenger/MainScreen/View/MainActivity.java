@@ -1,15 +1,16 @@
 package trickyquestion.messenger.MainScreen.View;
 
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.DragEvent;
-import android.view.View;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.eftimoff.viewpagertransformers.AccordionTransformer;
-import com.eftimoff.viewpagertransformers.ParallaxPageTransformer;
-import com.eftimoff.viewpagertransformers.ZoomInTransformer;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;
@@ -19,6 +20,7 @@ import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.F
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.MessagesFragment;
 import trickyquestion.messenger.MainScreen.Presenter.IMainPresenter;
 import trickyquestion.messenger.MainScreen.Presenter.MainPresenter;
+import trickyquestion.messenger.MainScreen.View.Menu.SettingMenuDialog;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
 
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     private IMainPresenter presenter;
+    private SettingMenuDialog dialogMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +49,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         toolbar.setTitle(getTitle());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    @Override
-    public void setupListeners() {
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
     }
 
@@ -72,4 +71,39 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         viewPager.setPageTransformer(true, new AccordionTransformer());
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return presenter.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
+    public void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showDialogMenu() {
+        if (dialogMenu == null)
+            dialogMenu = new SettingMenuDialog(this);
+        dialogMenu.show();
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return presenter.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        presenter.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    public boolean isDialogShow() {
+        return dialogMenu != null && dialogMenu.isShow();
+    }
 }

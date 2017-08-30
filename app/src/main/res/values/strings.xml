@@ -2,4 +2,6 @@
     <string name="app_name">Messenger</string>
     <string name="messages">Messages</string>
     <string name="friends">Friends</string>
+    <string name="action_settings">Setting</string>
+    <string name="search">Search</string>
 </resources>
