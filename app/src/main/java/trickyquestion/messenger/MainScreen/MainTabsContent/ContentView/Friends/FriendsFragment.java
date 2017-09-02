@@ -7,7 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -37,9 +42,17 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_friends, container, false);
         ButterKnife.bind(this, view);
+        setHasOptionsMenu(true);
         if (presenter == null) presenter = new FriendPresenter(this);
         presenter.onCreateView();
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(presenter.onQueryTextListener());
     }
 
     @Override
@@ -53,4 +66,10 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
+
+    @Override
+    public void notifyRecyclerDataChange() {
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
 }

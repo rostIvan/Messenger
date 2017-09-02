@@ -2,10 +2,13 @@ package trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,8 @@ public class MessagesFragment extends Fragment implements IMessageView {
 
     @BindView(R.id.rv_messages)
     RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout refreshLayout;
 
     public static MessagesFragment newInstance() {
         final Bundle args = new Bundle();
@@ -38,6 +43,7 @@ public class MessagesFragment extends Fragment implements IMessageView {
         ButterKnife.bind(this, view);
         if (presenter == null) presenter = new MessagePresenter(this);
         presenter.onCreateView();
+
         return view;
     }
 
@@ -51,5 +57,17 @@ public class MessagesFragment extends Fragment implements IMessageView {
         final RecyclerViewMessageAdapter adapter = new RecyclerViewMessageAdapter(presenter);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void setupSwipeRefreshLayout() {
+        refreshLayout.setOnRefreshListener(presenter.onRefreshListener());
+        refreshLayout.setProgressBackgroundColorSchemeColor(presenter.getProgressBackgroundColor());
+        refreshLayout.setColorSchemeColors(presenter.getSchemeColors());
+    }
+
+    @Override
+    public void setRefreshing(boolean isRefresh) {
+        refreshLayout.setRefreshing(isRefresh);
     }
 }

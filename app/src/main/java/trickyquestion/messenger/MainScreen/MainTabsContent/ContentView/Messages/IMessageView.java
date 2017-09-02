@@ -5,4 +5,6 @@ import android.content.Context;
 public interface IMessageView {
     Context getFragmentContext();
     void showMessageContent();
+    void setupSwipeRefreshLayout();
+    void setRefreshing(final boolean isRefresh);
 }

@@ -7,12 +7,19 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.IMessageView;
 import trickyquestion.messenger.R;
 
 public class MessageViewHolder extends RecyclerView.ViewHolder {
-    public @BindView(R.id.message_text)
+    public @BindView(R.id.message_friend_text)
     TextView message;
+    public @BindView(R.id.message_friend_name)
+    TextView name;
+    public @BindView(R.id.message_friend_time)
+    TextView time;
+    public @BindView(R.id.message_friend_photo)
+    CircleImageView inage;
 
     public MessageViewHolder(View itemView) {
         super(itemView);

@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.FriendPresenter;
 import trickyquestion.messenger.MainScreen.View.IMainView;
 import trickyquestion.messenger.R;
 
@@ -54,31 +55,6 @@ public class MainPresenter implements IMainPresenter {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final MenuItem settingMenuItem = menu.findItem(R.id.action_menu);
-        final SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnQueryTextListener(this.onQueryTextListener());
-        settingMenuItem.setOnMenuItemClickListener(this.onSettingClick());
-        return true;
-    }
-
-    @Override
-    public SearchView.OnQueryTextListener onQueryTextListener() {
-        return new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        };
     }
 
     @Override

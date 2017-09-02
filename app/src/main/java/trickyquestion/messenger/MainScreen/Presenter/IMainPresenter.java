@@ -11,8 +11,6 @@ public interface IMainPresenter {
     void onCreate();
     View.OnClickListener onNavigationButtonPressed();
     boolean onKeyDown(int keyCode, KeyEvent event);
-    boolean onCreateOptionsMenu(Menu menu);
-    SearchView.OnQueryTextListener onQueryTextListener();
     void onSaveInstanceState(Bundle outState);
     MenuItem.OnMenuItemClickListener onSettingClick();
 }

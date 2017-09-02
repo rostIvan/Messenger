@@ -1,33 +1,56 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends;
 
 import android.graphics.Color;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.IFriendsView;
+import trickyquestion.messenger.MainScreen.MainTabsContent.Interactors.FriendListInteractor;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Friend;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.FriendsRepository;
 import trickyquestion.messenger.R;
 
 public class FriendPresenter implements IFriendPresenter {
 
-    private final IFriendsView view;
-    private final List<Friend> friendList;
+    private IFriendsView view;
+    private List<Friend> friendList;
 
     public FriendPresenter(final IFriendsView view) {
         this.view = view;
-        this.friendList = FriendsRepository.getFriends();
+        this.friendList = FriendListInteractor.getFriends();
     }
 
+    /** For Fragment */
     @Override
     public void onCreateView() {
         view.showFriendsItem();
     }
 
+    @Override
+    public SearchView.OnQueryTextListener onQueryTextListener() {
+        return new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(view.getFragmentContext(), "Submit" + query, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                friendList = FriendListInteractor.getFriends(newText);
+                view.notifyRecyclerDataChange();
+                return false;
+            }
+        };
+    }
+
+    /** For Recycler */
     @Override
     public int getCount() {
         return friendList.size();
@@ -54,4 +77,5 @@ public class FriendPresenter implements IFriendPresenter {
         if (friend.isOnline()) holder.onlineStatus.setTextColor(Color.argb(200, 0, 255, 0));
         else holder.onlineStatus.setTextColor(Color.argb(190, 255, 255, 255));
     }
+
 }
