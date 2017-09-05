@@ -1,0 +1,42 @@
+# Messenger
+It's ours analog Telegram or another social network.
+
+# Getting Started
+
+If you want help or upgrade our app, you can following the next steps:
+
+```
+1. git clone https://github.com/rostIvan/Messenger   
+
+```
+or clone my branch
+
+```
+git clone -b rost https://github.com/rostIvan/Messenger 
+```
+
+```
+2. Contact me or send a pull request 
+```
+
+# Installing app
+
+Run on your device or use android emulators 
+
+# Built With
+
+* [Gradle](https://gradle.org/install/) - Gradel Build Tool v4.1
+
+# Version app
+
+0.3
+
+## Authors
+* **Ivankiv Rostyslav** - *Android UI, MVP Architecture, DB*
+* **Oleksiy Ratushny** - *Protocol and server communication*
+* **Vasiliy Poluch** - *Desing UI*
+* **Nadia Bogoslavets** - *Back end development*
+
+
+# Leave it here for Software Sngineering (2 course)
+![alt text](https://hikaruzone.files.wordpress.com/2015/10/in-case-of-fire-1-git-commit-2-git-push-3-leave-building2.png?w=800&h=559)
