@@ -21,7 +21,7 @@ git clone -b rost https://github.com/rostIvan/Messenger
 
 # Installing app
 
-Run on your device or use android emulators 
+Search apk file in build/ dir and run on your device or use android emulators 
 
 # Built With
 
