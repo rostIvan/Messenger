@@ -12,7 +12,7 @@
     android:layout_marginTop="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/friend_image"
+        android:id="@+id/friend_photo"
         android:layout_width="50dp"
         android:layout_height="50dp"
         tools:src="@mipmap/ic_launcher"

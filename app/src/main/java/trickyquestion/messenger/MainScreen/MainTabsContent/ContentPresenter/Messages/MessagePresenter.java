@@ -15,6 +15,7 @@ import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Message;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.MessagesRepository;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.Util.Constants;
 
 public class MessagePresenter implements IMessagePresenter {
     private final IMessageView view;
@@ -72,7 +73,7 @@ public class MessagePresenter implements IMessagePresenter {
     public int[] getSchemeColors() {
         return new int[] {
                 view.getFragmentContext().getResources().getColor(R.color.colorAccent),
-                view.getFragmentContext().getResources().getColor(R.color.colorRed),
+//                view.getFragmentContext().getResources().getColor(R.color.colorRed),
         };
     }
 
@@ -102,6 +103,6 @@ public class MessagePresenter implements IMessagePresenter {
         holder.name.setText(message.getNameSender());
         holder.time.setText(message.getTime());
         if (message.isWasRead())
-            holder.message.setBackgroundColor(Color.argb(100, 0, 0, 150));
+            holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
     }
 }

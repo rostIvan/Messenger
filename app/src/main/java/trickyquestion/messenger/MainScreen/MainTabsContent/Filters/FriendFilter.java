@@ -10,7 +10,7 @@ public class FriendFilter {
         if (searchValue.isEmpty() || searchValue.length() == 0) return friends;
         final List<Friend> result = new ArrayList<>();
         for (Friend friend : friends) {
-            if (friend.getName().contains(searchValue))
+            if (friend.getName().toLowerCase().contains(searchValue.toLowerCase()))
                 result.add(friend);
         }
         return result;

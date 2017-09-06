@@ -10,6 +10,6 @@ public interface IFriendPresenter {
     int getCount();
     void onBindViewHolder(final FriendViewHolder holder, final int position);
     FriendViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType);
-
+    void showPhotoDialog();
     SearchView.OnQueryTextListener onQueryTextListener();
 }

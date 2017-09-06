@@ -15,6 +15,7 @@ import trickyquestion.messenger.MainScreen.MainTabsContent.Interactors.FriendLis
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Friend;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.FriendsRepository;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.Util.Constants;
 
 public class FriendPresenter implements IFriendPresenter {
 
@@ -70,12 +71,17 @@ public class FriendPresenter implements IFriendPresenter {
         return new FriendViewHolder(itemView);
     }
 
+    @Override
+    public void showPhotoDialog() {
+
+    }
+
     private void setViewValue(final FriendViewHolder holder, Friend friend) {
         holder.name.setText(friend.getName());
         holder.id.setText(friend.getId().toString().substring(0, 25).replace("-", "").concat(" ..."));
         holder.onlineStatus.setText(friend.isOnline() ? "online" : "offline");
-        if (friend.isOnline()) holder.onlineStatus.setTextColor(Color.argb(200, 0, 255, 0));
-        else holder.onlineStatus.setTextColor(Color.argb(190, 255, 255, 255));
+        if (friend.isOnline()) holder.onlineStatus.setTextColor(Constants.ONLINE_STATUS_TEXT_COLOR);
+        else holder.onlineStatus.setTextColor(Constants.OFFLINE_STATUS_TEXT_COLOR);
     }
 
 }
