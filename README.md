@@ -1,6 +1,9 @@
 # Messenger
 It's ours analog Telegram or another social network.
 
+# View
+![alt text](https://github.com/rostIvan/Messenger/blob/rost/gif/Messenger.gif "Logo Title Text 1")
+
 # Getting Started
 
 If you want help or upgrade our app, you can following the next steps:
