@@ -1,7 +1,9 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.RecyclerViewAdapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.IFriendPresenter;
@@ -28,4 +30,5 @@ public class RecyclerViewFriendAdapter extends RecyclerView.Adapter<FriendViewHo
     public int getItemCount() {
         return presenter.getCount();
     }
+
 }

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import trickyquestion.messenger.MainScreen.MainTabsContent.Animation.ItemAlphaAnimator;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.IFriendsView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Interactors.FriendListInteractor;
@@ -61,6 +62,7 @@ public class FriendPresenter implements IFriendPresenter {
     public void onBindViewHolder(FriendViewHolder holder, int position) {
         final Friend friend = friendList.get(position);
         setViewValue(holder, friend);
+        ItemAlphaAnimator.setFadeAnimation(holder.itemView);
     }
 
     @Override

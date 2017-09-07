@@ -1,12 +1,16 @@
 package trickyquestion.messenger.MainScreen.View;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.eftimoff.viewpagertransformers.AccordionTransformer;
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     SmartTabLayout tabLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.header)
+    AppBarLayout appBar;
     private IMainPresenter presenter;
     private SettingMenuDialog dialogMenu;
 
