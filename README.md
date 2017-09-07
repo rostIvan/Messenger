@@ -46,5 +46,5 @@ Search apk file in build/ dir and run on your device or use android emulators
 * [CircleImageView](https://github.com/hdodenhof/CircleImageView/) - Circle images
 
 
-# Leave it here for Software Sngineering (2 course)
+# Leave it here for Software Engineering (2 course)
 ![alt text](https://hikaruzone.files.wordpress.com/2015/10/in-case-of-fire-1-git-commit-2-git-push-3-leave-building2.png?w=800&h=559)
