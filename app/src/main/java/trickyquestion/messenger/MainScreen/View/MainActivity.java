@@ -1,10 +1,8 @@
 package trickyquestion.messenger.MainScreen.View;
 
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -21,7 +19,7 @@ import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.F
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.MessagesFragment;
 import trickyquestion.messenger.MainScreen.Presenter.IMainPresenter;
 import trickyquestion.messenger.MainScreen.Presenter.MainPresenter;
-import trickyquestion.messenger.MainScreen.View.Menu.SettingMenuDialog;
+import trickyquestion.messenger.MainScreen.View.Dialogs.SettingMenuDialog;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
 
