@@ -4,13 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.DragEvent;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.eftimoff.viewpagertransformers.AccordionTransformer;
@@ -18,11 +17,15 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import trickyquestion.messenger.MainScreen.Adapters.MainPagerAdapter;
+import trickyquestion.messenger.MainScreen.MainTabsContent.Animation.AlphaAnimator;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.FriendsFragment;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.MessagesFragment;
 import trickyquestion.messenger.MainScreen.Presenter.IMainPresenter;
 import trickyquestion.messenger.MainScreen.Presenter.MainPresenter;
+import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.MainScreen.View.Dialogs.SettingMenuDialog;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
@@ -37,8 +40,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     Toolbar toolbar;
     @BindView(R.id.header)
     AppBarLayout appBar;
+
     private IMainPresenter presenter;
     private SettingMenuDialog dialogMenu;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
+        AlphaAnimator.setFadeAnimation(toolbar, Constants.DURATION_TOOLBAR_ANIMATION);
     }
 
     @Override
@@ -82,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         final MenuItem settingMenuItem = menu.findItem(R.id.action_menu);
         settingMenuItem.setOnMenuItemClickListener(presenter.onSettingClick());
+
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
         return true;
     }
 
@@ -111,5 +120,15 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     public boolean isDialogShow() {
         return dialogMenu != null && dialogMenu.isShow();
+    }
+
+    @Override
+    public boolean isSearchViewIconified() {
+        return searchView.isIconified();
+    }
+
+    @Override
+    public void setSearchViewIconified(final boolean iconified) {
+        searchView.setIconified(iconified);
     }
 }

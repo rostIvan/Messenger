@@ -1,6 +1,6 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends;
 
-import android.graphics.Color;
+import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +9,12 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import trickyquestion.messenger.MainScreen.MainTabsContent.Animation.ItemAlphaAnimator;
+import trickyquestion.messenger.MainScreen.MainTabsContent.Animation.AlphaAnimator;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.IFriendsView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Interactors.FriendListInteractor;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Friend;
-import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.FriendsRepository;
+import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
 
@@ -31,7 +31,7 @@ public class FriendPresenter implements IFriendPresenter {
     /** For Fragment */
     @Override
     public void onCreateView() {
-        view.showFriendsItem();
+        view.showFriendsItems();
     }
 
     @Override
@@ -62,7 +62,7 @@ public class FriendPresenter implements IFriendPresenter {
     public void onBindViewHolder(FriendViewHolder holder, int position) {
         final Friend friend = friendList.get(position);
         setViewValue(holder, friend);
-        ItemAlphaAnimator.setFadeAnimation(holder.itemView);
+        AlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
     @Override
@@ -71,11 +71,6 @@ public class FriendPresenter implements IFriendPresenter {
                 R.layout.item_friend, parent, false
         );
         return new FriendViewHolder(itemView);
-    }
-
-    @Override
-    public void showPhotoDialog() {
-
     }
 
     private void setViewValue(final FriendViewHolder holder, Friend friend) {

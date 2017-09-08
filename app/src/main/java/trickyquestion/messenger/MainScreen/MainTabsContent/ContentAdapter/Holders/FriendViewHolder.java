@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.MainScreen.View.Dialogs.PhotoDialog;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
@@ -34,31 +35,8 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
 
     @OnClick(R.id.friend_photo)
     void onPhotoClick() {
-
-        final Activity activity = (Activity) itemView.getContext();
-        Toast.makeText(activity, "Photo click", Toast.LENGTH_SHORT).show();
-
-        final View screenView = activity.getWindow().getDecorView().getRootView();
-        /* skip status bar in screenshot */
-        int sizeBar = Constants.SIZE_NOTIFICATION_BAR;
-        screenView.setDrawingCacheEnabled(true);
-
-        final Bitmap bitmap = Bitmap.createBitmap(
-                screenView.getDrawingCache(),
-                0,
-                sizeBar,
-                screenView.getWidth(),
-                screenView.getHeight() - sizeBar,
-                null,
-                true
-        );
-        screenView.setDrawingCacheEnabled(false);
-
-        final BitmapDrawable screenShot = new BitmapDrawable(activity.getResources(), bitmap);
-        final PhotoDialog photoDialog = new PhotoDialog(activity);
-        photoDialog.setBackground(screenShot);
-        photoDialog.show();
-
-        // TODO: 06.09.17 Add blur with content and cut this lines to another file
+        final FriendProfileView friendProfileView = new FriendProfileView(itemView.getContext());
+        friendProfileView.show();
+        //      TODO: 06.09.17 Add blur customize view
     }
 }

@@ -25,10 +25,6 @@ public class Friend {
         return name;
     }
 
-    public void setName(final String name) {
-        this.name = name;
-    }
-
     public static List<Friend> getFriends(int size) {
         final List<Friend> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {

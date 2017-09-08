@@ -1,7 +1,5 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Messages;
 
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -10,7 +8,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import trickyquestion.messenger.MainScreen.MainTabsContent.Animation.ItemAlphaAnimator;
+import trickyquestion.messenger.MainScreen.MainTabsContent.Animation.AlphaAnimator;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.MessageViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.IMessageView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Message;
@@ -90,7 +88,7 @@ public class MessagePresenter implements IMessagePresenter {
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         final Message message = messageList.get(position);
         setViewValue(holder, message);
-        ItemAlphaAnimator.setFadeAnimation(holder.itemView);
+        AlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
 
