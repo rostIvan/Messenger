@@ -9,12 +9,10 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import trickyquestion.messenger.MainScreen.MainTabsContent.Animation.AlphaAnimator;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.IFriendsView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Interactors.FriendListInteractor;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Friend;
-import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
 
@@ -22,6 +20,7 @@ public class FriendPresenter implements IFriendPresenter {
 
     private IFriendsView view;
     private List<Friend> friendList;
+    private static boolean profileWasOpened ;
 
     public FriendPresenter(final IFriendsView view) {
         this.view = view;
@@ -32,7 +31,15 @@ public class FriendPresenter implements IFriendPresenter {
     @Override
     public void onCreateView() {
         view.showFriendsItems();
+        if (profileWasOpened) view.showFriendProfile();
     }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        profileWasOpened = view.isFriendProfileOpen();
+    }
+
 
     @Override
     public SearchView.OnQueryTextListener onQueryTextListener() {
@@ -62,7 +69,6 @@ public class FriendPresenter implements IFriendPresenter {
     public void onBindViewHolder(FriendViewHolder holder, int position) {
         final Friend friend = friendList.get(position);
         setViewValue(holder, friend);
-        AlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
     @Override
@@ -79,6 +85,12 @@ public class FriendPresenter implements IFriendPresenter {
         holder.onlineStatus.setText(friend.isOnline() ? "online" : "offline");
         if (friend.isOnline()) holder.onlineStatus.setTextColor(Constants.ONLINE_STATUS_TEXT_COLOR);
         else holder.onlineStatus.setTextColor(Constants.OFFLINE_STATUS_TEXT_COLOR);
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.showFriendProfile();
+            }
+        });
     }
 
 }

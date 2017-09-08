@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.eftimoff.viewpagertransformers.AccordionTransformer;
@@ -17,15 +16,11 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 import trickyquestion.messenger.MainScreen.Adapters.MainPagerAdapter;
-import trickyquestion.messenger.MainScreen.MainTabsContent.Animation.AlphaAnimator;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.FriendsFragment;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.MessagesFragment;
 import trickyquestion.messenger.MainScreen.Presenter.IMainPresenter;
 import trickyquestion.messenger.MainScreen.Presenter.MainPresenter;
-import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.MainScreen.View.Dialogs.SettingMenuDialog;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
@@ -60,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
-        AlphaAnimator.setFadeAnimation(toolbar, Constants.DURATION_TOOLBAR_ANIMATION);
     }
 
     @Override

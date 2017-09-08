@@ -15,8 +15,8 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:minHeight="?attr/actionBarSize"
+            android:layout_height="40dp"
+            android:minHeight="40dp"
             android:background="@color/colorBlack"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -25,7 +25,7 @@
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/view_pager_tab"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:background="@color/colorBlack"
             android:textAlignment="center"
             app:stl_clickable="true"

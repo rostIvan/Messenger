@@ -29,6 +29,7 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @BindView(R.id.rv_friends)
     RecyclerView recyclerView;
+    private FriendProfileView friendProfileView;
 
     public static FriendsFragment newInstance() {
         final Bundle args = new Bundle();
@@ -46,6 +47,13 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         if (presenter == null) presenter = new FriendPresenter(this);
         presenter.onCreateView();
         return view;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        presenter.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -70,6 +78,18 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     @Override
     public void notifyRecyclerDataChange() {
         recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void showFriendProfile() {
+        if (friendProfileView == null)
+            friendProfileView = new FriendProfileView(getContext());
+        friendProfileView.show();
+    }
+
+    @Override
+    public boolean isFriendProfileOpen() {
+        return friendProfileView != null && friendProfileView.isShow();
     }
 
 }

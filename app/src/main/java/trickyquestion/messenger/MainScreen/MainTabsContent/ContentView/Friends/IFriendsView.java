@@ -6,4 +6,7 @@ public interface IFriendsView {
     Context getFragmentContext();
     void showFriendsItems();
     void notifyRecyclerDataChange();
+    void showFriendProfile();
+
+    boolean isFriendProfileOpen();
 }

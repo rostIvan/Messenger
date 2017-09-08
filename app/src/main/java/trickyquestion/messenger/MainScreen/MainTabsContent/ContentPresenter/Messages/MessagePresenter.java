@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import trickyquestion.messenger.MainScreen.MainTabsContent.Animation.AlphaAnimator;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.MessageViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.IMessageView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Message;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.MessagesRepository;
+import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
 
@@ -88,7 +88,6 @@ public class MessagePresenter implements IMessagePresenter {
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         final Message message = messageList.get(position);
         setViewValue(holder, message);
-        AlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
 
@@ -98,11 +97,18 @@ public class MessagePresenter implements IMessagePresenter {
     }
 
 
-    private void setViewValue(MessageViewHolder holder, Message message) {
+    private void setViewValue(final MessageViewHolder holder, Message message) {
         holder.message.setText(message.getMessageText());
         holder.name.setText(message.getNameSender());
         holder.time.setText(message.getTime());
         if (message.isWasRead())
             holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final FriendProfileView friendProfileView = new FriendProfileView(view.getContext());
+                friendProfileView.show();
+            }
+        });
     }
 }

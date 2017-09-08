@@ -33,10 +33,4 @@ public class FriendViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    @OnClick(R.id.friend_photo)
-    void onPhotoClick() {
-        final FriendProfileView friendProfileView = new FriendProfileView(itemView.getContext());
-        friendProfileView.show();
-        //      TODO: 06.09.17 Add blur customize view
-    }
 }
