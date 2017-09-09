@@ -2,13 +2,11 @@ package trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,14 +50,12 @@ public class MessagesFragment extends Fragment implements IMessageView {
     @Override
     public void onStart() {
         presenter.onStart();
-        Log.i("checkDebug", "start was: " + isFriendProfileOpen());
         super.onStart();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         presenter.onSaveInstanceState(outState);
-        Log.i("checkDebug", "save was: " + isFriendProfileOpen());
         super.onSaveInstanceState(outState);
     }
 
@@ -93,12 +89,16 @@ public class MessagesFragment extends Fragment implements IMessageView {
         if (friendProfileView == null)
             friendProfileView = new FriendProfileView(getContext());
         friendProfileView.show();
-        Log.i("checkDebug", "show!!! : ");
     }
 
     @Override
     public boolean isFriendProfileOpen() {
-        Log.i("checkDebug", "bool : " + (friendProfileView == null));
-        return friendProfileView != null && friendProfileView.isShow();
+        return friendProfileView != null && friendProfileView.isShowing();
+    }
+    @Override
+    public void dismissPhotoDialog() {
+        if (friendProfileView != null && friendProfileView.isShowing()) {
+            friendProfileView.dismiss();
+        }
     }
 }

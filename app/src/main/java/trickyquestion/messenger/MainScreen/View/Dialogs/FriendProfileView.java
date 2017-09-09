@@ -29,7 +29,11 @@ public class FriendProfileView {
         photoDialog.show();
     }
 
-    public boolean isShow() {
+    public boolean isShowing() {
         return photoDialog.isShow();
+    }
+
+    public void dismiss() {
+        photoDialog.dismiss();
     }
 }

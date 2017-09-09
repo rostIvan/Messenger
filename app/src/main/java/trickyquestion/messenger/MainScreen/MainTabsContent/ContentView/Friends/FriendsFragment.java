@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.RecyclerViewAdapters.RecyclerViewFriendAdapter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.FriendPresenter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.IFriendPresenter;
@@ -95,7 +93,13 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @Override
     public boolean isFriendProfileOpen() {
-        return friendProfileView != null && friendProfileView.isShow();
+        return friendProfileView != null && friendProfileView.isShowing();
     }
 
+    @Override
+    public void dismissPhotoDialog() {
+        if (friendProfileView != null && friendProfileView.isShowing()) {
+            friendProfileView.dismiss();
+        }
+    }
 }

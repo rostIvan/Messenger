@@ -35,15 +35,15 @@ public class FriendPresenter implements IFriendPresenter {
 
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        profileWasOpened = view.isFriendProfileOpen();
-    }
-
-    @Override
     public void onStart() {
         if (profileWasOpened) view.showFriendProfile();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        profileWasOpened = view.isFriendProfileOpen();
+        view.dismissPhotoDialog();
+    }
 
     @Override
     public SearchView.OnQueryTextListener onQueryTextListener() {

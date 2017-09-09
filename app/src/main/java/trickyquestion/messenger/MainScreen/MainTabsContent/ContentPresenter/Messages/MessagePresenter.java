@@ -59,6 +59,7 @@ public class MessagePresenter implements IMessagePresenter {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         profileWasOpened = view.isFriendProfileOpen();
+        view.dismissPhotoDialog();
     }
 
 
@@ -122,9 +123,8 @@ public class MessagePresenter implements IMessagePresenter {
             holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                final FriendProfileView friendProfileView = new FriendProfileView(view.getContext());
-                friendProfileView.show();
+            public void onClick(View v) {
+                view.showFriendProfile();
             }
         });
     }

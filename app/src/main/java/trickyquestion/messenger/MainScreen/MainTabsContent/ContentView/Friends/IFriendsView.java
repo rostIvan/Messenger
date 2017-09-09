@@ -9,4 +9,6 @@ public interface IFriendsView {
     void showFriendProfile();
 
     boolean isFriendProfileOpen();
+
+    void dismissPhotoDialog();
 }
