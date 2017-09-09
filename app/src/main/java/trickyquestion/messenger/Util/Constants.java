@@ -11,5 +11,4 @@ public class Constants {
     public static final int OFFLINE_STATUS_TEXT_COLOR = Color.argb(190, 255, 255, 255);
     public static final int SIZE_NOTIFICATION_BAR = 50;
     public static final int DURATION_ITEM_ANIMATION = 50;
-    public static final int DURATION_TOOLBAR_ANIMATION = 150;
 }

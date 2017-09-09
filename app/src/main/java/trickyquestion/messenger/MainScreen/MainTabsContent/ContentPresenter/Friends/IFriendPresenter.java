@@ -1,7 +1,9 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
@@ -14,4 +16,6 @@ public interface IFriendPresenter {
     SearchView.OnQueryTextListener onQueryTextListener();
     void onSaveInstanceState(Bundle outState);
     void onStart();
+    RecyclerView.OnScrollListener fabOnScroll();
+    View.OnClickListener onFabClick();
 }

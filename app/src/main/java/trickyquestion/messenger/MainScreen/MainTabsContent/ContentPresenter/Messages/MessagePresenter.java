@@ -16,6 +16,7 @@ import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Message;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.MessagesRepository;
 import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.Util.Animation.ItemAlphaAnimator;
 import trickyquestion.messenger.Util.Constants;
 
 public class MessagePresenter implements IMessagePresenter {
@@ -106,6 +107,7 @@ public class MessagePresenter implements IMessagePresenter {
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         final Message message = messageList.get(position);
         setViewValue(holder, message);
+        ItemAlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
 
