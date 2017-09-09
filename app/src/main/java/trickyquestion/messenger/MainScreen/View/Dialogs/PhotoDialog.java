@@ -43,6 +43,10 @@ public class PhotoDialog implements IDialogView {
             dialog.getWindow().setBackgroundDrawable(drawable);
     }
 
+    public Window getWindow() {
+        return dialog.getWindow();
+    }
+
     @Override
     public boolean isShow() {
         return isShow;

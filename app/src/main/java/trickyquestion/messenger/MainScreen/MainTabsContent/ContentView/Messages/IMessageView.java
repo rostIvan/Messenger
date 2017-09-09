@@ -7,4 +7,8 @@ public interface IMessageView {
     void showMessageContent();
     void setupSwipeRefreshLayout();
     void setRefreshing(final boolean isRefresh);
+
+    void showFriendProfile();
+
+    boolean isFriendProfileOpen();
 }

@@ -27,9 +27,4 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
-
-    @OnClick(R.id.message_friend_photo)
-    void showPhotoDialog() {
-        Toast.makeText(itemView.getContext(), "Photo dialog start", Toast.LENGTH_SHORT).show();
-    }
 }

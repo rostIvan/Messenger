@@ -1,16 +1,11 @@
 package trickyquestion.messenger.MainScreen.Presenter;
 
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.FriendPresenter;
 import trickyquestion.messenger.MainScreen.View.IMainView;
-import trickyquestion.messenger.R;
 
 public class MainPresenter implements IMainPresenter {
 
@@ -39,7 +34,8 @@ public class MainPresenter implements IMainPresenter {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.goBack();
+                if (!view.isSearchViewIconified()) view.setSearchViewIconified(true);
+                else view.goBack();
             }
         };
     }

@@ -8,21 +8,24 @@ import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Message;
 
 public interface IBaseCommunicationProtocol {
 
-    /** @Return bool value about previous auth
+    /** @return bool value about previous auth
      *  args - none
      *  on first Start app **/
     boolean isAuthenticated();
 
-    /** @Return connection answer
+    /** @return connection answer
      *  args - none
      *  for check wifi or another connection **/
     boolean isConnected();
+
+    boolean connectToCLient(UserDate userDate);
 
     interface UserDate {
         String getName();
         UUID getId();
         int getPhoto();
         boolean isOnlime();
+        boolean isKnow();
     }
 
     /** Void method
@@ -36,21 +39,21 @@ public interface IBaseCommunicationProtocol {
      *  Use for send some message to friend **/
     void sendMessage(final Message message, final Friend friend);
 
-    /** @Return Message
+    /** @return Message
      *  args - none
      *  Use for receive message from network **/
     Message receiveMessage();
 
-    /** @Return friends list from network
+    /** @return  friends list from network
      *  args - none
      *  Set content to Friend page**/
     List<Friend> getFriendsFromNetwork();
-    /** @Return friends list from network
+    /** @return  friends list from network
      *  args - none
      *  Set content to Message page**/
     List<Message> getMessagesFromNetwork();
 
-    /** @Return online status
+    /** @return online status
      *  args - none
      *  Set content to Message page **/
     boolean isFriendOnline(final Friend friend);

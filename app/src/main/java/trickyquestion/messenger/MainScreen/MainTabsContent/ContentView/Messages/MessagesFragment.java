@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.RecyclerViewAdapters.RecyclerViewMessageAdapter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Messages.IMessagePresenter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Messages.MessagePresenter;
+import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.R;
 
 public class MessagesFragment extends Fragment implements IMessageView {
@@ -28,6 +29,7 @@ public class MessagesFragment extends Fragment implements IMessageView {
     RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout refreshLayout;
+    private FriendProfileView friendProfileView;
 
     public static MessagesFragment newInstance() {
         final Bundle args = new Bundle();
@@ -41,10 +43,24 @@ public class MessagesFragment extends Fragment implements IMessageView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_messages, container, false);
         ButterKnife.bind(this, view);
+        setHasOptionsMenu(true);
         if (presenter == null) presenter = new MessagePresenter(this);
         presenter.onCreateView();
-
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        presenter.onStart();
+        Log.i("checkDebug", "start was: " + isFriendProfileOpen());
+        super.onStart();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        presenter.onSaveInstanceState(outState);
+        Log.i("checkDebug", "save was: " + isFriendProfileOpen());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -69,5 +85,20 @@ public class MessagesFragment extends Fragment implements IMessageView {
     @Override
     public void setRefreshing(boolean isRefresh) {
         refreshLayout.setRefreshing(isRefresh);
+    }
+
+
+    @Override
+    public void showFriendProfile() {
+        if (friendProfileView == null)
+            friendProfileView = new FriendProfileView(getContext());
+        friendProfileView.show();
+        Log.i("checkDebug", "show!!! : ");
+    }
+
+    @Override
+    public boolean isFriendProfileOpen() {
+        Log.i("checkDebug", "bool : " + (friendProfileView == null));
+        return friendProfileView != null && friendProfileView.isShow();
     }
 }

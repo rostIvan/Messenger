@@ -1,8 +1,10 @@
 package trickyquestion.messenger.MainScreen.View;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -31,8 +33,12 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     SmartTabLayout tabLayout;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.header)
+    AppBarLayout appBar;
+
     private IMainPresenter presenter;
     private SettingMenuDialog dialogMenu;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +82,9 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         final MenuItem settingMenuItem = menu.findItem(R.id.action_menu);
         settingMenuItem.setOnMenuItemClickListener(presenter.onSettingClick());
+
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        searchView = (SearchView) searchItem.getActionView();
         return true;
     }
 
@@ -105,5 +114,15 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     public boolean isDialogShow() {
         return dialogMenu != null && dialogMenu.isShow();
+    }
+
+    @Override
+    public boolean isSearchViewIconified() {
+        return searchView.isIconified();
+    }
+
+    @Override
+    public void setSearchViewIconified(final boolean iconified) {
+        searchView.setIconified(iconified);
     }
 }

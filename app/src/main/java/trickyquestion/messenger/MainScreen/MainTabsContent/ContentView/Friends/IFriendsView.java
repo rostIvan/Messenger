@@ -4,6 +4,9 @@ import android.content.Context;
 
 public interface IFriendsView {
     Context getFragmentContext();
-    void showFriendsItem();
+    void showFriendsItems();
     void notifyRecyclerDataChange();
+    void showFriendProfile();
+
+    boolean isFriendProfileOpen();
 }

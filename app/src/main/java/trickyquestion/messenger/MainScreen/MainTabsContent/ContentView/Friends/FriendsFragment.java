@@ -1,12 +1,9 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -20,9 +17,11 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.RecyclerViewAdapters.RecyclerViewFriendAdapter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.FriendPresenter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.IFriendPresenter;
+import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.R;
 
 public class FriendsFragment extends Fragment implements IFriendsView {
@@ -31,6 +30,7 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @BindView(R.id.rv_friends)
     RecyclerView recyclerView;
+    private FriendProfileView friendProfileView;
 
     public static FriendsFragment newInstance() {
         final Bundle args = new Bundle();
@@ -51,6 +51,18 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     }
 
     @Override
+    public void onStart() {
+        presenter.onStart();
+        super.onStart();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        presenter.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) searchItem.getActionView();
@@ -63,7 +75,7 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     }
 
     @Override
-    public void showFriendsItem() {
+    public void showFriendsItems() {
         final RecyclerViewFriendAdapter adapter = new RecyclerViewFriendAdapter(presenter);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -72,6 +84,18 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     @Override
     public void notifyRecyclerDataChange() {
         recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void showFriendProfile() {
+        if (friendProfileView == null)
+            friendProfileView = new FriendProfileView(getContext());
+        friendProfileView.show();
+    }
+
+    @Override
+    public boolean isFriendProfileOpen() {
+        return friendProfileView != null && friendProfileView.isShow();
     }
 
 }

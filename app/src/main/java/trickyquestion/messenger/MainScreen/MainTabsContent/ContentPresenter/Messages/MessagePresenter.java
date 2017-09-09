@@ -1,9 +1,9 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Messages;
 
-import android.graphics.Color;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +14,16 @@ import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holder
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.IMessageView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Message;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.MessagesRepository;
+import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
 
 public class MessagePresenter implements IMessagePresenter {
+
     private final IMessageView view;
     private List<Message> messageList;
-    private static boolean WAS_REFRESH_STARTED;
+    private static boolean wasRefreshStarted;
+    private static boolean profileWasOpened;
 
     public MessagePresenter(final IMessageView view) {
         this.view = view;
@@ -34,17 +37,30 @@ public class MessagePresenter implements IMessagePresenter {
         view.showMessageContent();
         view.setupSwipeRefreshLayout();
 
-        if (WAS_REFRESH_STARTED) {
+        if (wasRefreshStarted) {
             view.setRefreshing(true);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     view.setRefreshing(false);
-                    WAS_REFRESH_STARTED = false;
+                    wasRefreshStarted = false;
                 }
             }, 2000);
         }
     }
+
+
+    @Override
+    public void onStart() {
+        if (profileWasOpened) view.showFriendProfile();
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        profileWasOpened = view.isFriendProfileOpen();
+    }
+
 
     /** For Refresh View **/
     @Override
@@ -52,12 +68,12 @@ public class MessagePresenter implements IMessagePresenter {
         return new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                WAS_REFRESH_STARTED = true;
+                wasRefreshStarted = true;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         view.setRefreshing(false);
-                        WAS_REFRESH_STARTED = false;
+                        wasRefreshStarted = false;
                     }
                 }, 4000);
             }
@@ -98,11 +114,18 @@ public class MessagePresenter implements IMessagePresenter {
     }
 
 
-    private void setViewValue(MessageViewHolder holder, Message message) {
+    private void setViewValue(final MessageViewHolder holder, Message message) {
         holder.message.setText(message.getMessageText());
         holder.name.setText(message.getNameSender());
         holder.time.setText(message.getTime());
         if (message.isWasRead())
             holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final FriendProfileView friendProfileView = new FriendProfileView(view.getContext());
+                friendProfileView.show();
+            }
+        });
     }
 }

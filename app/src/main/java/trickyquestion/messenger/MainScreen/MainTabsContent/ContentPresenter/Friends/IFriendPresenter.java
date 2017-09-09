@@ -1,5 +1,6 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends;
 
+import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.ViewGroup;
 
@@ -10,6 +11,7 @@ public interface IFriendPresenter {
     int getCount();
     void onBindViewHolder(final FriendViewHolder holder, final int position);
     FriendViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType);
-    void showPhotoDialog();
     SearchView.OnQueryTextListener onQueryTextListener();
+    void onSaveInstanceState(Bundle outState);
+    void onStart();
 }
