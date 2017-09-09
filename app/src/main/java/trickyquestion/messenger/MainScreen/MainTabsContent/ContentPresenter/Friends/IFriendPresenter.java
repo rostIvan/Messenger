@@ -13,4 +13,5 @@ public interface IFriendPresenter {
     FriendViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType);
     SearchView.OnQueryTextListener onQueryTextListener();
     void onSaveInstanceState(Bundle outState);
+    void onStart();
 }

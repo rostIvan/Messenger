@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,6 +50,11 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        presenter.onStart();
+        super.onStart();
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

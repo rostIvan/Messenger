@@ -20,7 +20,7 @@ public class FriendPresenter implements IFriendPresenter {
 
     private IFriendsView view;
     private List<Friend> friendList;
-    private static boolean profileWasOpened ;
+    private static boolean profileWasOpened;
 
     public FriendPresenter(final IFriendsView view) {
         this.view = view;
@@ -31,7 +31,6 @@ public class FriendPresenter implements IFriendPresenter {
     @Override
     public void onCreateView() {
         view.showFriendsItems();
-        if (profileWasOpened) view.showFriendProfile();
     }
 
 
@@ -40,13 +39,18 @@ public class FriendPresenter implements IFriendPresenter {
         profileWasOpened = view.isFriendProfileOpen();
     }
 
+    @Override
+    public void onStart() {
+        if (profileWasOpened) view.showFriendProfile();
+    }
+
 
     @Override
     public SearchView.OnQueryTextListener onQueryTextListener() {
         return new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(view.getFragmentContext(), "Submit" + query, Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getFragmentContext(), "Submit: " + query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
