@@ -52,10 +52,10 @@ public class FriendPresenter implements IFriendPresenter {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0)
-                    view.hideFab();
-                else if (dy < 0)
-                    view.showFab();
+//                if (dy > 0)
+//                    view.hideFab();
+//                else if (dy < 0)
+//                    view.showFab();
             }
         };
     }

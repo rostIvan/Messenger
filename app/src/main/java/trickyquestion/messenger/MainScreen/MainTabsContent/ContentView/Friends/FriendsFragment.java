@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.melnykov.fab.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,8 +91,9 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @Override
     public void setFabBehavior() {
-        recyclerView.addOnScrollListener(presenter.fabOnScroll());
+//        recyclerView.addOnScrollListener(presenter.fabOnScroll());
         fab.setOnClickListener(presenter.onFabClick());
+        fab.attachToRecyclerView(recyclerView);
     }
 
     @Override
