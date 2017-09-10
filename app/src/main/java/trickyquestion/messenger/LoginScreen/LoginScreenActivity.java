@@ -1,4 +1,4 @@
-package trickyquestion.messenger.LogicScreen;
+package trickyquestion.messenger.LoginScreen;
 
 
 import android.os.Bundle;
