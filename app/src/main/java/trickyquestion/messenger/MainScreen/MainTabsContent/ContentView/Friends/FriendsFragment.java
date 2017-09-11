@@ -1,13 +1,13 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,13 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import trickyquestion.messenger.AddFriendScreen.AddFriendActivity;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.RecyclerViewAdapters.RecyclerViewFriendAdapter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.FriendPresenter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.IFriendPresenter;
-import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
+import trickyquestion.messenger.MainScreen.View.FriendProfileView;
 import trickyquestion.messenger.R;
 
 public class FriendsFragment extends Fragment implements IFriendsView {
@@ -30,6 +32,8 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @BindView(R.id.rv_friends)
     RecyclerView recyclerView;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     private FriendProfileView friendProfileView;
 
     public static FriendsFragment newInstance() {
@@ -80,10 +84,33 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
-
     @Override
     public void notifyRecyclerDataChange() {
         recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void setFabBehavior() {
+        fab.setOnClickListener(presenter.onFabClick());
+        fab.attachToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void hideFab() {
+        if (fab.getVisibility() == View.VISIBLE)
+            fab.hide();
+    }
+
+    @Override
+    public void showFab() {
+    if (fab.getVisibility() != View.VISIBLE)
+        fab.show();
+    }
+
+    @Override
+    public void startAddFriendActivity() {
+        final Intent intent = new Intent(getContext(), AddFriendActivity.class);
+        getContext().startActivity(intent);
     }
 
     @Override
@@ -95,7 +122,13 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @Override
     public boolean isFriendProfileOpen() {
-        return friendProfileView != null && friendProfileView.isShow();
+        return friendProfileView != null && friendProfileView.isShowing();
     }
 
+    @Override
+    public void dismissPhotoDialog() {
+        if (friendProfileView != null && friendProfileView.isShowing()) {
+            friendProfileView.dismiss();
+        }
+    }
 }

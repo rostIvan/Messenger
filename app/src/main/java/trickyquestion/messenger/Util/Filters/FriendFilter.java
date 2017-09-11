@@ -1,4 +1,4 @@
-package trickyquestion.messenger.MainScreen.MainTabsContent.Filters;
+package trickyquestion.messenger.Util.Filters;
 
 import java.util.ArrayList;
 import java.util.List;

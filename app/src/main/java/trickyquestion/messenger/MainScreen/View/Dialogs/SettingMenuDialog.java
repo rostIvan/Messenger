@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 
@@ -15,7 +16,7 @@ public class SettingMenuDialog {
     private boolean isShow;
 
     public SettingMenuDialog(final Context context) {
-        dialog = new Dialog(context);
+        dialog = new Dialog(context, R.style.CustomDialog);
         create();
     }
     public void show() {

@@ -1,4 +1,4 @@
-package trickyquestion.messenger.MainScreen.View.Dialogs;
+package trickyquestion.messenger.MainScreen.View;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import trickyquestion.messenger.MainScreen.View.Dialogs.PhotoDialog;
 import trickyquestion.messenger.Util.Constants;
 
 public class FriendProfileView {
@@ -29,7 +30,11 @@ public class FriendProfileView {
         photoDialog.show();
     }
 
-    public boolean isShow() {
+    public boolean isShowing() {
         return photoDialog.isShow();
+    }
+
+    public void dismiss() {
+        photoDialog.dismiss();
     }
 }

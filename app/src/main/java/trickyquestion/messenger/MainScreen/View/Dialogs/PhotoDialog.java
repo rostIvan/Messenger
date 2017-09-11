@@ -51,4 +51,8 @@ public class PhotoDialog implements IDialogView {
     public boolean isShow() {
         return isShow;
     }
+
+    public void dismiss() {
+        dialog.dismiss();
+    }
 }

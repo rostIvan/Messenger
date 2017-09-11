@@ -2,7 +2,7 @@ package trickyquestion.messenger.MainScreen.MainTabsContent.Interactors;
 
 import java.util.List;
 
-import trickyquestion.messenger.MainScreen.MainTabsContent.Filters.FriendFilter;
+import trickyquestion.messenger.Util.Filters.FriendFilter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Friend;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.FriendsRepository;
 

@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
+import trickyquestion.messenger.MainScreen.View.FriendProfileView;
 import trickyquestion.messenger.MainScreen.View.Dialogs.PhotoDialog;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;

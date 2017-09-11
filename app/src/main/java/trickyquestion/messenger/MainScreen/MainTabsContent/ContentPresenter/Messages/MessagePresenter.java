@@ -14,8 +14,9 @@ import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holder
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.IMessageView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Message;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.MessagesRepository;
-import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
+import trickyquestion.messenger.MainScreen.View.FriendProfileView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.Util.Animation.ItemAlphaAnimator;
 import trickyquestion.messenger.Util.Constants;
 
 public class MessagePresenter implements IMessagePresenter {
@@ -59,6 +60,7 @@ public class MessagePresenter implements IMessagePresenter {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         profileWasOpened = view.isFriendProfileOpen();
+        view.dismissPhotoDialog();
     }
 
 
@@ -105,6 +107,7 @@ public class MessagePresenter implements IMessagePresenter {
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         final Message message = messageList.get(position);
         setViewValue(holder, message);
+        ItemAlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
 
@@ -122,9 +125,8 @@ public class MessagePresenter implements IMessagePresenter {
             holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                final FriendProfileView friendProfileView = new FriendProfileView(view.getContext());
-                friendProfileView.show();
+            public void onClick(View v) {
+                view.showFriendProfile();
             }
         });
     }

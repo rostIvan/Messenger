@@ -9,6 +9,7 @@ public interface IMessageView {
     void setRefreshing(final boolean isRefresh);
 
     void showFriendProfile();
-
     boolean isFriendProfileOpen();
+
+    void dismissPhotoDialog();
 }

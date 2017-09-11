@@ -1,19 +1,26 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Optional;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.IFriendsView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Interactors.FriendListInteractor;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Friend;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.Util.Animation.ItemAlphaAnimator;
 import trickyquestion.messenger.Util.Constants;
 
 public class FriendPresenter implements IFriendPresenter {
@@ -31,19 +38,31 @@ public class FriendPresenter implements IFriendPresenter {
     @Override
     public void onCreateView() {
         view.showFriendsItems();
+        view.setFabBehavior();
     }
 
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        profileWasOpened = view.isFriendProfileOpen();
-    }
 
     @Override
     public void onStart() {
         if (profileWasOpened) view.showFriendProfile();
     }
 
+
+    @Override
+    public View.OnClickListener onFabClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.startAddFriendActivity();
+            }
+        };
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        profileWasOpened = view.isFriendProfileOpen();
+        view.dismissPhotoDialog();
+    }
 
     @Override
     public SearchView.OnQueryTextListener onQueryTextListener() {
@@ -73,6 +92,7 @@ public class FriendPresenter implements IFriendPresenter {
     public void onBindViewHolder(FriendViewHolder holder, int position) {
         final Friend friend = friendList.get(position);
         setViewValue(holder, friend);
+        ItemAlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
     @Override
@@ -96,5 +116,4 @@ public class FriendPresenter implements IFriendPresenter {
             }
         });
     }
-
 }
