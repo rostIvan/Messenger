@@ -16,6 +16,5 @@ public interface IFriendPresenter {
     SearchView.OnQueryTextListener onQueryTextListener();
     void onSaveInstanceState(Bundle outState);
     void onStart();
-    RecyclerView.OnScrollListener fabOnScroll();
     View.OnClickListener onFabClick();
 }

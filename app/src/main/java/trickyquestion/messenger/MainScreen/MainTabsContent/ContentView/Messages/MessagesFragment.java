@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.RecyclerViewAdapters.RecyclerViewMessageAdapter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Messages.IMessagePresenter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Messages.MessagePresenter;
-import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
+import trickyquestion.messenger.MainScreen.View.FriendProfileView;
 import trickyquestion.messenger.R;
 
 public class MessagesFragment extends Fragment implements IMessageView {

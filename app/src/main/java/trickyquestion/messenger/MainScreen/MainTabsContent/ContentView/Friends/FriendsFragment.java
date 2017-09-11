@@ -23,7 +23,7 @@ import trickyquestion.messenger.AddFriendScreen.AddFriendActivity;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.RecyclerViewAdapters.RecyclerViewFriendAdapter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.FriendPresenter;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.IFriendPresenter;
-import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
+import trickyquestion.messenger.MainScreen.View.FriendProfileView;
 import trickyquestion.messenger.R;
 
 public class FriendsFragment extends Fragment implements IFriendsView {
@@ -91,7 +91,6 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @Override
     public void setFabBehavior() {
-//        recyclerView.addOnScrollListener(presenter.fabOnScroll());
         fab.setOnClickListener(presenter.onFabClick());
         fab.attachToRecyclerView(recyclerView);
     }

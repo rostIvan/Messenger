@@ -14,7 +14,7 @@ import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holder
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Messages.IMessageView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Message;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Repository.MessagesRepository;
-import trickyquestion.messenger.MainScreen.View.Dialogs.FriendProfileView;
+import trickyquestion.messenger.MainScreen.View.FriendProfileView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Animation.ItemAlphaAnimator;
 import trickyquestion.messenger.Util.Constants;

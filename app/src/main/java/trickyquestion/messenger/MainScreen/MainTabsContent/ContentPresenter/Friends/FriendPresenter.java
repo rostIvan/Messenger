@@ -1,23 +1,24 @@
 package trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
-import trickyquestion.messenger.AddFriendScreen.AddFriendActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Optional;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
-import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.FriendsFragment;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentView.Friends.IFriendsView;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Interactors.FriendListInteractor;
 import trickyquestion.messenger.MainScreen.MainTabsContent.Model.Friend;
-import trickyquestion.messenger.MainScreen.View.MainActivity;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Animation.ItemAlphaAnimator;
 import trickyquestion.messenger.Util.Constants;
@@ -46,19 +47,6 @@ public class FriendPresenter implements IFriendPresenter {
         if (profileWasOpened) view.showFriendProfile();
     }
 
-    @Override
-    public RecyclerView.OnScrollListener fabOnScroll() {
-        return new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-//                if (dy > 0)
-//                    view.hideFab();
-//                else if (dy < 0)
-//                    view.showFab();
-            }
-        };
-    }
 
     @Override
     public View.OnClickListener onFabClick() {
@@ -128,5 +116,4 @@ public class FriendPresenter implements IFriendPresenter {
             }
         });
     }
-
 }
