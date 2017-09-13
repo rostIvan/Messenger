@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
 
+//TODO:clean imports
+
 public interface IFriendPresenter {
     void onCreateView();
     int getCount();

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+//TODO: clean imports and list<friends> must be in implemented
 public class Friend {
 
     private String name;
@@ -28,7 +28,8 @@ public class Friend {
     public static List<Friend> getFriends(int size) {
         final List<Friend> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            final Friend friend = new Friend("Some name: " + (i+1), UUID.randomUUID(), null, i % 2 == 0);
+            final Friend friend = new Friend("Some name: " + (i+1), UUID.randomUUID(),
+                    null, i % 2 == 0);
             list.add(friend);
         }
         return list;

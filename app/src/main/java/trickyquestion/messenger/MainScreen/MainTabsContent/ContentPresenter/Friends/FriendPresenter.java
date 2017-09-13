@@ -103,6 +103,7 @@ public class FriendPresenter implements IFriendPresenter {
         return new FriendViewHolder(itemView);
     }
 
+    //TODO: hide user id
     private void setViewValue(final FriendViewHolder holder, Friend friend) {
         holder.name.setText(friend.getName());
         holder.id.setText(friend.getId().toString().substring(0, 25).replace("-", "").concat(" ..."));

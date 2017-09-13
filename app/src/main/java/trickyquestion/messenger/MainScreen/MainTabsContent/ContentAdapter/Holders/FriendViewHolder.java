@@ -17,6 +17,8 @@ import trickyquestion.messenger.MainScreen.View.Dialogs.PhotoDialog;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.Util.Constants;
 
+//TODO:clean imports
+
 public class FriendViewHolder extends RecyclerView.ViewHolder {
 
     public @BindView(R.id.friend_name)

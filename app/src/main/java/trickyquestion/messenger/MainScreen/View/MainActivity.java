@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public void showTabsWithContent() {
-        final MainPagerAdapter pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), getApplicationContext());
+        final MainPagerAdapter pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),
+                getApplicationContext());
         pagerAdapter.addFragment(FriendsFragment.newInstance(), R.string.friends);
         pagerAdapter.addFragment(MessagesFragment.newInstance(), R.string.messages);
         viewPager.setAdapter(pagerAdapter);
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        //TODO: delete this function in release
     }
 
     @Override

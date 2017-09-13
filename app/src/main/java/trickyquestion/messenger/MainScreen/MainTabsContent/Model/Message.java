@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
+//TODO:clean imports and list<message> must be implemented
 public class Message {
 
     private String message;

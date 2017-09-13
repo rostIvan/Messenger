@@ -90,7 +90,7 @@ public class MessagePresenter implements IMessagePresenter {
     @Override
     public int[] getSchemeColors() {
         return new int[] {
-                view.getFragmentContext().getResources().getColor(R.color.colorAccent),
+                view.getFragmentContext().getResources().getColor(R.color.colorAccent)//,
 //                view.getFragmentContext().getResources().getColor(R.color.colorRed),
         };
     }
@@ -99,7 +99,8 @@ public class MessagePresenter implements IMessagePresenter {
     /** For Recycler View **/
     @Override
     public MessageViewHolder onCreateView(ViewGroup parent, int viewType) {
-        final View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_messege, parent, false);
+        final View itemView = LayoutInflater.from
+                (parent.getContext()).inflate(R.layout.item_messege, parent, false);
         return new MessageViewHolder(itemView);
     }
 

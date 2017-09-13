@@ -16,6 +16,7 @@ import trickyquestion.messenger.Util.Constants;
 public class FriendProfileView {
     private final Context context;
     private PhotoDialog photoDialog;
+
     public FriendProfileView(final Context context) {
         this.context = context;
         create();

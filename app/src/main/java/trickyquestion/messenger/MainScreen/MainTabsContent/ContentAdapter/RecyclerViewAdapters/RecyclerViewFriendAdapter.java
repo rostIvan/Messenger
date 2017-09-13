@@ -8,6 +8,8 @@ import android.view.animation.AlphaAnimation;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentAdapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.MainScreen.MainTabsContent.ContentPresenter.Friends.IFriendPresenter;
 
+//TODO: clean imports
+
 public class RecyclerViewFriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
     private final IFriendPresenter presenter;
