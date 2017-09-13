@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="55dp"
     android:orientation="vertical"
+    tools:background="@color/colorWhite"
     android:layout_marginLeft="13dp"
     android:layout_marginRight="13dp"
     android:layout_marginBottom="10dp"
     android:layout_marginTop="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/message_friend_photo"
+        android:id="@+id/add_friend_photo"
         android:layout_width="50dp"
         android:layout_height="50dp"
         tools:src="@mipmap/ic_launcher"
@@ -20,7 +21,7 @@
         app:civ_border_color="@color/colorBlack"/>
 
     <TextView
-        android:id="@+id/message_friend_name"
+        android:id="@+id/add_friend_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="70dp"
@@ -30,29 +31,28 @@
         android:textColor="@color/colorBlack"/>
 
     <TextView
-        android:id="@+id/message_friend_text"
+        android:id="@+id/add_friend_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="30dp"
-        tools:text="Bla, bla, bla, lorem ipsum"
-        android:textColor="@color/colorGrey" />
+        tools:text="1232154680704672"
+        android:textColor="@color/colorGrey"/>
 
-    <TextView
-        android:id="@+id/message_friend_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        tools:text="12:00"
-        android:layout_marginRight="15dp"
-        android:textColor="@color/colorBlack"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/ic_person_add"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorBlack"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_marginLeft="70dp"/>
 
 </RelativeLayout>

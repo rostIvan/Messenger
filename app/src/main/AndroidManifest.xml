@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainScreen.View.MainActivity"
+            android:name=".main_screen.view.MainActivity"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,8 +20,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".AddFriendScreen.AddFriendActivity">
+        <activity android:name=".add_friend_screen.view.AddFriendActivity"> </activity>
+
+        <activity
+            android:name=".login_screen.LoginScreenActivity"
+            android:theme="@style/AppTheme">
         </activity>
+
     </application>
 
 </manifest>
