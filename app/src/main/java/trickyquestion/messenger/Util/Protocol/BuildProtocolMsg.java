@@ -2,16 +2,25 @@ package trickyquestion.messenger.Util.Protocol;
 
 import java.util.UUID;
 
-import trickyquestion.messenger.Util.Constants;
-
 /**
  * Created by Zen on 13.09.2017.
  */
 public class BuildProtocolMsg {
-    static public String BuildHeartbeat(String UserName, UUID UserID, String IP){
-        StringBuilder FixedSizeUserName(Constants.USERNAME_MAX_LEN);
-        FixedSizeUserName.replace(0,UserName.length(),UserName);
-        //TODO: Write return and test algorithm
-        return "";
+    /**
+     * Create heartbeat packet data
+     * @param UserName also know as user Login
+     * @param UserID user id which identifies user in network
+     * @param IP client smart phone/tablet IP address
+     * @return return string value which represent protocol heartbeat packet
+     */
+    static public String genHeartbeatPacket(String UserName, UUID UserID, String IP){
+        StringBuilder UsrNamePart = new StringBuilder("$$$$$$$$$$$$$$$$$$$");
+        UsrNamePart.replace(0,UserName.length(),UserName);
+        StringBuilder UserIDPart = new StringBuilder(UserID.toString());
+        StringBuilder UserIPPart = new StringBuilder("$$$$$$$$$$$$$$$");
+        UserIPPart.replace(0,IP.length(),IP);
+        return new StringBuilder
+                ("P2P_HEARTBEAT:" + UsrNamePart + ":" + UserIDPart + ":" +UserIPPart+ ":P2P_HEARTBEAT")
+                .toString();
     }
 }
