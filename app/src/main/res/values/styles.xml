@@ -32,6 +32,7 @@
 
     <style name="CustomDialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowAnimationStyle">@style/CustomDialogAnimation</item>
+        <item name="android:background">@color/colorWhite</item>
     </style>
 
     <style name="CustomDialogAnimation">

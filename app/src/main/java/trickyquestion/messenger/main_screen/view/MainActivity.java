@@ -1,6 +1,8 @@
 package trickyquestion.messenger.main_screen.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
@@ -43,8 +45,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     private SettingMenuDialog dialogMenu;
     private SearchView searchView;
 
-
-    private final int REQUEST_LOGIN = 1;
+    private final int REQUEST_AUTH = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,15 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
+    protected void onResume() {
+        presenter.onResume();
+        super.onResume();
+    }
+
+    @Override
     public void startLoginActivity() {
         final Intent intent = new Intent(this, LoginScreenActivity.class);
-        startActivityForResult(intent, REQUEST_LOGIN);
+        startActivityForResult(intent, REQUEST_AUTH);
     }
 
     @Override
@@ -78,14 +85,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null)  super.onActivityResult(requestCode, resultCode, null);
-        else if (requestCode == REQUEST_LOGIN && resultCode == RESULT_OK) {
-            Toast.makeText(
-                    this,
-                    "name: \t" + data.getStringExtra(LoginFragment.EXTRA_TAG_LOGIN_NICK) +
-                    "\npass: \t" + data.getStringExtra(LoginFragment.EXTRA_TAG_LOGIN_PASS),
-                    Toast.LENGTH_SHORT).show();
-        }
+        presenter.onActivityResult(requestCode, resultCode, data, REQUEST_AUTH);
     }
 
     @Override
@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         super.onSaveInstanceState(outState);
     }
 
+    @Override
     public boolean isDialogShow() {
         return dialogMenu != null && dialogMenu.isShow();
     }
@@ -152,5 +153,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void setSearchViewIconified(final boolean iconified) {
         searchView.setIconified(iconified);
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

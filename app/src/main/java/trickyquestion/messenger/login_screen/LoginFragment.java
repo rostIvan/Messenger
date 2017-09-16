@@ -9,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.R;
 
 public class LoginFragment extends Fragment {
@@ -25,8 +23,8 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.button_sign_in)
     TextView buttonSignIn;
 
-    public static final String EXTRA_TAG_LOGIN_NICK = "nick";
-    public static final String EXTRA_TAG_LOGIN_PASS = "pass";
+    public static final String EXTRA_TAG_AUTH_LOGIN = "login";
+    public static final String EXTRA_TAG_AUTH_PASS = "pass";
 
     @Nullable
     @Override
@@ -39,8 +37,8 @@ public class LoginFragment extends Fragment {
     @OnClick(R.id.button_sign_in)
     public void signIn() {
         final Intent intent = new Intent();
-        intent.putExtra(EXTRA_TAG_LOGIN_NICK, nickField.getText().toString());
-        intent.putExtra(EXTRA_TAG_LOGIN_PASS, passFiled.getText().toString());
+        intent.putExtra(EXTRA_TAG_AUTH_LOGIN, nickField.getText().toString());
+        intent.putExtra(EXTRA_TAG_AUTH_PASS, passFiled.getText().toString());
         getActivity().setResult(Activity.RESULT_OK, intent);
         getActivity().finish();
     }

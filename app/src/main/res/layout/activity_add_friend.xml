@@ -6,8 +6,19 @@
     android:background="@color/colorWhite"
     tools:context=".main_screen.view.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/add_friend_toolbar"
+        style="@style/AppTheme.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/AppTheme.ActionBar">
+    </android.support.v7.widget.Toolbar>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_add_friend"
+        android:layout_below="@id/add_friend_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:overScrollMode="never"/>

@@ -1,5 +1,7 @@
 package trickyquestion.messenger.main_screen.view;
 
+import android.content.Context;
+
 public interface IMainView {
     void customizeToolbar();
     void goBack();
@@ -13,4 +15,7 @@ public interface IMainView {
     void showToast(final String message);
 
     void startLoginActivity();
+    void finish();
+
+    Context getContext();
 }

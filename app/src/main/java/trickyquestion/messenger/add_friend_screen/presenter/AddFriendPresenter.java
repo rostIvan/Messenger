@@ -1,9 +1,13 @@
 package trickyquestion.messenger.add_friend_screen.presenter;
 
 
+import android.graphics.Color;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,7 +30,19 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     @Override
     public void onCreate() {
+        view.customizeToolbar();
         view.showFriendsItems();
+    }
+
+    @Override
+    public View.OnClickListener onNavigationButtonPressed() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!view.isSearchViewIconified()) view.setSearchViewIconified(true);
+                else view.goBack();
+            }
+        };
     }
 
     @Override
@@ -41,7 +57,9 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     public void onBindViewHolder(AddFriendViewHolder holder, int position) {
         final Friend friend = friends.get(position);
         setViewValue(holder, friend);
+        setupListeners(holder, friend);
     }
+
 
     @Override
     public int getCount() {
@@ -52,16 +70,70 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     private void setViewValue(final AddFriendViewHolder holder, final Friend friend) {
         holder.name.setText(friend.getName());
         holder.id.setText(friend.getId().toString().substring(0, 25).concat(" ..."));
-        if (friend.getImage() != null)
+        if (friend.getImage() != null) {
             holder.image.setImageDrawable(friend.getImage().getDrawable());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Friend newFriend = new Friend(holder.name.getText().toString(), UUID.randomUUID(),  null, true);
-                FriendsRepository.addFriend(newFriend);
-                friends.remove(holder.getAdapterPosition());
-                view.notifyRecyclerDataChange();
+        }
+    }
+
+    private void setupListeners(final AddFriendViewHolder holder, final Friend friend) {
+
+        holder.itemView.setOnTouchListener(new OnHolderItemTouchListener(holder));
+        holder.buttonAddFriend.setOnTouchListener(new OnHolderItemTouchListener(holder));
+
+        holder.itemView.setOnClickListener(new OnHolderItemClickListener(holder, friend));
+        holder.buttonAddFriend.setOnClickListener(new OnHolderItemClickListener(holder, friend));
+    }
+
+    /** Here is located Holder Listeners **/
+
+    private class OnHolderItemClickListener implements View.OnClickListener {
+        private final AddFriendViewHolder holder;
+        private final Friend friend;
+
+        private OnHolderItemClickListener(final AddFriendViewHolder holder, final Friend friend) {
+            this.holder = holder;
+            this.friend = friend;
+        }
+
+        @Override
+        public void onClick(View view) {
+            addFriend(holder, friend);
+        }
+
+
+        private void addFriend(final AddFriendViewHolder holder, final Friend friend) {
+            final Friend newFriend = new Friend(friend.getName(), friend.getId(),  null, true);
+            FriendsRepository.addFriend(newFriend);
+            friends.remove(holder.getAdapterPosition());
+            view.notifyRecyclerDataChange();
+        }
+
+    }
+
+    private class OnHolderItemTouchListener implements View.OnTouchListener {
+        final AddFriendViewHolder holder;
+
+        private OnHolderItemTouchListener(final AddFriendViewHolder holder) {
+            this.holder = holder;
+        }
+
+        @Override
+        public boolean onTouch(View v, MotionEvent motionEvent) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN : {
+                    holder.itemView.setBackgroundColor(v.getResources().getColor(R.color.colorPrimaryGreen));
+                    break;
+                }
+                case MotionEvent.ACTION_UP : {
+                    holder.itemView.setBackgroundColor(v.getResources().getColor(R.color.colorWhite));
+                    break;
+                }
+                case MotionEvent.ACTION_CANCEL : {
+                    holder.itemView.setBackgroundColor(v.getResources().getColor(R.color.colorWhite));
+                    break;
+                }
             }
-        });
+            return false;
+        }
     }
 }

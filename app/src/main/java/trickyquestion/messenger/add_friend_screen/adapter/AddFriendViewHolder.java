@@ -2,6 +2,7 @@ package trickyquestion.messenger.add_friend_screen.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -17,6 +18,8 @@ public class AddFriendViewHolder extends RecyclerView.ViewHolder {
     public TextView id;
     @BindView(R.id.add_friend_photo)
     public CircleImageView image;
+    @BindView(R.id.button_add_friend)
+    public Button buttonAddFriend;
 
     public AddFriendViewHolder(View itemView) {
         super(itemView);
