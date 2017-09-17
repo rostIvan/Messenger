@@ -8,13 +8,10 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
-import java.util.Set;
 
 import trickyquestion.messenger.login_screen.authentication.LoginFragment;
 import trickyquestion.messenger.main_screen.view.IMainView;
-import trickyquestion.messenger.main_screen.view.dialogs.SettingMenuDialog;
+import trickyquestion.messenger.dialogs_screen.SettingMenuDialog;
 
 import static android.app.Activity.RESULT_OK;
 

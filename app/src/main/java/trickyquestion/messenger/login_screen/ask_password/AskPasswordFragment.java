@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
-import trickyquestion.messenger.main_screen.view.dialogs.SettingMenuDialog;
+import trickyquestion.messenger.dialogs_screen.SettingMenuDialog;
 
 
 public class AskPasswordFragment extends Fragment {
@@ -78,6 +78,5 @@ public class AskPasswordFragment extends Fragment {
         editor.apply();
         editor.commit();
         getActivity().finish();
-        Toast.makeText(getContext(), "True", Toast.LENGTH_SHORT).show();
     }
 }

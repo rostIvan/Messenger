@@ -1,4 +1,4 @@
-package trickyquestion.messenger.main_screen.view.dialogs;
+package trickyquestion.messenger.dialogs_screen;
 
 import android.app.Dialog;
 import android.content.Context;

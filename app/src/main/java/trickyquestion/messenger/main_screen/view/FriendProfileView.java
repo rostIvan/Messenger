@@ -3,7 +3,7 @@ package trickyquestion.messenger.main_screen.view;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 
-import trickyquestion.messenger.main_screen.view.dialogs.PhotoDialog;
+import trickyquestion.messenger.dialogs_screen.PhotoDialog;
 
 public class FriendProfileView {
     private final Context context;
