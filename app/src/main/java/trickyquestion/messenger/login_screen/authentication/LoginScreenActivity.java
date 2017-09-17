@@ -1,9 +1,9 @@
-package trickyquestion.messenger.login_screen;
+package trickyquestion.messenger.login_screen.authentication;
 
 
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.support.v4.app.Fragment;
+
+import trickyquestion.messenger.login_screen.SingleFragmentActivity;
 
 public class LoginScreenActivity extends SingleFragmentActivity {
 

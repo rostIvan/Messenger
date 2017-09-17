@@ -3,13 +3,18 @@ package trickyquestion.messenger.main_screen.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-import trickyquestion.messenger.login_screen.LoginFragment;
+import java.util.Set;
+
+import trickyquestion.messenger.login_screen.authentication.LoginFragment;
 import trickyquestion.messenger.main_screen.view.IMainView;
+import trickyquestion.messenger.main_screen.view.dialogs.SettingMenuDialog;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -18,13 +23,16 @@ public class MainPresenter implements IMainPresenter {
     private final IMainView view;
     private static boolean dialogWasOpened;
 
-    public static final  String EXTRA_KEY_AUTH_DATA = "Auth date";
-    public static final  String EXTRA_KEY_AUTH_LOGIN = "Auth log";
-    public static final  String EXTRA_KEY_AUTH_PASSWORD = "Auth pass";
-    public static final  String EXTRA_KEY_IS_AUTHENTICATED = "Ask pass";
+    private final SharedPreferences preferences;
+
+    public static final String EXTRA_KEY_AUTH_DATA = "Auth date";
+    public static final String EXTRA_KEY_AUTH_LOGIN = "Auth log";
+    public static final String EXTRA_KEY_AUTH_PASSWORD = "Auth pass";
+    public static final String EXTRA_KEY_IS_AUTHENTICATED = "Ask auth";
 
     public MainPresenter(final IMainView view) {
         this.view = view;
+        preferences = view.getContext().getSharedPreferences(EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -36,8 +44,37 @@ public class MainPresenter implements IMainPresenter {
     }
 
     @Override
-    public void onResume() {
+    public void onResume() {}
+
+    @Override
+    public void onAttachedToWindow() {
         if (!isAuthenticated()) view.startLoginActivity();
+        else if (askPassword() && !passWasEnter()) view.startAskPassActivity();
+    }
+
+    private boolean askPassword() {
+        return preferences.getBoolean(SettingMenuDialog.EXTRA_ASK_PASSWORD, false);
+    }
+
+    private boolean passWasEnter() {
+        return preferences.getBoolean(SettingMenuDialog.EXTRA_PASSWORD_WAS_ENTER, false);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        setPasswordEntered(true);
+    }
+
+    @Override
+    public void onFinish() {
+        setPasswordEntered(false);
+    }
+
+    private void setPasswordEntered(final boolean entered) {
+        final SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(SettingMenuDialog.EXTRA_PASSWORD_WAS_ENTER, entered);
+        editor.apply();
+        editor.commit();
     }
 
     @Override
@@ -57,6 +94,7 @@ public class MainPresenter implements IMainPresenter {
         }
     }
 
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         dialogWasOpened = view.isDialogShow();
@@ -67,8 +105,7 @@ public class MainPresenter implements IMainPresenter {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!view.isSearchViewIconified()) view.setSearchViewIconified(true);
-                else view.goBack();
+               onBackPressed();
             }
         };
     }
@@ -76,7 +113,7 @@ public class MainPresenter implements IMainPresenter {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK){
-            view.goBack();
+            onBackPressed();
             return true;
         }
         else if (keyCode == KeyEvent.KEYCODE_MENU) {
@@ -84,6 +121,12 @@ public class MainPresenter implements IMainPresenter {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!view.isSearchViewIconified()) view.setSearchViewIconified(true);
+        else view.goBack();
     }
 
     @Override
@@ -109,8 +152,6 @@ public class MainPresenter implements IMainPresenter {
     }
 
     private void saveAccountDate(final String login, final String password) {
-        final SharedPreferences preferences =
-                view.getContext().getSharedPreferences(EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putString(EXTRA_KEY_AUTH_LOGIN, login);
         editor.putString(EXTRA_KEY_AUTH_PASSWORD, password);

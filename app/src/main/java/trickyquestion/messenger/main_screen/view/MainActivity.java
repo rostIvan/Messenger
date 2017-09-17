@@ -2,7 +2,7 @@ package trickyquestion.messenger.main_screen.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
@@ -19,8 +19,8 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import trickyquestion.messenger.login_screen.LoginFragment;
-import trickyquestion.messenger.login_screen.LoginScreenActivity;
+import trickyquestion.messenger.login_screen.ask_password.AskPasswordActivity;
+import trickyquestion.messenger.login_screen.authentication.LoginScreenActivity;
 import trickyquestion.messenger.main_screen.adapter.MainPagerAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends.FriendsFragment;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.MessagesFragment;
@@ -48,6 +48,12 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     private final int REQUEST_AUTH = 1;
 
     @Override
+    public void onAttachedToWindow() {
+        presenter.onAttachedToWindow();
+        super.onAttachedToWindow();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(Constants.MAIN_LAYOUT);
@@ -63,9 +69,27 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
+    public void finish() {
+        presenter.onFinish();
+        super.finish();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        presenter.onConfigurationChanged(newConfig);
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
     public void startLoginActivity() {
         final Intent intent = new Intent(this, LoginScreenActivity.class);
         startActivityForResult(intent, REQUEST_AUTH);
+    }
+
+    @Override
+    public void startAskPassActivity() {
+        final Intent intent = new Intent(this, AskPasswordActivity.class);
+        startActivity(intent);
     }
 
     @Override

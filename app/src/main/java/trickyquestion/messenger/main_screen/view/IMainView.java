@@ -15,7 +15,7 @@ public interface IMainView {
     void showToast(final String message);
 
     void startLoginActivity();
+    void startAskPassActivity();
     void finish();
-
     Context getContext();
 }

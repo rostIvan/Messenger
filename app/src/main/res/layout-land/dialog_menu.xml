@@ -8,6 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="Clear date"/>
-
+        android:text="Log out"/>
+    <CheckBox
+        android:id="@+id/check_box_ask_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_clear_auth_data"
+        android:layout_marginLeft="20dp"
+        android:textColor="@color/colorBlack"
+        android:text="Ask password"/>
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package trickyquestion.messenger.login_screen;
+package trickyquestion.messenger.login_screen.authentication;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -20,7 +20,7 @@ public class LoginFragment extends Fragment {
     TextView nickField;
     @BindView(R.id.pass_field)
     TextView passFiled;
-    @BindView(R.id.button_sign_in)
+    @BindView(R.id.button_create_account)
     TextView buttonSignIn;
 
     public static final String EXTRA_TAG_AUTH_LOGIN = "login";
@@ -34,12 +34,22 @@ public class LoginFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.button_sign_in)
-    public void signIn() {
-        final Intent intent = new Intent();
-        intent.putExtra(EXTRA_TAG_AUTH_LOGIN, nickField.getText().toString());
-        intent.putExtra(EXTRA_TAG_AUTH_PASS, passFiled.getText().toString());
-        getActivity().setResult(Activity.RESULT_OK, intent);
-        getActivity().finish();
+    @OnClick(R.id.button_create_account)
+    public void createAccount() {
+        final String login = nickField.getText().toString();
+        final String password = passFiled.getText().toString();
+
+        if (isValid(login, password)) {
+            final Intent intent = new Intent();
+            intent.putExtra(EXTRA_TAG_AUTH_LOGIN, nickField.getText().toString());
+            intent.putExtra(EXTRA_TAG_AUTH_PASS, passFiled.getText().toString());
+            getActivity().setResult(Activity.RESULT_OK, intent);
+            getActivity().finish();
+        }
+
+    }
+
+    private boolean isValid(final String login, final String password) {
+        return true;
     }
 }
