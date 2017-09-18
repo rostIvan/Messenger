@@ -26,7 +26,7 @@ import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Frien
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.MessagesFragment;
 import trickyquestion.messenger.main_screen.presenter.IMainPresenter;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
-import trickyquestion.messenger.dialogs_screen.SettingMenuDialog;
+import trickyquestion.messenger.dialogs.SettingMenuDialog;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.util.Constants;
 

@@ -18,8 +18,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.dialogs.SettingMenuDialog;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
-import trickyquestion.messenger.dialogs_screen.SettingMenuDialog;
+import trickyquestion.messenger.util.Constants;
 
 
 public class AskPasswordFragment extends Fragment {
@@ -37,12 +38,12 @@ public class AskPasswordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_ask_pass, container, false);
         ButterKnife.bind(this, view);
-        preferences = view.getContext().getSharedPreferences(MainPresenter.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+        preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
         textViewHello.setText(
                 "Hello, "
-                .concat(preferences.getString(MainPresenter.EXTRA_KEY_AUTH_LOGIN, "someone"))
+                .concat(preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "someone"))
                 .concat(" ")
-                .concat(preferences.getString(MainPresenter.EXTRA_KEY_AUTH_PASSWORD, "someone pass"))
+                .concat(preferences.getString(Constants.EXTRA_KEY_AUTH_PASSWORD, "someone pass"))
         );
         addPassListeners();
         return view;
@@ -70,11 +71,11 @@ public class AskPasswordFragment extends Fragment {
     }
 
     private boolean rightPass() {
-        return pass.getText().toString().equals(preferences.getString(MainPresenter.EXTRA_KEY_AUTH_PASSWORD, "someone pass"));
+        return pass.getText().toString().equals(preferences.getString(Constants.EXTRA_KEY_AUTH_PASSWORD, "someone pass"));
     }
     private void signInAccount() {
         final SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(SettingMenuDialog.EXTRA_PASSWORD_WAS_ENTER, true);
+        editor.putBoolean(Constants.EXTRA_PASSWORD_WAS_ENTER, true);
         editor.apply();
         editor.commit();
         getActivity().finish();

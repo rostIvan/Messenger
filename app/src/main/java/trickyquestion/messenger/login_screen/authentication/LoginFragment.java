@@ -50,6 +50,7 @@ public class LoginFragment extends Fragment {
     }
 
     private boolean isValid(final String login, final String password) {
+        // TODO: 18.09.17 Add validation
         return true;
     }
 }

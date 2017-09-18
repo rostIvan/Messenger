@@ -23,7 +23,7 @@ import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.RecyclerViewAdapters.RecyclerViewFriendAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends.FriendPresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends.IFriendPresenter;
-import trickyquestion.messenger.main_screen.view.FriendProfileView;
+import trickyquestion.messenger.dialogs.FriendProfileView;
 import trickyquestion.messenger.R;
 
 public class FriendsFragment extends Fragment implements IFriendsView {

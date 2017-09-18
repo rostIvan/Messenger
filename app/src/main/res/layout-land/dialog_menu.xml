@@ -31,16 +31,18 @@
         android:id="@+id/button_clear_auth_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_below="@id/setting_circle_image"
         android:text="Log out"/>
     <Button
         android:id="@+id/button_change_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_below="@id/button_clear_auth_data"
-        android:text="Change date"/>
+        android:text="Change account date"/>
     <CheckBox
         android:id="@+id/check_box_ask_pass"
         android:layout_width="wrap_content"

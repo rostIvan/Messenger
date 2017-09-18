@@ -1,4 +1,4 @@
-package trickyquestion.messenger.dialogs_screen;
+package trickyquestion.messenger.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -6,12 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -23,7 +22,7 @@ import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.main_screen.presenter.MainPresenter;
+import trickyquestion.messenger.util.Constants;
 
 public class SettingMenuDialog {
     private Dialog dialog;
@@ -39,7 +38,6 @@ public class SettingMenuDialog {
     private SharedPreferences preferences;
 
     public static final String EXTRA_ASK_PASSWORD = "boxWasChecked";
-    public static final String EXTRA_PASSWORD_WAS_ENTER = "passWasEnter";
 
     public SettingMenuDialog(final Context context) {
         dialog = new Dialog(context, R.style.CustomDialog);
@@ -49,10 +47,11 @@ public class SettingMenuDialog {
     public void show() {
         dialog.show();
         isShow = true;
+        doKeepDialog(dialog);
     }
 
     private void initSharedPreferences (final Context context) {
-        preferences = context.getSharedPreferences(MainPresenter.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     private void create() {
@@ -89,7 +88,7 @@ public class SettingMenuDialog {
         id = (TextView) dialog.findViewById(R.id.setting_id);
         image = (CircleImageView) dialog.findViewById(R.id.setting_circle_image);
 
-        loginName.setText(preferences.getString(MainPresenter.EXTRA_KEY_AUTH_LOGIN, "admin"));
+        loginName.setText(preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "admin"));
         id.setText("id: ".concat(UUID.randomUUID().toString().substring(0, 20).concat(" ...")));
         image.setImageDrawable(dialog.getContext().getResources().getDrawable(R.mipmap.ic_launcher));
         checkBoxAskPassword.setChecked(preferences.getBoolean(EXTRA_ASK_PASSWORD, false));
@@ -123,9 +122,9 @@ public class SettingMenuDialog {
 
     private void clearAccountDate() {
         final SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(MainPresenter.EXTRA_KEY_AUTH_LOGIN, null);
-        editor.putString(MainPresenter.EXTRA_KEY_AUTH_PASSWORD, null);
-        editor.putBoolean(MainPresenter.EXTRA_KEY_IS_AUTHENTICATED, false);
+        editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, null);
+        editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, null);
+        editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, false);
 
         editor.apply();
         editor.commit();
@@ -133,9 +132,9 @@ public class SettingMenuDialog {
 
     private void setAccountDate(final String login, final String password) {
         final SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(MainPresenter.EXTRA_KEY_AUTH_LOGIN, login);
-        editor.putString(MainPresenter.EXTRA_KEY_AUTH_PASSWORD, password);
-        editor.putBoolean(MainPresenter.EXTRA_KEY_IS_AUTHENTICATED, true);
+        editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, login);
+        editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);
+        editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, true);
 
         editor.apply();
         editor.commit();
@@ -190,5 +189,12 @@ public class SettingMenuDialog {
             }
         });
         builder.show();
+    }
+    private static void doKeepDialog(Dialog dialog){
+        final WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes(lp);
     }
 }
