@@ -4,4 +4,7 @@
     <string name="friends">Friends</string>
     <string name="action_settings">Setting</string>
     <string name="search">Search</string>
+    <string name="action_account">account</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
 </resources>

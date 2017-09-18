@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="140dp"
+        android:layout_width="180dp"
+        android:layout_height="140dp"
+        android:layout_centerHorizontal="true"
+        android:text="Cool picture"
+        android:textSize="55dp"/>
+
+    <TextView
+        android:id="@+id/hello_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp"
+        android:textSize="18sp"
+        android:text="Hello, someone"/>
+    <EditText
+        android:id="@+id/pass_ask_field"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hello_text"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="30dp"
+        android:inputType="textPassword"
+        android:textColorHint="@color/colorGrey"
+        android:hint="@string/password"/>
+
+    <TextView
+        android:id="@+id/button_sign_in"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:text="Sign in"
+        android:layout_margin="30dp"
+        android:textColor="@color/colorBlack"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:paddingTop="5dp"
+        android:layout_below="@id/pass_ask_field"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/radius_shape" />
+</RelativeLayout>

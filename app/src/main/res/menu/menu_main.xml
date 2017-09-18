@@ -8,10 +8,17 @@
         android:title="@string/search"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_account"
+        android:icon="@drawable/ic_account_circle"
+        android:title="@string/action_account"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/action_menu"
         android:icon="@drawable/ic_settings"
-        android:title="@string/search"
+        android:title="@string/action_settings"
         app:showAsAction="always" />
 
 </menu>

@@ -5,7 +5,7 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack">
+    android:background="@color/colorWhite">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_friends"
@@ -22,8 +22,8 @@
         android:layout_marginBottom="63dp"
         android:layout_marginRight="15dp"
         android:src="@drawable/ic_add"
-        fab:fab_colorNormal="@color/colorAccent"
-        fab:fab_colorPressed="@color/colorRed"
-        fab:fab_colorRipple="@color/colorPrimary"/>
+        fab:fab_colorNormal="@color/colorPrimaryGreen"
+        fab:fab_colorPressed="@color/colorTransparentGreen"
+        fab:fab_colorRipple="@color/colorPrimary" />
 
 </android.support.design.widget.CoordinatorLayout>
