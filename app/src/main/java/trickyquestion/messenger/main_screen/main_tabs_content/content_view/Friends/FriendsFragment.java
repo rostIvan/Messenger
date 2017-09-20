@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -72,6 +73,7 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         final SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(presenter.onQueryTextListener());
     }
+
 
     @Override
     public Context getFragmentContext() {

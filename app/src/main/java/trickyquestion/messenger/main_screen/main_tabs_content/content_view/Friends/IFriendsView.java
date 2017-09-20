@@ -1,9 +1,11 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends;
 
 import android.content.Context;
+import android.view.View;
 
 public interface IFriendsView {
     Context getFragmentContext();
+
     void showFriendsItems();
 
     void setFabBehavior();

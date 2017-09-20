@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmResults;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 
 public class FriendsRepository {
@@ -24,6 +25,17 @@ public class FriendsRepository {
             @Override
             public void execute(Realm realm) {
                 realm.copyToRealm(friend);
+            }
+        });
+    }
+
+    public static void deleteFriend(final Friend friend) {
+        final Realm realm = Realm.getDefaultInstance();
+        final RealmResults results = realm.where(Friend.class).equalTo("name", friend.getName()).findAll();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                results.deleteAllFromRealm();
             }
         });
     }

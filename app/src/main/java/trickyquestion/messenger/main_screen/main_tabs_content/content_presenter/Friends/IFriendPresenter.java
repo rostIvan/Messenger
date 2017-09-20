@@ -2,6 +2,7 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter
 
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
