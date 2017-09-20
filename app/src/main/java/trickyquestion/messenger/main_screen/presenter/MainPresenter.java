@@ -9,6 +9,8 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import trickyquestion.messenger.login_screen.authentication.LoginFragment;
 import trickyquestion.messenger.main_screen.view.IMainView;
 import trickyquestion.messenger.dialogs.SettingMenuDialog;
@@ -19,11 +21,21 @@ import static android.app.Activity.RESULT_OK;
 public class MainPresenter implements IMainPresenter {
 
     private final IMainView view;
-    private final SharedPreferences preferences;
+    private SharedPreferences preferences;
 
     public MainPresenter(final IMainView view) {
         this.view = view;
+        initSharedPreference();
+        initRealm();
+    }
+
+    private void initSharedPreference() {
         preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+    }
+    private void initRealm() {
+        Realm.init(view.getContext());
+        RealmConfiguration config = new RealmConfiguration.Builder().name("myrealm.realm").deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(config);
     }
 
     @Override

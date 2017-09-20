@@ -87,8 +87,10 @@ public class FriendPresenter implements IFriendPresenter {
     public void onBindViewHolder(FriendViewHolder holder, int position) {
         final Friend friend = friendList.get(position);
         setViewValue(holder, friend);
+        setViewListeners(holder, friend);
         ItemAlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
+
 
     @Override
     public FriendViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -103,6 +105,10 @@ public class FriendPresenter implements IFriendPresenter {
         holder.onlineStatus.setText(friend.isOnline() ? "online" : "last seen at 4:20");
         if (friend.isOnline()) holder.onlineStatus.setTextColor(Constants.ONLINE_STATUS_TEXT_COLOR);
         else holder.onlineStatus.setTextColor(Constants.OFFLINE_STATUS_TEXT_COLOR);
+
+    }
+
+    private void setViewListeners(final FriendViewHolder holder, final Friend friend) {
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

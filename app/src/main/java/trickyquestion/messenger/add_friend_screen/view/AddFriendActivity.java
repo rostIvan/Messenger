@@ -1,5 +1,6 @@
 package trickyquestion.messenger.add_friend_screen.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.MotionEvent;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import trickyquestion.messenger.add_friend_screen.adapter.RecyclerViewAddFriendAdapter;
 import trickyquestion.messenger.add_friend_screen.presenter.AddFriendPresenter;
 import trickyquestion.messenger.add_friend_screen.presenter.IAddFriendPresenter;
@@ -21,11 +23,9 @@ import trickyquestion.messenger.R;
 public class AddFriendActivity extends AppCompatActivity  implements IAddFriendView {
     @BindView(R.id.rv_add_friend)
     RecyclerView recyclerView;
-
     @BindView(R.id.add_friend_toolbar)
     Toolbar toolbar;
     private SearchView searchView;
-
 
     private IAddFriendPresenter presenter;
 
@@ -84,5 +84,10 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
     @Override
     public void setSearchViewIconified(final boolean iconified) {
         searchView.setIconified(iconified);
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
     }
 }

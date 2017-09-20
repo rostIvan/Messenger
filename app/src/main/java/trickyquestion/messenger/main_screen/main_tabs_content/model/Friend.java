@@ -6,12 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Friend {
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.RealmClass;
+
+@RealmClass
+public class Friend implements RealmModel {
 
     private String name;
+    @Ignore
     private UUID id;
+    @Ignore
     private ImageView image;
     private boolean online;
+
+    public Friend() {
+    }
 
     public Friend(final String name, final UUID id, final ImageView image, final boolean online) {
         this.name = name;
@@ -22,6 +33,22 @@ public class Friend {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setImage(ImageView image) {
+        this.image = image;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 
     public static List<Friend> getFriends(int size) {

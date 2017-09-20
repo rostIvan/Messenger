@@ -22,6 +22,7 @@ import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.util.Constants;
 
 public class SettingMenuDialog {
@@ -31,6 +32,7 @@ public class SettingMenuDialog {
     private CheckBox checkBoxAskPassword;
     private Button buttonLogOut;
     private Button buttonChangeDate;
+    private Button buttonDeleteAllFriends;
     private CircleImageView image;
     private TextView loginName;
     private TextView id;
@@ -82,11 +84,15 @@ public class SettingMenuDialog {
     private void initView() {
         buttonLogOut = (Button) dialog.findViewById(R.id.button_clear_auth_data);
         buttonChangeDate = (Button) dialog.findViewById(R.id.button_change_data);
+        buttonDeleteAllFriends = (Button) dialog.findViewById(R.id.button_delete_all_friends);
+
         checkBoxAskPassword = (CheckBox) dialog.findViewById(R.id.check_box_ask_pass);
+
         loginName = (TextView) dialog.findViewById(R.id.setting_login_name);
         loginName = (TextView) dialog.findViewById(R.id.setting_login_name);
         id = (TextView) dialog.findViewById(R.id.setting_id);
         image = (CircleImageView) dialog.findViewById(R.id.setting_circle_image);
+
 
         loginName.setText(preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "admin"));
         id.setText("id: ".concat(UUID.randomUUID().toString().substring(0, 20).concat(" ...")));
@@ -98,18 +104,13 @@ public class SettingMenuDialog {
         checkBoxAskPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final SharedPreferences.Editor editor = preferences.edit();
-                if (checkBoxAskPassword.isChecked()) editor.putBoolean(EXTRA_ASK_PASSWORD, true);
-                else editor.putBoolean(EXTRA_ASK_PASSWORD, false);
-                editor.apply();
-                editor.commit();
+                setCheckBoxValue();
             }
         });
         buttonLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clearAccountDate();
-                restartApp(view);
             }
         });
         buttonChangeDate.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +119,21 @@ public class SettingMenuDialog {
                 buildAlert();
             }
         });
+        buttonDeleteAllFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FriendsRepository.deleteAllFriends();
+                restartApp(v);
+            }
+        });
+    }
+
+    private void setCheckBoxValue() {
+        final SharedPreferences.Editor editor = preferences.edit();
+        if (checkBoxAskPassword.isChecked()) editor.putBoolean(EXTRA_ASK_PASSWORD, true);
+        else editor.putBoolean(EXTRA_ASK_PASSWORD, false);
+        editor.apply();
+        editor.commit();
     }
 
     private void clearAccountDate() {
