@@ -8,15 +8,14 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 
 public class FriendsRepository {
-    private static List<Friend> friends;
 
     public static List<Friend> getFriends() {
         final Realm realm = Realm.getDefaultInstance();
-        friends = realm.where(Friend.class).findAll();
-        return friends;
+        return realm.where(Friend.class).findAll().sort("name", Sort.ASCENDING);
     }
 
     public static void addFriend(final Friend friend) {

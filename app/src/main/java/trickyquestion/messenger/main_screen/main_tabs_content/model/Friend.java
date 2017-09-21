@@ -3,6 +3,7 @@ package trickyquestion.messenger.main_screen.main_tabs_content.model;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class Friend implements RealmModel {
     private UUID id;
     @Ignore
     private ImageView image;
+    @Ignore
     private boolean online;
 
     public Friend() {
@@ -70,13 +72,5 @@ public class Friend implements RealmModel {
 
     public boolean isOnline() {
         return online;
-    }
-
-    public static Friend find(final Friend friend, final List<Friend> friendList) {
-        for (Friend f : friendList) {
-            if (f.getId().equals(friend.getId()))
-                return f;
-        }
-        return null;
     }
 }
