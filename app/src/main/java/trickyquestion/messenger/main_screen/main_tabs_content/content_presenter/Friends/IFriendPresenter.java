@@ -13,8 +13,12 @@ public interface IFriendPresenter {
     int getCount();
     void onBindViewHolder(final FriendViewHolder holder, final int position);
     FriendViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType);
+
+    String getStackQuery();
+
     SearchView.OnQueryTextListener onQueryTextListener();
     void onSaveInstanceState(Bundle outState);
+    void onActivityCreated(Bundle savedInstanceState);
     void onStart();
     View.OnClickListener onFabClick();
 }

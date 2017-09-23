@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +34,8 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     RecyclerView recyclerView;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+
+    private SearchView searchView;
     private FriendProfileView friendProfileView;
 
     public static FriendsFragment newInstance() {
@@ -61,6 +62,13 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         super.onStart();
     }
 
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        presenter.onActivityCreated(savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
+    }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         presenter.onSaveInstanceState(outState);
@@ -70,8 +78,10 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(presenter.onQueryTextListener());
+        if (presenter.getStackQuery() != null)
+            searchView.setQuery(presenter.getStackQuery(), false);
     }
 
 
@@ -132,5 +142,10 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         if (friendProfileView != null && friendProfileView.isShowing()) {
             friendProfileView.dismiss();
         }
+    }
+
+    @Override
+    public String getSearchQuery() {
+        return searchView.getQuery().toString();
     }
 }

@@ -23,4 +23,6 @@ public interface IFriendsView {
     boolean isFriendProfileOpen();
 
     void dismissPhotoDialog();
+
+    String getSearchQuery();
 }

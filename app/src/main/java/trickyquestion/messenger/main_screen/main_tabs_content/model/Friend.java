@@ -20,7 +20,6 @@ public class Friend implements RealmModel {
     private UUID id;
     @Ignore
     private ImageView image;
-    @Ignore
     private boolean online;
 
     public Friend() {

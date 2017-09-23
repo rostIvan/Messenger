@@ -25,6 +25,7 @@ public class FriendPresenter implements IFriendPresenter {
     private IFriendsView view;
     private List<Friend> friendList;
     private static boolean profileWasOpened;
+    private String searchQuery;
 
     public FriendPresenter(final IFriendsView view) {
         this.view = view;
@@ -60,6 +61,19 @@ public class FriendPresenter implements IFriendPresenter {
     public void onSaveInstanceState(Bundle outState) {
         profileWasOpened = view.isFriendProfileOpen();
         view.dismissPhotoDialog();
+        if (view.getSearchQuery() != null)
+            outState.putString("svQuery", view.getSearchQuery());
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        if (savedInstanceState == null) return;
+        searchQuery = savedInstanceState.getString("svQuery");
+    }
+
+    @Override
+    public String getStackQuery() {
+        return searchQuery;
     }
 
     @Override
