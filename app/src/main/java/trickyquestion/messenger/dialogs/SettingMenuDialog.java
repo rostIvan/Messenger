@@ -111,6 +111,7 @@ public class SettingMenuDialog {
             @Override
             public void onClick(View view) {
                 clearAccountDate();
+                restartApp(view);
             }
         });
         buttonChangeDate.setOnClickListener(new View.OnClickListener() {

@@ -26,16 +26,10 @@ public class MainPresenter implements IMainPresenter {
     public MainPresenter(final IMainView view) {
         this.view = view;
         initSharedPreference();
-        initRealm();
     }
 
     private void initSharedPreference() {
         preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
-    }
-    private void initRealm() {
-        Realm.init(view.getContext());
-        RealmConfiguration config = new RealmConfiguration.Builder().name("myrealm.realm").deleteRealmIfMigrationNeeded().build();
-        Realm.setDefaultConfiguration(config);
     }
 
     @Override
