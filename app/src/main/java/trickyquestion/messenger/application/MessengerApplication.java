@@ -1,4 +1,4 @@
-package trickyquestion.messenger.app;
+package trickyquestion.messenger.application;
 
 
 import android.app.Application;

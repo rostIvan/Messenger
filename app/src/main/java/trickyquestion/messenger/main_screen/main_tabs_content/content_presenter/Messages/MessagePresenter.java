@@ -105,7 +105,6 @@ public class MessagePresenter implements IMessagePresenter {
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         final Message message = messageList.get(position);
         setViewValue(holder, message);
-        ItemAlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
 

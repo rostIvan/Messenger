@@ -2,18 +2,21 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_view.Frie
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -62,17 +65,16 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         super.onStart();
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        presenter.onActivityCreated(savedInstanceState);
         super.onActivityCreated(savedInstanceState);
+        presenter.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        presenter.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+        presenter.onSaveInstanceState(outState);
     }
 
     @Override
@@ -80,10 +82,10 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(presenter.onQueryTextListener());
-        if (presenter.getStackQuery() != null)
+        if (presenter.getStackQuery() != null && !presenter.getStackQuery().isEmpty())
             searchView.setQuery(presenter.getStackQuery(), false);
+        searchView.setOnCloseListener(presenter.onCloseSearchViewListener());
     }
-
 
     @Override
     public Context getFragmentContext() {

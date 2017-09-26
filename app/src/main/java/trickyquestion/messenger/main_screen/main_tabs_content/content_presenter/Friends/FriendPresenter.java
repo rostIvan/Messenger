@@ -2,6 +2,7 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter
 
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -39,13 +40,24 @@ public class FriendPresenter implements IFriendPresenter {
         view.setFabBehavior();
     }
 
-
     @Override
     public void onStart() {
         if (profileWasOpened) view.showFriendProfile();
         view.notifyRecyclerDataChange();
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        if (savedInstanceState == null) return;
+        searchQuery = savedInstanceState.getString("svQuery");
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        profileWasOpened = view.isFriendProfileOpen();
+        view.dismissPhotoDialog();
+        if (view.getSearchQuery() != null && !view.getSearchQuery().isEmpty())
+            outState.putString("svQuery", view.getSearchQuery());
+    }
 
     @Override
     public View.OnClickListener onFabClick() {
@@ -58,17 +70,15 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        profileWasOpened = view.isFriendProfileOpen();
-        view.dismissPhotoDialog();
-        if (view.getSearchQuery() != null)
-            outState.putString("svQuery", view.getSearchQuery());
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        if (savedInstanceState == null) return;
-        searchQuery = savedInstanceState.getString("svQuery");
+    public SearchView.OnCloseListener onCloseSearchViewListener() {
+        return new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                searchQuery = null;
+                updateFriendList();
+                return false;
+            }
+        };
     }
 
     @Override
@@ -81,12 +91,15 @@ public class FriendPresenter implements IFriendPresenter {
         return new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                if (query == null || query.isEmpty()) return false;
                 Toast.makeText(view.getFragmentContext(), "Submit: " + query, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+//                if (newText == null || newText.isEmpty()) return false;
+                if (newText == null) return false;
                 friendList = FriendListInteractor.getFriends(newText);
                 view.notifyRecyclerDataChange();
                 return false;
@@ -105,9 +118,7 @@ public class FriendPresenter implements IFriendPresenter {
         final Friend friend = friendList.get(position);
         setViewValue(holder, friend);
         setViewListeners(holder, friend);
-        ItemAlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
-
 
     @Override
     public FriendViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

@@ -5,6 +5,8 @@ import android.view.ViewGroup;
 
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.Holders.MessageViewHolder;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.IMessagePresenter;
+import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.animation.ItemAlphaAnimator;
 
 public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
@@ -22,6 +24,7 @@ public class RecyclerViewMessageAdapter extends RecyclerView.Adapter<MessageView
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
         presenter.onBindViewHolder(holder, position);
+        ItemAlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
     @Override

@@ -5,6 +5,8 @@ import android.view.ViewGroup;
 
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends.IFriendPresenter;
+import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.animation.ItemAlphaAnimator;
 
 public class RecyclerViewFriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
@@ -22,6 +24,7 @@ public class RecyclerViewFriendAdapter extends RecyclerView.Adapter<FriendViewHo
     @Override
     public void onBindViewHolder(FriendViewHolder holder, int position) {
         presenter.onBindViewHolder(holder, position);
+        ItemAlphaAnimator.setFadeAnimation(holder.itemView, Constants.DURATION_ITEM_ANIMATION);
     }
 
     @Override
