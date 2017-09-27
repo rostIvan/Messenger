@@ -2,6 +2,9 @@ package trickyquestion.messenger.login_screen.ask_password;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -52,7 +55,10 @@ public class AskPasswordFragment extends Fragment {
     @OnClick(R.id.button_sign_in)
     public void onButtonSignInClick() {
         if (rightPass()) signInAccount();
-        else Toast.makeText(getContext(), "Incorrect password", Toast.LENGTH_SHORT).show();
+        else {
+            pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorRed), PorterDuff.Mode.SRC_ATOP);
+            Toast.makeText(getContext(), "Incorrect password", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void addPassListeners() {
@@ -62,7 +68,8 @@ public class AskPasswordFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (rightPass()) signInAccount();
+                if (rightPass())
+                    signInAccount();
             }
 
             @Override
