@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,8 @@ public class MainPresenter implements IMainPresenter {
 
     private final IMainView view;
     private SharedPreferences preferences;
+
+    private boolean searchViewWasOpened = false;
 
     public MainPresenter(final IMainView view) {
         this.view = view;
@@ -97,6 +100,10 @@ public class MainPresenter implements IMainPresenter {
     }
 
     @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    }
+
+    @Override
     public View.OnClickListener onNavigationButtonPressed() {
         return new View.OnClickListener() {
             @Override
@@ -144,6 +151,22 @@ public class MainPresenter implements IMainPresenter {
                 view.showToast("Account item click");
                 return true;
             }
+        };
+    }
+
+    @Override
+    public ViewPager.OnPageChangeListener onPageChangeListener() {
+        return new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                view.closeKeyboard();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
         };
     }
 

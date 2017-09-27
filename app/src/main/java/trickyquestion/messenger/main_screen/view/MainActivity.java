@@ -3,7 +3,6 @@ package trickyquestion.messenger.main_screen.view;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
@@ -13,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.eftimoff.viewpagertransformers.AccordionTransformer;
@@ -20,6 +21,9 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import trickyquestion.messenger.R;
+import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
+import trickyquestion.messenger.dialogs.SettingMenuDialog;
 import trickyquestion.messenger.login_screen.ask_password.AskPasswordActivity;
 import trickyquestion.messenger.login_screen.authentication.LoginScreenActivity;
 import trickyquestion.messenger.main_screen.adapter.MainPagerAdapter;
@@ -27,8 +31,6 @@ import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Frien
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.MessagesFragment;
 import trickyquestion.messenger.main_screen.presenter.IMainPresenter;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
-import trickyquestion.messenger.dialogs.SettingMenuDialog;
-import trickyquestion.messenger.R;
 import trickyquestion.messenger.util.Constants;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
@@ -77,8 +79,14 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        presenter.onConfigurationChanged(newConfig);
         super.onConfigurationChanged(newConfig);
+        presenter.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        presenter.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
@@ -91,6 +99,13 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     public void startAskPassActivity() {
         final Intent intent = new Intent(this, AskPasswordActivity.class);
         startActivity(intent);
+    }
+
+
+    @Override
+    public void startAddFriendActivity() {
+        final Intent intent = new Intent(getContext(), AddFriendActivity.class);
+        getContext().startActivity(intent);
     }
 
     @Override
@@ -132,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         pagerAdapter.addFragment(FriendsFragment.newInstance(), R.string.friends);
         pagerAdapter.addFragment(MessagesFragment.newInstance(), R.string.messages);
         viewPager.setAdapter(pagerAdapter);
+        viewPager.addOnPageChangeListener(presenter.onPageChangeListener());
         tabLayout.setViewPager(viewPager);
     }
 
@@ -178,6 +194,15 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void setSearchViewIconified(final boolean iconified) {
         searchView.setIconified(iconified);
+    }
+
+    @Override
+    public void closeKeyboard() {
+        View view = getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override

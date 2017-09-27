@@ -46,6 +46,7 @@ public class FriendPresenter implements IFriendPresenter {
         view.notifyRecyclerDataChange();
     }
 
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         if (savedInstanceState == null) return;
@@ -75,7 +76,6 @@ public class FriendPresenter implements IFriendPresenter {
             @Override
             public boolean onClose() {
                 searchQuery = null;
-                updateFriendList();
                 return false;
             }
         };
@@ -98,8 +98,11 @@ public class FriendPresenter implements IFriendPresenter {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                if (newText == null || newText.isEmpty()) return false;
-                if (newText == null) return false;
+                if (newText == null) {
+                    searchQuery = null;
+                    return false;
+                }
+                searchQuery = newText;
                 friendList = FriendListInteractor.getFriends(newText);
                 view.notifyRecyclerDataChange();
                 return false;

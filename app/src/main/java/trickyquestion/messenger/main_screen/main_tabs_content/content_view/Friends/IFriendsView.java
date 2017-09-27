@@ -24,7 +24,5 @@ public interface IFriendsView {
 
     void dismissPhotoDialog();
 
-//    boolean isFragmentShow();
-
     String getSearchQuery();
 }

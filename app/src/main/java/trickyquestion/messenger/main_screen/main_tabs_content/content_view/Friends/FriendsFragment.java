@@ -3,6 +3,7 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_view.Frie
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -82,8 +83,11 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(presenter.onQueryTextListener());
-        if (presenter.getStackQuery() != null && !presenter.getStackQuery().isEmpty())
+        if (presenter.getStackQuery() != null && !presenter.getStackQuery().isEmpty()) {
+            searchItem.expandActionView();
             searchView.setQuery(presenter.getStackQuery(), false);
+            searchView.clearFocus();
+        }
         searchView.setOnCloseListener(presenter.onCloseSearchViewListener());
     }
 
@@ -148,6 +152,6 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @Override
     public String getSearchQuery() {
-        return searchView.getQuery().toString();
+        return searchView != null ? searchView.getQuery().toString() : null;
     }
 }
