@@ -48,6 +48,7 @@ public class AskPasswordFragment extends Fragment {
                 .concat(" ")
                 .concat(preferences.getString(Constants.EXTRA_KEY_AUTH_PASSWORD, "someone pass"))
         );
+        pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimaryGreen), PorterDuff.Mode.SRC_ATOP);
         addPassListeners();
         return view;
     }
@@ -70,6 +71,8 @@ public class AskPasswordFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (rightPass())
                     signInAccount();
+                if (charSequence.length() == 0)
+                    pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimaryGreen), PorterDuff.Mode.SRC_ATOP);
             }
 
             @Override

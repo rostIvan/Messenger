@@ -101,13 +101,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         startActivity(intent);
     }
 
-
-    @Override
-    public void startAddFriendActivity() {
-        final Intent intent = new Intent(getContext(), AddFriendActivity.class);
-        getContext().startActivity(intent);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);

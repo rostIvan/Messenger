@@ -3,8 +3,6 @@ package trickyquestion.messenger.main_screen.view;
 import android.content.Context;
 
 public interface IMainView {
-    void startAddFriendActivity();
-
     void customizeToolbar();
     void goBack();
     void showTabsWithContent();

@@ -24,8 +24,6 @@ public class MainPresenter implements IMainPresenter {
     private final IMainView view;
     private SharedPreferences preferences;
 
-    private boolean searchViewWasOpened = false;
-
     public MainPresenter(final IMainView view) {
         this.view = view;
         initSharedPreference();
