@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.github.bluzwong.swipeback.SwipeBackActivityHelper;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
@@ -38,6 +40,16 @@ public class ChatActivity extends AppCompatActivity implements IChatView {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
+    }
+
+    @Override
+    public void setupSwipeBack() {
+        final SwipeBackActivityHelper helper = new SwipeBackActivityHelper();
+        helper.setEdgeMode(true)
+                .setParallaxMode(true)
+                .setParallaxRatio(3)
+                .setNeedBackgroundShadow(true)
+                .init(this);
     }
 
     @Override

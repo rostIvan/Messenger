@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.bluzwong.swipeback.SwipeBackActivityHelper;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.chat_screen.view.ChatActivity;
@@ -106,8 +108,13 @@ public class MessagesFragment extends Fragment implements IMessageView {
 
     @Override
     public void showChatActivity() {
-        Intent i = new Intent(this.getContext(), ChatActivity.class);
-        startActivity(i);
+        final Intent i = new Intent(this.getContext(), ChatActivity.class);
+
+        SwipeBackActivityHelper.activityBuilder(this.getActivity())
+                .intent(i)
+                .needParallax(true)
+                .needBackgroundShadow(true)
+                .startActivity();
         getActivity().overridePendingTransition(R.anim.translate_left_slide, R.anim.alpha_to_zero);
     }
 }
