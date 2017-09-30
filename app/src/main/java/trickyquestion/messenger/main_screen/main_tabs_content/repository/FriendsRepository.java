@@ -10,6 +10,7 @@ import io.realm.RealmList;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.util.temp_impl.FriendsGetter;
 
 public class FriendsRepository {
 
@@ -50,6 +51,6 @@ public class FriendsRepository {
     }
 
     public static List<Friend> createRandom(int size) {
-        return Friend.getFriends(size);
+        return FriendsGetter.getFriends(size);
     }
 }

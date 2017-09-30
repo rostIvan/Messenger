@@ -1,6 +1,7 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import trickyquestion.messenger.chat_screen.view.ChatActivity;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.RecyclerViewAdapters.RecyclerViewMessageAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.IMessagePresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.MessagePresenter;
@@ -100,5 +102,12 @@ public class MessagesFragment extends Fragment implements IMessageView {
         if (friendProfileView != null && friendProfileView.isShowing()) {
             friendProfileView.dismiss();
         }
+    }
+
+    @Override
+    public void showChatActivity() {
+        Intent i = new Intent(this.getContext(), ChatActivity.class);
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.translate_left_slide, R.anim.alpha_to_zero);
     }
 }

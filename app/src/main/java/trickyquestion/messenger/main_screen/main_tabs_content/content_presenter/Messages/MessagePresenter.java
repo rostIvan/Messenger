@@ -14,7 +14,6 @@ import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messa
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.MessagesRepository;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.util.animation.ItemAlphaAnimator;
 import trickyquestion.messenger.util.Constants;
 
 public class MessagePresenter implements IMessagePresenter {
@@ -26,7 +25,7 @@ public class MessagePresenter implements IMessagePresenter {
 
     public MessagePresenter(final IMessageView view) {
         this.view = view;
-        messageList = MessagesRepository.getFriends();
+        messageList = MessagesRepository.getMessages();
     }
 
 
@@ -36,6 +35,12 @@ public class MessagePresenter implements IMessagePresenter {
         view.showMessageContent();
         view.setupSwipeRefreshLayout();
 
+    }
+
+
+    @Override
+    public void onStart() {
+        if (profileWasOpened) view.showFriendProfile();
         if (wasRefreshStarted) {
             view.setRefreshing(true);
             new Handler().postDelayed(new Runnable() {
@@ -46,12 +51,6 @@ public class MessagePresenter implements IMessagePresenter {
                 }
             }, 2000);
         }
-    }
-
-
-    @Override
-    public void onStart() {
-        if (profileWasOpened) view.showFriendProfile();
     }
 
 
@@ -118,12 +117,19 @@ public class MessagePresenter implements IMessagePresenter {
         holder.message.setText(message.getMessageText());
         holder.name.setText(message.getNameSender());
         holder.time.setText(message.getTime());
-        if (message.isWasRead())
+        if (message.wasRead())
             holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 view.showFriendProfile();
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.showChatActivity();
             }
         });
     }

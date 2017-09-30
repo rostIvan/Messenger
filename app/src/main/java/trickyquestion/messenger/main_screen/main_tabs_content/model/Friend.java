@@ -52,15 +52,6 @@ public class Friend implements RealmModel {
         this.online = online;
     }
 
-    public static List<Friend> getFriends(int size) {
-        final List<Friend> list = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            final Friend friend = new Friend("Some name: " + (i+1), UUID.randomUUID(), null, i % 2 == 0);
-            list.add(friend);
-        }
-        return list;
-    }
-
     public UUID getId() {
         return id;
     }

@@ -12,4 +12,6 @@ public interface IMessageView {
     boolean isFriendProfileOpen();
 
     void dismissPhotoDialog();
+
+    void showChatActivity();
 }

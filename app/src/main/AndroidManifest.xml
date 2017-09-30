@@ -27,8 +27,10 @@
             android:name=".login_screen.authentication.LoginScreenActivity"
             android:theme="@style/AppTheme">
         </activity>
+
         <activity android:name=".login_screen.ask_password.AskPasswordActivity" />
 
+        <activity android:name=".chat_screen.view.ChatActivity"/>
     </application>
 
 </manifest>

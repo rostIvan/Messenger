@@ -1,53 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/message_toolbar"
-        android:layout_width="match_parent"
-        tools:background="@color/colorPrimaryGreen"
-        android:layout_height="35dp">
-    </android.support.v7.widget.Toolbar>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/message_toolbar"
+        style="@style/AppTheme.ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_gravity="top"
+        android:theme="@style/AppTheme.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message_toolbar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:padding="10dp" />
+
     <EditText
         android:id="@+id/message_field"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="5dp"
-        android:layout_marginRight="50dp"
-        android:hint="Message"
-        android:paddingLeft="50dp" />
+        android:layout_marginRight="45dp"
+        android:hint="@string/message"
+        android:paddingLeft="50dp"
+        android:textColorHighlight="@color/colorPrimaryGreen" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/send_button"
         android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
         android:background="@color/transparent"
-        android:src="@drawable/ic_send_24dp" />
+        android:src="@drawable/ic_send" />
 
 
     <ImageButton
+        android:id="@+id/attach_button"
         android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/transparent"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginBottom="15dp"
+        android:background="@color/transparent"
         android:src="@drawable/ic_attach_file_black_24dp" />
 
 </RelativeLayout>
