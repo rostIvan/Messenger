@@ -22,6 +22,7 @@ import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.MessagePresenter;
 import trickyquestion.messenger.dialogs.FriendProfileView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 
 public class MessagesFragment extends Fragment implements IMessageView {
 
@@ -107,9 +108,9 @@ public class MessagesFragment extends Fragment implements IMessageView {
     }
 
     @Override
-    public void showChatActivity() {
+    public void showChatActivity(final Message message) {
         final Intent i = new Intent(this.getContext(), ChatActivity.class);
-
+        i.putExtra(ChatActivity.FRIEND_NAME_EXTRA, message.getNameSender());
         SwipeBackActivityHelper.activityBuilder(this.getActivity())
                 .intent(i)
                 .needParallax(true)

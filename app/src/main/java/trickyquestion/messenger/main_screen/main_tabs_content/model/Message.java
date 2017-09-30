@@ -25,11 +25,7 @@ public class Message {
         this.wasRead = wasRead;
     }
 
-    public String getMessageText() {
-        return message;
-    }
-
-    public String getMessage() {
+    public String getLastMessage() {
         return message;
     }
 

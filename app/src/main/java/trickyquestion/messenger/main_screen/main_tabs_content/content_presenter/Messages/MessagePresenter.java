@@ -113,8 +113,8 @@ public class MessagePresenter implements IMessagePresenter {
     }
 
 
-    private void setViewValue(final MessageViewHolder holder, Message message) {
-        holder.message.setText(message.getMessageText());
+    private void setViewValue(final MessageViewHolder holder, final Message message) {
+        holder.message.setText(message.getLastMessage());
         holder.name.setText(message.getNameSender());
         holder.time.setText(message.getTime());
         if (message.wasRead())
@@ -129,7 +129,7 @@ public class MessagePresenter implements IMessagePresenter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.showChatActivity();
+                view.showChatActivity(message);
             }
         });
     }

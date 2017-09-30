@@ -24,6 +24,7 @@ public class ChatActivity extends AppCompatActivity implements IChatView {
     Toolbar toolbar;
     @BindView(R.id.rv_chat)
     RecyclerView recyclerView;
+    public static final String FRIEND_NAME_EXTRA = "friendName";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class ChatActivity extends AppCompatActivity implements IChatView {
 
     @Override
     public void customizeToolbar() {
-        toolbar.setTitle(getTitle());
+        toolbar.setTitle(getIntent().getStringExtra(FRIEND_NAME_EXTRA));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());

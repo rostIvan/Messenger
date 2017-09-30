@@ -2,6 +2,8 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_view.Mess
 
 import android.content.Context;
 
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
+
 public interface IMessageView {
     Context getFragmentContext();
     void showMessageContent();
@@ -10,8 +12,7 @@ public interface IMessageView {
 
     void showFriendProfile();
     boolean isFriendProfileOpen();
-
     void dismissPhotoDialog();
 
-    void showChatActivity();
+    void showChatActivity(Message message);
 }
