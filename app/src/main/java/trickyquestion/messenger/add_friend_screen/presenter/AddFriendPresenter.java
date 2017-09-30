@@ -14,6 +14,7 @@ import trickyquestion.messenger.add_friend_screen.adapter.AddFriendViewHolder;
 import trickyquestion.messenger.add_friend_screen.view.IAddFriendView;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
+import trickyquestion.messenger.util.temp_impl.FriendsGetter;
 
 public class AddFriendPresenter implements IAddFriendPresenter {
 
@@ -22,7 +23,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     public AddFriendPresenter(final IAddFriendView view) {
         this.view = view;
-        friends = FriendsRepository.createRandom(40);
+        friends = FriendsGetter.getFriends(40);
     }
 
     @Override

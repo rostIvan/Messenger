@@ -49,8 +49,4 @@ public class FriendsRepository {
             }
         });
     }
-
-    public static List<Friend> createRandom(int size) {
-        return FriendsGetter.getFriends(size);
-    }
 }
