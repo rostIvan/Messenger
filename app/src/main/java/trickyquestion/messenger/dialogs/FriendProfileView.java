@@ -2,6 +2,7 @@ package trickyquestion.messenger.dialogs;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.widget.ImageView;
 
 public class FriendProfileView {
     private final Context context;
@@ -28,4 +29,5 @@ public class FriendProfileView {
     public void dismiss() {
         photoDialog.dismiss();
     }
+
 }

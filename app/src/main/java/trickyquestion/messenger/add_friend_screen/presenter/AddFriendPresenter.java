@@ -1,22 +1,20 @@
 package trickyquestion.messenger.add_friend_screen.presenter;
 
 
-import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
-import java.util.UUID;
 
+import io.realm.Realm;
+import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.adapter.AddFriendViewHolder;
 import trickyquestion.messenger.add_friend_screen.view.IAddFriendView;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
-import trickyquestion.messenger.R;
+import trickyquestion.messenger.util.temp_impl.FriendsGetter;
 
 public class AddFriendPresenter implements IAddFriendPresenter {
 
@@ -25,7 +23,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     public AddFriendPresenter(final IAddFriendView view) {
         this.view = view;
-        friends = FriendsRepository.createRandom(40);
+        friends = FriendsGetter.getFriends(40);
     }
 
     @Override

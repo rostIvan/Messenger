@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,8 +8,9 @@
         android:id="@+id/setting_circle_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"/>
+        tools:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/setting_login_name"
@@ -17,7 +19,8 @@
         android:layout_marginLeft="120dp"
         android:layout_marginTop="30dp"
         android:text="admin"
-        android:textSize="24sp"/>
+        android:textSize="24sp" />
+
     <TextView
         android:id="@+id/setting_id"
         android:layout_width="wrap_content"
@@ -25,30 +28,41 @@
         android:layout_marginLeft="120dp"
         android:layout_marginTop="60dp"
         android:text="id: 1231255196199"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/button_clear_auth_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/setting_circle_image"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@id/setting_circle_image"
-        android:text="Log out"/>
+        android:text="Log out" />
+
     <Button
         android:id="@+id/button_change_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/button_clear_auth_data"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@id/button_clear_auth_data"
-        android:text="Change account date"/>
+        android:text="Change account date" />
+
+    <Button
+        android:id="@+id/button_delete_all_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_change_data"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Change account date" />
+
     <CheckBox
         android:id="@+id/check_box_ask_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_change_data"
+        android:layout_below="@id/button_delete_all_friends"
         android:layout_margin="10dp"
-        android:textColor="@color/colorBlack"
-        android:text="Ask password"/>
+        android:text="Ask password"
+        android:textColor="@color/colorBlack" />
 </RelativeLayout>

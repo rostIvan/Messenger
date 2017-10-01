@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import trickyquestion.messenger.login_screen.authentication.LoginFragment;
 import trickyquestion.messenger.main_screen.view.IMainView;
 import trickyquestion.messenger.dialogs.SettingMenuDialog;
@@ -19,10 +22,14 @@ import static android.app.Activity.RESULT_OK;
 public class MainPresenter implements IMainPresenter {
 
     private final IMainView view;
-    private final SharedPreferences preferences;
+    private SharedPreferences preferences;
 
     public MainPresenter(final IMainView view) {
         this.view = view;
+        initSharedPreference();
+    }
+
+    private void initSharedPreference() {
         preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
@@ -91,6 +98,10 @@ public class MainPresenter implements IMainPresenter {
     }
 
     @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    }
+
+    @Override
     public View.OnClickListener onNavigationButtonPressed() {
         return new View.OnClickListener() {
             @Override
@@ -138,6 +149,22 @@ public class MainPresenter implements IMainPresenter {
                 view.showToast("Account item click");
                 return true;
             }
+        };
+    }
+
+    @Override
+    public ViewPager.OnPageChangeListener onPageChangeListener() {
+        return new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                view.closeKeyboard();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
         };
     }
 

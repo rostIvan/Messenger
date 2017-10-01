@@ -1,6 +1,8 @@
 package trickyquestion.messenger.add_friend_screen.view;
 
 
+import android.content.Context;
+
 public interface IAddFriendView {
     void customizeToolbar();
 
@@ -13,4 +15,6 @@ public interface IAddFriendView {
     boolean isSearchViewIconified();
 
     void setSearchViewIconified(boolean iconified);
+
+    Context getContext();
 }

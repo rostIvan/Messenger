@@ -17,5 +17,8 @@ public interface IMainView {
     void startLoginActivity();
     void startAskPassActivity();
     void finish();
+
+    void closeKeyboard();
+
     Context getContext();
 }
