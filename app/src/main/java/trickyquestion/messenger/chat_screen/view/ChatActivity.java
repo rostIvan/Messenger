@@ -1,11 +1,17 @@
 package trickyquestion.messenger.chat_screen.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.github.bluzwong.swipeback.SwipeBackActivityHelper;
@@ -24,6 +30,13 @@ public class ChatActivity extends AppCompatActivity implements IChatView {
     Toolbar toolbar;
     @BindView(R.id.rv_chat)
     RecyclerView recyclerView;
+    @BindView(R.id.message_field)
+    EditText messageField;
+    @BindView(R.id.send_button)
+    ImageButton sendButton;
+    @BindView(R.id.attach_button)
+    ImageButton attachButton;
+
     public static final String FRIEND_NAME_EXTRA = "friendName";
 
     @Override
@@ -33,6 +46,13 @@ public class ChatActivity extends AppCompatActivity implements IChatView {
         ButterKnife.bind(this);
         if (presenter == null) presenter = new ChatPresenter(this);
         presenter.onCreate();
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!messageField.getText().toString().isEmpty())
+                    Toast.makeText(ChatActivity.this, "Submit: " + messageField.getText().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
