@@ -69,8 +69,6 @@ public class AskPasswordFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (rightPass())
-                    signInAccount();
                 if (charSequence.length() == 0)
                     pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimaryGreen), PorterDuff.Mode.SRC_ATOP);
             }

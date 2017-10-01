@@ -1,9 +1,12 @@
 package trickyquestion.messenger.chat_screen.presenter;
 
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -48,7 +51,7 @@ public class ChatPresenter implements IChatPresenter {
     @Override
     public ChatViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View itemView = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.item_add_friend, parent, false
+                R.layout.item_chat_messege, parent, false
         );
         return new ChatViewHolder(itemView);
     }
@@ -60,7 +63,28 @@ public class ChatPresenter implements IChatPresenter {
     }
 
     private void bindViewHolder(ChatViewHolder holder, ChatMessage message) {
-
+        holder.textMessage.setText(message.getText());
+        holder.timeMessage.setText(message.getTime());
+        if (message.isMy()) setStyleMyMessage(holder.container, holder.textMessage, holder.timeMessage);
+        else setStyleFriendMessage(holder.container, holder.textMessage, holder.timeMessage);
     }
 
+    private void setStyleMyMessage(final View container, final TextView textMessage, final TextView timeMessage) {
+        final LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(130, 20, 30, 20);
+        container.setLayoutParams(params);
+        container.setBackgroundResource(R.drawable.shape_my_message);
+        textMessage.setTextColor(Color.WHITE);
+        timeMessage.setTextColor(container.getResources().getColor(R.color.colorTransparentGray));
+    }
+    private void setStyleFriendMessage(final View container, final TextView textMessage, final TextView timeMessage) {
+        final LinearLayout.LayoutParams params =
+                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(30, 20, 130, 20);
+        container.setLayoutParams(params);
+        container.setBackgroundResource(R.drawable.shape_friend_message);
+        textMessage.setTextColor(Color.BLACK);
+        timeMessage.setTextColor(Color.argb(100, 0, 0, 0));
+    }
 }
