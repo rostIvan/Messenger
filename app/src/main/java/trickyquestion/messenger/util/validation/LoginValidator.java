@@ -2,6 +2,8 @@ package trickyquestion.messenger.util.validation;
 
 import android.support.annotation.NonNull;
 
+import java.util.regex.Pattern;
+
 public class LoginValidator {
 
     private final String name;
@@ -13,7 +15,7 @@ public class LoginValidator {
     }
 
     public boolean isInputValid() {
-        // TODO: 27.09.17 Create logic
-        return true;
+        final Pattern pattern = Pattern.compile("^[0-9a-zA-Z]{3,}$");
+        return pattern.matcher(name).matches() && pattern.matcher(pass).matches();
     }
 }
