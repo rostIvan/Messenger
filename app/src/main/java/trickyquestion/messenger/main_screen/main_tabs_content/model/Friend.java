@@ -2,13 +2,9 @@ package trickyquestion.messenger.main_screen.main_tabs_content.model;
 
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.UUID;
 
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
 import io.realm.annotations.RealmClass;
 

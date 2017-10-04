@@ -46,6 +46,11 @@ public class FriendPresenter implements IFriendPresenter {
         view.notifyRecyclerDataChange();
     }
 
+    @Override
+    public void onResume() {
+        updateFriendList();
+    }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

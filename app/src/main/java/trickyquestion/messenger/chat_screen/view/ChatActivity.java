@@ -1,29 +1,24 @@
 package trickyquestion.messenger.chat_screen.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.github.bluzwong.swipeback.SwipeBackActivityHelper;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.yokeyword.swipebackfragment.SwipeBackActivity;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.adapters.RecyclerChatAdapter;
 import trickyquestion.messenger.chat_screen.presenter.ChatPresenter;
 import trickyquestion.messenger.chat_screen.presenter.IChatPresenter;
 
-public class ChatActivity extends AppCompatActivity implements IChatView {
+public class ChatActivity extends SwipeBackActivity implements IChatView {
     private IChatPresenter presenter;
 
     @BindView(R.id.message_toolbar)
@@ -61,16 +56,6 @@ public class ChatActivity extends AppCompatActivity implements IChatView {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
-    }
-
-    @Override
-    public void setupSwipeBack() {
-        final SwipeBackActivityHelper helper = new SwipeBackActivityHelper();
-        helper.setEdgeMode(true)
-                .setParallaxMode(true)
-                .setParallaxRatio(3)
-                .setNeedBackgroundShadow(true)
-                .init(this);
     }
 
     @Override

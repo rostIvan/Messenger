@@ -67,6 +67,12 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        presenter.onResume();
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         presenter.onActivityCreated(savedInstanceState);

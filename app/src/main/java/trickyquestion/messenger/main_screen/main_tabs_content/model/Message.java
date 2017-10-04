@@ -1,10 +1,6 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.model;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-//TODO:clean imports and list<message> must be implemented
+
 public class Message {
 
     private String message;

@@ -29,7 +29,6 @@ public class ChatPresenter implements IChatPresenter {
     public void onCreate() {
         view.customizeToolbar();
         view.showMessages();
-        view.setupSwipeBack();
     }
 
     @Override
