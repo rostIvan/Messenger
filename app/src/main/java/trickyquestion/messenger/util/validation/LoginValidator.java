@@ -16,7 +16,6 @@ public class LoginValidator {
 
     public boolean isInputValid() {
         final Pattern pattern = Pattern.compile("^[0-9a-zA-Z]{3,}$");
-        //TODO: 04.10.2017 check is regex correct
         return pattern.matcher(name).matches() && pattern.matcher(pass).matches();
     }
 }
