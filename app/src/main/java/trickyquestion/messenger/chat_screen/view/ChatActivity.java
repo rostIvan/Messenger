@@ -15,8 +15,10 @@ import butterknife.ButterKnife;
 import me.yokeyword.swipebackfragment.SwipeBackActivity;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.adapters.RecyclerChatAdapter;
+import trickyquestion.messenger.chat_screen.model.ChatMessage;
 import trickyquestion.messenger.chat_screen.presenter.ChatPresenter;
 import trickyquestion.messenger.chat_screen.presenter.IChatPresenter;
+import trickyquestion.messenger.util.formatter.TimeFormatter;
 
 public class ChatActivity extends SwipeBackActivity implements IChatView {
     private IChatPresenter presenter;
@@ -41,13 +43,6 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
         ButterKnife.bind(this);
         if (presenter == null) presenter = new ChatPresenter(this);
         presenter.onCreate();
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!messageField.getText().toString().isEmpty())
-                    Toast.makeText(ChatActivity.this, "Submit: " + messageField.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -55,7 +50,12 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
         toolbar.setTitle(getIntent().getStringExtra(FRIEND_NAME_EXTRA));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void setupListeners() {
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
+        sendButton.setOnClickListener(presenter.onSendButtonClick());
     }
 
     @Override
@@ -73,5 +73,22 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     @Override
     public void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void refreshRecycler() {
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+    @Override
+    public void scrollRecyclerToPosition(int position) {
+        recyclerView.scrollToPosition(position);
+    }
+    @Override
+    public String getMessageText() {
+        return messageField.getText().toString().trim();
+    }
+    @Override
+    public void clearMessageText() {
+        messageField.setText("");
     }
 }
