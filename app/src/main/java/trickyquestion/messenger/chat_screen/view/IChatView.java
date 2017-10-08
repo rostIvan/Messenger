@@ -14,4 +14,5 @@ public interface IChatView {
 
     String getMessageText();
     void clearMessageText();
+    void showToast(String text);
 }

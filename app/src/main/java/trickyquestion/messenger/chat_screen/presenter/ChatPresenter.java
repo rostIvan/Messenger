@@ -16,6 +16,7 @@ import trickyquestion.messenger.chat_screen.adapters.ChatViewHolder;
 import trickyquestion.messenger.chat_screen.interactor.ChatMessageInteractor;
 import trickyquestion.messenger.chat_screen.model.ChatMessage;
 import trickyquestion.messenger.chat_screen.repository.ChatMessageRepository;
+import trickyquestion.messenger.chat_screen.repository.IChatMessageRepository;
 import trickyquestion.messenger.chat_screen.view.IChatView;
 import trickyquestion.messenger.util.formatter.TimeFormatter;
 
@@ -23,11 +24,12 @@ public class ChatPresenter implements IChatPresenter {
 
     private final IChatView view;
     private final List<ChatMessage> chatMessages;
-    private final ChatMessageRepository repository = new ChatMessageRepository();
+    private final IChatMessageRepository repository;
 
     public ChatPresenter(final IChatView view) {
         this.view = view;
         this.chatMessages = ChatMessageInteractor.getMessages();
+        this.repository = new ChatMessageRepository();
     }
 
     @Override
@@ -52,9 +54,16 @@ public class ChatPresenter implements IChatPresenter {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendMessage(view.getMessageText());
+                if (!view.getMessageText().isEmpty()) sendMessage(view.getMessageText());
+                else view.showToast("Message is empty!");
             }
         };
+    }
+
+    @Override
+    public void onClearMessagesItemCLick() {
+        repository.deleteAllMessages();
+        view.refreshRecycler();
     }
 
     @Override

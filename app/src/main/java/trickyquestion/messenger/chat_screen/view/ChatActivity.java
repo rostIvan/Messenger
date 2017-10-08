@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -15,10 +17,8 @@ import butterknife.ButterKnife;
 import me.yokeyword.swipebackfragment.SwipeBackActivity;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.adapters.RecyclerChatAdapter;
-import trickyquestion.messenger.chat_screen.model.ChatMessage;
 import trickyquestion.messenger.chat_screen.presenter.ChatPresenter;
 import trickyquestion.messenger.chat_screen.presenter.IChatPresenter;
-import trickyquestion.messenger.util.formatter.TimeFormatter;
 
 public class ChatActivity extends SwipeBackActivity implements IChatView {
     private IChatPresenter presenter;
@@ -43,6 +43,24 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
         ButterKnife.bind(this);
         if (presenter == null) presenter = new ChatPresenter(this);
         presenter.onCreate();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.chat_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.clear_messages :
+                presenter.onClearMessagesItemCLick();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -90,5 +108,10 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     @Override
     public void clearMessageText() {
         messageField.setText("");
+    }
+
+    @Override
+    public void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }

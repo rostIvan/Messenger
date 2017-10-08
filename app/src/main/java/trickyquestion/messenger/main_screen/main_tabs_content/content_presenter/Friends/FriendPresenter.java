@@ -136,7 +136,6 @@ public class FriendPresenter implements IFriendPresenter {
         return new FriendViewHolder(itemView);
     }
 
-    //TODO: hide user id
     private void setViewValue(final FriendViewHolder holder, Friend friend) {
         holder.name.setText(friend.getName());
         holder.onlineStatus.setText(friend.isOnline() ? "online" : "last seen at 4:20");
