@@ -8,7 +8,10 @@ import trickyquestion.messenger.chat_screen.repository.ChatMessageRepository;
 
 public class ChatMessageInteractor {
 
-    public static List<ChatMessage> getMessages() {
-        return new ChatMessageRepository().getMessages();
+    public static List<ChatMessage> getAllMessages() {
+        return new ChatMessageRepository().getAllMessagesFromDB();
+    }
+    public static List<ChatMessage> getMessages(final String name) {
+        return new ChatMessageRepository().getMessages(name);
     }
 }

@@ -60,8 +60,8 @@ public class LoginFragment extends Fragment {
 
         if (isValid(login, password)) {
             final Intent intent = new Intent();
-            intent.putExtra(EXTRA_TAG_AUTH_LOGIN, nickField.getText().toString());
-            intent.putExtra(EXTRA_TAG_AUTH_PASS, passFiled.getText().toString());
+            intent.putExtra(EXTRA_TAG_AUTH_LOGIN, login);
+            intent.putExtra(EXTRA_TAG_AUTH_PASS, password);
             getActivity().setResult(Activity.RESULT_OK, intent);
             getActivity().finish();
         }

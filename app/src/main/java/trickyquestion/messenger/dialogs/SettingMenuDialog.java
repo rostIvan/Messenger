@@ -89,7 +89,6 @@ public class SettingMenuDialog {
         checkBoxAskPassword = (CheckBox) dialog.findViewById(R.id.check_box_ask_pass);
 
         loginName = (TextView) dialog.findViewById(R.id.setting_login_name);
-        loginName = (TextView) dialog.findViewById(R.id.setting_login_name);
         id = (TextView) dialog.findViewById(R.id.setting_id);
         image = (CircleImageView) dialog.findViewById(R.id.setting_circle_image);
 

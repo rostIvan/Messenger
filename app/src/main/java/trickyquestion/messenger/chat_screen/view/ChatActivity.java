@@ -65,7 +65,7 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
 
     @Override
     public void customizeToolbar() {
-        toolbar.setTitle(getIntent().getStringExtra(FRIEND_NAME_EXTRA));
+        toolbar.setTitle(getFriendName());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -113,5 +113,10 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     @Override
     public void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public String getFriendName() {
+        return getIntent().getStringExtra(FRIEND_NAME_EXTRA);
     }
 }

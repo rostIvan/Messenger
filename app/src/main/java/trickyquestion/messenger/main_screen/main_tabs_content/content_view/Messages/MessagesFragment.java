@@ -86,7 +86,6 @@ public class MessagesFragment extends Fragment implements IMessageView {
         refreshLayout.setRefreshing(isRefresh);
     }
 
-
     @Override
     public void showFriendProfile() {
         if (friendProfileView == null)
