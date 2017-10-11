@@ -49,4 +49,5 @@ dependencies {
     compile 'me.yokeyword:swipebackfragment:0.3.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     testCompile 'junit:junit:4.12'
+    compile 'org.jetbrains:annotations-java5:15.0'
 }
