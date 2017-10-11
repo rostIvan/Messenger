@@ -23,6 +23,12 @@
 
         <activity android:name=".AddFriendScreen.AddFriendActivity">
         </activity>
+
+        <service
+            android:name=".Protocol.P2PService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>
