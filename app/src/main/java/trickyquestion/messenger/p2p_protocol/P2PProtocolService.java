@@ -61,33 +61,6 @@ public class P2PProtocolService extends Service {
     }
 
     /**
-     * Set user data
-     * @param client data object
-     */
-    public void setStartData(IClient client){
-        //set data
-        this.client = client;
-    }
-
-    /**
-     * Start heartbeat and registering users
-     */
-    public void Start(){
-        heartbeat.ReConfigure(client, this);
-        heartbeat.Broadcast();
-        network.StartNetwork();
-
-    }
-
-    /**
-     * Stop service
-     */
-    public void Stop(){
-        heartbeat.Stop();
-        network.StopNetwork();
-    }
-
-    /**
      * Interface for registering changing network
      */
     public interface IChangeNetworkListener {
@@ -143,5 +116,38 @@ public class P2PProtocolService extends Service {
         public void ResetNetworkChangeListener(){
             P2PProtocolService.this.network.CleanListeners();
         }
+
+        /**
+         * Set user data
+         * @param data object which sets
+         */
+        public void SetClientData(IClient data){
+            P2PProtocolService.this.client = data;
+            //if heartbeat active reconfigure it
+            if(heartbeat.getStatus()!= trickyquestion.messenger.p2p_protocol.heartbeat.HeartbeatStatus.Run){
+                heartbeat.Stop();
+                heartbeat.ReConfigure(data,P2PProtocolService.this);
+            }
+            //TODO: write network class status and checking it as it work above for heartbeat
+        }
+
+        /**
+         * Start heartbeat and registering users
+         */
+        public void Start(){
+            heartbeat.ReConfigure(client, P2PProtocolService.this);
+            heartbeat.Broadcast();
+            network.StartNetwork();
+
+        }
+
+        /**
+         * Stop service
+         */
+        public void Stop(){
+            heartbeat.Stop();
+            network.StopNetwork();
+        }
+
     }
 }
