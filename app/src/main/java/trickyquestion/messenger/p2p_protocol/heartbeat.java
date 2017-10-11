@@ -29,7 +29,7 @@ public class heartbeat {
         return ("P2P_HEARTBEAT:" +
                 UsrNamePart + ":" +
                 UserIDPart + ":" +
-                UserIPPart+ ":" + 
+                UserIPPart+ ":" +
                 SendTime +
                 ":P2P_HEARTBEAT");
     }
