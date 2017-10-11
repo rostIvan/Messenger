@@ -78,16 +78,23 @@ public class network_listener {
             public void run() {
                 //Getting Calendar value
                 Calendar time = Calendar.getInstance();
+                //Flag signalized when users changed
+                boolean network_changed;
                 //TODO: correct end thread
                 while (true) {
+                    //Set flag of
+                    network_changed = false;
                     //Get copy of user list
                     List<Network.User> users_copy = users;
                     for (Network.User user : users_copy) {
-                        //if ttl of user elapsed delete user
+                        //if ttl of user elapsed delete user and signalized flag
                         if (System.currentTimeMillis() > user.getTTL().getTime()) {
                             users.remove(user);
+                            network_changed = true;
                         }
                     }
+                    //if flag signalized inform listener by exec NetworkChanged
+                    if (network_changed) NetworkChanged();
                     try {
                         //delay execution thread by HEARTBEAT_FREQUENCY / 2
                         //because user registering is async process
@@ -220,5 +227,40 @@ public class network_listener {
      */
     public void RestartNetwork(){
         network.RestartNetwork();
+    }
+
+    /**
+     * List of listeners
+     */
+    private List<P2PProtocolService.IChangeNetworkListener> listeners = new ArrayList<>();
+
+    /**
+     * Register new listeners
+     * @param new_listener
+     */
+    void RegisterListener(P2PProtocolService.IChangeNetworkListener new_listener){
+        listeners.add(new_listener);
+    }
+
+    /**
+     * Called when add or remove users
+     */
+    void NetworkChanged(){
+        for (P2PProtocolService.IChangeNetworkListener listener: listeners)
+            if(listener !=null) listener.NetworkChanged();
+    }
+
+    /**
+     * @return user list
+     */
+    List<IUser> GetUsers(){
+        return network.getActiveUsers();
+    }
+
+    /**
+     * Cleaning listeners
+     */
+    void CleanListeners(){
+        listeners.clear();
     }
 }
