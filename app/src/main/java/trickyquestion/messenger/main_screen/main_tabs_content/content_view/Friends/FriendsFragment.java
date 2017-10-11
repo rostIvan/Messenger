@@ -2,33 +2,29 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_view.Frie
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
+import trickyquestion.messenger.dialogs.FriendProfileView;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.RecyclerViewAdapters.RecyclerViewFriendAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends.FriendPresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends.IFriendPresenter;
-import trickyquestion.messenger.dialogs.FriendProfileView;
-import trickyquestion.messenger.R;
 
 public class FriendsFragment extends Fragment implements IFriendsView {
 
@@ -64,6 +60,12 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     public void onStart() {
         presenter.onStart();
         super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.onResume();
     }
 
     @Override

@@ -9,27 +9,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Random;
 
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.adapters.ChatViewHolder;
+import trickyquestion.messenger.chat_screen.interactor.ChatMessageInteractor;
 import trickyquestion.messenger.chat_screen.model.ChatMessage;
+import trickyquestion.messenger.chat_screen.repository.ChatMessageRepository;
+import trickyquestion.messenger.chat_screen.repository.IChatMessageRepository;
 import trickyquestion.messenger.chat_screen.view.IChatView;
-import trickyquestion.messenger.util.temp_impl.ChatMessageGetter;
+import trickyquestion.messenger.util.formatter.TimeFormatter;
 
 public class ChatPresenter implements IChatPresenter {
+
     private final IChatView view;
     private final List<ChatMessage> chatMessages;
+    private final IChatMessageRepository repository;
 
     public ChatPresenter(final IChatView view) {
         this.view = view;
-        this.chatMessages = ChatMessageGetter.getMessages(40);
+//        this.chatMessages = ChatMessageInteractor.getAllMessagesFromDB();
+        this.chatMessages = ChatMessageInteractor.getMessages(view.getFriendName());
+        this.repository = new ChatMessageRepository();
     }
 
     @Override
     public void onCreate() {
         view.customizeToolbar();
         view.showMessages();
-        view.setupSwipeBack();
+        view.setupListeners();
     }
 
     @Override
@@ -42,6 +50,22 @@ public class ChatPresenter implements IChatPresenter {
         };
     }
 
+    @Override
+    public View.OnClickListener onSendButtonClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!view.getMessageText().isEmpty()) sendMessage(view.getMessageText());
+                else view.showToast("Message is empty!");
+            }
+        };
+    }
+
+    @Override
+    public void onClearMessagesItemCLick() {
+        repository.deleteMessageTable(view.getFriendName());
+        view.refreshRecycler();
+    }
 
     @Override
     public int getCount() {
@@ -86,5 +110,20 @@ public class ChatPresenter implements IChatPresenter {
         container.setBackgroundResource(R.drawable.shape_friend_message);
         textMessage.setTextColor(Color.BLACK);
         timeMessage.setTextColor(Color.argb(100, 0, 0, 0));
+    }
+
+    private void addMessageToDb(final String  message) {
+        final ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setText(message);
+        chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
+        chatMessage.setMeOwner(new Random().nextBoolean());
+        chatMessage.setTable(view.getFriendName());
+        repository.addMessage(chatMessage);
+    }
+    private void sendMessage(String message) {
+        addMessageToDb(message);
+        view.clearMessageText();
+        view.refreshRecycler();
+        view.scrollRecyclerToPosition(chatMessages.size() - 1);
     }
 }

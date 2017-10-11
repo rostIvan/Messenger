@@ -1,4 +1,4 @@
-package trickyquestion.messenger.util.filters;
+package trickyquestion.messenger.util.filter;
 
 import java.util.ArrayList;
 import java.util.List;

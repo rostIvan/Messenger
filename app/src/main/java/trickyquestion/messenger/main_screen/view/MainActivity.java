@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-        //TODO: delete this function in release
     }
 
     @Override

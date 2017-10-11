@@ -17,9 +17,21 @@ public class MessengerApplication extends Application {
         initStetho();
     }
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        Realm.getDefaultInstance().close();
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Realm.getDefaultInstance().close();
+    }
+
     private void initRealm() {
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder()
+        final RealmConfiguration config = new RealmConfiguration.Builder()
                 .name("myrealm.realm")
                 .deleteRealmIfMigrationNeeded()
                 .build();
@@ -33,4 +45,5 @@ public class MessengerApplication extends Application {
                         .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                         .build());
     }
+
 }

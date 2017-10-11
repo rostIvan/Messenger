@@ -12,16 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.bluzwong.swipeback.SwipeBackActivityHelper;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.view.ChatActivity;
+import trickyquestion.messenger.dialogs.FriendProfileView;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.RecyclerViewAdapters.RecyclerViewMessageAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.IMessagePresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.MessagePresenter;
-import trickyquestion.messenger.dialogs.FriendProfileView;
-import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 
 public class MessagesFragment extends Fragment implements IMessageView {
@@ -88,7 +86,6 @@ public class MessagesFragment extends Fragment implements IMessageView {
         refreshLayout.setRefreshing(isRefresh);
     }
 
-
     @Override
     public void showFriendProfile() {
         if (friendProfileView == null)
@@ -111,11 +108,7 @@ public class MessagesFragment extends Fragment implements IMessageView {
     public void showChatActivity(final Message message) {
         final Intent i = new Intent(this.getContext(), ChatActivity.class);
         i.putExtra(ChatActivity.FRIEND_NAME_EXTRA, message.getNameSender());
-        SwipeBackActivityHelper.activityBuilder(this.getActivity())
-                .intent(i)
-                .needParallax(true)
-                .needBackgroundShadow(true)
-                .startActivity();
+        startActivity(i);
         getActivity().overridePendingTransition(R.anim.translate_left_slide, R.anim.alpha_to_zero);
     }
 }

@@ -1,29 +1,26 @@
 package trickyquestion.messenger.chat_screen.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.github.bluzwong.swipeback.SwipeBackActivityHelper;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.yokeyword.swipebackfragment.SwipeBackActivity;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.adapters.RecyclerChatAdapter;
 import trickyquestion.messenger.chat_screen.presenter.ChatPresenter;
 import trickyquestion.messenger.chat_screen.presenter.IChatPresenter;
 
-public class ChatActivity extends AppCompatActivity implements IChatView {
+public class ChatActivity extends SwipeBackActivity implements IChatView {
     private IChatPresenter presenter;
 
     @BindView(R.id.message_toolbar)
@@ -46,31 +43,37 @@ public class ChatActivity extends AppCompatActivity implements IChatView {
         ButterKnife.bind(this);
         if (presenter == null) presenter = new ChatPresenter(this);
         presenter.onCreate();
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!messageField.getText().toString().isEmpty())
-                    Toast.makeText(ChatActivity.this, "Submit: " + messageField.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.chat_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.clear_messages :
+                presenter.onClearMessagesItemCLick();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
     public void customizeToolbar() {
-        toolbar.setTitle(getIntent().getStringExtra(FRIEND_NAME_EXTRA));
+        toolbar.setTitle(getFriendName());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
     }
 
     @Override
-    public void setupSwipeBack() {
-        final SwipeBackActivityHelper helper = new SwipeBackActivityHelper();
-        helper.setEdgeMode(true)
-                .setParallaxMode(true)
-                .setParallaxRatio(3)
-                .setNeedBackgroundShadow(true)
-                .init(this);
+    public void setupListeners() {
+        toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
+        sendButton.setOnClickListener(presenter.onSendButtonClick());
     }
 
     @Override
@@ -88,5 +91,32 @@ public class ChatActivity extends AppCompatActivity implements IChatView {
     @Override
     public void goBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void refreshRecycler() {
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+    @Override
+    public void scrollRecyclerToPosition(int position) {
+        recyclerView.scrollToPosition(position);
+    }
+    @Override
+    public String getMessageText() {
+        return messageField.getText().toString().trim();
+    }
+    @Override
+    public void clearMessageText() {
+        messageField.setText("");
+    }
+
+    @Override
+    public void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public String getFriendName() {
+        return getIntent().getStringExtra(FRIEND_NAME_EXTRA);
     }
 }

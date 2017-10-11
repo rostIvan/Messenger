@@ -2,8 +2,13 @@ package trickyquestion.messenger.chat_screen.model;
 
 import android.support.annotation.NonNull;
 
-public class ChatMessage {
+import io.realm.RealmModel;
+import io.realm.annotations.RealmClass;
 
+@RealmClass
+public class ChatMessage implements RealmModel {
+
+    private String table;
     private String text;
     private String time;
     private boolean my;
@@ -32,5 +37,13 @@ public class ChatMessage {
 
     public void setMeOwner(boolean iOwner) {
         this.my = iOwner;
+    }
+
+    public void setTable(@NonNull final String table) {
+        this.table = table;
+    }
+
+    public String getTable() {
+        return table;
     }
 }
