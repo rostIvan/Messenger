@@ -43,14 +43,13 @@ public class FriendPresenter implements IFriendPresenter {
     @Override
     public void onStart() {
         if (profileWasOpened) view.showFriendProfile();
-        view.notifyRecyclerDataChange();
     }
 
     @Override
     public void onResume() {
         updateFriendList();
+        view.notifyRecyclerDataChange();
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -144,6 +143,12 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     private void setViewListeners(final FriendViewHolder holder, final Friend friend) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.showChatActivity(friend);
+            }
+        });
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +184,8 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     private void updateFriendList() {
-        friendList = FriendListInteractor.getFriends();
-        view.notifyRecyclerDataChange();
+        if (FriendListInteractor.getFriends().equals(friendList)) return;
+        this.friendList = FriendListInteractor.getFriends();
+        this.view.notifyRecyclerDataChange();
     }
 }

@@ -10,15 +10,13 @@ public interface IMessagePresenter {
     //for fragment
     void onCreateView();
     void onStart();
+    void onResume();
     int[] getSchemeColors();
     int getProgressBackgroundColor();
-
     void onSaveInstanceState(Bundle outState);
-
     SwipeRefreshLayout.OnRefreshListener onRefreshListener();
     // for Adapter
     MessageViewHolder onCreateView(final ViewGroup parent, final int viewType);
     void onBindViewHolder(final MessageViewHolder holder, final int position);
-
     int getCount();
 }

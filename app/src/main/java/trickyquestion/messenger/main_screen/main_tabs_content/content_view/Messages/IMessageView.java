@@ -7,6 +7,9 @@ import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 public interface IMessageView {
     Context getFragmentContext();
     void showMessageContent();
+
+    void notifyDataSetChanged();
+
     void setupSwipeRefreshLayout();
     void setRefreshing(final boolean isRefresh);
 

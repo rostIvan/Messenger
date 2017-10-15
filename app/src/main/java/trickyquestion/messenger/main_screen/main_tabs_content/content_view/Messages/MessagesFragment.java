@@ -57,6 +57,12 @@ public class MessagesFragment extends Fragment implements IMessageView {
     }
 
     @Override
+    public void onResume() {
+        presenter.onResume();
+        super.onResume();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         presenter.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
@@ -72,6 +78,11 @@ public class MessagesFragment extends Fragment implements IMessageView {
         final RecyclerViewMessageAdapter adapter = new RecyclerViewMessageAdapter(presenter);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override

@@ -43,7 +43,7 @@ public class ChatMessage implements RealmModel {
         this.table = table;
     }
 
-    public String getTable() {
+    public String getUserTableName() {
         return table;
     }
 }
