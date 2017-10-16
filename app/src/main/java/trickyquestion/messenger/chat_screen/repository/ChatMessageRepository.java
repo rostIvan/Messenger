@@ -27,7 +27,7 @@ public class ChatMessageRepository implements IChatMessageRepository {
     public void deleteMessage(final ChatMessage message) {
         final Realm realm = Realm.getDefaultInstance();
         final RealmResults results = realm.where(ChatMessage.class)
-                .equalTo("table", message.getTable())
+                .equalTo("table", message.getUserTableName())
                 .equalTo("text", message.getText())
                 .equalTo("time", message.getTime())
                 .equalTo("my", message.isMy())

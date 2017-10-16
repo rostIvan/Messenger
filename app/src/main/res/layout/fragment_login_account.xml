@@ -2,48 +2,68 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <ImageView
+        android:layout_width="380dp"
+        android:layout_height="240dp"
+        android:src="@drawable/login_image"
+        android:layout_marginTop="40dp"
+        android:id="@+id/imageView"/>
 
     <TextView
-        android:layout_marginTop="140dp"
-        android:layout_width="180dp"
-        android:layout_height="140dp"
+        android:layout_width="320dp"
+        android:layout_height="30dp"
         android:layout_centerHorizontal="true"
-        android:text="Cool picture"
-        android:textSize="55dp"/>
+        android:layout_marginTop="280dp"
+        android:text="@string/welcome"
+        android:textColor="#07A984"
+        android:textAlignment="center"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="320dp"
+        android:layout_height="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="320dp"
+        android:text="@string/start_text"
+        android:textColor="#95989A"
+        android:textAlignment="center"
+        android:textSize="17dp" />
 
     <EditText
         android:id="@+id/nick_field"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
         android:inputType="textPersonName"
         android:textColorHint="@color/colorGrey"
-        android:hint="@string/login"/>
+        android:hint="@string/login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="380dp" />
+
     <EditText
         android:id="@+id/pass_field"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nick_field"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="30dp"
         android:inputType="textPassword"
         android:textColorHint="@color/colorGrey"
-        android:hint="@string/password"/>
+        android:hint="@string/password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="430dp"/>
+
 
     <TextView
         android:id="@+id/button_create_account"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:text="Create account"
-        android:layout_margin="30dp"
-        android:textColor="@color/colorBlack"
-        android:textSize="25sp"
+        android:layout_width="350dp"
+        android:layout_height="45dp"
+        android:text="@string/create_an_account"
+        android:textColor="@color/colorWhite"
+        android:textSize="22sp"
         android:textAlignment="center"
-        android:paddingTop="5dp"
-        android:layout_below="@id/pass_field"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/radius_shape" />
+        android:paddingTop="9dp"
+        android:background="@drawable/radius_shape"
+        android:layout_marginTop="490dp"
+        android:layout_alignLeft="@+id/pass_field"
+        android:layout_alignStart="@+id/pass_field" />
 </RelativeLayout>
