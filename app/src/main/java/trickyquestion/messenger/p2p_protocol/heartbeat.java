@@ -96,7 +96,7 @@ public class heartbeat {
     }
 
     /**
-     * @return Heartbeat status
+     * @return heartbeat status
      */
     HeartbeatStatus getStatus(){
         return status;

@@ -9,5 +9,5 @@ import java.util.UUID;
 public interface IUser {
     UUID getID();
     String getName();
-    String get_network_address();
+    String getNetworkAddress();
 }

@@ -10,6 +10,8 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.UUID;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import trickyquestion.messenger.login_screen.authentication.LoginFragment;
@@ -172,6 +174,7 @@ public class MainPresenter implements IMainPresenter {
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, login);
         editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);
+        editor.putString(Constants.EXTRA_KEY_USER_ID, UUID.randomUUID().toString());
         editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, true);
 
         editor.apply();

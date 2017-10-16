@@ -11,6 +11,7 @@ import java.util.List;
 import io.realm.Realm;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.adapter.AddFriendViewHolder;
+import trickyquestion.messenger.add_friend_screen.model.IFriend;
 import trickyquestion.messenger.add_friend_screen.view.IAddFriendView;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
@@ -19,11 +20,11 @@ import trickyquestion.messenger.util.temp_impl.FriendsGetter;
 public class AddFriendPresenter implements IAddFriendPresenter {
 
     private final IAddFriendView view;
-    private List<Friend> friends;
+    private List<IFriend> friends;
 
     public AddFriendPresenter(final IAddFriendView view) {
         this.view = view;
-        friends = FriendsGetter.getFriends(40);
+        this.friends = FriendsGetter.getFriends(40);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     @Override
     public void onBindViewHolder(AddFriendViewHolder holder, int position) {
-        final Friend friend = friends.get(position);
+        final IFriend friend = friends.get(position);
         setViewValue(holder, friend);
         setupListeners(holder, friend);
     }
@@ -65,7 +66,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
 
-    private void setViewValue(final AddFriendViewHolder holder, final Friend friend) {
+    private void setViewValue(final AddFriendViewHolder holder, final IFriend friend) {
         holder.name.setText(friend.getName());
         holder.id.setText(friend.getId().toString().substring(0, 25).concat(" ..."));
         if (friend.getImage() != null) {
@@ -73,7 +74,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         }
     }
 
-    private void setupListeners(final AddFriendViewHolder holder, final Friend friend) {
+    private void setupListeners(final AddFriendViewHolder holder, final IFriend friend) {
 
         holder.itemView.setOnTouchListener(new OnHolderItemTouchListener(holder));
         holder.buttonAddFriend.setOnTouchListener(new OnHolderItemTouchListener(holder));
@@ -86,9 +87,9 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     private class OnHolderItemClickListener implements View.OnClickListener {
         private final AddFriendViewHolder holder;
-        private final Friend friend;
+        private final IFriend friend;
 
-        private OnHolderItemClickListener(final AddFriendViewHolder holder, final Friend friend) {
+        private OnHolderItemClickListener(final AddFriendViewHolder holder, final IFriend friend) {
             this.holder = holder;
             this.friend = friend;
         }
@@ -99,7 +100,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         }
 
 
-        private void addFriend(final AddFriendViewHolder holder, final Friend friend) {
+        private void addFriend(final AddFriendViewHolder holder, final IFriend friend) {
             final Friend newFriend = new Friend(friend.getName(), friend.getId(),  null, true);
             FriendsRepository.addFriend(newFriend);
             friends.remove(holder.getAdapterPosition());

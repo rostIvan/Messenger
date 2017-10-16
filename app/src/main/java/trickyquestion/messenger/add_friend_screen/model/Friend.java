@@ -1,20 +1,14 @@
-package trickyquestion.messenger.main_screen.main_tabs_content.model;
+package trickyquestion.messenger.add_friend_screen.model;
 
 import android.widget.ImageView;
 
 import java.util.UUID;
 
-import io.realm.RealmModel;
-import io.realm.annotations.Ignore;
-import io.realm.annotations.RealmClass;
 
-@RealmClass
-public class Friend implements RealmModel {
+public class Friend implements IFriend {
 
     private String name;
-    @Ignore
     private UUID id;
-    @Ignore
     private ImageView image;
     private boolean online;
 
@@ -28,35 +22,43 @@ public class Friend implements RealmModel {
         this.online = online;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setImage(ImageView image) {
-        this.image = image;
-    }
-
-    public void setOnline(boolean online) {
-        this.online = online;
-    }
-
+    @Override
     public UUID getId() {
         return id;
     }
 
+    @Override
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    @Override
     public ImageView getImage() {
         return image;
     }
 
+    @Override
+    public void setImage(ImageView image) {
+        this.image = image;
+    }
+
+    @Override
     public boolean isOnline() {
         return online;
+    }
+
+    @Override
+    public void setOnline(boolean online) {
+        this.online = online;
     }
 }

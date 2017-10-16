@@ -9,6 +9,6 @@ import java.util.UUID;
 public interface IFriend extends IUser {
     UUID getID();
     String getName();
-    String get_network_address();
+    String getNetworkAddress();
     String getImage();
 }

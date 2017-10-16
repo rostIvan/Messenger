@@ -38,9 +38,17 @@ public class network_listener {
                 this.TTL = TTL;
             }
 
+            @Override
             public UUID getID()    {return ID;}
+
+            @Override
             public String getName(){return UName;}
-            public String get_network_address()  {return IP;}
+
+            @Override
+            public String getNetworkAddress() {
+                return IP;
+            }
+
             public Date getTTL()   {return TTL;}
 
             public void setTTL(Date NewTTL){TTL = NewTTL;}
@@ -59,7 +67,7 @@ public class network_listener {
                 //if user exist extend TTL and return true
                 if (userLink.getID().equals(user.getID()) &&
                         userLink.getName().equals(user.getName()) &&
-                        userLink.get_network_address().equals(user.get_network_address()))
+                        userLink.getNetworkAddress().equals(user.getNetworkAddress()))
                 {userLink.setTTL(user.getTTL()); return true;}
             users.add(user);
             return false;
