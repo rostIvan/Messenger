@@ -28,7 +28,6 @@ public class ChatPresenter implements IChatPresenter {
 
     public ChatPresenter(final IChatView view) {
         this.view = view;
-//        this.chatMessages = ChatMessageInteractor.getAllMessagesFromDB();
         this.chatMessages = ChatMessageInteractor.getMessages(view.getFriendName());
         this.repository = new ChatMessageRepository();
     }
@@ -38,6 +37,7 @@ public class ChatPresenter implements IChatPresenter {
         view.customizeToolbar();
         view.showMessages();
         view.setupListeners();
+        view.scrollRecyclerToPosition(chatMessages.size() - 1);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class ChatPresenter implements IChatPresenter {
         timeMessage.setTextColor(Color.argb(100, 0, 0, 0));
     }
 
-    private void addMessageToDb(final String  message) {
+    private void addMessageToDb(final String message) {
         final ChatMessage chatMessage = new ChatMessage();
         chatMessage.setText(message);
         chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
@@ -120,7 +120,7 @@ public class ChatPresenter implements IChatPresenter {
         chatMessage.setTable(view.getFriendName());
         repository.addMessage(chatMessage);
     }
-    private void sendMessage(String message) {
+    private void sendMessage(final String message) {
         addMessageToDb(message);
         view.clearMessageText();
         view.refreshRecycler();

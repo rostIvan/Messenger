@@ -3,6 +3,9 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_view.Frie
 import android.content.Context;
 import android.view.View;
 
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
+
 public interface IFriendsView {
     Context getFragmentContext();
 
@@ -25,4 +28,6 @@ public interface IFriendsView {
     void dismissPhotoDialog();
 
     String getSearchQuery();
+
+    void showChatActivity(Friend message);
 }

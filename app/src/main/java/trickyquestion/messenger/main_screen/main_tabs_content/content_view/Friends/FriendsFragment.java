@@ -21,10 +21,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
+import trickyquestion.messenger.chat_screen.view.ChatActivity;
 import trickyquestion.messenger.dialogs.FriendProfileView;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.RecyclerViewAdapters.RecyclerViewFriendAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends.FriendPresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends.IFriendPresenter;
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 
 public class FriendsFragment extends Fragment implements IFriendsView {
 
@@ -155,5 +158,13 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     @Override
     public String getSearchQuery() {
         return searchView != null ? searchView.getQuery().toString() : null;
+    }
+
+    @Override
+    public void showChatActivity(final Friend friend) {
+        final Intent i = new Intent(this.getContext(), ChatActivity.class);
+        i.putExtra(ChatActivity.FRIEND_NAME_EXTRA, friend.getName());
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.translate_left_slide, R.anim.alpha_to_zero);
     }
 }

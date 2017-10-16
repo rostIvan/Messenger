@@ -1,5 +1,6 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -25,7 +26,7 @@ public class MessagePresenter implements IMessagePresenter {
 
     public MessagePresenter(final IMessageView view) {
         this.view = view;
-        messageList = MessagesRepository.getMessages();
+        this.messageList = MessagesRepository.getMessages();
     }
 
 
@@ -34,7 +35,6 @@ public class MessagePresenter implements IMessagePresenter {
     public void onCreateView() {
         view.showMessageContent();
         view.setupSwipeRefreshLayout();
-
     }
 
 
@@ -51,6 +51,11 @@ public class MessagePresenter implements IMessagePresenter {
                 }
             }, 2000);
         }
+    }
+
+    @Override
+    public void onResume() {
+        updateMessageList();
     }
 
 
@@ -73,8 +78,9 @@ public class MessagePresenter implements IMessagePresenter {
                     public void run() {
                         view.setRefreshing(false);
                         wasRefreshStarted = false;
+                        updateMessageList();
                     }
-                }, 4000);
+                }, 1000);
             }
         };
     }
@@ -87,8 +93,7 @@ public class MessagePresenter implements IMessagePresenter {
     @Override
     public int[] getSchemeColors() {
         return new int[] {
-                view.getFragmentContext().getResources().getColor(R.color.colorPrimaryGreen),
-//                view.getFragmentContext().getResources().getColor(R.color.colorRed),
+                view.getFragmentContext().getResources().getColor(R.color.colorPrimaryGreen)
         };
     }
 
@@ -117,8 +122,8 @@ public class MessagePresenter implements IMessagePresenter {
         holder.message.setText(message.getLastMessage());
         holder.name.setText(message.getNameSender());
         holder.time.setText(message.getTime());
-        if (message.wasRead())
-            holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
+        if (!message.wasRead()) holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
+        else holder.message.setBackgroundColor(Color.TRANSPARENT);
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,5 +137,10 @@ public class MessagePresenter implements IMessagePresenter {
                 view.showChatActivity(message);
             }
         });
+    }
+
+    private void updateMessageList() {
+        this.messageList = MessagesRepository.getMessages();
+        this.view.notifyDataSetChanged();
     }
 }
