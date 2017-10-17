@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 
 import trickyquestion.messenger.login_screen.SingleFragmentActivity;
 
-public class AskPasswordActivity extends SingleFragmentActivity{
+public class AskPasswordActivity extends SingleFragmentActivity {
     @Override
     public Fragment createFragment() {
         return new AskPasswordFragment();
@@ -13,7 +13,7 @@ public class AskPasswordActivity extends SingleFragmentActivity{
 
     @Override
     public void onBackPressed() {
-        closeApp();
+        super.onBackPressed();
     }
 
     private void closeApp() {

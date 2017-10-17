@@ -9,7 +9,6 @@ public class LoginScreenActivity extends SingleFragmentActivity {
 
     @Override
     public Fragment createFragment() {
-//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return new LoginFragment();
     }
 }

@@ -1,6 +1,7 @@
 package trickyquestion.messenger.login_screen.ask_password;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -23,6 +24,7 @@ import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.dialogs.SettingMenuDialog;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
+import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.util.Constants;
 
 
@@ -86,6 +88,7 @@ public class AskPasswordFragment extends Fragment {
         editor.putBoolean(Constants.EXTRA_PASSWORD_WAS_ENTER, true);
         editor.apply();
         editor.commit();
+        getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
         getActivity().finish();
     }
 }

@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.validation.LoginValidator;
 
@@ -68,9 +69,8 @@ public class LoginFragment extends Fragment {
         final String password = passFiled.getText().toString();
 
         if (isValid(login, password)) {
-            final Intent intent = new Intent();
             saveAccountDate(login, password);
-            getActivity().setResult(Activity.RESULT_OK, intent);
+            getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
             getActivity().finish();
         }
         else {

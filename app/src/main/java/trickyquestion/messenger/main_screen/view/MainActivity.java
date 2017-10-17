@@ -51,12 +51,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     private final int REQUEST_AUTH = 1;
 
     @Override
-    public void onAttachedToWindow() {
-        presenter.onAttachedToWindow();
-        super.onAttachedToWindow();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(Constants.MAIN_LAYOUT);
@@ -66,21 +60,9 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
-    protected void onResume() {
-        presenter.onResume();
-        super.onResume();
-    }
-
-    @Override
     public void finish() {
         presenter.onFinish();
         super.finish();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        presenter.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -192,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public void closeKeyboard() {
-        View view = getCurrentFocus();
+        final View view = getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

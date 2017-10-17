@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.UUID;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
@@ -108,9 +106,9 @@ public class SettingMenuDialog {
         });
         buttonLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 clearAccountDate();
-                restartApp(view);
+                restartApp(v.getContext());
             }
         });
         buttonChangeDate.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +121,7 @@ public class SettingMenuDialog {
             @Override
             public void onClick(View v) {
                 FriendsRepository.deleteAllFriends();
-                restartApp(v);
+                restartApp(v.getContext());
             }
         });
     }
@@ -141,7 +139,6 @@ public class SettingMenuDialog {
         editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, null);
         editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, null);
         editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, false);
-
         editor.apply();
         editor.commit();
     }
@@ -151,21 +148,13 @@ public class SettingMenuDialog {
         editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, login);
         editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);
         editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, true);
-
         editor.apply();
         editor.commit();
     }
-
-    private void restartApp(final View view) {
-        Intent i = view.getContext().getPackageManager()
-                .getLaunchIntentForPackage(view.getContext().getPackageName() );
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        view.getContext().startActivity(i);
-    }
     private void restartApp(final Context context) {
-        Intent i = context.getPackageManager()
-                .getLaunchIntentForPackage(context.getPackageName() );
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        final Intent i = context.getPackageManager()
+                .getLaunchIntentForPackage( context.getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 

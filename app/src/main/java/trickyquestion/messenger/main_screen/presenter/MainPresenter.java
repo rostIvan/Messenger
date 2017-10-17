@@ -24,15 +24,11 @@ import static android.app.Activity.RESULT_OK;
 public class MainPresenter implements IMainPresenter {
 
     private final IMainView view;
-    private SharedPreferences preferences;
+    private final SharedPreferences preferences;
 
     public MainPresenter(final IMainView view) {
         this.view = view;
-        initSharedPreference();
-    }
-
-    private void initSharedPreference() {
-        preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+        this.preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -42,28 +38,6 @@ public class MainPresenter implements IMainPresenter {
         view.setPagerAnimation();
     }
 
-    @Override
-    public void onResume() {
-    }
-
-    @Override
-    public void onAttachedToWindow() {
-        if (!isAuthenticated()) view.startLoginActivity();
-        else if (askPassword() && !passWasEnter()) view.startAskPassActivity();
-    }
-
-    private boolean askPassword() {
-        return preferences.getBoolean(SettingMenuDialog.EXTRA_ASK_PASSWORD, false);
-    }
-
-    private boolean passWasEnter() {
-         return preferences.getBoolean(Constants.EXTRA_PASSWORD_WAS_ENTER, false);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        setPasswordEntered(true);
-    }
 
     @Override
     public void onFinish() {
@@ -81,7 +55,6 @@ public class MainPresenter implements IMainPresenter {
     public void onActivityResult(int requestCode, int resultCode, Intent data, int REQUEST_AUTH) {
         if (resultCode != RESULT_OK) view.finish();
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -158,18 +131,4 @@ public class MainPresenter implements IMainPresenter {
         };
     }
 
-
-    private String getLogin() {
-        final SharedPreferences preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
-        return preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, null);
-    }
-    private String getPassword() {final SharedPreferences preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
-        return preferences.getString(Constants.EXTRA_KEY_AUTH_PASSWORD, null);
-    }
-    private boolean isAuthenticated() {
-        final SharedPreferences preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
-        if ( getLogin() != null && getPassword() != null)
-            return true;
-        return preferences.getBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, false);
-    }
 }

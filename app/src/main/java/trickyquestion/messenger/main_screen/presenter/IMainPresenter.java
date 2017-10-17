@@ -10,12 +10,9 @@ import android.view.View;
 
 public interface IMainPresenter {
     void onCreate();
-    void onResume();
-    void onAttachedToWindow();
     void onSaveInstanceState(Bundle outState);
     void onRestoreInstanceState(Bundle savedInstanceState);
     void onActivityResult(int requestCode, int resultCode, Intent data, int REQUEST_AUTH);
-    void onConfigurationChanged(Configuration newConfig);
     void onFinish();
     boolean onKeyDown(int keyCode, KeyEvent event);
     void onBackPressed();
