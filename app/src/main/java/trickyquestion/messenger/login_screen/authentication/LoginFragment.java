@@ -1,7 +1,9 @@
 package trickyquestion.messenger.login_screen.authentication;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -16,10 +18,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.UUID;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.validation.LoginValidator;
 
 public class LoginFragment extends Fragment {
@@ -30,17 +35,21 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.button_create_account)
     TextView buttonSignIn;
 
-    public static final String EXTRA_TAG_AUTH_LOGIN = "login";
-    public static final String EXTRA_TAG_AUTH_PASS = "pass";
+    private SharedPreferences preferences;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_login_account, container, false);
         ButterKnife.bind(this, view);
+        initSharedPreference();
         setEditTextLineColor(getResources().getColor(R.color.colorPrimaryGreen));
         setupListeners();
         return view;
+    }
+
+    private void initSharedPreference() {
+        preferences = getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     private void setEditTextLineColor (final int color) {
@@ -60,8 +69,7 @@ public class LoginFragment extends Fragment {
 
         if (isValid(login, password)) {
             final Intent intent = new Intent();
-            intent.putExtra(EXTRA_TAG_AUTH_LOGIN, login);
-            intent.putExtra(EXTRA_TAG_AUTH_PASS, password);
+            saveAccountDate(login, password);
             getActivity().setResult(Activity.RESULT_OK, intent);
             getActivity().finish();
         }
@@ -75,6 +83,17 @@ public class LoginFragment extends Fragment {
     private boolean isValid(final String login, final String password) {
         final LoginValidator validator = new LoginValidator(login, password);
         return validator.isInputValid();
+    }
+
+    private void saveAccountDate(final String login, final String password) {
+        final SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, login);
+        editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);
+        editor.putString(Constants.EXTRA_KEY_USER_ID, UUID.randomUUID().toString());
+        editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, true);
+
+        editor.apply();
+        editor.commit();
     }
 
     private class LoginTextChangeListener implements TextWatcher {

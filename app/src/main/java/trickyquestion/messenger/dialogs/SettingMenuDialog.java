@@ -94,7 +94,7 @@ public class SettingMenuDialog {
 
 
         loginName.setText(preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "admin"));
-        id.setText("id: ".concat(preferences.getString(Constants.EXTRA_KEY_USER_ID, "_NAN_").concat(" ...")));
+        id.setText("id: ".concat(preferences.getString(Constants.EXTRA_KEY_USER_ID, "_NAN_").substring(0, 20).concat(" ...")));
         image.setImageDrawable(dialog.getContext().getResources().getDrawable(R.mipmap.ic_launcher));
         checkBoxAskPassword.setChecked(preferences.getBoolean(EXTRA_ASK_PASSWORD, false));
     }

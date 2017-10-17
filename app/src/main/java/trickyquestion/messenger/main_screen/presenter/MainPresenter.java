@@ -80,18 +80,6 @@ public class MainPresenter implements IMainPresenter {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data, int REQUEST_AUTH) {
         if (resultCode != RESULT_OK) view.finish();
-        else if (requestCode == REQUEST_AUTH && data != null) {
-            final String login = data.getStringExtra(LoginFragment.EXTRA_TAG_AUTH_LOGIN);
-            final String password = data.getStringExtra(LoginFragment.EXTRA_TAG_AUTH_PASS);
-            if (login != null && password != null && !login.isEmpty() && !password.isEmpty()) {
-                saveAccountDate(login, password);
-                view.showToast("log: \t" + getLogin() + "\npass: \t" + getPassword());
-            }
-            else {
-                view.showToast("Error");
-                view.finish();
-            }
-        }
     }
 
 
@@ -168,17 +156,6 @@ public class MainPresenter implements IMainPresenter {
             @Override
             public void onPageScrollStateChanged(int state) {}
         };
-    }
-
-    private void saveAccountDate(final String login, final String password) {
-        final SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, login);
-        editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);
-        editor.putString(Constants.EXTRA_KEY_USER_ID, UUID.randomUUID().toString());
-        editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, true);
-
-        editor.apply();
-        editor.commit();
     }
 
 
