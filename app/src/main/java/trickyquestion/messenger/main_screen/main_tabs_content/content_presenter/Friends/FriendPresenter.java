@@ -184,7 +184,6 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     private void updateFriendList() {
-        if (FriendListInteractor.getFriends().equals(friendList)) return;
         this.friendList = FriendListInteractor.getFriends();
         this.view.notifyRecyclerDataChange();
     }

@@ -53,7 +53,7 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
 
     @Override
     public void customizeToolbar() {
-        toolbar.setTitle(getTitle());
+        toolbar.setTitle("Invite friends");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
