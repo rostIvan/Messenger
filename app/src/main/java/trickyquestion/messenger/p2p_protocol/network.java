@@ -55,7 +55,7 @@ public class network {
             StringBuilder UserIDPart = new StringBuilder(UserID.toString());
             StringBuilder UserIPPart = new StringBuilder("$$$$$$$$$$$$$$$");
             Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);//8//18
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);//8//18
             String SendTime = sdf.format(Calendar.getInstance().getTime());
             UserIPPart.replace(0,IP.length(),IP);
             return ("P2P_HEARTBEAT:" +
@@ -172,7 +172,7 @@ public class network {
                             if (received_packet_content[0].equals("P2P_HEARTBEAT") &&
                                     received_packet_content[5].equals("P2P_HEARTBEAT")) {
                                 //Creating parser for time
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);
                                 Calendar cal = Calendar.getInstance();
                                 cal.setTime(sdf.parse(received_packet_content[4]));
                                 //Adding TTL time
@@ -259,7 +259,7 @@ public class network {
         public void setTTL(Date NewTTL){TTL = NewTTL;}
 
         boolean equal(User second){
-            if(this.ID == second.ID && this.IP == second.IP && this.UName == second.UName)
+            if((this.ID.equals(second.ID)) && (this.IP.equals(second.IP)) && (this.UName.equals(second.UName)))
                 return true;
             else return false;
         }
@@ -273,7 +273,8 @@ public class network {
             list_lock.lock();
             boolean is_new = true;
             for(User user :  users){
-                if(user.equal(new_user)) {new_user.setTTL(user.getTTL()); is_new = false; continue;}
+                if(user.equal(new_user)) {
+                    new_user.setTTL(user.getTTL()); is_new = false; continue;}
             }
             if(is_new) users.add(new_user);
             list_lock.unlock();
