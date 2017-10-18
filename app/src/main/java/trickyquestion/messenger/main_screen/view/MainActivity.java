@@ -22,7 +22,6 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
 import trickyquestion.messenger.dialogs.SettingMenuDialog;
 import trickyquestion.messenger.login_screen.ask_password.AskPasswordActivity;
 import trickyquestion.messenger.login_screen.authentication.LoginScreenActivity;
@@ -31,6 +30,7 @@ import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Frien
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.MessagesFragment;
 import trickyquestion.messenger.main_screen.presenter.IMainPresenter;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
+import trickyquestion.messenger.p2p_protocol.ProtocolClientSide;
 import trickyquestion.messenger.util.Constants;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         ButterKnife.bind(this);
         if (presenter == null) presenter = new MainPresenter(this);
         presenter.onCreate();
+        ProtocolClientSide.TryStart(this.getContext());
     }
 
     @Override
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         presenter.onActivityResult(requestCode, resultCode, data, REQUEST_AUTH);
+        ProtocolClientSide.TryStart(this.getContext());
     }
 
     @Override
@@ -186,3 +188,4 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         return this;
     }
 }
+

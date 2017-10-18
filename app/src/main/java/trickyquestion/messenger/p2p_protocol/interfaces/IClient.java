@@ -9,10 +9,8 @@ import java.util.UUID;
 public interface IClient extends IFriend {
     UUID getID();
     String getName();
-    String getNetworkAddress();
     String getImage();
 
-    void setName(String newName);
-    void setNetworkAddress(String newAddress);
-    void recreate(UUID id, String name, String networkAddress);
+    void setName(String new_name);
+    void recreate(UUID id, String name, String network_address);
 }

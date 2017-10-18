@@ -7,14 +7,17 @@ import java.util.UUID;
 
 import trickyquestion.messenger.add_friend_screen.model.Friend;
 import trickyquestion.messenger.add_friend_screen.model.IFriend;
+import trickyquestion.messenger.p2p_protocol.ProtocolClientSide;
+import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
 public class FriendsGetter {
     public static List<IFriend> getFriends(int size) {
-        final List<IFriend> list = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            final IFriend friend = new Friend("Some name: " + (i+1), UUID.randomUUID(), null, i % 2 == 0);
-            list.add(friend);
+        final List<IFriend> ret = new ArrayList<>();
+        final List<IUser> list = ProtocolClientSide.ProtocolInterface().getUsers();
+        for (IUser user : list) {
+            final IFriend friend = new Friend(user.getName(), user.getID(), null, true);
+            ret.add(friend);
         }
-        return list;
+        return ret;
     }
 }

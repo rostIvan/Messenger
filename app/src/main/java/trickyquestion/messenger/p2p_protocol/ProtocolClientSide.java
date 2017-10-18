@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
+import java.util.UUID;
+
 import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
+import trickyquestion.messenger.util.Constants;
 
 /**
  * Created by Zen on 11.10.2017.
@@ -15,18 +18,10 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
 /**
  * Represent client side for protocol, simple binding service
  */
-public final class ProtocolClientSide {
-    static private P2PProtocolService.LocalBinder bind;
+public class ProtocolClientSide {
+    static private P2ProtocolService.LocalBinder bind;
     static private boolean bound;
     static private IClient client;
-
-    /**
-     * Set client data(user name, id)
-     * @param data client object
-     */
-    void SetClientData(IClient data){
-        client = data;
-    }
 
     /**
      * Service connector object for connecting P2PProtocolService
@@ -35,9 +30,7 @@ public final class ProtocolClientSide {
 
         public void onServiceConnected(ComponentName name, IBinder binder) {
             //get binder
-            bind = (P2PProtocolService.LocalBinder) binder;
-            //seting client data;
-            bind.SetClientData(client);
+            bind = (P2ProtocolService.LocalBinder) binder;
             //start service
             bind.Start();
             //signalize that service connected
@@ -53,28 +46,36 @@ public final class ProtocolClientSide {
     /**
      * @return service status
      */
-    static boolean isServiceConnected(){
+    static public boolean isServiceConnected() {
         return bound;
     }
 
     /**
      * Connect and start(if require) service
+     *
      * @param context from caller
      */
-    static void ConnectService(Context context){
+    static public void ConnectService(Context context) {
         //bind service
-        context.bindService(new Intent(context, P2PProtocolService.class),sConn, Context.BIND_AUTO_CREATE);
+        context.bindService(new Intent(context, P2ProtocolService.class), sConn, Context.BIND_AUTO_CREATE);
         //start service
-        context.startService(new Intent(context, P2PProtocolService.class));
+        context.startService(new Intent(context, P2ProtocolService.class));
     }
 
     /**
      * Service interface
+     *
      * @return binder which represent service or NULL if service not connected
      */
-    static P2PProtocolService.LocalBinder ProtocolInterface(){
+    static public P2ProtocolService.LocalBinder ProtocolInterface() {
         //if service connected return bind
-        if (bound) return bind; else return null;
+        if (bound) return bind;
+        else return null;
+    }
+
+    public static void TryStart(Context context) {
+        if (!bound) {
+            ConnectService(context);
+        }
     }
 }
-

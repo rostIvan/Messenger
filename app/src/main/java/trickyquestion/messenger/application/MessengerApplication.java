@@ -2,12 +2,17 @@ package trickyquestion.messenger.application;
 
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import trickyquestion.messenger.p2p_protocol.P2ProtocolService;
+import trickyquestion.messenger.p2p_protocol.ProtocolClientSide;
+import trickyquestion.messenger.util.Constants;
 
 public class MessengerApplication extends Application {
     @Override
