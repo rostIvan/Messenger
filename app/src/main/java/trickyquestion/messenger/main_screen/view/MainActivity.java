@@ -2,7 +2,6 @@ package trickyquestion.messenger.main_screen.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
@@ -30,7 +29,7 @@ import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Frien
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.MessagesFragment;
 import trickyquestion.messenger.main_screen.presenter.IMainPresenter;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
-import trickyquestion.messenger.p2p_protocol.ProtocolClientSide;
+import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.util.Constants;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         ButterKnife.bind(this);
         if (presenter == null) presenter = new MainPresenter(this);
         presenter.onCreate();
-        ProtocolClientSide.TryStart(this.getContext());
+        P2PProtocolConnector.TryStart(this.getContext());
     }
 
     @Override
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         presenter.onActivityResult(requestCode, resultCode, data, REQUEST_AUTH);
-        ProtocolClientSide.TryStart(this.getContext());
+        P2PProtocolConnector.TryStart(this.getContext());
     }
 
     @Override

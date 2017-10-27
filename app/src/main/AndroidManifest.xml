@@ -40,7 +40,7 @@
             android:theme="@style/Theme.Swipe.Back"/>
 
         <service
-            android:name=".p2p_protocol.P2ProtocolService"
+            android:name=".p2p_protocol.P2PProtocolService"
             android:enabled="true"
             android:exported="false">
         </service>

@@ -9,7 +9,7 @@ import trickyquestion.messenger.dialogs.SettingMenuDialog;
 import trickyquestion.messenger.login_screen.ask_password.AskPasswordActivity;
 import trickyquestion.messenger.login_screen.authentication.LoginScreenActivity;
 import trickyquestion.messenger.main_screen.view.MainActivity;
-import trickyquestion.messenger.p2p_protocol.ProtocolClientSide;
+import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.util.Constants;
 
 public class AppStarter implements IStarter {
@@ -26,10 +26,10 @@ public class AppStarter implements IStarter {
     public void start() {
         if ( !isAuthenticated() ) {
             startLoginActivity();
-            ProtocolClientSide.TryStart(context);
+
         }
         else {
-            ProtocolClientSide.TryStart(context);
+            P2PProtocolConnector.TryStart(context);
             if ( askPasswordActivated() ) startAskPasswordActivity();
             else startMainActivity();
         }
