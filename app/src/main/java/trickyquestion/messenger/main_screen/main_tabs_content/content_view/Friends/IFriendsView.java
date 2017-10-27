@@ -11,13 +11,7 @@ public interface IFriendsView {
 
     void showFriendsItems();
 
-    void setFabBehavior();
-
     void notifyRecyclerDataChange();
-
-    void hideFab();
-
-    void showFab();
 
     void startAddFriendActivity();
 

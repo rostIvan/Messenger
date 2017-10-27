@@ -35,8 +35,6 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @BindView(R.id.rv_friends)
     RecyclerView recyclerView;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
 
     private SearchView searchView;
     private FriendProfileView friendProfileView;
@@ -112,23 +110,6 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
-    @Override
-    public void setFabBehavior() {
-        fab.setOnClickListener(presenter.onFabClick());
-        fab.attachToRecyclerView(recyclerView);
-    }
-
-    @Override
-    public void hideFab() {
-        if (fab.getVisibility() == View.VISIBLE)
-            fab.hide();
-    }
-
-    @Override
-    public void showFab() {
-    if (fab.getVisibility() != View.VISIBLE)
-        fab.show();
-    }
 
     @Override
     public void startAddFriendActivity() {

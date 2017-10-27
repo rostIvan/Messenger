@@ -14,18 +14,4 @@
         android:overScrollMode="never"
         tools:background="@color/colorGrey"/>
 
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="63dp"
-        android:layout_marginRight="15dp"
-        android:src="@drawable/ic_add"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        fab:fab_colorNormal="@color/colorPrimaryGreen"
-        fab:fab_colorPressed="@color/colorTransparentGreen" />
-
 </android.support.design.widget.CoordinatorLayout>

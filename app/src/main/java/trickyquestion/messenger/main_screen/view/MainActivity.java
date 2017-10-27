@@ -2,7 +2,6 @@ package trickyquestion.messenger.main_screen.view;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
@@ -17,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.eftimoff.viewpagertransformers.AccordionTransformer;
+import com.melnykov.fab.FloatingActionButton;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import butterknife.BindView;
@@ -24,8 +24,6 @@ import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
 import trickyquestion.messenger.dialogs.SettingMenuDialog;
-import trickyquestion.messenger.login_screen.ask_password.AskPasswordActivity;
-import trickyquestion.messenger.login_screen.authentication.LoginScreenActivity;
 import trickyquestion.messenger.main_screen.adapter.MainPagerAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends.FriendsFragment;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.MessagesFragment;
@@ -43,12 +41,12 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     Toolbar toolbar;
     @BindView(R.id.header)
     AppBarLayout appBar;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     private IMainPresenter presenter;
     private SettingMenuDialog dialogMenu;
     private SearchView searchView;
-
-    private final int REQUEST_AUTH = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,18 +70,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
-    public void startLoginActivity() {
-        final Intent intent = new Intent(this, LoginScreenActivity.class);
-        startActivityForResult(intent, REQUEST_AUTH);
-    }
-
-    @Override
-    public void startAskPassActivity() {
-        final Intent intent = new Intent(this, AskPasswordActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
@@ -99,16 +85,33 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        presenter.onActivityResult(requestCode, resultCode, data, REQUEST_AUTH);
-    }
-
-    @Override
     public void customizeToolbar() {
         toolbar.setTitle(getTitle());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
+    }
+
+
+    @Override
+    public void setFabBehavior() {
+        fab.setOnClickListener(presenter.onFabClick());
+        viewPager.addOnPageChangeListener(presenter.onPageChangeListener());
+    }
+
+    @Override
+    public void hideFab() {
+        fab.hide();
+    }
+
+    @Override
+    public void showFab() {
+        fab.show();
+    }
+
+    @Override
+    public boolean isFabShow() {
+        return fab.isVisible();
     }
 
     @Override
@@ -123,7 +126,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         pagerAdapter.addFragment(FriendsFragment.newInstance(), R.string.friends);
         pagerAdapter.addFragment(MessagesFragment.newInstance(), R.string.messages);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.addOnPageChangeListener(presenter.onPageChangeListener());
         tabLayout.setViewPager(viewPager);
     }
 
@@ -132,6 +134,11 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         viewPager.setPageTransformer(true, new AccordionTransformer());
     }
 
+    @Override
+    public void startAddFriendActivity() {
+        final Intent intent = new Intent(this, AddFriendActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void showToast(String message) {

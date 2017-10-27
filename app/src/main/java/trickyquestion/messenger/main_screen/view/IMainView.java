@@ -4,6 +4,13 @@ import android.content.Context;
 
 public interface IMainView {
     void customizeToolbar();
+
+    void setFabBehavior();
+    void hideFab();
+    void showFab();
+
+    boolean isFabShow();
+
     void goBack();
     void showTabsWithContent();
     void setPagerAnimation();
@@ -11,13 +18,12 @@ public interface IMainView {
     boolean isDialogShow();
     boolean isSearchViewIconified();
     void setSearchViewIconified(final boolean iconified);
+
+    void startAddFriendActivity();
+
     //for simple test
     void showToast(final String message);
-
-    void startLoginActivity();
-    void startAskPassActivity();
     void finish();
-
     void closeKeyboard();
 
     Context getContext();

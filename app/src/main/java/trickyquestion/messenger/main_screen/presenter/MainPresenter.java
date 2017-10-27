@@ -29,6 +29,7 @@ public class MainPresenter implements IMainPresenter {
         view.customizeToolbar();
         view.showTabsWithContent();
         view.setPagerAnimation();
+        view.setFabBehavior();
     }
 
 
@@ -45,16 +46,15 @@ public class MainPresenter implements IMainPresenter {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data, int REQUEST_AUTH) {
-        if (resultCode != RESULT_OK) view.finish();
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle outState) {
+        if (view.isFabShow()) outState.putBoolean("fab was shown", true);
+        else outState.putBoolean("fab was shown", false);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState.getBoolean("fab was shown")) view.showFab();
+        else view.hideFab();
     }
 
     @Override
@@ -112,15 +112,29 @@ public class MainPresenter implements IMainPresenter {
     public ViewPager.OnPageChangeListener onPageChangeListener() {
         return new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
 
             @Override
             public void onPageSelected(int position) {
+                if (position == 0) view.showFab();
                 view.closeKeyboard();
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+                if (state == 1) view.hideFab();
+            }
+        };
+    }
+
+    @Override
+    public View.OnClickListener onFabClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                view.startAddFriendActivity();
+            }
         };
     }
 

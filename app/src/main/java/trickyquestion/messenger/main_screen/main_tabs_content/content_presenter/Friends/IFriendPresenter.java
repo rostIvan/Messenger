@@ -21,6 +21,5 @@ public interface IFriendPresenter {
 
     String getStackQuery();
     SearchView.OnQueryTextListener onQueryTextListener();
-    View.OnClickListener onFabClick();
     SearchView.OnCloseListener onCloseSearchViewListener();
 }

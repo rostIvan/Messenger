@@ -37,7 +37,6 @@ public class FriendPresenter implements IFriendPresenter {
     @Override
     public void onCreateView() {
         view.showFriendsItems();
-        view.setFabBehavior();
     }
 
     @Override
@@ -62,16 +61,6 @@ public class FriendPresenter implements IFriendPresenter {
         view.dismissPhotoDialog();
         if (view.getSearchQuery() != null && !view.getSearchQuery().isEmpty())
             outState.putString("svQuery", view.getSearchQuery());
-    }
-
-    @Override
-    public View.OnClickListener onFabClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.startAddFriendActivity();
-            }
-        };
     }
 
     @Override

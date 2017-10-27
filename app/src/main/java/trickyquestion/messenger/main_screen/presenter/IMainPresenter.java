@@ -12,7 +12,6 @@ public interface IMainPresenter {
     void onCreate();
     void onSaveInstanceState(Bundle outState);
     void onRestoreInstanceState(Bundle savedInstanceState);
-    void onActivityResult(int requestCode, int resultCode, Intent data, int REQUEST_AUTH);
     void onFinish();
     boolean onKeyDown(int keyCode, KeyEvent event);
     void onBackPressed();
@@ -20,4 +19,6 @@ public interface IMainPresenter {
     MenuItem.OnMenuItemClickListener onSettingClick();
     MenuItem.OnMenuItemClickListener onAccountMenuItemClick();
     ViewPager.OnPageChangeListener onPageChangeListener();
+
+    View.OnClickListener onFabClick();
 }
