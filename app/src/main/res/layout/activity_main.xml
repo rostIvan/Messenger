@@ -75,7 +75,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        fab:fab_shadow="true"
         fab:fab_colorNormal="@color/colorPrimaryGreen"
-        fab:fab_colorPressed="@color/colorTransparentGreen" />
+        fab:fab_colorPressed="@color/colorTransparentGreen"
+        fab:fab_colorRipple="@color/colorWhite" />
 
 </android.support.design.widget.CoordinatorLayout>

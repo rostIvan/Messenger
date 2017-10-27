@@ -72,7 +72,7 @@ public class P2ProtocolService extends Service{
 
         Host(Context context){
             id = UUID.fromString("00000000-0000-0000-0000-000000000000");
-            preferences = context.getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+            preferences = context.getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
         }
 
         @Override
