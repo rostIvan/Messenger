@@ -23,6 +23,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.view.MainActivity;
+import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.validation.LoginValidator;
 
@@ -69,6 +70,7 @@ public class LoginFragment extends Fragment {
         if (isValid(login, password)) {
             saveAccountDate(login, password);
             getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
+            P2PProtocolConnector.TryStart(this.getContext());
             getActivity().finish();
         }
         else {

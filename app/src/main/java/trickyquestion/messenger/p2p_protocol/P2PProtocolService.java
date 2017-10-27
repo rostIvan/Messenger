@@ -10,6 +10,7 @@ import android.os.IBinder;
 import java.util.List;
 import java.util.UUID;
 
+import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.Constants;
@@ -18,11 +19,11 @@ import trickyquestion.messenger.util.Constants;
  * Created by Zen on 17.10.2017.
  */
 
-public class P2ProtocolService extends Service{
+public class P2PProtocolService extends Service{
     private final LocalBinder mBinder = new LocalBinder();
     private IClient host;
 
-    public P2ProtocolService(){
+    public P2PProtocolService(){
     }
 
     /**
@@ -46,21 +47,22 @@ public class P2ProtocolService extends Service{
         return super.onUnbind(intent);
     }
 
-    private network Network;
+    private P2PNetwork P2PNetwork;
 
     public class LocalBinder extends Binder{
         public void Start(){
             host = new Host(getApplicationContext());
-            Network = new network(host, getApplicationContext());
-            Network.Start();
+            Network.StartNetworkListener(getApplicationContext());
+            P2PNetwork = new P2PNetwork(host, getApplicationContext());
+            P2PNetwork.Start();
         }
 
         public void Stop(){
-            Network.Stop();
+            P2PNetwork.Stop();
         }
 
         public List<IUser> getUsers(){
-            return Network.getUsers();
+            return P2PNetwork.getUsers();
         }
     }
 
@@ -95,11 +97,11 @@ public class P2ProtocolService extends Service{
         }
 
         @Override
-        public void recreate(UUID id, String name, String network_address) {
+        public void reCreate(UUID id, String name, String network_address) {
         }
 
         @Override
-        public String get_network_address() {
+        public String getNetworkAddress() {
             return "127.0.0.1";
         }
     }
