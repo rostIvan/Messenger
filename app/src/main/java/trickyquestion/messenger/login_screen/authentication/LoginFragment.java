@@ -1,10 +1,8 @@
 package trickyquestion.messenger.login_screen.authentication;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,7 +48,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void initSharedPreference() {
-        preferences = getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+        preferences = getContext().getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     private void setEditTextLineColor (final int color) {

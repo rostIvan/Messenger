@@ -18,7 +18,7 @@ public class AppStarter implements IStarter {
 
     public AppStarter(final Context context) {
         this.context = context;
-        this.preferences = context.getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+        this.preferences = context.getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     @Override

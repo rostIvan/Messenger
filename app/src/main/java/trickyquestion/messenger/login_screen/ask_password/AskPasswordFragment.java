@@ -3,9 +3,7 @@ package trickyquestion.messenger.login_screen.ask_password;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,8 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.dialogs.SettingMenuDialog;
-import trickyquestion.messenger.main_screen.presenter.MainPresenter;
 import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.util.Constants;
 
@@ -43,7 +39,7 @@ public class AskPasswordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_ask_pass, container, false);
         ButterKnife.bind(this, view);
-        preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+        preferences = view.getContext().getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
         textViewHello.setText(
                 "Hello, "
                 .concat(preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "someone"))

@@ -3,20 +3,13 @@ package trickyquestion.messenger.main_screen.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.UUID;
-
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import trickyquestion.messenger.login_screen.authentication.LoginFragment;
 import trickyquestion.messenger.main_screen.view.IMainView;
-import trickyquestion.messenger.dialogs.SettingMenuDialog;
 import trickyquestion.messenger.util.Constants;
 
 import static android.app.Activity.RESULT_OK;
@@ -28,7 +21,7 @@ public class MainPresenter implements IMainPresenter {
 
     public MainPresenter(final IMainView view) {
         this.view = view;
-        this.preferences = view.getContext().getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+        this.preferences = view.getContext().getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     @Override

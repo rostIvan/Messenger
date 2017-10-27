@@ -51,7 +51,7 @@ public class SettingMenuDialog {
     }
 
     private void initSharedPreferences (final Context context) {
-        preferences = context.getSharedPreferences(Constants.EXTRA_KEY_AUTH_DATA, Context.MODE_PRIVATE);
+        preferences = context.getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     private void create() {
