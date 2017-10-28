@@ -2,9 +2,11 @@ package trickyquestion.messenger.chat_screen.repository;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import trickyquestion.messenger.chat_screen.model.ChatMessage;
+import trickyquestion.messenger.util.event_bus_pojo.SendMessageEvent;
 
 public class ChatMessageRepository implements IChatMessageRepository {
 
@@ -16,6 +18,7 @@ public class ChatMessageRepository implements IChatMessageRepository {
                 @Override
                 public void execute(Realm realm) {
                     realm.copyToRealm(message);
+                    onChange();
                 }
             });
         } finally {
@@ -37,6 +40,7 @@ public class ChatMessageRepository implements IChatMessageRepository {
                 @Override
                 public void execute(Realm realm) {
                     results.deleteAllFromRealm();
+                    onChange();
                 }
             });
         } finally {
@@ -55,6 +59,7 @@ public class ChatMessageRepository implements IChatMessageRepository {
                 @Override
                 public void execute(Realm realm) {
                     results.deleteAllFromRealm();
+                    onChange();
                 }
             });
         } finally {
@@ -70,6 +75,7 @@ public class ChatMessageRepository implements IChatMessageRepository {
                 @Override
                 public void execute(Realm realm) {
                     realm.delete(ChatMessage.class);
+                    onChange();
                 }
             });
         } finally {
@@ -86,5 +92,9 @@ public class ChatMessageRepository implements IChatMessageRepository {
     public List<ChatMessage> getMessages(final String table) {
         final Realm realm = Realm.getDefaultInstance();
         return realm.where(ChatMessage.class).equalTo("table", table).findAll();
+    }
+
+    private void onChange() {
+        EventBus.getDefault().post(new SendMessageEvent("Message send"));
     }
 }

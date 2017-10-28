@@ -2,10 +2,12 @@ package trickyquestion.messenger.main_screen.main_tabs_content.repository;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
 
 public class FriendsRepository {
 
@@ -21,6 +23,7 @@ public class FriendsRepository {
                 @Override
                 public void execute(Realm realm) {
                     realm.copyToRealm(friend);
+                    onChange();
                 }
             });
         } finally {
@@ -36,6 +39,7 @@ public class FriendsRepository {
                 @Override
                 public void execute(Realm realm) {
                     results.deleteFirstFromRealm();
+                    onChange();
                 }
             });
         } finally {
@@ -50,10 +54,15 @@ public class FriendsRepository {
                 @Override
                 public void execute(Realm realm) {
                     realm.delete(Friend.class);
+                    onChange();
                 }
             });
         } finally {
             realm.close();
         }
+    }
+
+    private static void onChange() {
+        EventBus.getDefault().post(new AddFriendEvent("Friend add to list"));
     }
 }

@@ -2,7 +2,6 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter
 
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,14 +11,15 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends.IFriendsView;
 import trickyquestion.messenger.main_screen.main_tabs_content.interactors.FriendListInteractor;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
-import trickyquestion.messenger.util.animation.ItemAlphaAnimator;
 import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
 
 public class FriendPresenter implements IFriendPresenter {
 
@@ -36,6 +36,7 @@ public class FriendPresenter implements IFriendPresenter {
     /** For Fragment */
     @Override
     public void onCreateView() {
+        EventBus.getDefault().register(this);
         view.showFriendsItems();
     }
 
@@ -46,8 +47,6 @@ public class FriendPresenter implements IFriendPresenter {
 
     @Override
     public void onResume() {
-        updateFriendList();
-        view.notifyRecyclerDataChange();
     }
 
     @Override
@@ -165,16 +164,19 @@ public class FriendPresenter implements IFriendPresenter {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     FriendsRepository.deleteFriend(friend);
-                    updateFriendList();
                     return false;
                 }
             });
         }
     }
 
+    public void onEvent(AddFriendEvent event){
+        updateFriendList();
+    }
+
     private void updateFriendList() {
-        if (FriendListInteractor.getFriends().equals(friendList)) return;
         this.friendList = FriendListInteractor.getFriends();
         this.view.notifyRecyclerDataChange();
     }
+
 }
