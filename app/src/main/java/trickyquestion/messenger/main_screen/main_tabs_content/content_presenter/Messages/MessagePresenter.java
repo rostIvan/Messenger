@@ -7,15 +7,19 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.Holders.MessageViewHolder;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.IMessageView;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.MessagesRepository;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
+import trickyquestion.messenger.util.event_bus_pojo.SendMessageEvent;
 
 public class MessagePresenter implements IMessagePresenter {
 
@@ -33,6 +37,7 @@ public class MessagePresenter implements IMessagePresenter {
     /** For Fragment View **/
     @Override
     public void onCreateView() {
+        EventBus.getDefault().register(this);
         view.showMessageContent();
         view.setupSwipeRefreshLayout();
     }
@@ -55,7 +60,6 @@ public class MessagePresenter implements IMessagePresenter {
 
     @Override
     public void onResume() {
-        updateMessageList();
     }
 
 
@@ -137,6 +141,10 @@ public class MessagePresenter implements IMessagePresenter {
                 view.showChatActivity(message);
             }
         });
+    }
+
+    public void onEvent(SendMessageEvent event){
+        updateMessageList();
     }
 
     private void updateMessageList() {
