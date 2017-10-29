@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.SocketAddress;
 
 /**
  * Created by Zen on 27.10.2017.
@@ -17,6 +18,10 @@ public class MSocket {
         try {
             MulticastSocket socket = new MulticastSocket(port);
             socket.joinGroup(InetAddress.getByName(groupIP));
+            //set broadcasting
+            socket.setBroadcast(true);
+            socket.setReuseAddress(true);
+            socket.setLoopbackMode(false);
             Log.d("MSocket", "Send packet: " + msg);
             socket.send(new DatagramPacket(msg.getBytes(),msg.getBytes().length));
         } catch (IOException e) {
@@ -29,6 +34,10 @@ public class MSocket {
         try {
             MulticastSocket socket = new MulticastSocket(port);
             socket.joinGroup(InetAddress.getByName(groupIP));
+            //set broadcasting
+            socket.setBroadcast(true);
+            socket.setReuseAddress(true);
+            socket.setLoopbackMode(false);
             byte[] content = new byte[1000];
             DatagramPacket packet = new DatagramPacket(content,content.length);
             Log.d("MSocket","Receive packet: " + new String(
