@@ -14,9 +14,13 @@ import org.jetbrains.annotations.Contract;
 
 import java.math.BigInteger;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import static android.content.Context.WIFI_SERVICE;
@@ -72,36 +76,29 @@ public class Network {
     }
 
     private static String wifiIpAddress(Context context) {
-        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
-        int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
-        if (ByteOrder.nativeOrder().equals(ByteOrder.LITTLE_ENDIAN)) {
-            ipAddress = Integer.reverseBytes(ipAddress);
-        }
-        byte[] ipByteArray = BigInteger.valueOf(ipAddress).toByteArray();
-        String ipAddressString;
         try {
-            ipAddressString = InetAddress.getByAddress(ipByteArray).getHostAddress();
-        } catch (UnknownHostException ex) {
-            ipAddressString = null;
-        }
-        return ipAddressString;
+            for (Enumeration<NetworkInterface> en = NetworkInterface
+                    .getNetworkInterfaces(); en.hasMoreElements();) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress()) {
+                        return inetAddress.getHostAddress().toString();
+                    }
+                }
+            }
+        } catch (SocketException ex) {}
+        return null;
     }
 
     @Nullable
-    public static String broadcastAdress(Context context){
-        if(networkState == NetworkState.ACTIVE){
-            WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
-            DhcpInfo dhcp = wifiManager.getDhcpInfo();
-            if(dhcp != null){
-                int broadcast = (dhcp.ipAddress & dhcp.netmask) | ~dhcp.netmask;
-                byte[] quads = new byte[4];
-                for(int i =0;i<4;i++){
-                    quads[i]=(byte)((broadcast >> i * 8)&0xFF);
-                }
-                try {
-                    return InetAddress.getByAddress(quads).toString();
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
+    public static String broadcastAdress(Context context) throws SocketException {
+        System.setProperty("java.net.preferIPv4Stack", "true");
+        for (Enumeration<NetworkInterface> niEnum = NetworkInterface.getNetworkInterfaces(); niEnum.hasMoreElements();) {
+            NetworkInterface ni = niEnum.nextElement();
+            if (!ni.isLoopback()) {
+                for (InterfaceAddress interfaceAddress : ni.getInterfaceAddresses()) {
+                    return interfaceAddress.getBroadcast().toString().substring(1);
                 }
             }
         }

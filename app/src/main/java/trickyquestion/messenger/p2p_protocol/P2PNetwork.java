@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -78,12 +79,14 @@ public class P2PNetwork {
                     MSocket.SendMsg(
                        genHeartbeatPacket(
                                host.getName(),host.getID(), Network.IPAddress(context)),
-                       networkPreference.getMulticastGroupIp(),
+                       Network.broadcastAdress(context),
                        networkPreference.getMulticastPort());
                     //Sleep thread
                     Thread.sleep(2500);
                 } catch (InterruptedException e) {
                     break;
+                } catch (SocketException e) {
+                    e.printStackTrace();
                 }
             }
             NetworkLock.unlock();
@@ -109,9 +112,14 @@ public class P2PNetwork {
             for(;;) {
                 if (Network.GetCurrentNetworkState() != NetworkState.ACTIVE)
                     NetworkUp.awaitUninterruptibly();
-                String received_data = MSocket.Receive(networkPreference.getMulticastGroupIp(),
-                        networkPreference.getMulticastPort()
-                );
+                String received_data = null;
+                try {
+                    received_data = MSocket.Receive(Network.broadcastAdress(context),
+                            networkPreference.getMulticastPort()
+                    );
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                }
                 if (received_data != null) {
                     //Split packet string
                     received_packet_content = received_data.split("[:]");
