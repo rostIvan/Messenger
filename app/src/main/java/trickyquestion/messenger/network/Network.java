@@ -35,13 +35,14 @@ public class Network {
                 if (networkInfo.getState() == CONNECTED) {
                     if(Network.networkState!=NetworkState.ACTIVE)
                         for (NetworkListener listener: NetworkListeners) {
-                            if(listener!=null)
+                            if(listener != null)
                                 listener.OnNetworkStateChange(NetworkState.ACTIVE);
                         }
                     Network.networkState = NetworkState.ACTIVE;
-                } if(Network.networkState!=NetworkState.INACTIVE)
+                }
+                if(Network.networkState!=NetworkState.INACTIVE)
                     for (NetworkListener listener: NetworkListeners) {
-                        if(listener!=null)
+                        if(listener != null)
                             listener.OnNetworkStateChange(NetworkState.ACTIVE);
                     }
             }

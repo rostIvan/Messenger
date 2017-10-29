@@ -42,17 +42,14 @@ public class P2PNetwork {
 
         private Lock NetworkLock = new ReentrantLock();
         private Condition NetworkUp = NetworkLock.newCondition();
-
-        public HeartbeatRunner(){
-            Network.RegisterListener(new Network.NetworkListener() {
-                @Override
-                public void OnNetworkStateChange(NetworkState newState) {
-                    if(newState==NetworkState.ACTIVE){
-                        NetworkUp.signalAll();
-                    }
+        private Network.NetworkListener listener = new Network.NetworkListener() {
+            @Override
+            public void OnNetworkStateChange(NetworkState newState) {
+                if(newState==NetworkState.ACTIVE){
+                    NetworkUp.signalAll();
                 }
-            });
-        }
+            }
+        };
 
         private String genHeartbeatPacket(String UserName, UUID UserID, String IP){
             StringBuilder UsrNamePart = new StringBuilder("$$$$$$$$$$$$$$$$$$$");
@@ -96,17 +93,14 @@ public class P2PNetwork {
     private class ListenerRunner implements Runnable{
         private Lock NetworkLock = new ReentrantLock();
         private Condition NetworkUp = NetworkLock.newCondition();
-
-        public ListenerRunner(){
-            Network.RegisterListener(new Network.NetworkListener() {
-                @Override
-                public void OnNetworkStateChange(NetworkState newState) {
-                    if(newState==NetworkState.ACTIVE){
-                        NetworkUp.signalAll();
-                    }
+        private Network.NetworkListener listener = new Network.NetworkListener() {
+            @Override
+            public void OnNetworkStateChange(NetworkState newState) {
+                if(newState==NetworkState.ACTIVE){
+                    NetworkUp.signalAll();
                 }
-            });
-        }
+            }
+        };
 
         @Override
         public void run() {
