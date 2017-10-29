@@ -27,6 +27,7 @@ import java.util.List;
 
 import static android.content.Context.WIFI_SERVICE;
 import static android.net.NetworkInfo.State.CONNECTED;
+import static android.net.wifi.WifiManager.WIFI_STATE_ENABLED;
 
 public class Network {
 
@@ -40,10 +41,9 @@ public class Network {
                 NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (networkInfo.getState() == CONNECTED) {
                     if(Network.networkState!=NetworkState.ACTIVE)
-                        for (NetworkListener listener: NetworkListeners) {
+                            for (NetworkListener listener: NetworkListeners)
                             if(listener != null)
                                 listener.OnNetworkStateChange(NetworkState.ACTIVE);
-                        }
                     Network.networkState = NetworkState.ACTIVE;
                 }
                 if(Network.networkState!=NetworkState.INACTIVE)
@@ -70,6 +70,9 @@ public class Network {
 
     static public boolean StartNetworkListener(Context context){
         if(isStarted) return false;
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
+        if(wifiManager.getWifiState()==WIFI_STATE_ENABLED)
+            networkState=NetworkState.ACTIVE;
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.wifi.WIFI_AP_STATE_CHANGED");
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
