@@ -1,7 +1,6 @@
 package trickyquestion.messenger.main_screen.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -11,8 +10,6 @@ import android.view.View;
 
 import trickyquestion.messenger.main_screen.view.IMainView;
 import trickyquestion.messenger.util.Constants;
-
-import static android.app.Activity.RESULT_OK;
 
 public class MainPresenter implements IMainPresenter {
 
@@ -118,6 +115,7 @@ public class MainPresenter implements IMainPresenter {
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) view.showFab();
+                if (position == 1) view.hideFab();
                 view.closeKeyboard();
             }
 
