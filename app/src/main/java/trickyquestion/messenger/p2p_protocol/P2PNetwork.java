@@ -74,8 +74,6 @@ public class P2PNetwork {
             NetworkLock.lock();
             for(;;) {
                 try {
-                    if(Network.GetCurrentNetworkState()!=NetworkState.ACTIVE)
-                        NetworkUp.awaitUninterruptibly();
                     MSocket.SendMsg(
                        genHeartbeatPacket(
                                host.getName(),host.getID(), Network.IPAddress(context)),
@@ -110,8 +108,6 @@ public class P2PNetwork {
             NetworkLock.lock();
             String[] received_packet_content;
             for(;;) {
-                if (Network.GetCurrentNetworkState() != NetworkState.ACTIVE)
-                    NetworkUp.awaitUninterruptibly();
                 String received_data = null;
                 try {
                     received_data = MSocket.Receive(Network.broadcastAdress(context),
