@@ -7,7 +7,9 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.view.IMainView;
 import trickyquestion.messenger.util.Constants;
 
@@ -109,8 +111,7 @@ public class MainPresenter implements IMainPresenter {
     public ViewPager.OnPageChangeListener onPageChangeListener() {
         return new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
 
             @Override
             public void onPageSelected(int position) {
@@ -120,9 +121,7 @@ public class MainPresenter implements IMainPresenter {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
-                if (state == 1) view.hideFab();
-            }
+            public void onPageScrollStateChanged(int state) {}
         };
     }
 
