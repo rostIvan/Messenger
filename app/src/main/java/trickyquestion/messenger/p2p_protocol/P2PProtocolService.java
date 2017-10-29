@@ -14,6 +14,7 @@ import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.preference.NetworkPreference;
 
 /**
  * Created by Zen on 17.10.2017.
@@ -22,6 +23,7 @@ import trickyquestion.messenger.util.Constants;
 public class P2PProtocolService extends Service{
     private final LocalBinder mBinder = new LocalBinder();
     private IClient host;
+    private NetworkPreference servicePreference;
 
     public P2PProtocolService(){
     }
@@ -53,7 +55,8 @@ public class P2PProtocolService extends Service{
         public void Start(){
             host = new Host(getApplicationContext());
             Network.StartNetworkListener(getApplicationContext());
-            P2PNetwork = new P2PNetwork(host, getApplicationContext());
+            servicePreference = new NetworkPreference(getApplicationContext());
+            P2PNetwork = new P2PNetwork(host, getApplicationContext(),servicePreference);
             P2PNetwork.Start();
         }
 

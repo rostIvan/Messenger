@@ -26,6 +26,7 @@ import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
+import trickyquestion.messenger.util.preference.NetworkPreference;
 
 /**
  * Created by Zen on 17.10.2017.
@@ -35,6 +36,7 @@ public class P2PNetwork {
     //Requirements
     private Context context;
     private IClient host;
+    private NetworkPreference networkPreference;
 
     private class HeartbeatRunner implements Runnable{
 
@@ -79,8 +81,8 @@ public class P2PNetwork {
                     MSocket.SendMsg(
                        genHeartbeatPacket(
                                host.getName(),host.getID(), Network.IPAddress(context)),
-                       P2PProtocolCfg.CurrentMulticastGroupIP(),
-                       P2PProtocolCfg.CurrentMulticastPort());
+                       networkPreference.getMulticastGroupIp(),
+                       networkPreference.getMulticastPort());
                     //Sleep thread
                     Thread.sleep(2500);
                 } catch (InterruptedException e) {
@@ -113,8 +115,8 @@ public class P2PNetwork {
             for(;;) {
                 if (Network.GetCurrentNetworkState() != NetworkState.ACTIVE)
                     NetworkUp.awaitUninterruptibly();
-                String received_data = MSocket.Receive(P2PProtocolCfg.CurrentMulticastGroupIP(),
-                        P2PProtocolCfg.CurrentMulticastPort()
+                String received_data = MSocket.Receive(networkPreference.getMulticastGroupIp(),
+                        networkPreference.getMulticastPort()
                 );
                 if (received_data != null) {
                     //Split packet string
@@ -169,7 +171,7 @@ public class P2PNetwork {
                 try {
                     //delay execution thread by HEARTBEAT_FREQUENCY / 2
                     //because user registering is async process
-                    Thread.sleep(P2PProtocolCfg.CurrentHeartbeatFrequency() / 2);
+                    Thread.sleep(networkPreference.getHeartbeatFrequency() / 2);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -253,9 +255,10 @@ public class P2PNetwork {
 
     private AsyncList users = new AsyncList();
 
-    P2PNetwork(IClient host, Context context){
+    P2PNetwork(IClient host, Context context, NetworkPreference networkPreference){
         this.context = context;
         this.host = host;
+        this.networkPreference = networkPreference;
         Heartbeat = new Thread(new HeartbeatRunner());
         Listener = new Thread(new ListenerRunner());
         KeepAlive = new Thread(new CleanerRunner());

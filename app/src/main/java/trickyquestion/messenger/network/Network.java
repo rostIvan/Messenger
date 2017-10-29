@@ -35,12 +35,14 @@ public class Network {
                 if (networkInfo.getState() == CONNECTED) {
                     if(Network.networkState!=NetworkState.ACTIVE)
                         for (NetworkListener listener: NetworkListeners) {
-                            listener.OnNetworkStateChange(NetworkState.ACTIVE);
+                            if(listener!=null)
+                                listener.OnNetworkStateChange(NetworkState.ACTIVE);
                         }
                     Network.networkState = NetworkState.ACTIVE;
                 } if(Network.networkState!=NetworkState.INACTIVE)
                     for (NetworkListener listener: NetworkListeners) {
-                        listener.OnNetworkStateChange(NetworkState.ACTIVE);
+                        if(listener!=null)
+                            listener.OnNetworkStateChange(NetworkState.ACTIVE);
                     }
             }
 //            if ("android.net.wifi.WIFI_AP_STATE_CHANGED".equals(action)) {
