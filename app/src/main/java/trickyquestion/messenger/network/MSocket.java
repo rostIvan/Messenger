@@ -1,6 +1,7 @@
 package trickyquestion.messenger.network;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -16,6 +17,7 @@ public class MSocket {
         try {
             MulticastSocket socket = new MulticastSocket(port);
             socket.joinGroup(InetAddress.getByName(groupIP));
+            Log.d("MSocket", "Send packet: " + msg);
             socket.send(new DatagramPacket(msg.getBytes(),msg.getBytes().length));
         } catch (IOException e) {
             e.printStackTrace();
@@ -29,6 +31,11 @@ public class MSocket {
             socket.joinGroup(InetAddress.getByName(groupIP));
             byte[] content = new byte[1000];
             DatagramPacket packet = new DatagramPacket(content,content.length);
+            Log.d("MSocket","Receive packet: " + new String(
+                    packet.getData(),
+                    packet.getOffset(),
+                    packet.getLength()
+            ));
             return new String(
                     packet.getData(),
                     packet.getOffset(),
