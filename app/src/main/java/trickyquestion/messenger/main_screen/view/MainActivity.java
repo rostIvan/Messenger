@@ -23,6 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
+import trickyquestion.messenger.dialogs.AccountPopup;
 import trickyquestion.messenger.dialogs.SettingMenuDialog;
 import trickyquestion.messenger.main_screen.adapter.MainPagerAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends.FriendsFragment;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     private IMainPresenter presenter;
     private SettingMenuDialog dialogMenu;
+    private AccountPopup accountPopup;
     private SearchView searchView;
 
     @Override
@@ -72,13 +74,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         final MenuItem settingMenuItem = menu.findItem(R.id.action_menu);
         settingMenuItem.setOnMenuItemClickListener(presenter.onSettingClick());
-
         final MenuItem myAccount = menu.findItem(R.id.action_account);
         myAccount.setOnMenuItemClickListener(presenter.onAccountMenuItemClick());
-
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         searchView = (SearchView) searchItem.getActionView();
         return true;
@@ -186,6 +185,19 @@ public class MainActivity extends AppCompatActivity implements IMainView {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    @Override
+    public void showAccountPopup() {
+        accountPopup = new AccountPopup(this);
+        accountPopup.show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (accountPopup != null)
+            accountPopup.dismiss();
     }
 
     @Override

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Transparent Rectangle -->
+    <item>
+        <shape android:shape="rectangle">
+            <size
+                android:width="80dp"
+                android:height="80dp" />
+            <solid android:color="@android:color/background_dark" />
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <size
+                android:width="80dp"
+                android:height="80dp" />
+            <corners
+                android:radius="4dp">
+            </corners>
+            <solid android:color="#0000" />
+        </shape>
+    </item>
+
+    <item
+        android:left="90dp"
+        android:right="110dp"
+        android:top="0dp"
+        android:bottom="50dp">
+        <rotate android:fromDegrees="45">
+            <shape android:shape="rectangle">
+                <size
+                    android:width="100dp"
+                    android:height="90dp" />
+                <solid android:color="#000000" />
+            </shape>
+        </rotate>
+    </item>
+
+</layer-list>

@@ -26,5 +26,7 @@ public interface IMainView {
     void finish();
     void closeKeyboard();
 
+    void showAccountPopup();
+
     Context getContext();
 }

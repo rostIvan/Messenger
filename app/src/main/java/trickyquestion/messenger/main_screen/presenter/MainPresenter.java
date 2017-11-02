@@ -101,7 +101,7 @@ public class MainPresenter implements IMainPresenter {
         return new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                view.showToast("Account item click");
+                view.showAccountPopup();
                 return true;
             }
         };
