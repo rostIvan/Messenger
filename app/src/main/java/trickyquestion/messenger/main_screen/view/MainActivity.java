@@ -196,8 +196,18 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     protected void onPause() {
         super.onPause();
+        closeAccountPopup();
+    }
+
+    @Override
+    public void closeAccountPopup() {
         if (accountPopup != null)
             accountPopup.dismiss();
+    }
+
+    @Override
+    public boolean isAccountPopupShowing() {
+        return accountPopup.isShowing();
     }
 
     @Override

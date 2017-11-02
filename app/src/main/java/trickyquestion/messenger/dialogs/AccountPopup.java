@@ -56,6 +56,10 @@ public class AccountPopup {
         });
     }
 
+    public boolean isShowing() {
+        return popupWindow.isShowing();
+    }
+
     public void dismiss() {
         popupWindow.dismiss();
     }

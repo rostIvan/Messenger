@@ -82,6 +82,7 @@ public class MainPresenter implements IMainPresenter {
     @Override
     public void onBackPressed() {
         if (!view.isSearchViewIconified()) view.setSearchViewIconified(true);
+        else if (view.isAccountPopupShowing()) view.closeAccountPopup();
         else view.goBack();
     }
 

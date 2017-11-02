@@ -28,5 +28,9 @@ public interface IMainView {
 
     void showAccountPopup();
 
+    void closeAccountPopup();
+
+    boolean isAccountPopupShowing();
+
     Context getContext();
 }
