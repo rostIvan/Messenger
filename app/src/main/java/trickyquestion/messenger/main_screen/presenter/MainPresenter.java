@@ -7,9 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.view.IMainView;
 import trickyquestion.messenger.util.Constants;
 
@@ -73,7 +71,7 @@ public class MainPresenter implements IMainPresenter {
             return true;
         }
         else if (keyCode == KeyEvent.KEYCODE_MENU) {
-            view.showDialogMenu();
+            view.showSettingMenu();
             return true;
         }
         return false;
@@ -91,7 +89,7 @@ public class MainPresenter implements IMainPresenter {
         return new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                view.showDialogMenu();
+                view.showSettingMenu();
                 return true;
             }
         };

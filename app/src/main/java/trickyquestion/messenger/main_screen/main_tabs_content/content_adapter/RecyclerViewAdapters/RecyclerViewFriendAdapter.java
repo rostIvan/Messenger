@@ -8,8 +8,6 @@ import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.animation.ItemAlphaAnimator;
 
-//TODO: clean imports
-
 public class RecyclerViewFriendAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
     private final IFriendPresenter presenter;

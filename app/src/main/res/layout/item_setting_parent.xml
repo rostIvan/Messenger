@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/parent_setting_item_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_add_friend_circle"/>
+
+    <TextView
+        android:id="@+id/parent_list_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:padding="15dp"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="Setting Title" />
+
+    <ImageButton
+        android:id="@+id/parent_list_item_expand_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="14dp"
+        android:src="@drawable/ic_arrow"
+        android:background="@color/transparent"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="65dp"
+        android:layout_below="@id/parent_list_item_title"
+        android:background="@color/colorGrey"/>
+
+</RelativeLayout>

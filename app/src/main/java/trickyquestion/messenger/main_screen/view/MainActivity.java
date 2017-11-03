@@ -23,13 +23,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
-import trickyquestion.messenger.dialogs.AccountPopup;
-import trickyquestion.messenger.dialogs.SettingMenuDialog;
+import trickyquestion.messenger.account.AccountPopup;
 import trickyquestion.messenger.main_screen.adapter.MainPagerAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends.FriendsFragment;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.MessagesFragment;
 import trickyquestion.messenger.main_screen.presenter.IMainPresenter;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
+import trickyquestion.messenger.setting.view.SettingActivity;
 import trickyquestion.messenger.util.Constants;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
@@ -45,10 +45,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
-    private IMainPresenter presenter;
-    private SettingMenuDialog dialogMenu;
     private AccountPopup accountPopup;
     private SearchView searchView;
+
+    private IMainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,12 +145,11 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
-    public void showDialogMenu() {
-        if (dialogMenu == null)
-            dialogMenu = new SettingMenuDialog(this);
-        dialogMenu.show();
+    public void showSettingMenu() {
+        final Intent i = new Intent(this, SettingActivity.class);
+        startActivity(i);
+        overridePendingTransition(R.anim.translate_top_side, R.anim.translate_bottom_side);
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -161,11 +160,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     protected void onSaveInstanceState(Bundle outState) {
         presenter.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public boolean isDialogShow() {
-        return dialogMenu != null && dialogMenu.isShow();
     }
 
     @Override
@@ -207,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public boolean isAccountPopupShowing() {
-        return accountPopup.isShowing();
+        return accountPopup!= null && accountPopup.isShowing();
     }
 
     @Override

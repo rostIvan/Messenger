@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="60dp">
+
+    <ImageView
+        android:id="@+id/child_setting_item_icon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_add_friend_circle"/>
+
+    <TextView
+        android:id="@+id/child_list_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textSize="14sp"
+        android:layout_marginLeft="50dp"
+        android:textStyle="bold"
+        android:text="Setting child Title" />
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/child_list_item_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:layout_margin="8dp"
+        app:buttonTint="@color/colorPrimaryGreen" />
+
+    <View
+        android:id="@+id/child_separate_small_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="65dp"
+        android:layout_below="@id/child_list_item_title"
+        android:background="@color/colorGrey"/>
+    <View
+        android:id="@+id/child_separate_big_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:visibility="gone"
+        android:layout_marginLeft="0dp"
+        android:layout_below="@id/child_list_item_title"
+        android:background="@color/colorGrey"/>
+</RelativeLayout>
