@@ -1,6 +1,5 @@
 package trickyquestion.messenger.login_screen.ask_password;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -22,6 +21,7 @@ import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.preference.AuthPreference;
 
 
 public class AskPasswordFragment extends Fragment {
@@ -32,19 +32,19 @@ public class AskPasswordFragment extends Fragment {
     EditText pass;
     @BindView(R.id.button_sign_in)
     TextView buttonSignIn;
-    private SharedPreferences preferences;
+    private AuthPreference authPreference;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_ask_pass, container, false);
         ButterKnife.bind(this, view);
-        preferences = view.getContext().getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
+        authPreference = new AuthPreference(this.getContext());
         textViewHello.setText(
                 "Hello, "
-                .concat(preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "someone"))
+                .concat(authPreference.getAccountLogin())
                 .concat(" ")
-                .concat(preferences.getString(Constants.EXTRA_KEY_AUTH_PASSWORD, "someone pass"))
+                .concat(authPreference.getAccountPassword())
         );
         pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimaryGreen), PorterDuff.Mode.SRC_ATOP);
         addPassListeners();
@@ -77,13 +77,10 @@ public class AskPasswordFragment extends Fragment {
     }
 
     private boolean rightPass() {
-        return pass.getText().toString().equals(preferences.getString(Constants.EXTRA_KEY_AUTH_PASSWORD, "someone pass"));
+        return pass.getText().toString().equals(authPreference.getAccountPassword());
     }
     private void signInAccount() {
-        final SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(Constants.EXTRA_PASSWORD_WAS_ENTER, true);
-        editor.apply();
-        editor.commit();
+        authPreference.setPasswordWasEntered(true);
         getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
         getActivity().finish();
     }

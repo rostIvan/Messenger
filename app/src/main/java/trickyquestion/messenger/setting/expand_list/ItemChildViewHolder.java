@@ -1,13 +1,16 @@
-package trickyquestion.messenger.setting.expandList;
+package trickyquestion.messenger.setting.expand_list;
 
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.setting.presenter.SettingPresenter;
+import trickyquestion.messenger.setting.view.ISettingView;
 
 public class ItemChildViewHolder extends ChildViewHolder {
 
@@ -22,8 +25,8 @@ public class ItemChildViewHolder extends ChildViewHolder {
         title = (TextView) itemView.findViewById(R.id.child_list_item_title);
         checkBox = (CheckBox) itemView.findViewById(R.id.child_list_item_check_box);
         imageView = (ImageView) itemView.findViewById(R.id.child_setting_item_icon);
-        bigSeparateLine = (View) itemView.findViewById(R.id.child_separate_big_line);
-        smallSeparateLine = (View) itemView.findViewById(R.id.child_separate_small_line);
+        bigSeparateLine = itemView.findViewById(R.id.child_separate_big_line);
+        smallSeparateLine = itemView.findViewById(R.id.child_separate_small_line);
     }
 
 }

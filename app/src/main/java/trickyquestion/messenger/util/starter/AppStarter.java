@@ -54,7 +54,7 @@ public class AppStarter implements IStarter {
     }
 
     private boolean askPasswordActivated() {
-        return preferences.getBoolean(SettingMenuDialog.EXTRA_ASK_PASSWORD, false);
+        return preferences.getBoolean(Constants.EXTRA_ASK_PASSWORD, false);
     }
 
     private boolean isAuthenticated() {

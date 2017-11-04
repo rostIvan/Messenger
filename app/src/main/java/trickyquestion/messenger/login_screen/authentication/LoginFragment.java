@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.preference.AuthPreference;
 import trickyquestion.messenger.util.validation.LoginValidator;
 
 public class LoginFragment extends Fragment {
@@ -34,21 +35,17 @@ public class LoginFragment extends Fragment {
     @BindView(R.id.button_create_account)
     TextView buttonSignIn;
 
-    private SharedPreferences preferences;
+    private AuthPreference authPreference;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_login_account, container, false);
         ButterKnife.bind(this, view);
-        initSharedPreference();
         setEditTextLineColor(getResources().getColor(R.color.colorPrimaryGreen));
         setupListeners();
+        authPreference = new AuthPreference(this.getContext());
         return view;
-    }
-
-    private void initSharedPreference() {
-        preferences = getContext().getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     private void setEditTextLineColor (final int color) {
@@ -67,7 +64,7 @@ public class LoginFragment extends Fragment {
         final String password = passFiled.getText().toString();
 
         if (isValid(login, password)) {
-            saveAccountDate(login, password);
+            authPreference.setAccountDate(login, password);
             getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
             getActivity().finish();
         }
@@ -81,17 +78,6 @@ public class LoginFragment extends Fragment {
     private boolean isValid(final String login, final String password) {
         final LoginValidator validator = new LoginValidator(login, password);
         return validator.isInputValid();
-    }
-
-    private void saveAccountDate(final String login, final String password) {
-        final SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, login);
-        editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);
-        editor.putString(Constants.EXTRA_KEY_USER_ID, UUID.randomUUID().toString());
-        editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, true);
-
-        editor.apply();
-        editor.commit();
     }
 
     private class LoginTextChangeListener implements TextWatcher {

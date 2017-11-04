@@ -37,7 +37,7 @@ public class MainPresenter implements IMainPresenter {
 
     private void setPasswordEntered(final boolean entered) {
         final SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(Constants.EXTRA_PASSWORD_WAS_ENTER, entered);
+        editor.putBoolean(Constants.EXTRA_PASSWORD_WAS_ENTERED, entered);
         editor.apply();
         editor.commit();
     }

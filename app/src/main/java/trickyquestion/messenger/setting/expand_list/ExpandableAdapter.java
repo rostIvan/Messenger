@@ -1,4 +1,4 @@
-package trickyquestion.messenger.setting.expandList;
+package trickyquestion.messenger.setting.expand_list;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -13,13 +13,17 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import java.util.List;
 
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.setting.presenter.ISettingPresenter;
+import trickyquestion.messenger.setting.view.ISettingView;
 
 public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewHolder, ItemChildViewHolder> {
 
+    private final ISettingPresenter presenter;
     private final List<ParentObject> parentItemList;
 
-    public ExpandableAdapter(Context context, List<ParentObject> parentItemList) {
-        super(context, parentItemList);
+    public ExpandableAdapter(final  ISettingPresenter presenter, List<ParentObject> parentItemList) {
+        super(presenter.getView().getContext(), parentItemList);
+        this.presenter = presenter;
         this.parentItemList = parentItemList;
     }
 
@@ -56,6 +60,7 @@ public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewH
         setBigSeparateLine(itemChildViewHolder, child.isLast());
         final Drawable icon = itemChildViewHolder.itemView.getResources().getDrawable(child.getImageResourse());
         itemChildViewHolder.imageView.setImageDrawable(icon);
+        itemChildViewHolder.itemView.setOnClickListener(new OnChildItemClickListener(presenter, child));
     }
 
     @Override
@@ -63,8 +68,8 @@ public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewH
         return super.getItemCount();
     }
 
-    private void setBigSeparateLine(ItemChildViewHolder itemChildViewHolder, boolean conditional ) {
-        if (conditional) {
+    private void setBigSeparateLine(ItemChildViewHolder itemChildViewHolder, boolean isLastChild) {
+        if (isLastChild) {
             itemChildViewHolder.smallSeparateLine.setVisibility(View.GONE);
             itemChildViewHolder.bigSeparateLine.setVisibility(View.VISIBLE);
         }
@@ -73,5 +78,4 @@ public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewH
             itemChildViewHolder.bigSeparateLine.setVisibility(View.GONE);
         }
     }
-
 }

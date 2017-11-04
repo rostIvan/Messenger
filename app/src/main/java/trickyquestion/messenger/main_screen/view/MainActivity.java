@@ -148,7 +148,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     public void showSettingMenu() {
         final Intent i = new Intent(this, SettingActivity.class);
         startActivity(i);
-        overridePendingTransition(R.anim.translate_top_side, R.anim.translate_bottom_side);
+//        overridePendingTransition(R.anim.translate_top_side, R.anim.translate_bottom_side);
+        overridePendingTransition(R.anim.translate_top_side, R.anim.alpha_to_zero);
     }
 
     @Override

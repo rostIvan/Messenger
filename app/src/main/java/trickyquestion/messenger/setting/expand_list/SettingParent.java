@@ -1,4 +1,4 @@
-package trickyquestion.messenger.setting.expandList;
+package trickyquestion.messenger.setting.expand_list;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
