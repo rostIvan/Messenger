@@ -5,11 +5,13 @@ public class SettingChild {
     private String title;
     private boolean checked;
     private int imageResource;
+    private boolean isLast;
 
-    public SettingChild(final String title, final boolean checked, final int imageResource) {
+    public SettingChild(final String title, final boolean checked, final int imageResource, final boolean isLast) {
         this.title = title;
         this.checked = checked;
         this.imageResource = imageResource;
+        this.isLast = isLast;
     }
 
     public String getTitle() {
@@ -34,5 +36,13 @@ public class SettingChild {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public boolean isLast() {
+        return isLast;
+    }
+
+    public void setLast(boolean last) {
+        isLast = last;
     }
 }

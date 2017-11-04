@@ -53,10 +53,7 @@ public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewH
         itemChildViewHolder.title.setText(child.getTitle());
         itemChildViewHolder.checkBox.setVisibility(child.getTitle().equals("Ask for password") ? View.VISIBLE : View.GONE);
         itemChildViewHolder.checkBox.setChecked(child.isChecked());
-        setBigSeparateLine(
-                itemChildViewHolder,
-                child.getTitle().equals("Log out")
-        );
+        setBigSeparateLine(itemChildViewHolder, child.isLast());
         final Drawable icon = itemChildViewHolder.itemView.getResources().getDrawable(child.getImageResourse());
         itemChildViewHolder.imageView.setImageDrawable(icon);
     }
@@ -76,4 +73,5 @@ public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewH
             itemChildViewHolder.bigSeparateLine.setVisibility(View.GONE);
         }
     }
+
 }
