@@ -2,7 +2,9 @@ package trickyquestion.messenger.account;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import com.daasuu.bl.BubbleLayout;
 import com.daasuu.bl.BubblePopupHelper;
 
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.setting.view.SettingActivity;
 import trickyquestion.messenger.util.Constants;
 
 public class AccountPopup {
@@ -39,19 +42,25 @@ public class AccountPopup {
 
         accountName.setText(getAccountName());
         accountId.setText(getAccountId());
+        changeDataLink.setPaintFlags(changeDataLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         changeDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openSetting();
             }
         });
         changeDataLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                openSetting();
             }
         });
+    }
+
+    private void openSetting() {
+        final Intent i = new Intent(mContext, SettingActivity.class);
+        mContext.startActivity(i);
     }
 
     public boolean isShowing() {
