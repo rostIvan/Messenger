@@ -1,16 +1,13 @@
-package trickyquestion.messenger.setting.expand_list;
+package trickyquestion.messenger.settings_screen.expand_list.holders;
 
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.setting.presenter.SettingPresenter;
-import trickyquestion.messenger.setting.view.ISettingView;
 
 public class ItemChildViewHolder extends ChildViewHolder {
 

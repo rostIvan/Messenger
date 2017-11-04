@@ -29,7 +29,7 @@ import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Frien
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.MessagesFragment;
 import trickyquestion.messenger.main_screen.presenter.IMainPresenter;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
-import trickyquestion.messenger.setting.view.SettingActivity;
+import trickyquestion.messenger.settings_screen.view.SettingActivity;
 import trickyquestion.messenger.util.Constants;
 
 public class MainActivity extends AppCompatActivity implements IMainView {

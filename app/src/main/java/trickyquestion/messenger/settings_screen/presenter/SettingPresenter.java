@@ -1,4 +1,4 @@
-package trickyquestion.messenger.setting.presenter;
+package trickyquestion.messenger.settings_screen.presenter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.setting.expand_list.SettingChild;
-import trickyquestion.messenger.setting.expand_list.SettingParent;
-import trickyquestion.messenger.setting.view.ISettingView;
+import trickyquestion.messenger.settings_screen.expand_list.model.SettingChild;
+import trickyquestion.messenger.settings_screen.expand_list.model.SettingParent;
+import trickyquestion.messenger.settings_screen.view.ISettingView;
 import trickyquestion.messenger.util.preference.AuthPreference;
 
 public class SettingPresenter implements ISettingPresenter {
@@ -102,12 +102,12 @@ public class SettingPresenter implements ISettingPresenter {
 
     @Override
     public void onChangeNameItemClick() {
-        view.showToast("item => change name");
+        view.showChangeLoginDialog();
     }
 
     @Override
     public void onChangePassItemClick() {
-        view.showToast("item => change pass");
+        view.showChangePasswordDialog();
     }
 
     @Override
@@ -140,4 +140,18 @@ public class SettingPresenter implements ISettingPresenter {
     public String getUserId() {
         return authPreference.getAccountId().trim().substring(0, 30).concat(" ... ");
     }
+
+    @Override
+    public void setNewLogin(String login) {
+        // TODO: 05.11.2017 Validate
+        authPreference.setAccountLogin(login);
+    }
+
+    @Override
+    public void setNewPassword(String password) {
+        // TODO: 05.11.2017 Validate
+        authPreference.setAccountPassword(password);
+    }
+
+
 }

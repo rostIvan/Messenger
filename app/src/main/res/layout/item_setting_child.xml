@@ -9,7 +9,7 @@
         android:id="@+id/child_setting_item_icon"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:src="@drawable/ic_add_friend_circle"/>
 
@@ -20,7 +20,7 @@
         android:padding="15dp"
         android:textSize="14sp"
         android:layout_marginLeft="50dp"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:text="Setting child Title" />
 
     <android.support.v7.widget.AppCompatCheckBox
@@ -30,7 +30,7 @@
         android:layout_alignParentRight="true"
         android:visibility="gone"
         android:clickable="false"
-        android:layout_margin="8dp"
+        android:layout_margin="10dp"
         app:buttonTint="@color/colorPrimaryGreen" />
 
     <View

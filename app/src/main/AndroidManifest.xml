@@ -35,7 +35,7 @@
 
         <activity android:name=".login_screen.ask_password.AskPasswordActivity" />
 
-        <activity android:name=".setting.view.SettingActivity" />
+        <activity android:name=".settings_screen.view.SettingActivity" />
 
         <activity
             android:name=".chat_screen.view.ChatActivity"

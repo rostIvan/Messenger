@@ -1,9 +1,14 @@
-package trickyquestion.messenger.setting.view;
+package trickyquestion.messenger.settings_screen.view;
 
 import android.content.Context;
 
 public interface ISettingView {
     void goBack();
     Context getContext();
+
+    void showChangeLoginDialog();
+
+    void showChangePasswordDialog();
+
     void showToast(String text);
 }

@@ -73,9 +73,16 @@ public class AuthPreference {
         return preferences.getString(Constants.EXTRA_KEY_AUTH_PASSWORD, "someone pass");
     }
 
-    public void setPasswordWasEntered(boolean wasEntered) {
+    public void setUserAuthenticated(boolean userAuthenticated) {
         final SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(Constants.EXTRA_PASSWORD_WAS_ENTERED, wasEntered);
+        editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, userAuthenticated);
+        editor.apply();
+        editor.commit();
+    }
+
+    public void setAccountId(String id) {
+        final SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(Constants.EXTRA_KEY_USER_ID, id);
         editor.apply();
         editor.commit();
     }

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -65,6 +66,7 @@ public class LoginFragment extends Fragment {
 
         if (isValid(login, password)) {
             authPreference.setAccountDate(login, password);
+            authPreference.setAccountId(UUID.randomUUID().toString());
             getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
             getActivity().finish();
         }

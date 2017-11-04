@@ -1,7 +1,6 @@
 package trickyquestion.messenger.login_screen.ask_password;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +19,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.view.MainActivity;
-import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.preference.AuthPreference;
 
 
@@ -80,7 +78,7 @@ public class AskPasswordFragment extends Fragment {
         return pass.getText().toString().equals(authPreference.getAccountPassword());
     }
     private void signInAccount() {
-        authPreference.setPasswordWasEntered(true);
+        authPreference.setUserAuthenticated(true);
         getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
         getActivity().finish();
     }

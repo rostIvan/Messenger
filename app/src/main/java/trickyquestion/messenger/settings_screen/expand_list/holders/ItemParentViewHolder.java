@@ -1,4 +1,4 @@
-package trickyquestion.messenger.setting.expand_list;
+package trickyquestion.messenger.settings_screen.expand_list.holders;
 
 
 import android.view.View;

@@ -1,7 +1,5 @@
 package trickyquestion.messenger.main_screen.presenter;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
@@ -9,16 +7,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import trickyquestion.messenger.main_screen.view.IMainView;
-import trickyquestion.messenger.util.Constants;
 
 public class MainPresenter implements IMainPresenter {
 
     private final IMainView view;
-    private final SharedPreferences preferences;
 
     public MainPresenter(final IMainView view) {
         this.view = view;
-        this.preferences = view.getContext().getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -29,17 +24,8 @@ public class MainPresenter implements IMainPresenter {
         view.setFabBehavior();
     }
 
-
     @Override
     public void onFinish() {
-        setPasswordEntered(false);
-    }
-
-    private void setPasswordEntered(final boolean entered) {
-        final SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(Constants.EXTRA_PASSWORD_WAS_ENTERED, entered);
-        editor.apply();
-        editor.commit();
     }
 
     @Override

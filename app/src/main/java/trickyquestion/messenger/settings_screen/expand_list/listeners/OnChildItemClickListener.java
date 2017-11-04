@@ -1,11 +1,11 @@
-package trickyquestion.messenger.setting.expand_list;
+package trickyquestion.messenger.settings_screen.expand_list.listeners;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.setting.presenter.ISettingPresenter;
+import trickyquestion.messenger.settings_screen.expand_list.model.SettingChild;
+import trickyquestion.messenger.settings_screen.presenter.ISettingPresenter;
 
 public class OnChildItemClickListener implements View.OnClickListener {
 

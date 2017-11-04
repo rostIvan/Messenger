@@ -1,4 +1,4 @@
-package trickyquestion.messenger.setting.presenter;
+package trickyquestion.messenger.settings_screen.presenter;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,7 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
 
-import trickyquestion.messenger.setting.view.ISettingView;
+import trickyquestion.messenger.settings_screen.view.ISettingView;
 
 public interface ISettingPresenter {
     View.OnClickListener onBackPressed();
@@ -23,4 +23,8 @@ public interface ISettingPresenter {
 
     String  getUserName();
     String  getUserId();
+
+    void setNewLogin(String login);
+
+    void setNewPassword(String password);
 }

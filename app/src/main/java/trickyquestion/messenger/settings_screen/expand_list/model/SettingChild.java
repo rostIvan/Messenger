@@ -1,4 +1,4 @@
-package trickyquestion.messenger.setting.expand_list;
+package trickyquestion.messenger.settings_screen.expand_list.model;
 
 public class SettingChild {
 

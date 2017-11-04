@@ -16,17 +16,19 @@ import com.daasuu.bl.BubbleLayout;
 import com.daasuu.bl.BubblePopupHelper;
 
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.setting.view.SettingActivity;
+import trickyquestion.messenger.settings_screen.view.SettingActivity;
 import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.preference.AuthPreference;
 
 public class AccountPopup {
     private final Context mContext;
-    private final SharedPreferences preferences;
     private PopupWindow popupWindow;
+
+    private AuthPreference authPreference;
 
     public AccountPopup(final Context context) {
         this.mContext = context;
-        preferences = context.getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
+        authPreference = new AuthPreference(context);
     }
 
     public void show() {
@@ -83,10 +85,10 @@ public class AccountPopup {
     }
 
     private String getAccountName() {
-        return preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "__NAN__");
+        return authPreference.getAccountLogin();
     }
 
     private String getAccountId() {
-        return "id: ".concat(preferences.getString(Constants.EXTRA_KEY_USER_ID, "_NAN_").substring(0, 15).concat(" ..."));
+        return authPreference.getAccountId().substring(0, 15).concat(" ...");
     }
 }

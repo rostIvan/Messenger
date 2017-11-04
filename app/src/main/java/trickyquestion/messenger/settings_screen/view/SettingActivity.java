@@ -1,13 +1,13 @@
-package trickyquestion.messenger.setting.view;
+package trickyquestion.messenger.settings_screen.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +18,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.setting.expand_list.ExpandableAdapter;
-import trickyquestion.messenger.setting.presenter.ISettingPresenter;
-import trickyquestion.messenger.setting.presenter.SettingPresenter;
+import trickyquestion.messenger.settings_screen.expand_list.adapter.ExpandableAdapter;
+import trickyquestion.messenger.settings_screen.presenter.ISettingPresenter;
+import trickyquestion.messenger.settings_screen.presenter.SettingPresenter;
+import trickyquestion.messenger.settings_screen.view.dialogs.ChangeLoginDialog;
+import trickyquestion.messenger.settings_screen.view.dialogs.ChangePasswordDialog;
+import trickyquestion.messenger.settings_screen.view.dialogs.IChangeDialog;
 
 public class SettingActivity extends AppCompatActivity implements ISettingView {
 
@@ -32,13 +35,12 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
     TextView id;
 
     private ExpandableAdapter adapter;
-
     private ISettingPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting_menu);
+        setContentView(R.layout.activity_setting_menu);
         ButterKnife.bind(this);
         if (presenter == null) presenter = new SettingPresenter(this);
         customizeToolbar();
@@ -95,6 +97,45 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void showChangeLoginDialog() {
+        final IChangeDialog dialog = new ChangeLoginDialog();
+        dialog.setOnPositiveClickListener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(SettingActivity.this, "Login was changed", Toast.LENGTH_SHORT).show();
+                presenter.setNewLogin(dialog.getEnteredText());
+                login.setText(dialog.getEnteredText());
+            }
+        });
+        dialog.setOnNegativeClickListener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show(getSupportFragmentManager(), "change login");
+    }
+
+    @Override
+    public void showChangePasswordDialog() {
+        final IChangeDialog dialog = new ChangePasswordDialog();
+        dialog.setOnPositiveClickListener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(SettingActivity.this, "Password was changed", Toast.LENGTH_SHORT).show();
+                presenter.setNewPassword(dialog.getEnteredText());
+            }
+        });
+        dialog.setOnNegativeClickListener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show(getSupportFragmentManager(), "change password");
     }
 
     @Override
