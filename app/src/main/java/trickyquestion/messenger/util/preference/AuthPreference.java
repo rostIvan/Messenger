@@ -86,4 +86,8 @@ public class AuthPreference {
         editor.apply();
         editor.commit();
     }
+
+    public boolean isUserAuthenticated() {
+        return preferences.getBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, false);
+    }
 }

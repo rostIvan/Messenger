@@ -30,6 +30,7 @@ public class AskPasswordFragment extends Fragment {
     EditText pass;
     @BindView(R.id.button_sign_in)
     TextView buttonSignIn;
+
     private AuthPreference authPreference;
 
     @Nullable

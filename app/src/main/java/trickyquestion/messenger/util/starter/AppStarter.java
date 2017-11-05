@@ -3,23 +3,21 @@ package trickyquestion.messenger.util.starter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
-import trickyquestion.messenger.dialogs.SettingMenuDialog;
 import trickyquestion.messenger.login_screen.ask_password.AskPasswordActivity;
 import trickyquestion.messenger.login_screen.authentication.LoginScreenActivity;
 import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.p2p_protocol.ProtocolClientSide;
-import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.preference.AuthPreference;
 
 public class AppStarter implements IStarter {
 
     private final Context context;
-    private final SharedPreferences preferences;
+    private final AuthPreference authPreference;
 
     public AppStarter(final Context context) {
         this.context = context;
-        this.preferences = context.getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
+        this.authPreference = new AuthPreference(context);
     }
 
     @Override
@@ -54,10 +52,10 @@ public class AppStarter implements IStarter {
     }
 
     private boolean askPasswordActivated() {
-        return preferences.getBoolean(Constants.EXTRA_ASK_PASSWORD, false);
+        return authPreference.askPassword();
     }
 
     private boolean isAuthenticated() {
-        return preferences.getBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, false);
+        return authPreference.isUserAuthenticated();
     }
 }
