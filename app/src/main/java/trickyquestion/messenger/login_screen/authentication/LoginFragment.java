@@ -1,8 +1,6 @@
 package trickyquestion.messenger.login_screen.authentication;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Random;
 import java.util.UUID;
 
 import butterknife.BindView;
@@ -24,9 +21,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.view.MainActivity;
-import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.preference.AuthPreference;
-import trickyquestion.messenger.util.validation.LoginValidator;
+import trickyquestion.messenger.util.validation.RegistrationDataValidator;
 
 public class LoginFragment extends Fragment {
     @BindView(R.id.nick_field)
@@ -78,7 +74,7 @@ public class LoginFragment extends Fragment {
     }
 
     private boolean isValid(final String login, final String password) {
-        final LoginValidator validator = new LoginValidator(login, password);
+        final RegistrationDataValidator validator = new RegistrationDataValidator(login, password);
         return validator.isInputValid();
     }
 

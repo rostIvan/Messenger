@@ -14,6 +14,7 @@ import trickyquestion.messenger.settings_screen.expand_list.model.SettingChild;
 import trickyquestion.messenger.settings_screen.expand_list.model.SettingParent;
 import trickyquestion.messenger.settings_screen.view.ISettingView;
 import trickyquestion.messenger.util.preference.AuthPreference;
+import trickyquestion.messenger.util.validation.UserInputValidator;
 
 public class SettingPresenter implements ISettingPresenter {
 
@@ -143,14 +144,25 @@ public class SettingPresenter implements ISettingPresenter {
 
     @Override
     public void setNewLogin(String login) {
-        // TODO: 05.11.2017 Validate
-        authPreference.setAccountLogin(login);
+        if (UserInputValidator.isLoginValid(login)) {
+            view.showToast("Login was changed");
+            authPreference.setAccountLogin(login);
+            view.setNewLoginText(login);
+        } else {
+            view.showToast("Entered login isn't correct, try again");
+            view.showChangeLoginDialog();
+        }
     }
 
     @Override
     public void setNewPassword(String password) {
-        // TODO: 05.11.2017 Validate
-        authPreference.setAccountPassword(password);
+        if (UserInputValidator.isPasswordValid(password)) {
+            view.showToast("Password was changed");
+            authPreference.setAccountPassword(password);
+        } else {
+            view.showToast("Entered password isn't correct, try again");
+            view.showChangePasswordDialog();
+        }
     }
 
 

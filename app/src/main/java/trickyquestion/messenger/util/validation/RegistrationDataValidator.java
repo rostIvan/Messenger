@@ -4,12 +4,12 @@ import android.support.annotation.NonNull;
 
 import java.util.regex.Pattern;
 
-public class LoginValidator {
+public class RegistrationDataValidator {
 
     private final String name;
     private final String pass;
 
-    public LoginValidator(@NonNull final String name, @NonNull final String pass) {
+    public RegistrationDataValidator(@NonNull final String name, @NonNull final String pass) {
         this.name = name;
         this.pass = pass;
     }

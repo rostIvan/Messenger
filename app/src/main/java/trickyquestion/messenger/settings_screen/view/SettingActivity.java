@@ -105,9 +105,7 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
         dialog.setOnPositiveClickListener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(SettingActivity.this, "Login was changed", Toast.LENGTH_SHORT).show();
                 presenter.setNewLogin(dialog.getEnteredText());
-                login.setText(dialog.getEnteredText());
             }
         });
         dialog.setOnNegativeClickListener(new DialogInterface.OnClickListener() {
@@ -125,7 +123,6 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
         dialog.setOnPositiveClickListener(new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(SettingActivity.this, "Password was changed", Toast.LENGTH_SHORT).show();
                 presenter.setNewPassword(dialog.getEnteredText());
             }
         });
@@ -136,6 +133,11 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
             }
         });
         dialog.show(getSupportFragmentManager(), "change password");
+    }
+
+    @Override
+    public void setNewLoginText(final String loginText) {
+        login.setText(loginText);
     }
 
     @Override

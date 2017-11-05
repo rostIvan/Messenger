@@ -7,8 +7,9 @@ public interface ISettingView {
     Context getContext();
 
     void showChangeLoginDialog();
-
     void showChangePasswordDialog();
+
+    void setNewLoginText(String loginText);
 
     void showToast(String text);
 }
