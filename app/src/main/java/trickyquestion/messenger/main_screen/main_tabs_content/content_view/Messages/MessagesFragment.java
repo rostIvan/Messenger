@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.view.ChatActivity;
-import trickyquestion.messenger.dialogs.FriendProfileView;
+import trickyquestion.messenger.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.RecyclerViewAdapters.RecyclerViewMessageAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.IMessagePresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.MessagePresenter;
@@ -30,7 +30,6 @@ public class MessagesFragment extends Fragment implements IMessageView {
     RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout refreshLayout;
-    private FriendProfileView friendProfileView;
 
     public static MessagesFragment newInstance() {
         final Bundle args = new Bundle();
@@ -98,28 +97,20 @@ public class MessagesFragment extends Fragment implements IMessageView {
     }
 
     @Override
-    public void showFriendProfile() {
-        if (friendProfileView == null)
-            friendProfileView = new FriendProfileView(getContext());
-        friendProfileView.show();
-    }
-
-    @Override
-    public boolean isFriendProfileOpen() {
-        return friendProfileView != null && friendProfileView.isShowing();
-    }
-    @Override
-    public void dismissPhotoDialog() {
-        if (friendProfileView != null && friendProfileView.isShowing()) {
-            friendProfileView.dismiss();
-        }
-    }
-
-    @Override
     public void showChatActivity(final Message message) {
         final Intent i = new Intent(this.getContext(), ChatActivity.class);
         i.putExtra(ChatActivity.FRIEND_NAME_EXTRA, message.getNameSender());
         startActivity(i);
         getActivity().overridePendingTransition(R.anim.translate_left_slide, R.anim.alpha_to_zero);
+    }
+
+    @Override
+    public void showFriendProfile(String nameSender) {
+        final FriendPhotoDialog dialog = new FriendPhotoDialog();
+        final Bundle bundle = new Bundle();
+        bundle.putString("name", nameSender);
+        bundle.putBoolean("online", true);
+        dialog.setArguments(bundle);
+        dialog.show(getFragmentManager(), "profile fragment");
     }
 }

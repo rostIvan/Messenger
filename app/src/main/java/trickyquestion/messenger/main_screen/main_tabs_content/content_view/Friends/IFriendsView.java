@@ -1,10 +1,8 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends;
 
 import android.content.Context;
-import android.view.View;
 
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
-import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 
 public interface IFriendsView {
     Context getFragmentContext();
@@ -13,13 +11,7 @@ public interface IFriendsView {
 
     void notifyRecyclerDataChange();
 
-    void startAddFriendActivity();
-
-    void showFriendProfile();
-
-    boolean isFriendProfileOpen();
-
-    void dismissPhotoDialog();
+    void showFriendProfile(String name);
 
     String getSearchQuery();
 

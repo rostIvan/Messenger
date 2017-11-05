@@ -25,7 +25,6 @@ public class FriendPresenter implements IFriendPresenter {
 
     private IFriendsView view;
     private List<Friend> friendList;
-    private static boolean profileWasOpened;
     private String searchQuery;
 
     public FriendPresenter(final IFriendsView view) {
@@ -42,7 +41,6 @@ public class FriendPresenter implements IFriendPresenter {
 
     @Override
     public void onStart() {
-        if (profileWasOpened) view.showFriendProfile();
     }
 
     @Override
@@ -56,8 +54,6 @@ public class FriendPresenter implements IFriendPresenter {
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        profileWasOpened = view.isFriendProfileOpen();
-        view.dismissPhotoDialog();
         if (view.getSearchQuery() != null && !view.getSearchQuery().isEmpty())
             outState.putString("svQuery", view.getSearchQuery());
     }
@@ -140,7 +136,7 @@ public class FriendPresenter implements IFriendPresenter {
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.showFriendProfile();
+                view.showFriendProfile(friend.getName());
             }
         });
         holder.itemView.setOnCreateContextMenuListener(new onHolderCreateContextMenu(holder, friend));

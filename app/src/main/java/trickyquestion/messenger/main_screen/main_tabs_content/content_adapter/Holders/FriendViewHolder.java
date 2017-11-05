@@ -9,8 +9,6 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import trickyquestion.messenger.R;
 
-//TODO:clean imports
-
 public class FriendViewHolder extends RecyclerView.ViewHolder {
 
     public @BindView(R.id.friend_name)

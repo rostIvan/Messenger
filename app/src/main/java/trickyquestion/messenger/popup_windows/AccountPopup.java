@@ -1,4 +1,4 @@
-package trickyquestion.messenger.account;
+package trickyquestion.messenger.popup_windows;
 
 import android.app.Activity;
 import android.content.Context;

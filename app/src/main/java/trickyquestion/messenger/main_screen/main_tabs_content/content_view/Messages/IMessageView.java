@@ -13,9 +13,6 @@ public interface IMessageView {
     void setupSwipeRefreshLayout();
     void setRefreshing(final boolean isRefresh);
 
-    void showFriendProfile();
-    boolean isFriendProfileOpen();
-    void dismissPhotoDialog();
-
     void showChatActivity(Message message);
+    void showFriendProfile(String nameSender);
 }

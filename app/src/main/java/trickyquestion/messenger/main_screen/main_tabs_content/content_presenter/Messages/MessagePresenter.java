@@ -26,7 +26,6 @@ public class MessagePresenter implements IMessagePresenter {
     private final IMessageView view;
     private List<Message> messageList;
     private static boolean wasRefreshStarted;
-    private static boolean profileWasOpened;
 
     public MessagePresenter(final IMessageView view) {
         this.view = view;
@@ -45,7 +44,6 @@ public class MessagePresenter implements IMessagePresenter {
 
     @Override
     public void onStart() {
-        if (profileWasOpened) view.showFriendProfile();
         if (wasRefreshStarted) {
             view.setRefreshing(true);
             new Handler().postDelayed(new Runnable() {
@@ -65,8 +63,6 @@ public class MessagePresenter implements IMessagePresenter {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        profileWasOpened = view.isFriendProfileOpen();
-        view.dismissPhotoDialog();
     }
 
 
@@ -131,7 +127,7 @@ public class MessagePresenter implements IMessagePresenter {
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                view.showFriendProfile();
+                view.showFriendProfile(message.getNameSender());
             }
         });
 

@@ -15,19 +15,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.melnykov.fab.FloatingActionButton;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
 import trickyquestion.messenger.chat_screen.view.ChatActivity;
-import trickyquestion.messenger.dialogs.FriendProfileView;
+import trickyquestion.messenger.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.RecyclerViewAdapters.RecyclerViewFriendAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends.FriendPresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends.IFriendPresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
-import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 
 public class FriendsFragment extends Fragment implements IFriendsView {
 
@@ -37,7 +33,6 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     RecyclerView recyclerView;
 
     private SearchView searchView;
-    private FriendProfileView friendProfileView;
 
     public static FriendsFragment newInstance() {
         final Bundle args = new Bundle();
@@ -110,30 +105,14 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
-
     @Override
-    public void startAddFriendActivity() {
-        final Intent intent = new Intent(getContext(), AddFriendActivity.class);
-        getContext().startActivity(intent);
-    }
-
-    @Override
-    public void showFriendProfile() {
-        if (friendProfileView == null)
-            friendProfileView = new FriendProfileView(getContext());
-        friendProfileView.show();
-    }
-
-    @Override
-    public boolean isFriendProfileOpen() {
-        return friendProfileView != null && friendProfileView.isShowing();
-    }
-
-    @Override
-    public void dismissPhotoDialog() {
-        if (friendProfileView != null && friendProfileView.isShowing()) {
-            friendProfileView.dismiss();
-        }
+    public void showFriendProfile(String name) {
+        final FriendPhotoDialog dialog = new FriendPhotoDialog();
+        final Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        bundle.putBoolean("online", true);
+        dialog.setArguments(bundle);
+        dialog.show(getFragmentManager(), "profile fragment");
     }
 
     @Override

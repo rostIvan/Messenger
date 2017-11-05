@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.view.AddFriendActivity;
-import trickyquestion.messenger.account.AccountPopup;
+import trickyquestion.messenger.popup_windows.AccountPopup;
 import trickyquestion.messenger.main_screen.adapter.MainPagerAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends.FriendsFragment;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Messages.MessagesFragment;
