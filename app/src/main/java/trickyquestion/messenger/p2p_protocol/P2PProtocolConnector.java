@@ -18,7 +18,6 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
 public class P2PProtocolConnector {
     static private P2PProtocolService.LocalBinder bind;
     static private boolean bound;
-    static private IClient client;
 
     /**
      * Service connector object for connecting P2PProtocolService
@@ -52,7 +51,7 @@ public class P2PProtocolConnector {
      *
      * @param context from caller
      */
-    static public void ConnectService(Context context) {
+    static private void ConnectService(Context context) {
         //bind service
         context.bindService(new Intent(context, P2PProtocolService.class), sConn, Context.BIND_AUTO_CREATE);
         //start service

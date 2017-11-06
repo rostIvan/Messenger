@@ -14,16 +14,16 @@ import java.net.SocketAddress;
  */
 
 public class MSocket {
-    static public void SendMsg(String msg,String groupIP, int port){
+    static public void SendMsg(String msg, String groupIP, int port){
         try {
             MulticastSocket socket = new MulticastSocket(port);
             socket.joinGroup(InetAddress.getByName(groupIP));
-            //set broadcasting
             socket.setBroadcast(true);
             socket.setReuseAddress(true);
             socket.setLoopbackMode(false);
             Log.d("MSocket", "Send packet: " + msg);
-            socket.send(new DatagramPacket(msg.getBytes(),msg.getBytes().length));
+            socket.send(new DatagramPacket(msg.getBytes(),msg.getBytes().length, InetAddress.getByName(groupIP),port));
+            socket.leaveGroup(InetAddress.getByName(groupIP));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,21 +35,17 @@ public class MSocket {
             MulticastSocket socket = new MulticastSocket(port);
             socket.joinGroup(InetAddress.getByName(groupIP));
             //set broadcasting
-            socket.setBroadcast(true);
-            socket.setReuseAddress(true);
-            socket.setLoopbackMode(false);
-            byte[] content = new byte[1000];
+            byte[] content = new byte[256];
             DatagramPacket packet = new DatagramPacket(content,content.length);
-            Log.d("MSocket","Receive packet: " + new String(
-                    packet.getData(),
-                    packet.getOffset(),
-                    packet.getLength()
-            ));
-            return new String(
+            socket.receive(packet);
+            String data = new String(
                     packet.getData(),
                     packet.getOffset(),
                     packet.getLength()
             );
+            Log.d("MSocket","Receive packet: " + data);
+            socket.leaveGroup(InetAddress.getByName(groupIP));
+            return data;
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -25,13 +25,13 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 import static android.content.Context.WIFI_SERVICE;
 import static android.net.NetworkInfo.State.CONNECTED;
 import static android.net.wifi.WifiManager.WIFI_STATE_ENABLED;
 
 public class Network {
-
-    private static List<NetworkListener> NetworkListeners = new ArrayList<>();
 
     private static class Receiver extends BroadcastReceiver{
         @Override
@@ -41,16 +41,11 @@ public class Network {
                 NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (networkInfo.getState() == CONNECTED) {
                     if(Network.networkState!=NetworkState.ACTIVE)
-                            for (NetworkListener listener: NetworkListeners)
-                            if(listener != null)
-                                listener.OnNetworkStateChange(NetworkState.ACTIVE);
+                        EventBus.getDefault().post(new NetworkStateChanged(networkState));
                     Network.networkState = NetworkState.ACTIVE;
                 }
                 if(Network.networkState!=NetworkState.INACTIVE)
-                    for (NetworkListener listener: NetworkListeners) {
-                        if(listener != null)
-                            listener.OnNetworkStateChange(NetworkState.ACTIVE);
-                    }
+                    EventBus.getDefault().post(new NetworkStateChanged(networkState));
             }
 //            if ("android.net.wifi.WIFI_AP_STATE_CHANGED".equals(action)) {
 //                int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
@@ -118,12 +113,5 @@ public class Network {
 
     @Contract(pure = true)
     public static NetworkState GetCurrentNetworkState(){return networkState;}
-
-    public static void RegisterListener(NetworkListener listener){
-        NetworkListeners.add(listener);
-    }
-
-    public interface NetworkListener {
-        void OnNetworkStateChange(NetworkState newState);
-    }
 }
+
