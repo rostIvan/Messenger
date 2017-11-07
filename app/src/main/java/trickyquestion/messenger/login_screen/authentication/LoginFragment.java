@@ -62,7 +62,7 @@ public class LoginFragment extends Fragment {
         final String password = passFiled.getText().toString();
 
         if (isValid(login, password)) {
-            authPreference.setAccountDate(login, password);
+            authPreference.setAccountData(login, password);
             authPreference.setAccountId(UUID.randomUUID().toString());
             getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
             P2PProtocolConnector.TryStart(this.getContext());

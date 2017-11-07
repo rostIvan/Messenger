@@ -60,14 +60,14 @@ public class SettingPresenter implements ISettingPresenter {
     private SettingParent getFirstParent() {
         final SettingParent parent1 = new SettingParent();
         parent1.setTitle("Account Setting");
-        parent1.setImageResourse(R.drawable.ic_settings_primary_green);
+        parent1.setImageResource(R.drawable.ic_settings_primary_green);
         return parent1;
     }
 
     private SettingParent getSecondParent() {
         final SettingParent parent2 = new SettingParent();
         parent2.setTitle("Notification");
-        parent2.setImageResourse(R.drawable.ic_notification_primary_green);
+        parent2.setImageResource(R.drawable.ic_notification_primary_green);
         return parent2;
     }
 
@@ -75,7 +75,7 @@ public class SettingPresenter implements ISettingPresenter {
     private SettingParent getThirdParent() {
         final SettingParent parent3 = new SettingParent();
         parent3.setTitle("Color managment");
-        parent3.setImageResourse(R.drawable.ic_color_managment_primary_green);
+        parent3.setImageResource(R.drawable.ic_color_managment_primary_green);
         return parent3;
     }
 
@@ -119,7 +119,8 @@ public class SettingPresenter implements ISettingPresenter {
 
     @Override
     public void onLogOutItemClick() {
-        authPreference.clearAccoutDate();
+        authPreference.clearAccountData();
+        authPreference.setUserAuthenticated(false);
         restartApp(view.getContext());
     }
 

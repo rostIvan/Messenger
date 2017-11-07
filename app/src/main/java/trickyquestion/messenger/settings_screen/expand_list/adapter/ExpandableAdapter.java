@@ -49,7 +49,7 @@ public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewH
     public void onBindParentViewHolder(ItemParentViewHolder itemParentViewHolder, int i, Object parentObject) {
         final SettingParent parent = (SettingParent) parentObject;
         itemParentViewHolder.settingParentTitle.setText(parent.getTitle());
-        final Drawable icon = itemParentViewHolder.itemView.getResources().getDrawable(parent.getImageResourse());
+        final Drawable icon = itemParentViewHolder.itemView.getResources().getDrawable(parent.getImageResource());
         itemParentViewHolder.imageView.setImageDrawable(icon);
     }
 
@@ -60,7 +60,7 @@ public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewH
         itemChildViewHolder.checkBox.setVisibility(child.getTitle().equals("Ask for password") ? View.VISIBLE : View.GONE);
         itemChildViewHolder.checkBox.setChecked(child.isChecked());
         setBigSeparateLine(itemChildViewHolder, child.isLast());
-        final Drawable icon = itemChildViewHolder.itemView.getResources().getDrawable(child.getImageResourse());
+        final Drawable icon = itemChildViewHolder.itemView.getResources().getDrawable(child.getImageResource());
         itemChildViewHolder.imageView.setImageDrawable(icon);
         itemChildViewHolder.itemView.setOnClickListener(new OnChildItemClickListener(presenter, child));
     }

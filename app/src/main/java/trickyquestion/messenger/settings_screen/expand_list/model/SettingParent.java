@@ -5,15 +5,15 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import java.util.List;
 
 public class SettingParent implements ParentObject {
-    private List<Object> childrenlist;
+    private List<Object> childrenList;
     private String title;
-    private int imageResourse;
+    private int imageResource;
 
     public SettingParent() {
     }
 
     public SettingParent(List<Object> mChildrenList) {
-        this.childrenlist = mChildrenList;
+        this.childrenList = mChildrenList;
     }
 
     public void setTitle(String title) {
@@ -24,21 +24,21 @@ public class SettingParent implements ParentObject {
         return title;
     }
 
-    public void setImageResourse(int imageResourse) {
-        this.imageResourse = imageResourse;
+    public void setImageResource(int imageResource) {
+        this.imageResource = imageResource;
     }
 
-    public int getImageResourse() {
-        return imageResourse;
+    public int getImageResource() {
+        return imageResource;
     }
 
     @Override
     public List<Object> getChildObjectList() {
-        return childrenlist;
+        return childrenList;
     }
 
     @Override
     public void setChildObjectList(List<Object> list) {
-        childrenlist = list;
+        childrenList = list;
     }
 }

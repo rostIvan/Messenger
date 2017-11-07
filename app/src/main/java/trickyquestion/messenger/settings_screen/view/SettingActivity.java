@@ -44,11 +44,11 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
         ButterKnife.bind(this);
         if (presenter == null) presenter = new SettingPresenter(this);
         customizeToolbar();
-        setUserDate();
+        setUserData();
         customizeRecycler();
     }
 
-    private void setUserDate() {
+    private void setUserData() {
         login.setText(presenter.getUserName());
         id.setText(presenter.getUserId());
     }

@@ -30,7 +30,7 @@ public class SettingChild {
         this.imageResource = imageResource;
     }
 
-    public int getImageResourse() {
+    public int getImageResource() {
         return imageResource;
     }
 
