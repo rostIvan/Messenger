@@ -12,5 +12,5 @@ public interface IClient extends IFriend {
     String getImage();
 
     void setName(String new_name);
-    void recreate(UUID id, String name, String network_address);
+    void reCreate(UUID id, String name, String network_address);
 }

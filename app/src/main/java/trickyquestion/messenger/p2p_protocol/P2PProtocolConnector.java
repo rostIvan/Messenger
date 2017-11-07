@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
-import java.util.UUID;
-
 import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
-import trickyquestion.messenger.util.Constants;
 
 /**
  * Created by Zen on 11.10.2017.
@@ -18,10 +15,9 @@ import trickyquestion.messenger.util.Constants;
 /**
  * Represent client side for protocol, simple binding service
  */
-public class ProtocolClientSide {
-    static private P2ProtocolService.LocalBinder bind;
+public class P2PProtocolConnector {
+    static private P2PProtocolService.LocalBinder bind;
     static private boolean bound;
-    static private IClient client;
 
     /**
      * Service connector object for connecting P2PProtocolService
@@ -30,7 +26,7 @@ public class ProtocolClientSide {
 
         public void onServiceConnected(ComponentName name, IBinder binder) {
             //get binder
-            bind = (P2ProtocolService.LocalBinder) binder;
+            bind = (P2PProtocolService.LocalBinder) binder;
             //start service
             bind.Start();
             //signalize that service connected
@@ -55,11 +51,11 @@ public class ProtocolClientSide {
      *
      * @param context from caller
      */
-    static public void ConnectService(Context context) {
+    static private void ConnectService(Context context) {
         //bind service
-        context.bindService(new Intent(context, P2ProtocolService.class), sConn, Context.BIND_AUTO_CREATE);
+        context.bindService(new Intent(context, P2PProtocolService.class), sConn, Context.BIND_AUTO_CREATE);
         //start service
-        context.startService(new Intent(context, P2ProtocolService.class));
+        context.startService(new Intent(context, P2PProtocolService.class));
     }
 
     /**
@@ -67,7 +63,7 @@ public class ProtocolClientSide {
      *
      * @return binder which represent service or NULL if service not connected
      */
-    static public P2ProtocolService.LocalBinder ProtocolInterface() {
+    static public P2PProtocolService.LocalBinder ProtocolInterface() {
         //if service connected return bind
         if (bound) return bind;
         else return null;
