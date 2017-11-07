@@ -10,7 +10,7 @@ import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
 public class FriendsGetter {
-    public static List<IFriend> getFriends(int size) {
+    public static List<IFriend> getFriends() {
         final List<IFriend> ret = new ArrayList<>();
         final List<IUser> list = P2PProtocolConnector.ProtocolInterface().getUsers();
         for (IUser user : list) {

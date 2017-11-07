@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import io.realm.Realm;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.adapter.AddFriendViewHolder;
@@ -15,6 +16,8 @@ import trickyquestion.messenger.add_friend_screen.model.IFriend;
 import trickyquestion.messenger.add_friend_screen.view.IAddFriendView;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
+import trickyquestion.messenger.p2p_protocol.P2PNetwork;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.temp_impl.FriendsGetter;
 
 public class AddFriendPresenter implements IAddFriendPresenter {
@@ -24,13 +27,14 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     public AddFriendPresenter(final IAddFriendView view) {
         this.view = view;
-        this.friends = FriendsGetter.getFriends(40);
+        this.friends = FriendsGetter.getFriends();
     }
 
     @Override
     public void onCreate() {
         view.customizeToolbar();
         view.showFriendsItems();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -134,5 +138,14 @@ public class AddFriendPresenter implements IAddFriendPresenter {
             }
             return false;
         }
+    }
+
+
+    public void onEvent(ChangeUserList event){
+        updateFriendList();
+    }
+    private void updateFriendList() {
+        this.friends = FriendsGetter.getFriends();
+        this.view.notifyRecyclerDataChange();
     }
 }

@@ -4,17 +4,14 @@ import java.util.List;
 
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
-/**
- * Created by Zen on 02.11.2017.
- */
-
 public class ChangeUserList {
-    private final List<IUser> users;
-    public ChangeUserList(List<IUser> users){
-        this.users = users;
+    private final String message;
+
+    public ChangeUserList(String message) {
+        this.message = message;
     }
 
-    public List<IUser> getNewList(){
-        return users;
+    public String getMessage() {
+        return message;
     }
 }

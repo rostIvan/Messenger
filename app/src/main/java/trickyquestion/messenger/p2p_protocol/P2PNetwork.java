@@ -78,7 +78,6 @@ public class P2PNetwork {
         volatile Semaphore networkAvailability = new Semaphore(1);
 
         ListenerRunner(){
-            EventBus.getDefault().register(this);
         }
 
         //@Subscribe(threadMode = ThreadMode.ASYNC)
@@ -140,7 +139,6 @@ public class P2PNetwork {
                     break;
                 }
             }
-            EventBus.getDefault().unregister(this);
         }
     }
 
@@ -221,7 +219,7 @@ public class P2PNetwork {
             }
             if(is_new) {
                 users.add(new_user);
-                EventBus.getDefault().post(new UserListChanged(users));
+                EventBus.getDefault().post(new ChangeUserList("Change list"));
             }
             list_lock.unlock();
         }
@@ -239,7 +237,7 @@ public class P2PNetwork {
         public void remove(User user){
             list_lock.lock();
             users.remove(user);
-            EventBus.getDefault().post(new UserListChanged(users));
+            EventBus.getDefault().post(new ChangeUserList("Change list"));
             list_lock.unlock();
         }
 
