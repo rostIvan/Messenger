@@ -41,11 +41,13 @@ public class Network {
                 NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 if (networkInfo.getState() == CONNECTED) {
                     if(Network.networkState!=NetworkState.ACTIVE)
-                        EventBus.getDefault().post(new NetworkStateChanged(networkState));
+                        EventBus.getDefault().post(new NetworkStateChanged(NetworkState.ACTIVE));
                     Network.networkState = NetworkState.ACTIVE;
                 }
-                if(Network.networkState!=NetworkState.INACTIVE)
-                    EventBus.getDefault().post(new NetworkStateChanged(networkState));
+                if(Network.networkState!=NetworkState.INACTIVE) {
+                    EventBus.getDefault().post(new NetworkStateChanged(NetworkState.INACTIVE));
+                    Network.networkState = NetworkState.INACTIVE;
+                }
             }
 //            if ("android.net.wifi.WIFI_AP_STATE_CHANGED".equals(action)) {
 //                int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
