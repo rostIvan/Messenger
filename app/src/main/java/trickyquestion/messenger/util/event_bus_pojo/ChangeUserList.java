@@ -5,13 +5,19 @@ import java.util.List;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
 public class ChangeUserList {
-    private final String message;
+    private final IUser user;
+    private final boolean isExist;
 
-    public ChangeUserList(String message) {
-        this.message = message;
+    public ChangeUserList(IUser user, boolean isExist) {
+        this.user = user;
+        this.isExist = isExist;
     }
 
-    public String getMessage() {
-        return message;
+    public IUser getUser() {
+        return user;
+    }
+
+    public boolean isExist(){
+        return isExist;
     }
 }

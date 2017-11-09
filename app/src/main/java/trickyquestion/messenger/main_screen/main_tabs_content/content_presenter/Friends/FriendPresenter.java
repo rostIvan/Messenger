@@ -2,6 +2,7 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter
 
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -9,17 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends.IFriendsView;
 import trickyquestion.messenger.main_screen.main_tabs_content.interactors.FriendListInteractor;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
+import trickyquestion.messenger.network.NetworkState;
+import trickyquestion.messenger.network.NetworkStateChanged;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
 
 public class FriendPresenter implements IFriendPresenter {
 
@@ -121,7 +128,7 @@ public class FriendPresenter implements IFriendPresenter {
 
     private void setViewValue(final FriendViewHolder holder, Friend friend) {
         holder.name.setText(friend.getName());
-        holder.onlineStatus.setText(friend.isOnline() ? "online" : "last seen at 4:20");
+        holder.onlineStatus.setText(friend.isOnline() ? "online" : "offline" );
         if (friend.isOnline()) holder.onlineStatus.setTextColor(Constants.ONLINE_STATUS_TEXT_COLOR);
         else holder.onlineStatus.setTextColor(Constants.OFFLINE_STATUS_TEXT_COLOR);
     }
@@ -170,9 +177,39 @@ public class FriendPresenter implements IFriendPresenter {
         updateFriendList();
     }
 
+    public void onEvent(NetworkStateChanged event){
+        Realm.getDefaultInstance().beginTransaction();
+        List<Friend> friends = new ArrayList<>();
+        friends.addAll(Realm.getDefaultInstance().where(Friend.class).findAll());
+        Realm.getDefaultInstance().where(Friend.class).findAll();
+        for(Friend friend : friends){
+            friend.setOnline(event.getNewNetworkState() != NetworkState.INACTIVE);
+        }
+        Realm.getDefaultInstance().copyToRealm(friends);
+        Realm.getDefaultInstance().commitTransaction();
+        for(Friend friend : friendList){
+            Log.d("Friends", String.valueOf(friend.isOnline()));
+        }
+        updateFriendList();
+        for(Friend friend : friendList){
+            Log.d("Friends", String.valueOf(friend.isOnline()));
+        }
+    }
+
+    public void onEvent(ChangeUserList event){
+//        boolean isReqRefresh = false;
+//        for (Friend friend : friendList) {
+//            if(friend.getId() == event.getUser().getID()){
+//                friend.setOnline(event.isExist());
+//                isReqRefresh = true;
+//                break;
+//            }
+//        }
+//        if(isReqRefresh) updateFriendList();
+    }
+
     private void updateFriendList() {
         this.friendList = FriendListInteractor.getFriends();
         this.view.notifyRecyclerDataChange();
     }
-
 }

@@ -212,32 +212,22 @@ public class P2PNetwork {
             boolean is_new = true;
             for(User user :  users) {
                 if (user.equal(new_user)) {
-                        new_user.setTTL(user.getTTL());
+                        user.setTTL(new_user.getTTL());
                     is_new = false;
                     break;
                 }
             }
             if(is_new) {
                 users.add(new_user);
-                EventBus.getDefault().post(new ChangeUserList("Change list"));
+                EventBus.getDefault().post(new ChangeUserList(new_user,true));
             }
             list_lock.unlock();
-        }
-
-        public class UserListChanged{
-            private List<IUser> users;
-            UserListChanged(List<User> users){
-                this.users = new ArrayList<>();
-                for(User user : users){
-                    this.users.add(user);
-                }
-            }
         }
 
         public void remove(User user){
             list_lock.lock();
             users.remove(user);
-            EventBus.getDefault().post(new ChangeUserList("Change list"));
+            EventBus.getDefault().post(new ChangeUserList(user,false));
             list_lock.unlock();
         }
 
