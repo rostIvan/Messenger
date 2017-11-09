@@ -1,5 +1,7 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.repository;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -7,6 +9,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
 
 public class FriendsRepository {
@@ -21,7 +24,7 @@ public class FriendsRepository {
         try {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
-                public void execute(Realm realm) {
+                public void execute(@NonNull Realm realm) {
                     realm.copyToRealm(friend);
                     onChange();
                 }
@@ -37,7 +40,7 @@ public class FriendsRepository {
         try {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
-                public void execute(Realm realm) {
+                public void execute(@NonNull Realm realm) {
                     results.deleteFirstFromRealm();
                     onChange();
                 }
@@ -52,9 +55,23 @@ public class FriendsRepository {
         try {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
-                public void execute(Realm realm) {
+                public void execute(@NonNull Realm realm) {
                     realm.delete(Friend.class);
                     onChange();
+                }
+            });
+        } finally {
+            realm.close();
+        }
+    }
+
+    public static void changeFriendOnlineStatus(final Friend friend, final boolean isOnline) {
+        final Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.executeTransaction(new Realm.Transaction() {
+                @Override
+                public void execute(@NonNull Realm realm) {
+                    friend.setOnline(isOnline);
                 }
             });
         } finally {

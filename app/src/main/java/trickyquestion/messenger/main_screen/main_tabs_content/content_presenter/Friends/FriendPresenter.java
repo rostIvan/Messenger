@@ -1,5 +1,6 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -178,34 +179,24 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     public void onEvent(NetworkStateChanged event){
-        Realm.getDefaultInstance().beginTransaction();
-        List<Friend> friends = new ArrayList<>();
-        friends.addAll(Realm.getDefaultInstance().where(Friend.class).findAll());
-        Realm.getDefaultInstance().where(Friend.class).findAll();
-        for(Friend friend : friends){
-            friend.setOnline(event.getNewNetworkState() != NetworkState.INACTIVE);
-        }
-        Realm.getDefaultInstance().copyToRealm(friends);
-        Realm.getDefaultInstance().commitTransaction();
-        for(Friend friend : friendList){
-            Log.d("Friends", String.valueOf(friend.isOnline()));
+        for (Friend friend : friendList) {
+            FriendsRepository.changeFriendOnlineStatus(friend, event.getNewNetworkState() == NetworkState.ACTIVE);
         }
         updateFriendList();
-        for(Friend friend : friendList){
-            Log.d("Friends", String.valueOf(friend.isOnline()));
-        }
+        Toast.makeText(view.getFragmentContext(), "your status: " + event.getNewNetworkState(), Toast.LENGTH_SHORT).show();
     }
 
+    // TODO: 09.11.17 Test this func
     public void onEvent(ChangeUserList event){
-//        boolean isReqRefresh = false;
-//        for (Friend friend : friendList) {
-//            if(friend.getId() == event.getUser().getID()){
-//                friend.setOnline(event.isExist());
-//                isReqRefresh = true;
-//                break;
-//            }
-//        }
-//        if(isReqRefresh) updateFriendList();
+        boolean isReqRefresh = false;
+        for (Friend friend : friendList) {
+            if(friend.getId() == event.getUser().getID()){
+                FriendsRepository.changeFriendOnlineStatus(friend, event.isExist());
+                isReqRefresh = true;
+                break;
+            }
+        }
+        if(isReqRefresh) updateFriendList();
     }
 
     private void updateFriendList() {
