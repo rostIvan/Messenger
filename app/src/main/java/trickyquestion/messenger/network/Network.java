@@ -44,6 +44,7 @@ public class Network {
                         EventBus.getDefault().post(new NetworkStateChanged(NetworkState.ACTIVE));
                     Network.networkState = NetworkState.ACTIVE;
                 }
+                else
                 if(Network.networkState!=NetworkState.INACTIVE) {
                     EventBus.getDefault().post(new NetworkStateChanged(NetworkState.INACTIVE));
                     Network.networkState = NetworkState.INACTIVE;
