@@ -179,11 +179,11 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     public void onEvent(NetworkStateChanged event){
-        for (Friend friend : friendList) {
-            FriendsRepository.changeFriendOnlineStatus(friend, event.getNewNetworkState() == NetworkState.ACTIVE);
-        }
-        updateFriendList();
-        Toast.makeText(view.getFragmentContext(), "your status: " + event.getNewNetworkState(), Toast.LENGTH_SHORT).show();
+//        for (Friend friend : friendList) {
+//            FriendsRepository.changeFriendOnlineStatus(friend, event.getNewNetworkState() == NetworkState.ACTIVE);
+//        }
+//        updateFriendList();
+//        Toast.makeText(view.getFragmentContext(), "your status: " + event.getNewNetworkState(), Toast.LENGTH_SHORT).show();
     }
 
     // TODO: 09.11.17 Test this func
@@ -192,13 +192,19 @@ public class FriendPresenter implements IFriendPresenter {
         boolean isReqRefresh = false;
         List<Friend> local_copy = FriendListInteractor.getFriends();
         for (Friend friend : local_copy) {
-            if(friend.getId() == event.getUser().getID()){
+            Log.d("Result_TEST",
+                    "loop: "
+                            + event.getUser().getName() + " => " + event.getUser().getID() + "\n"
+                            + friend.getName() + " => " + friend.getId());
+
+            if(friend.getId().equals(event.getUser().getID().toString())) {
                 FriendsRepository.changeFriendOnlineStatus(friend, event.isExist());
                 isReqRefresh = true;
                 break;
             }
         }
         if(isReqRefresh) updateFriendList();
+        Log.d("Result_TEST", "end");
     }
 
     private void updateFriendList() {
