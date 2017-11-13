@@ -234,9 +234,7 @@ public class P2PNetwork {
         public List<IUser> get(){
             list_lock.lock();
             List<IUser> ret = new ArrayList<>();
-            for(User user : users){
-                ret.add(user);
-            }
+            ret.addAll(users);
             list_lock.unlock();
             return ret;
         }

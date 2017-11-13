@@ -187,9 +187,11 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     // TODO: 09.11.17 Test this func
+    // Maybe run but i can't test now it
     public void onEvent(ChangeUserList event){
         boolean isReqRefresh = false;
-        for (Friend friend : friendList) {
+        List<Friend> local_copy = FriendListInteractor.getFriends();
+        for (Friend friend : local_copy) {
             if(friend.getId() == event.getUser().getID()){
                 FriendsRepository.changeFriendOnlineStatus(friend, event.isExist());
                 isReqRefresh = true;
