@@ -78,10 +78,11 @@ public class P2PNetwork {
         volatile Semaphore networkAvailability = new Semaphore(1);
 
         ListenerRunner(){
+            EventBus.getDefault().register(this);
         }
 
         //@Subscribe(threadMode = ThreadMode.ASYNC)
-        public void onMessage(NetworkStateChanged event) {
+        public void onEvent(NetworkStateChanged event) {
             if (event.getNewNetworkState() == NetworkState.INACTIVE) {
                 try {
                     networkAvailability.acquire();
@@ -95,13 +96,6 @@ public class P2PNetwork {
 
         @Override
         public void run() {
-            if (Network.GetCurrentNetworkState() != NetworkState.ACTIVE) {
-                try {
-                    networkAvailability.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
             String[] received_packet_content;
             for (;;) {
                 if (networkAvailability.availablePermits() == 0) {

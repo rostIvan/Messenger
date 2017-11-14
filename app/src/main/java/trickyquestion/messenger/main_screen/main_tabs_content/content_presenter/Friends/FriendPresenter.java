@@ -1,5 +1,6 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
@@ -34,17 +35,21 @@ public class FriendPresenter implements IFriendPresenter {
     private IFriendsView view;
     private List<Friend> friendList;
     private String searchQuery;
+    private volatile Activity activity;
 
     public FriendPresenter(final IFriendsView view) {
         this.view = view;
         this.friendList = FriendListInteractor.getFriends();
     }
 
-    /** For Fragment */
+    /**
+     * For Fragment
+     */
     @Override
     public void onCreateView() {
         EventBus.getDefault().register(this);
         view.showFriendsItems();
+        activity = (Activity)view.getFragmentContext();
     }
 
     @Override
@@ -60,6 +65,7 @@ public class FriendPresenter implements IFriendPresenter {
         if (savedInstanceState == null) return;
         searchQuery = savedInstanceState.getString("svQuery");
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         if (view.getSearchQuery() != null && !view.getSearchQuery().isEmpty())
@@ -106,7 +112,9 @@ public class FriendPresenter implements IFriendPresenter {
         };
     }
 
-    /** For Recycler */
+    /**
+     * For Recycler
+     */
     @Override
     public int getCount() {
         return friendList.size();
@@ -129,7 +137,7 @@ public class FriendPresenter implements IFriendPresenter {
 
     private void setViewValue(final FriendViewHolder holder, Friend friend) {
         holder.name.setText(friend.getName());
-        holder.onlineStatus.setText(friend.isOnline() ? "online" : "offline" );
+        holder.onlineStatus.setText(friend.isOnline() ? "online" : "offline");
         if (friend.isOnline()) holder.onlineStatus.setTextColor(Constants.ONLINE_STATUS_TEXT_COLOR);
         else holder.onlineStatus.setTextColor(Constants.OFFLINE_STATUS_TEXT_COLOR);
     }
@@ -174,37 +182,52 @@ public class FriendPresenter implements IFriendPresenter {
         }
     }
 
-    public void onEvent(AddFriendEvent event){
-        updateFriendList();
+    public void onEvent(AddFriendEvent event) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateFriendList();
+            }
+        });
     }
 
-    public void onEvent(NetworkStateChanged event){
-//        for (Friend friend : friendList) {
-//            FriendsRepository.changeFriendOnlineStatus(friend, event.getNewNetworkState() == NetworkState.ACTIVE);
-//        }
-//        updateFriendList();
-//        Toast.makeText(view.getFragmentContext(), "your status: " + event.getNewNetworkState(), Toast.LENGTH_SHORT).show();
+    public void onEvent(final NetworkStateChanged event) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                for (Friend friend : friendList)
+                {
+                    FriendsRepository.changeFriendOnlineStatus(friend, event.getNewNetworkState() == NetworkState.ACTIVE);
+                }
+                updateFriendList();
+                Toast.makeText(view.getFragmentContext(), "your status: " + event.getNewNetworkState(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // TODO: 09.11.17 Test this func
     // Maybe run but i can't test now it
-    public void onEvent(ChangeUserList event){
-        boolean isReqRefresh = false;
-        List<Friend> local_copy = FriendListInteractor.getFriends();
-        for (Friend friend : local_copy) {
-            Log.d("Result_TEST",
-                    "loop: "
-                            + event.getUser().getName() + " => " + event.getUser().getID() + "\n"
-                            + friend.getName() + " => " + friend.getId());
+    public void onEvent(final ChangeUserList event) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                boolean isReqRefresh = false;
+                for (Friend friend : friendList) {
+                    Log.d("Result_TEST",
+                            "loop: "
+                                    + event.getUser().getName() + " => " + event.getUser().getID() + "\n"
+                                    + friend.getName() + " => " + friend.getId());
 
-            if(friend.getId().equals(event.getUser().getID().toString())) {
-                FriendsRepository.changeFriendOnlineStatus(friend, event.isExist());
-                isReqRefresh = true;
-                break;
+                    if (friend.getId().equals(event.getUser().getID().toString())) {
+                        FriendsRepository.changeFriendOnlineStatus(friend, event.isExist());
+                        isReqRefresh = true;
+                        break;
+                    }
+                }
+                if (isReqRefresh) updateFriendList();
+                Log.d("Result_TEST", "end");
             }
-        }
-        if(isReqRefresh) updateFriendList();
-        Log.d("Result_TEST", "end");
+        });
     }
 
     private void updateFriendList() {

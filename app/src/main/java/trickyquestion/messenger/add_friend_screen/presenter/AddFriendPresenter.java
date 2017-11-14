@@ -1,6 +1,7 @@
 package trickyquestion.messenger.add_friend_screen.presenter;
 
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,6 +25,8 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     private final IAddFriendView view;
     private List<IFriend> friends;
+    //TODO: add
+    private Activity activity;
 
     public AddFriendPresenter(final IAddFriendView view) {
         this.view = view;
@@ -142,8 +145,15 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
 
     public void onEvent(ChangeUserList event){
+//        activity.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                updateFriendList();
+//            }
+//        });
         updateFriendList();
     }
+
     private void updateFriendList() {
         this.friends = FriendsGetter.getFriends();
         this.view.notifyRecyclerDataChange();
