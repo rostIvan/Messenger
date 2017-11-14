@@ -12,8 +12,7 @@ import io.realm.annotations.RealmClass;
 public class Friend implements RealmModel {
 
     private String name;
-    @Ignore
-    private UUID id;
+    private String id;
     @Ignore
     private ImageView image;
     private boolean online;
@@ -23,7 +22,7 @@ public class Friend implements RealmModel {
 
     public Friend(final String name, final UUID id, final ImageView image, final boolean online) {
         this.name = name;
-        this.id = id;
+        this.id = id.toString();
         this.image = image;
         this.online = online;
     }
@@ -37,7 +36,7 @@ public class Friend implements RealmModel {
     }
 
     public void setId(UUID id) {
-        this.id = id;
+        this.id = id.toString();
     }
 
     public void setImage(ImageView image) {
@@ -48,7 +47,7 @@ public class Friend implements RealmModel {
         this.online = online;
     }
 
-    public UUID getId() {
+    public String  getId() {
         return id;
     }
 
