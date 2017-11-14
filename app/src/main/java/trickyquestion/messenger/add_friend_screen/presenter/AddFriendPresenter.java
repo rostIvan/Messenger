@@ -141,7 +141,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
 
-    public void onEvent(ChangeUserList event){
+    public void onEventMainThread(ChangeUserList event){
         updateFriendList();
     }
     private void updateFriendList() {

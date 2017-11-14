@@ -178,7 +178,7 @@ public class FriendPresenter implements IFriendPresenter {
         updateFriendList();
     }
 
-    public void onEvent(NetworkStateChanged event){
+    public void onEventMainThread(NetworkStateChanged event){
         for (Friend friend : friendList) {
             FriendsRepository.changeFriendOnlineStatus(friend, event.getNewNetworkState() == NetworkState.ACTIVE);
         }
@@ -187,11 +187,9 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     // TODO: 09.11.17 Test this func
-    // Maybe run but i can't test now it
-    public void onEvent(ChangeUserList event){
+    public void onEventMainThread(ChangeUserList event){
         boolean isReqRefresh = false;
-        List<Friend> local_copy = FriendListInteractor.getFriends();
-        for (Friend friend : local_copy) {
+        for (Friend friend : friendList) {
             if(friend.getId() == event.getUser().getID()){
                 FriendsRepository.changeFriendOnlineStatus(friend, event.isExist());
                 isReqRefresh = true;
