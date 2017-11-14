@@ -3,6 +3,7 @@ package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -24,8 +25,11 @@ import trickyquestion.messenger.main_screen.main_tabs_content.interactors.Friend
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
+import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
+import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
+import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
@@ -40,6 +44,25 @@ public class FriendPresenter implements IFriendPresenter {
     public FriendPresenter(final IFriendsView view) {
         this.view = view;
         this.friendList = FriendListInteractor.getFriends();
+        if(P2PProtocolConnector.isServiceConnected()) {
+            final Realm realm = Realm.getDefaultInstance();
+            try {
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(@NonNull Realm realm) {
+                        for (Friend friend : friendList) {
+                            friend.setOnline(false);
+                            for (IUser user : P2PProtocolConnector.ProtocolInterface().getUsers()) {
+                                if (friend.getId().equals(user.getID()))
+                                    friend.setOnline(true);
+                            }
+                        }
+                    }
+                });
+            } finally {
+                realm.close();
+            }
+        }
     }
 
     /**

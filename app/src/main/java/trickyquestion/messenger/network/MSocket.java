@@ -34,10 +34,13 @@ public class MSocket {
         try {
             MulticastSocket socket = new MulticastSocket(port);
             socket.joinGroup(InetAddress.getByName(groupIP));
-            //set broadcasting
+            socket.setBroadcast(true);
+            socket.setReuseAddress(true);
+            socket.setLoopbackMode(false);
             byte[] content = new byte[256];
             DatagramPacket packet = new DatagramPacket(content,content.length);
-            socket.receive(packet);
+            if(Network.GetCurrentNetworkState()==NetworkState.ACTIVE)
+                socket.receive(packet);
             String data = new String(
                     packet.getData(),
                     packet.getOffset(),
