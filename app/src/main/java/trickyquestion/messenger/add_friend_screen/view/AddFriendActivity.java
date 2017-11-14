@@ -87,6 +87,11 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
     }
 
     @Override
+    public void runOnActivityUiThread(Runnable r) {
+        super.runOnUiThread(r);
+    }
+
+    @Override
     public Context getContext() {
         return getApplicationContext();
     }
