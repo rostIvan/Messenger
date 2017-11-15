@@ -1,6 +1,7 @@
 package trickyquestion.messenger.settings_screen.expand_list.list_data;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -64,7 +65,7 @@ public class ExpandedListCreator {
     private SettingParent getThirdParent() {
         final SettingParent parent3 = new SettingParent();
         final Drawable icon = getDrawable(R.drawable.ic_change_name_primary_green, themePreference.getPrimaryColor());
-        parent3.setTitle("Color management");
+        parent3.setTitle("Color theme");
         parent3.setImageDrawable(icon);
         return parent3;
     }
@@ -96,28 +97,40 @@ public class ExpandedListCreator {
     }
 
     private List<Object> getChildrenThirdParent() {
-        final Drawable drawableChild1 = getDrawable(R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor());
-        final Drawable drawableChild2 = getDrawable(R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor());
-        final Drawable drawableChild3 = getDrawable(R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor());
-        final Drawable drawableChild4 = getDrawable(R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor());
+        final Drawable drawableChild1 = getDrawable(
+                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
+        );
+        final Drawable drawableChild2 = getDrawable(
+                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
+        );
+        final Drawable drawableChild3 = getDrawable(
+                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
+        );
+        final Drawable drawableChild4 = getDrawable(
+                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
+        );
+        final Drawable drawableChild5 = getDrawable(
+                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
+        );
 
         final SettingChild child1 = new SettingChild("Standard", false, drawableChild1, false);
-        final SettingChild child2 = new SettingChild("Red", false, drawableChild2, false);
-        final SettingChild child3 = new SettingChild("Orange", false, drawableChild3, false);
-        final SettingChild child4 = new SettingChild("Black", false, drawableChild4, true);
+        final SettingChild child2 = new SettingChild("Dark blue", false, drawableChild2, false);
+        final SettingChild child3 = new SettingChild("Red", false, drawableChild3, false);
+        final SettingChild child4 = new SettingChild("Orange", false, drawableChild4, false);
+        final SettingChild child5 = new SettingChild("Black", false, drawableChild5, true);
         final List<Object> children = new ArrayList<>();
         children.add(child1);
         children.add(child2);
         children.add(child3);
         children.add(child4);
+        children.add(child5);
         return children;
     }
 
     private Drawable getDrawable(final int res, final int color) {
         final Drawable drawable = AppCompatResources.getDrawable(context, res);
         if (drawable != null) {
-            drawable.mutate();
-            DrawableCompat.setTint(drawable, color);
+            drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         }
         return drawable;
     }

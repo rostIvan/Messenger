@@ -145,7 +145,7 @@ public class FriendPresenter implements IFriendPresenter {
 
     private void setViewListeners(final FriendViewHolder holder, final Friend friend) {
         holder.itemView.setOnClickListener(v -> view.showChatActivity(friend));
-        holder.image.setOnClickListener(v -> view.showFriendProfile(friend.getName()));
+        holder.image.setOnClickListener(v -> view.showFriendProfile(friend.getName(), friend.isOnline()));
         holder.itemView.setOnCreateContextMenuListener(new onHolderCreateContextMenu(holder, friend));
     }
 

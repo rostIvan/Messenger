@@ -130,6 +130,7 @@ public class SettingPresenter implements ISettingPresenter {
     public void setThemePrimaryColor(int res) {
         themePreference.setPrimaryColor(res);
         view.customizeTheme();
+        view.customizeRecycler();
         EventBus.getDefault().post(new ChangeThemeEvent(res));
     }
 
@@ -137,6 +138,7 @@ public class SettingPresenter implements ISettingPresenter {
     public void setThemeSecondaryColor(int res) {
         themePreference.setPrimaryColor(res);
         view.customizeTheme();
+        view.customizeRecycler();
         EventBus.getDefault().post(new ChangeThemeEvent(res));
     }
 }

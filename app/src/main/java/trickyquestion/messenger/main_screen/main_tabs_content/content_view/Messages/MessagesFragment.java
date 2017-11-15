@@ -105,11 +105,11 @@ public class MessagesFragment extends Fragment implements IMessageView {
     }
 
     @Override
-    public void showFriendProfile(String nameSender) {
+    public void showFriendProfile(String nameSender, boolean online) {
         final FriendPhotoDialog dialog = new FriendPhotoDialog();
         final Bundle bundle = new Bundle();
         bundle.putString("name", nameSender);
-        bundle.putBoolean("online", true);
+        bundle.putBoolean("online", online);
         dialog.setArguments(bundle);
         dialog.show(getFragmentManager(), "profile fragment");
     }

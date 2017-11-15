@@ -50,6 +50,11 @@ public class OnChildItemClickListener implements View.OnClickListener {
                 Toast.makeText(presenter.getView().getContext(), "Theme changed: " + "Standard", Toast.LENGTH_SHORT).show();
                 break;
             }
+            case "Dark blue" :{
+                presenter.setThemePrimaryColor(R.color.colorPrimary);
+                Toast.makeText(presenter.getView().getContext(), "Theme changed: " + "Dark blue", Toast.LENGTH_SHORT).show();
+                break;
+            }
             case "Red" :{
                 presenter.setThemePrimaryColor(R.color.colorAccent);
                 Toast.makeText(presenter.getView().getContext(), "Theme changed: " + "Red", Toast.LENGTH_SHORT).show();
