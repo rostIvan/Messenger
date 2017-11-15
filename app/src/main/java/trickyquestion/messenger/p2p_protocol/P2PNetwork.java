@@ -62,9 +62,11 @@ public class P2PNetwork {
                         String packet_data = genHeartbeatPacket(
                                 host.getName(),host.getID(), Network.IPAddress(context));
                         MSocket.SendMsg(
+                                Network.IPAddress(context),
                                 packet_data,
-                           networkPreference.getMulticastGroupIp(),
-                           networkPreference.getMulticastPort());
+                                networkPreference.getMulticastGroupIp(),
+                                networkPreference.getMulticastPort()
+                        );
                     }
                     Thread.sleep(2500);
                 } catch (InterruptedException e) {
@@ -103,7 +105,9 @@ public class P2PNetwork {
                     networkAvailability.release();
                 }
                 if(Network.GetCurrentNetworkState()!=NetworkState.ACTIVE) continue;
-                String received_data = MSocket.Receive(networkPreference.getMulticastGroupIp(),
+                String received_data = MSocket.Receive(
+                        Network.IPAddress(context),
+                        networkPreference.getMulticastGroupIp(),
                         networkPreference.getMulticastPort()
                 );
                 if (received_data == null) continue;
@@ -187,15 +191,25 @@ public class P2PNetwork {
         public UUID getID()    {return ID;}
         public String getName(){return UName;}
         public String getNetworkAddress()  {return IP;}
+
+        @Override
+        public void setName(String newName) {
+            this.UName = newName;
+        }
+
         public Date getTTL()   {return TTL;}
 
         public void setTTL(Date NewTTL){TTL = NewTTL;}
 
         boolean equal(User second){
-            if((this.ID.equals(second.ID)) && (this.IP.equals(second.IP)) && (this.UName.equals(second.UName))) {
+            if((this.ID.equals(second.ID)) && (this.IP.equals(second.IP))) {
                 return true;
             }
             else return false;
+        }
+
+        boolean equalUserName(User second) {
+            return ((this.UName.equals(second.UName)));
         }
     }
 
@@ -208,7 +222,10 @@ public class P2PNetwork {
             boolean is_new = true;
             for(User user :  users) {
                 if (user.equal(new_user)) {
-                        user.setTTL(new_user.getTTL());
+                    user.setTTL(new_user.getTTL());
+                    if(!user.equalUserName(new_user)){
+                        user.setName(new_user.getName());
+                    }
                     is_new = false;
                     break;
                 }

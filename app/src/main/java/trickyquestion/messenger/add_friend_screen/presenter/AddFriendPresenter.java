@@ -143,11 +143,11 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
 
     public void onEvent(ChangeUserList event){
-        view.runOnActivityUiThread(this::updateFriendList);
+        this.view.runOnActivityUiThread(this::updateFriendList);
     }
 
     public void onEvent(final NetworkStateChanged event) {
-        view.runOnActivityUiThread( () ->  onNetworkChanged(event));
+        this.view.runOnActivityUiThread( () ->  onNetworkChanged(event));
     }
 
     private void updateFriendList() {

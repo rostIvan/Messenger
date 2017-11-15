@@ -10,4 +10,6 @@ public interface IUser {
     UUID getID();
     String getName();
     String getNetworkAddress();
+
+    void setName(String newName);
 }

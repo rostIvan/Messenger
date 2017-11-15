@@ -11,4 +11,6 @@ public interface IFriend extends IUser {
     String getName();
     String getNetworkAddress();
     String getImage();
+
+    void setName(String newName);
 }

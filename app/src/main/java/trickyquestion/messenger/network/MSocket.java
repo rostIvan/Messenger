@@ -14,9 +14,10 @@ import java.net.SocketAddress;
  */
 
 public class MSocket {
-    static public void SendMsg(String msg, String groupIP, int port){
+    static public void SendMsg(String ip, String msg, String groupIP, int port){
         try {
             MulticastSocket socket = new MulticastSocket(port);
+            socket.setInterface(InetAddress.getByName(ip));
             socket.joinGroup(InetAddress.getByName(groupIP));
             socket.setBroadcast(true);
             socket.setReuseAddress(true);
@@ -30,15 +31,17 @@ public class MSocket {
     }
 
     @Nullable
-    static public String Receive(String groupIP, int port){
+    static public String Receive(String ip, String groupIP, int port){
         try {
             MulticastSocket socket = new MulticastSocket(port);
+            socket.setInterface(InetAddress.getByName(ip));
             socket.joinGroup(InetAddress.getByName(groupIP));
             socket.setBroadcast(true);
             socket.setReuseAddress(true);
             socket.setLoopbackMode(false);
             byte[] content = new byte[256];
             DatagramPacket packet = new DatagramPacket(content,content.length);
+            socket.setSoTimeout(1000);
             if(Network.GetCurrentNetworkState()==NetworkState.ACTIVE)
                 socket.receive(packet);
             String data = new String(
