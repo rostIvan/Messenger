@@ -7,12 +7,10 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/setting_toolbar"
-        style="@style/AppTheme.ActionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top"
-        android:theme="@style/AppTheme.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        android:theme="@style/AppTheme.ActionBar"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/setting_circle_image"

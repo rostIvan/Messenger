@@ -1,5 +1,7 @@
 package trickyquestion.messenger.settings_screen.expand_list.model;
 
+import android.graphics.drawable.Drawable;
+
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 public class SettingParent implements ParentObject {
     private List<Object> childrenList;
     private String title;
-    private int imageResource;
+    private Drawable drawable;
 
     public SettingParent() {
     }
@@ -24,12 +26,12 @@ public class SettingParent implements ParentObject {
         return title;
     }
 
-    public void setImageResource(int imageResource) {
-        this.imageResource = imageResource;
+    public void setImageDrawable(Drawable drawable) {
+        this.drawable = drawable;
     }
 
-    public int getImageResource() {
-        return imageResource;
+    public Drawable getDrawable() {
+        return drawable;
     }
 
     @Override

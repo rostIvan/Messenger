@@ -53,7 +53,6 @@ public class FriendPresenter implements IFriendPresenter {
         EventBus.getDefault().register(this);
         if (P2PProtocolConnector.isServiceConnected()) {
             FriendsRepository.updateFriendsStatus(friendList, P2PProtocolConnector.ProtocolInterface().getUsers());
-//            Toast.makeText(view.getFragmentContext(), "service is connected", Toast.LENGTH_SHORT).show();
         }
         view.showFriendsItems();
     }

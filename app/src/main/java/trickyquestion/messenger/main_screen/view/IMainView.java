@@ -3,6 +3,8 @@ package trickyquestion.messenger.main_screen.view;
 import android.content.Context;
 
 public interface IMainView {
+    void customizeTheme();
+
     void customizeToolbar();
     void setFabBehavior();
     void hideFab();

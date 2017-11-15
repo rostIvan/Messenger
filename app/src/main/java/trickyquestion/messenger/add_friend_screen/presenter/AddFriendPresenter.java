@@ -21,6 +21,7 @@ import trickyquestion.messenger.main_screen.main_tabs_content.repository.Friends
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.P2PNetwork;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.temp_impl.FriendsGetter;
 
@@ -36,6 +37,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     @Override
     public void onCreate() {
+        view.customizeTheme();
         view.customizeToolbar();
         view.showFriendsItems();
         EventBus.getDefault().register(this);
@@ -163,5 +165,9 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         else if (event.getNewNetworkState() == NetworkState.ACTIVE) {
             updateFriendList();
         }
+    }
+
+    public void onEvent(ChangeThemeEvent event) {
+        view.customizeTheme();
     }
 }

@@ -2,6 +2,7 @@ package trickyquestion.messenger.settings_screen.expand_list.listeners;
 
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.settings_screen.expand_list.model.SettingChild;
@@ -42,6 +43,26 @@ public class OnChildItemClickListener implements View.OnClickListener {
             }
             case "Log out" :  {
                 presenter.onLogOutItemClick();
+                break;
+            }
+            case "Standard" :{
+                presenter.setThemePrimaryColor(R.color.colorPrimaryGreen);
+                Toast.makeText(presenter.getView().getContext(), "Theme changed: " + "Standard", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case "Red" :{
+                presenter.setThemePrimaryColor(R.color.colorAccent);
+                Toast.makeText(presenter.getView().getContext(), "Theme changed: " + "Red", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case "Orange" :{
+                presenter.setThemePrimaryColor(R.color.colorOrange);
+                Toast.makeText(presenter.getView().getContext(), "Theme changed: " + "Orange", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case "Black" :{
+                presenter.setThemePrimaryColor(R.color.colorBlack);
+                Toast.makeText(presenter.getView().getContext(),"Theme changed: " + "Black", Toast.LENGTH_SHORT).show();
                 break;
             }
         }

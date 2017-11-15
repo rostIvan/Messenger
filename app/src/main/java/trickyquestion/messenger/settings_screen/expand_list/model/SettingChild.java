@@ -1,16 +1,19 @@
 package trickyquestion.messenger.settings_screen.expand_list.model;
 
+import android.graphics.drawable.Drawable;
+import android.support.v7.content.res.AppCompatResources;
+
 public class SettingChild {
 
     private String title;
     private boolean checked;
-    private int imageResource;
+    private Drawable drawable;
     private boolean isLast;
 
-    public SettingChild(final String title, final boolean checked, final int imageResource, final boolean isLast) {
+    public SettingChild(final String title, final boolean checked, final Drawable drawable, final boolean isLast) {
         this.title = title;
         this.checked = checked;
-        this.imageResource = imageResource;
+        this.drawable = drawable;
         this.isLast = isLast;
     }
 
@@ -26,12 +29,12 @@ public class SettingChild {
         return checked;
     }
 
-    public void setImageResource(int imageResource) {
-        this.imageResource = imageResource;
+    public void setDrawable(Drawable drawable) {
+        this.drawable= drawable;
     }
 
-    public int getImageResource() {
-        return imageResource;
+    public Drawable getIconDrawable() {
+        return drawable;
     }
 
     public void setChecked(boolean checked) {

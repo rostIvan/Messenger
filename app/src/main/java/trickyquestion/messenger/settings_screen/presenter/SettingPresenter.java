@@ -2,6 +2,10 @@ package trickyquestion.messenger.settings_screen.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
@@ -9,21 +13,37 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.settings_screen.expand_list.list_data.ExpandedListCreator;
 import trickyquestion.messenger.settings_screen.expand_list.model.SettingChild;
 import trickyquestion.messenger.settings_screen.expand_list.model.SettingParent;
 import trickyquestion.messenger.settings_screen.view.ISettingView;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.preference.AuthPreference;
+import trickyquestion.messenger.util.preference.ThemePreference;
 import trickyquestion.messenger.util.validation.UserInputValidator;
 
 public class SettingPresenter implements ISettingPresenter {
 
     private final ISettingView view;
     private final AuthPreference authPreference;
+    private final ThemePreference themePreference;
+    private final ExpandedListCreator listCreator;
 
     public SettingPresenter(ISettingView view) {
         this.view = view;
         this.authPreference = new AuthPreference(view.getContext());
+        this.themePreference = new ThemePreference(view.getContext());
+        this.listCreator = new ExpandedListCreator(view.getContext());
+    }
+
+    @Override
+    public void onCreate() {
+        view.customizeToolbar();
+        view.customizeTheme();
+        view.setUserData();
+        view.customizeRecycler();
     }
 
     @Override
@@ -33,72 +53,12 @@ public class SettingPresenter implements ISettingPresenter {
 
     @Override
     public View.OnClickListener onBackPressed() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.goBack();
-            }
-        };
+        return v -> view.goBack();
     }
 
     @Override
     public List<ParentObject> getParents() {
-        final List<ParentObject> parents = new ArrayList<>();
-
-        final SettingParent parent1 = getFirstParent();
-        final SettingParent parent2 = getSecondParent();
-        final SettingParent parent3 = getThirdParent();
-        parent1.setChildObjectList(getChildsFirstParent());
-
-        parents.add(parent1);
-        parents.add(parent2);
-        parents.add(parent3);
-
-        return parents;
-    }
-
-    private SettingParent getFirstParent() {
-        final SettingParent parent1 = new SettingParent();
-        parent1.setTitle("Account Setting");
-        parent1.setImageResource(R.drawable.ic_settings_primary_green);
-        return parent1;
-    }
-
-    private SettingParent getSecondParent() {
-        final SettingParent parent2 = new SettingParent();
-        parent2.setTitle("Notification");
-        parent2.setImageResource(R.drawable.ic_notification_primary_green);
-        return parent2;
-    }
-
-
-    private SettingParent getThirdParent() {
-        final SettingParent parent3 = new SettingParent();
-        parent3.setTitle("Color managment");
-        parent3.setImageResource(R.drawable.ic_color_managment_primary_green);
-        return parent3;
-    }
-
-
-    private List<Object> getChildsFirstParent() {
-        final SettingChild child1 = new SettingChild(
-                "Change name", false, R.drawable.ic_change_name_primary_green, false
-        );
-        final SettingChild child2 = new SettingChild(
-                "Change password", false, R.drawable.ic_change_pass_primary_green, false
-        );
-        final SettingChild child3 = new SettingChild(
-                "Ask for password", authPreference.askPassword(), R.drawable.ic_ask_pass_primary_green, false
-        );
-        final SettingChild child4 = new SettingChild(
-                "Log out", false, R.drawable.ic_logout_primary_green, true
-        );
-        final List<Object> childs = new ArrayList<>();
-        childs.add(child1);
-        childs.add(child2);
-        childs.add(child3);
-        childs.add(child4);
-        return childs;
+        return listCreator.getParents();
     }
 
     @Override
@@ -166,5 +126,17 @@ public class SettingPresenter implements ISettingPresenter {
         }
     }
 
+    @Override
+    public void setThemePrimaryColor(int res) {
+        themePreference.setPrimaryColor(res);
+        view.customizeTheme();
+        EventBus.getDefault().post(new ChangeThemeEvent(res));
+    }
 
+    @Override
+    public void setThemeSecondaryColor(int res) {
+        themePreference.setPrimaryColor(res);
+        view.customizeTheme();
+        EventBus.getDefault().post(new ChangeThemeEvent(res));
+    }
 }

@@ -17,6 +17,9 @@ public class Constants {
     public static final String EXTRA_KEY_USER_ID = "User ID";
     public static final String EXTRA_KEY_IS_AUTHENTICATED = "Ask auth";
     public static final String EXTRA_ASK_PASSWORD = "Ask pass";
+    public static final String PREFERENCE_THEME_COLOR = "Theme color";
+    public static final String EXTRA_KEY_PRIMARY_COLOR = "Primary color";
+    public static final String EXTRA_KEY_SECONDARY_COLOR = "Secondary color";
     public static final String PREFERENCE_NETWORK_DATA = "Network data";
     public static final String EXTRA_KEY_HEARTBEAT_FREQUENCY = "Heartbeat frequency";
     public static final String EXTRA_KEY_MULTICAST_PORT = "Multicast port";

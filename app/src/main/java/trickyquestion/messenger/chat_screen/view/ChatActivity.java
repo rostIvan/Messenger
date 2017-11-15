@@ -19,6 +19,7 @@ import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.adapters.RecyclerChatAdapter;
 import trickyquestion.messenger.chat_screen.presenter.ChatPresenter;
 import trickyquestion.messenger.chat_screen.presenter.IChatPresenter;
+import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class ChatActivity extends SwipeBackActivity implements IChatView {
     private IChatPresenter presenter;
@@ -35,6 +36,7 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     ImageButton attachButton;
 
     public static final String FRIEND_NAME_EXTRA = "friendName";
+    private ThemePreference themePreference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
         setContentView(R.layout.activity_chat_message);
         ButterKnife.bind(this);
         if (presenter == null) presenter = new ChatPresenter(this);
+        themePreference = new ThemePreference(this);
         presenter.onCreate();
     }
 
@@ -61,6 +64,11 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void customizeTheme() {
+        toolbar.setBackgroundColor(themePreference.getPrimaryColor());
     }
 
     @Override

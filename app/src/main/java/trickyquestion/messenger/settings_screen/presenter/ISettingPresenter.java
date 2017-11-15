@@ -27,4 +27,10 @@ public interface ISettingPresenter {
     void setNewLogin(String login);
 
     void setNewPassword(String password);
+
+    void setThemePrimaryColor(int res);
+
+    void setThemeSecondaryColor(int res);
+
+    void onCreate();
 }

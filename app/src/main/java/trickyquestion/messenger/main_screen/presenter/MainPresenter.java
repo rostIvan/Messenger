@@ -2,11 +2,14 @@ package trickyquestion.messenger.main_screen.presenter;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.main_screen.view.IMainView;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 
 public class MainPresenter implements IMainPresenter {
 
@@ -18,14 +21,17 @@ public class MainPresenter implements IMainPresenter {
 
     @Override
     public void onCreate() {
+        view.customizeTheme();
         view.customizeToolbar();
         view.showTabsWithContent();
         view.setPagerAnimation();
         view.setFabBehavior();
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onFinish() {
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -42,12 +48,7 @@ public class MainPresenter implements IMainPresenter {
 
     @Override
     public View.OnClickListener onNavigationButtonPressed() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               onBackPressed();
-            }
-        };
+        return v -> onBackPressed();
     }
 
     @Override
@@ -72,23 +73,17 @@ public class MainPresenter implements IMainPresenter {
 
     @Override
     public MenuItem.OnMenuItemClickListener onSettingClick() {
-        return new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                view.showSettingMenu();
-                return true;
-            }
+        return menuItem -> {
+            view.showSettingMenu();
+            return true;
         };
     }
 
     @Override
     public MenuItem.OnMenuItemClickListener onAccountMenuItemClick() {
-        return new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                view.showAccountPopup();
-                return true;
-            }
+        return menuItem -> {
+            view.showAccountPopup();
+            return true;
         };
     }
 
@@ -112,12 +107,10 @@ public class MainPresenter implements IMainPresenter {
 
     @Override
     public View.OnClickListener onFabClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.startAddFriendActivity();
-            }
-        };
+        return v -> view.startAddFriendActivity();
     }
 
+    public void onEvent(ChangeThemeEvent event) {
+        view.customizeTheme();
+    }
 }

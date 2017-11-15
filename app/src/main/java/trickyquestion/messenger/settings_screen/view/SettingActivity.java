@@ -24,6 +24,7 @@ import trickyquestion.messenger.settings_screen.presenter.SettingPresenter;
 import trickyquestion.messenger.settings_screen.view.dialogs.ChangeLoginDialog;
 import trickyquestion.messenger.settings_screen.view.dialogs.ChangePasswordDialog;
 import trickyquestion.messenger.settings_screen.view.dialogs.IChangeDialog;
+import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class SettingActivity extends AppCompatActivity implements ISettingView {
 
@@ -36,6 +37,7 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
 
     private ExpandableAdapter adapter;
     private ISettingPresenter presenter;
+    private ThemePreference themePreference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,12 +45,12 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
         setContentView(R.layout.activity_setting_menu);
         ButterKnife.bind(this);
         if (presenter == null) presenter = new SettingPresenter(this);
-        customizeToolbar();
-        setUserData();
-        customizeRecycler();
+        themePreference = new ThemePreference(this);
+        presenter.onCreate();
     }
 
-    private void setUserData() {
+    @Override
+    public void setUserData() {
         login.setText(presenter.getUserName());
         id.setText(presenter.getUserId());
     }
@@ -56,7 +58,6 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
     @Override
     public void finish() {
         super.finish();
-//        overridePendingTransition(R.anim.translate_top_side, R.anim.translate_bottom_side);
         overridePendingTransition(R.anim.alpha_to_one, R.anim.translate_bottom_side);
     }
 
@@ -72,6 +73,12 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
         adapter.onRestoreInstanceState(savedInstanceState);
     }
 
+    @Override
+    public void customizeTheme() {
+        toolbar.setBackgroundColor(themePreference.getPrimaryColor());
+    }
+
+    @Override
     public void customizeToolbar() {
         toolbar.setTitle(R.string.action_settings);
         setSupportActionBar(toolbar);
@@ -79,6 +86,7 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
         toolbar.setNavigationOnClickListener(presenter.onBackPressed());
     }
 
+    @Override
     public void customizeRecycler() {
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_setting_expanded);
         adapter = new ExpandableAdapter(presenter, getParents());
@@ -102,36 +110,16 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
     @Override
     public void showChangeLoginDialog() {
         final IChangeDialog dialog = new ChangeLoginDialog();
-        dialog.setOnPositiveClickListener(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                presenter.setNewLogin(dialog.getEnteredText());
-            }
-        });
-        dialog.setOnNegativeClickListener(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialog.dismiss();
-            }
-        });
+        dialog.setOnPositiveClickListener((dialogInterface, i) -> presenter.setNewLogin(dialog.getEnteredText()));
+        dialog.setOnNegativeClickListener((dialogInterface, i) -> dialog.dismiss());
         dialog.show(getSupportFragmentManager(), "change login");
     }
 
     @Override
     public void showChangePasswordDialog() {
         final IChangeDialog dialog = new ChangePasswordDialog();
-        dialog.setOnPositiveClickListener(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                presenter.setNewPassword(dialog.getEnteredText());
-            }
-        });
-        dialog.setOnNegativeClickListener(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialog.dismiss();
-            }
-        });
+        dialog.setOnPositiveClickListener((dialogInterface, i) -> presenter.setNewPassword(dialog.getEnteredText()));
+        dialog.setOnNegativeClickListener((dialogInterface, i) -> dialog.dismiss());
         dialog.show(getSupportFragmentManager(), "change password");
     }
 

@@ -18,6 +18,7 @@ import trickyquestion.messenger.chat_screen.model.ChatMessage;
 import trickyquestion.messenger.chat_screen.repository.ChatMessageRepository;
 import trickyquestion.messenger.chat_screen.repository.IChatMessageRepository;
 import trickyquestion.messenger.chat_screen.view.IChatView;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.formatter.TimeFormatter;
 
 public class ChatPresenter implements IChatPresenter {
@@ -34,6 +35,7 @@ public class ChatPresenter implements IChatPresenter {
 
     @Override
     public void onCreate() {
+        view.customizeTheme();
         view.customizeToolbar();
         view.showMessages();
         view.setupListeners();
@@ -42,22 +44,14 @@ public class ChatPresenter implements IChatPresenter {
 
     @Override
     public View.OnClickListener onNavigationButtonPressed() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.goBack();
-            }
-        };
+        return v -> view.goBack();
     }
 
     @Override
     public View.OnClickListener onSendButtonClick() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!view.getMessageText().isEmpty()) sendMessage(view.getMessageText());
-                else view.showToast("Message is empty!");
-            }
+        return v -> {
+            if (!view.getMessageText().isEmpty()) sendMessage(view.getMessageText());
+            else view.showToast("Message is empty!");
         };
     }
 
@@ -125,5 +119,9 @@ public class ChatPresenter implements IChatPresenter {
         view.clearMessageText();
         view.refreshRecycler();
         view.scrollRecyclerToPosition(chatMessages.size() - 1);
+    }
+
+    public void onEvent(ChangeThemeEvent event) {
+        view.customizeTheme();
     }
 }

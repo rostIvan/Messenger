@@ -2,6 +2,7 @@ package trickyquestion.messenger.main_screen.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
@@ -31,6 +32,7 @@ import trickyquestion.messenger.main_screen.presenter.IMainPresenter;
 import trickyquestion.messenger.main_screen.presenter.MainPresenter;
 import trickyquestion.messenger.settings_screen.view.SettingActivity;
 import trickyquestion.messenger.util.Constants;
+import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
 
@@ -44,11 +46,11 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     AppBarLayout appBar;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-
     private AccountPopup accountPopup;
     private SearchView searchView;
 
     private IMainPresenter presenter;
+    private ThemePreference themePreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         setContentView(Constants.MAIN_LAYOUT);
         ButterKnife.bind(this);
         if (presenter == null) presenter = new MainPresenter(this);
+        this.themePreference = new ThemePreference(this);
         presenter.onCreate();
     }
 
@@ -84,13 +87,19 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
+    public void customizeTheme() {
+        toolbar.setBackgroundColor(themePreference.getPrimaryColor());
+        fab.setColorNormal(themePreference.getPrimaryColor());
+        tabLayout.setBackgroundColor(themePreference.getPrimaryColor());
+    }
+
+    @Override
     public void customizeToolbar() {
         toolbar.setTitle(getTitle());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
     }
-
 
     @Override
     public void setFabBehavior() {

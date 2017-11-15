@@ -19,6 +19,7 @@ import trickyquestion.messenger.add_friend_screen.adapter.RecyclerViewAddFriendA
 import trickyquestion.messenger.add_friend_screen.presenter.AddFriendPresenter;
 import trickyquestion.messenger.add_friend_screen.presenter.IAddFriendPresenter;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class AddFriendActivity extends AppCompatActivity  implements IAddFriendView {
     @BindView(R.id.rv_add_friend)
@@ -28,6 +29,7 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
     private SearchView searchView;
 
     private IAddFriendPresenter presenter;
+    private ThemePreference themePreference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,13 +37,13 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
         setContentView(R.layout.activity_add_friend);
         ButterKnife.bind(this);
         if (presenter == null) presenter = new AddFriendPresenter(this);
+        themePreference = new ThemePreference(this);
         presenter.onCreate();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         final MenuItem settingMenuItem = menu.findItem(R.id.action_menu);
         settingMenuItem.setVisible(false);
         final MenuItem myAccount = menu.findItem(R.id.action_account);
@@ -50,6 +52,13 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
         searchView = (SearchView) searchItem.getActionView();
         return true;
     }
+
+
+    @Override
+    public void customizeTheme() {
+        toolbar.setBackgroundColor(themePreference.getPrimaryColor());
+    }
+
 
     @Override
     public void customizeToolbar() {

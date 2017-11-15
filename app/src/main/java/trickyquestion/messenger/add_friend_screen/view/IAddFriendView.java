@@ -4,6 +4,8 @@ package trickyquestion.messenger.add_friend_screen.view;
 import android.content.Context;
 
 public interface IAddFriendView {
+    void customizeTheme();
+
     void customizeToolbar();
 
     void goBack();
