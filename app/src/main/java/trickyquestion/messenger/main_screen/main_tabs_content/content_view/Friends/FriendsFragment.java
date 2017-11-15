@@ -127,4 +127,9 @@ public class FriendsFragment extends Fragment implements IFriendsView {
         startActivity(i);
         getActivity().overridePendingTransition(R.anim.translate_left_slide, R.anim.alpha_to_zero);
     }
+
+    @Override
+    public void runOnUiThread(final Runnable r) {
+        this.getActivity().runOnUiThread(r);
+    }
 }

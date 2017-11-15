@@ -16,4 +16,6 @@ public interface IFriendsView {
     String getSearchQuery();
 
     void showChatActivity(Friend message);
+
+    void runOnUiThread(Runnable r);
 }

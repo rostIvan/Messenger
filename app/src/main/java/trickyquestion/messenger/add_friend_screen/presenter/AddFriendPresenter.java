@@ -1,10 +1,12 @@
 package trickyquestion.messenger.add_friend_screen.presenter;
 
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -16,6 +18,8 @@ import trickyquestion.messenger.add_friend_screen.model.IFriend;
 import trickyquestion.messenger.add_friend_screen.view.IAddFriendView;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
+import trickyquestion.messenger.network.NetworkState;
+import trickyquestion.messenger.network.NetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.P2PNetwork;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.temp_impl.FriendsGetter;
@@ -39,12 +43,9 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     @Override
     public View.OnClickListener onNavigationButtonPressed() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!view.isSearchViewIconified()) view.setSearchViewIconified(true);
-                else view.goBack();
-            }
+        return v -> {
+            if (!view.isSearchViewIconified()) view.setSearchViewIconified(true);
+            else view.goBack();
         };
     }
 
@@ -141,11 +142,26 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
 
-    public void onEventMainThread(ChangeUserList event){
-        updateFriendList();
+    public void onEvent(ChangeUserList event){
+        view.runOnActivityUiThread(this::updateFriendList);
     }
+
+    public void onEvent(final NetworkStateChanged event) {
+        view.runOnActivityUiThread( () ->  onNetworkChanged(event));
+    }
+
     private void updateFriendList() {
         this.friends = FriendsGetter.getFriends();
         this.view.notifyRecyclerDataChange();
+    }
+
+    private void onNetworkChanged(NetworkStateChanged event) {
+        if ( event.getNewNetworkState() == NetworkState.INACTIVE ) {
+            friends.clear();
+            this.view.notifyRecyclerDataChange();
+        }
+        else if (event.getNewNetworkState() == NetworkState.ACTIVE) {
+            updateFriendList();
+        }
     }
 }

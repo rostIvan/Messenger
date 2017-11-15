@@ -1,7 +1,5 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.repository;
 
-import android.support.annotation.NonNull;
-
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -9,7 +7,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
-import trickyquestion.messenger.network.NetworkState;
+import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
 
 public class FriendsRepository {
@@ -22,12 +20,9 @@ public class FriendsRepository {
     public static void addFriend(final Friend friend) {
         final Realm realm = Realm.getDefaultInstance();
         try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(@NonNull Realm realm) {
-                    realm.copyToRealm(friend);
-                    onChange();
-                }
+            realm.executeTransaction(r -> {
+                r.copyToRealm(friend);
+                onChange();
             });
         } finally {
             realm.close();
@@ -38,12 +33,9 @@ public class FriendsRepository {
         final Realm realm = Realm.getDefaultInstance();
         final RealmResults results = realm.where(Friend.class).equalTo("name", friend.getName()).findAll();
         try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(@NonNull Realm realm) {
-                    results.deleteFirstFromRealm();
-                    onChange();
-                }
+            realm.executeTransaction(r -> {
+                results.deleteFirstFromRealm();
+                onChange();
             });
         } finally {
             realm.close();
@@ -53,12 +45,9 @@ public class FriendsRepository {
     public static void deleteAllFriends() {
         final Realm realm = Realm.getDefaultInstance();
         try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(@NonNull Realm realm) {
-                    realm.delete(Friend.class);
-                    onChange();
-                }
+            realm.executeTransaction(r -> {
+                r.delete(Friend.class);
+                onChange();
             });
         } finally {
             realm.close();
@@ -68,12 +57,7 @@ public class FriendsRepository {
     public static void changeFriendOnlineStatus(final Friend friend, final boolean isOnline) {
         final Realm realm = Realm.getDefaultInstance();
         try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(@NonNull Realm realm) {
-                    friend.setOnline(isOnline);
-                }
-            });
+            realm.executeTransaction(r -> friend.setOnline(isOnline));
         } finally {
             realm.close();
         }
@@ -81,5 +65,22 @@ public class FriendsRepository {
 
     private static void onChange() {
         EventBus.getDefault().post(new AddFriendEvent("Friend add to list"));
+    }
+
+    public static void updateFriendsStatus(List<Friend> friendList, List<IUser> users) {
+        final Realm realm = Realm.getDefaultInstance();
+        try {
+            realm.executeTransaction(r -> {
+                for (Friend friend : friendList) {
+                    friend.setOnline(false);
+                    for (IUser user : users) {
+                        if (friend.getId().equals(user.getID().toString()))
+                            friend.setOnline(true);
+                    }
+                }
+            });
+        } finally {
+            realm.close();
+        }
     }
 }

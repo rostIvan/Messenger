@@ -78,10 +78,11 @@ public class P2PNetwork {
         volatile Semaphore networkAvailability = new Semaphore(1);
 
         ListenerRunner(){
+            networkAvailability.release();
+            EventBus.getDefault().register(this);
         }
 
-        //@Subscribe(threadMode = ThreadMode.ASYNC)
-        public void onMessage(NetworkStateChanged event) {
+        public void onEvent(NetworkStateChanged event) {
             if (event.getNewNetworkState() == NetworkState.INACTIVE) {
                 try {
                     networkAvailability.acquire();
@@ -95,18 +96,13 @@ public class P2PNetwork {
 
         @Override
         public void run() {
-            if (Network.GetCurrentNetworkState() != NetworkState.ACTIVE) {
-                try {
-                    networkAvailability.acquire();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
             String[] received_packet_content;
             for (;;) {
                 if (networkAvailability.availablePermits() == 0) {
                     networkAvailability.tryAcquire();
+                    networkAvailability.release();
                 }
+                if(Network.GetCurrentNetworkState()!=NetworkState.ACTIVE) continue;
                 String received_data = MSocket.Receive(networkPreference.getMulticastGroupIp(),
                         networkPreference.getMulticastPort()
                 );
@@ -136,7 +132,7 @@ public class P2PNetwork {
                                     received_packet_content[3].substring(0, received_packet_content[3].indexOf("$")),
                                     cal.getTime()));
                 } catch (ParseException e) {
-                    break;
+                    continue;
                 }
             }
         }

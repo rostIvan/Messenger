@@ -16,5 +16,8 @@ public interface IAddFriendView {
 
     void setSearchViewIconified(boolean iconified);
 
+    void runOnActivityUiThread(Runnable r);
+
     Context getContext();
+
 }
