@@ -3,6 +3,7 @@ package trickyquestion.messenger.settings_screen.view;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
     @BindView(R.id.setting_id)
     TextView id;
 
+    private RecyclerView recyclerView;
     private ExpandableAdapter adapter;
     private ISettingPresenter presenter;
     private ThemePreference themePreference;
@@ -88,7 +90,7 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
 
     @Override
     public void customizeRecycler() {
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv_setting_expanded);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_setting_expanded);
         adapter = new ExpandableAdapter(presenter, getParents());
         adapter.setCustomParentAnimationViewId(R.id.parent_list_item_expand_arrow);
         adapter.setParentClickableViewAnimationDefaultDuration();
@@ -131,6 +133,13 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
     @Override
     public void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void openParentItem(final int pos) {
+        new Handler().postDelayed(
+                () -> recyclerView.findViewHolderForAdapterPosition(pos).itemView.performClick(), 1
+        );
     }
 
     private List<ParentObject> getParents() {

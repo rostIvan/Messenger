@@ -15,4 +15,5 @@
     <color name="colorOpacityBlack">#15000000</color>
     <color name="colorPrimaryGreen">#07a984</color>
     <color name="colorTransparentGray">#95ffffff</color>
+    <color name="colorViolet">#ad6aea</color>
 </resources>

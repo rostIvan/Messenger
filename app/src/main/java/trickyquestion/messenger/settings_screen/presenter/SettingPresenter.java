@@ -2,22 +2,14 @@ package trickyquestion.messenger.settings_screen.presenter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import trickyquestion.messenger.R;
 import trickyquestion.messenger.settings_screen.expand_list.list_data.ExpandedListCreator;
-import trickyquestion.messenger.settings_screen.expand_list.model.SettingChild;
-import trickyquestion.messenger.settings_screen.expand_list.model.SettingParent;
 import trickyquestion.messenger.settings_screen.view.ISettingView;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.preference.AuthPreference;
@@ -131,6 +123,7 @@ public class SettingPresenter implements ISettingPresenter {
         themePreference.setPrimaryColor(res);
         view.customizeTheme();
         view.customizeRecycler();
+        view.openParentItem(2);
         EventBus.getDefault().post(new ChangeThemeEvent(res));
     }
 

@@ -20,4 +20,6 @@ public interface ISettingView {
     void setNewLoginText(String loginText);
 
     void showToast(String text);
+
+    void openParentItem(int pos);
 }

@@ -3,8 +3,6 @@ package trickyquestion.messenger.settings_screen.expand_list.list_data;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.content.res.AppCompatResources;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
@@ -113,17 +111,23 @@ public class ExpandedListCreator {
                 R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
         );
 
+        final Drawable drawableChild6 = getDrawable(
+                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
+        );
+
         final SettingChild child1 = new SettingChild("Standard", false, drawableChild1, false);
         final SettingChild child2 = new SettingChild("Dark blue", false, drawableChild2, false);
         final SettingChild child3 = new SettingChild("Red", false, drawableChild3, false);
         final SettingChild child4 = new SettingChild("Orange", false, drawableChild4, false);
-        final SettingChild child5 = new SettingChild("Black", false, drawableChild5, true);
+        final SettingChild child5 = new SettingChild("Violet", false, drawableChild5, false);
+        final SettingChild child6 = new SettingChild("Black", false, drawableChild6, true);
         final List<Object> children = new ArrayList<>();
         children.add(child1);
         children.add(child2);
         children.add(child3);
         children.add(child4);
         children.add(child5);
+        children.add(child6);
         return children;
     }
 
