@@ -1,13 +1,14 @@
 package trickyquestion.messenger.chat_screen.view;
 
 import android.content.res.ColorStateList;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +26,6 @@ import trickyquestion.messenger.chat_screen.presenter.IChatPresenter;
 import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class ChatActivity extends SwipeBackActivity implements IChatView {
-    private IChatPresenter presenter;
 
     @BindView(R.id.message_toolbar)
     Toolbar toolbar;
@@ -41,6 +41,8 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     public static final String FRIEND_NAME_EXTRA = "friendName";
     private ThemePreference themePreference;
 
+    private IChatPresenter presenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +55,18 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+        final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.chat_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        final MenuItem settingsMenuItem = menu.findItem(R.id.clear_messages);
+        final SpannableString s = new SpannableString(settingsMenuItem.getTitle());
+        s.setSpan(new ForegroundColorSpan(themePreference.getPrimaryColor()), 0, s.length(), 0);
+        settingsMenuItem.setTitle(s);
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
