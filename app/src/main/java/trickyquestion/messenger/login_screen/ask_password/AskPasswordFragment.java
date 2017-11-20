@@ -1,6 +1,7 @@
 package trickyquestion.messenger.login_screen.ask_password;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.util.preference.AuthPreference;
+import trickyquestion.messenger.util.preference.ThemePreference;
 
 
 public class AskPasswordFragment extends Fragment {
@@ -32,6 +34,7 @@ public class AskPasswordFragment extends Fragment {
     TextView buttonSignIn;
 
     private AuthPreference authPreference;
+    private ThemePreference themePreference;
 
     @Nullable
     @Override
@@ -39,15 +42,20 @@ public class AskPasswordFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_ask_pass, container, false);
         ButterKnife.bind(this, view);
         authPreference = new AuthPreference(this.getContext());
+        themePreference = new ThemePreference(this.getContext());
         textViewHello.setText(
                 "Hello, "
                 .concat(authPreference.getAccountLogin())
                 .concat(" ")
                 .concat(authPreference.getAccountPassword())
         );
-        pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimaryGreen), PorterDuff.Mode.SRC_ATOP);
+        customizeTheme();
         addPassListeners();
         return view;
+    }
+
+    private void customizeTheme() {
+        pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimaryGreen), PorterDuff.Mode.SRC_ATOP);
     }
 
     @OnClick(R.id.button_sign_in)

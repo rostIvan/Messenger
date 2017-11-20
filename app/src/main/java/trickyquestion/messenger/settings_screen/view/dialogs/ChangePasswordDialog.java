@@ -11,6 +11,7 @@ import android.text.InputType;
 import android.widget.EditText;
 
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class ChangePasswordDialog extends DialogFragment implements IChangeDialog {
 
@@ -35,7 +36,11 @@ public class ChangePasswordDialog extends DialogFragment implements IChangeDialo
     @Override
     public void onStart() {
         super.onStart();
-        final int primaryColor = getResources().getColor(R.color.colorPrimaryGreen);
+        customizeTheme();
+    }
+
+    private void customizeTheme() {
+        final int primaryColor = new ThemePreference(getContext()).getPrimaryColor();
         ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(primaryColor);
         ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(primaryColor);
         editText.getBackground().mutate().setColorFilter(primaryColor, PorterDuff.Mode.SRC_ATOP);

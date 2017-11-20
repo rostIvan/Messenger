@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public boolean isSearchViewIconified() {
-        return searchView.isIconified();
+        return searchView == null || searchView.isIconified();
     }
 
     @Override

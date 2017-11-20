@@ -19,16 +19,24 @@ import trickyquestion.messenger.R;
 import trickyquestion.messenger.settings_screen.view.SettingActivity;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.preference.AuthPreference;
+import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class AccountPopup {
     private final Context mContext;
     private PopupWindow popupWindow;
 
     private AuthPreference authPreference;
+    private ThemePreference themePreference;
+
+    private TextView accountName;
+    private TextView accountId;
+    private ImageView changeDataButton;
+    private TextView changeDataLink;
 
     public AccountPopup(final Context context) {
         this.mContext = context;
         authPreference = new AuthPreference(context);
+        themePreference = new ThemePreference(context);
     }
 
     public void show() {
@@ -36,28 +44,34 @@ public class AccountPopup {
         final View v = ((Activity) mContext).findViewById(R.id.action_account);
         popupWindow = BubblePopupHelper.create(mContext, bubbleLayout);
         popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, getX(v), getY(v));
+        initViews(bubbleLayout);
+        setValues();
+        customizeTheme();
+        setupListeners();
+    }
 
-        final TextView accountName = (TextView) bubbleLayout.findViewById(R.id.account_name);
-        final TextView accountId = (TextView) bubbleLayout.findViewById(R.id.account_id);
-        final ImageView changeDataButton = (ImageView) bubbleLayout.findViewById(R.id.change_data_arrow);
-        final TextView changeDataLink = (TextView) bubbleLayout.findViewById(R.id.change_data_link);
 
+    private void initViews(BubbleLayout bubbleLayout) {
+        accountName = (TextView) bubbleLayout.findViewById(R.id.account_name);
+        accountId = (TextView) bubbleLayout.findViewById(R.id.account_id);
+        changeDataButton = (ImageView) bubbleLayout.findViewById(R.id.change_data_arrow);
+        changeDataLink = (TextView) bubbleLayout.findViewById(R.id.change_data_link);
+    }
+
+    private void customizeTheme() {
+        changeDataButton.setColorFilter(themePreference.getPrimaryColor());
+        changeDataLink.setTextColor(themePreference.getPrimaryColor());
+        changeDataLink.setPaintFlags(changeDataLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+    }
+
+    private void setValues() {
         accountName.setText(getAccountName());
         accountId.setText(getAccountId());
-        changeDataLink.setPaintFlags(changeDataLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+    }
 
-        changeDataButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSetting();
-            }
-        });
-        changeDataLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSetting();
-            }
-        });
+    private void setupListeners() {
+        changeDataButton.setOnClickListener(view -> openSetting());
+        changeDataLink.setOnClickListener(view -> openSetting());
     }
 
     private void openSetting() {

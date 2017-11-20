@@ -32,8 +32,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="45dp"
         android:hint="@string/message"
-        android:paddingLeft="50dp"
-        android:textColorHighlight="@color/colorPrimaryGreen" />
+        android:paddingLeft="50dp" />
 
     <ImageButton
         android:id="@+id/send_button"

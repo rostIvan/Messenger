@@ -1,10 +1,14 @@
 package trickyquestion.messenger.settings_screen.expand_list.adapter;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
@@ -19,6 +23,7 @@ import trickyquestion.messenger.settings_screen.expand_list.listeners.OnParentIt
 import trickyquestion.messenger.settings_screen.expand_list.model.SettingChild;
 import trickyquestion.messenger.settings_screen.expand_list.model.SettingParent;
 import trickyquestion.messenger.settings_screen.presenter.ISettingPresenter;
+import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewHolder, ItemChildViewHolder> {
 
@@ -62,6 +67,14 @@ public class ExpandableAdapter extends ExpandableRecyclerAdapter<ItemParentViewH
                 child.getTitle().equals("Show notifications") ? View.VISIBLE : View.GONE
         );
         itemChildViewHolder.checkBox.setChecked(child.isChecked());
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) itemChildViewHolder.checkBox.setButtonTintList(
+                ColorStateList.valueOf(new ThemePreference(mContext).getPrimaryColor())
+        );
+        else CompoundButtonCompat.setButtonTintList(itemChildViewHolder.checkBox,
+                ColorStateList.valueOf(new ThemePreference(mContext).getPrimaryColor())
+        );
         setBigSeparateLine(itemChildViewHolder, child.isLast());
         final Drawable icon = child.getIconDrawable();
         if (icon != null)

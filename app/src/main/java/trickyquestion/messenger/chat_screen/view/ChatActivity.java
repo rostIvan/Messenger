@@ -1,7 +1,10 @@
 package trickyquestion.messenger.chat_screen.view;
 
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -69,6 +72,8 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     @Override
     public void customizeTheme() {
         toolbar.setBackgroundColor(themePreference.getPrimaryColor());
+        sendButton.setColorFilter(themePreference.getPrimaryColor());
+        ViewCompat.setBackgroundTintList(messageField, ColorStateList.valueOf(themePreference.getPrimaryColor()));
     }
 
     @Override
