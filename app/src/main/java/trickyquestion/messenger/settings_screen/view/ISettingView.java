@@ -22,4 +22,5 @@ public interface ISettingView {
     void showToast(String text);
 
     void openParentItem(int pos);
+    void showColorPicker();
 }

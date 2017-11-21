@@ -2,10 +2,19 @@ package trickyquestion.messenger.util.event_bus_pojo;
 
 public class ChangeThemeEvent {
 
-    private final int color;
+    private  int color;
+    private String  colorHex;
 
     public ChangeThemeEvent(int color) {
         this.color = color;
+    }
+
+    public ChangeThemeEvent(String colorHex) {
+        this.colorHex = colorHex;
+    }
+
+    public String getColorHex() {
+        return colorHex;
     }
 
     public int getColor() {

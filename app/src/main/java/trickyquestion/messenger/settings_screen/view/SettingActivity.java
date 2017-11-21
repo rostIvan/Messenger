@@ -2,9 +2,11 @@ package trickyquestion.messenger.settings_screen.view;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+import com.flask.colorpicker.ColorPickerView;
+import com.flask.colorpicker.OnColorChangedListener;
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
 import java.util.List;
 
@@ -140,6 +145,29 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
         new Handler().postDelayed(
                 () -> recyclerView.findViewHolderForAdapterPosition(pos).itemView.performClick(), 1
         );
+    }
+
+    @Override
+    public void showColorPicker() {
+        final AlertDialog picker = ColorPickerDialogBuilder
+                .with(this)
+                .setTitle("Choose color")
+                .initialColor(themePreference.getPrimaryColor())
+                .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+                .density(9)
+                .setPositiveButton("ok", (dialog, selectedColor, allColors) -> {
+                    presenter.setThemePrimaryColor("#" + Integer.toHexString(selectedColor));
+                })
+                .setNegativeButton("cancel", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .showColorEdit(true)
+                .showAlphaSlider(true)
+                .showColorPreview(true)
+                .showLightnessSlider(true)
+                .setColorEditTextColor(Color.BLACK)
+                .build();
+        picker.show();
     }
 
     private List<ParentObject> getParents() {

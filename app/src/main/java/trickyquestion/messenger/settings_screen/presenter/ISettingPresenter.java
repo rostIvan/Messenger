@@ -13,6 +13,7 @@ public interface ISettingPresenter {
     View.OnClickListener onBackPressed();
     List<ParentObject> getParents();
     ISettingView getView();
+    void onCreate();
 
     void onChangeNameItemClick();
     void onChangePassItemClick();
@@ -25,12 +26,13 @@ public interface ISettingPresenter {
     String  getUserId();
 
     void setNewLogin(String login);
-
     void setNewPassword(String password);
-
     void setThemePrimaryColor(int res);
-
     void setThemeSecondaryColor(int res);
 
-    void onCreate();
+    void setThemePrimaryColor(String colorHex);
+
+    void setThemeSecondaryColor(String colorHex);
+
+    void onPickColorClick();
 }

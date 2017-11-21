@@ -126,12 +126,33 @@ public class SettingPresenter implements ISettingPresenter {
         view.openParentItem(2);
         EventBus.getDefault().post(new ChangeThemeEvent(res));
     }
-
     @Override
     public void setThemeSecondaryColor(int res) {
         themePreference.setPrimaryColor(res);
         view.customizeTheme();
         view.customizeRecycler();
         EventBus.getDefault().post(new ChangeThemeEvent(res));
+    }
+
+    @Override
+    public void setThemePrimaryColor(String colorHex) {
+        themePreference.setPrimaryColor(colorHex);
+        view.customizeTheme();
+        view.customizeRecycler();
+        view.openParentItem(2);
+        EventBus.getDefault().post(new ChangeThemeEvent(colorHex));
+    }
+
+    @Override
+    public void setThemeSecondaryColor(String colorHex) {
+        themePreference.setPrimaryColor(colorHex);
+        view.customizeTheme();
+        view.customizeRecycler();
+        EventBus.getDefault().post(new ChangeThemeEvent(Integer.parseInt(colorHex)));
+    }
+
+    @Override
+    public void onPickColorClick() {
+        view.showColorPicker();
     }
 }

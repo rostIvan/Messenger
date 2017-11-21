@@ -95,32 +95,16 @@ public class ExpandedListCreator {
     }
 
     private List<Object> getChildrenThirdParent() {
-        final Drawable drawableChild1 = getDrawable(
+        final Drawable drawableChild = getDrawable(
                 R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
         );
-        final Drawable drawableChild2 = getDrawable(
-                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
-        );
-        final Drawable drawableChild3 = getDrawable(
-                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
-        );
-        final Drawable drawableChild4 = getDrawable(
-                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
-        );
-        final Drawable drawableChild5 = getDrawable(
-                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
-        );
-
-        final Drawable drawableChild6 = getDrawable(
-                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
-        );
-
-        final SettingChild child1 = new SettingChild("Standard", false, drawableChild1, false);
-        final SettingChild child2 = new SettingChild("Dark blue", false, drawableChild2, false);
-        final SettingChild child3 = new SettingChild("Red", false, drawableChild3, false);
-        final SettingChild child4 = new SettingChild("Orange", false, drawableChild4, false);
-        final SettingChild child5 = new SettingChild("Violet", false, drawableChild5, false);
-        final SettingChild child6 = new SettingChild("Black", false, drawableChild6, true);
+        final SettingChild child1 = new SettingChild("Standard", false, drawableChild, false);
+        final SettingChild child2 = new SettingChild("Dark blue", false, drawableChild, false);
+        final SettingChild child3 = new SettingChild("Red", false, drawableChild, false);
+        final SettingChild child4 = new SettingChild("Orange", false, drawableChild, false);
+        final SettingChild child5 = new SettingChild("Violet", false, drawableChild, false);
+        final SettingChild child6 = new SettingChild("Black", false, drawableChild, false);
+        final SettingChild child7 = new SettingChild("Pick color", false, drawableChild, true);
         final List<Object> children = new ArrayList<>();
         children.add(child1);
         children.add(child2);
@@ -128,6 +112,7 @@ public class ExpandedListCreator {
         children.add(child4);
         children.add(child5);
         children.add(child6);
+        children.add(child7);
         return children;
     }
 

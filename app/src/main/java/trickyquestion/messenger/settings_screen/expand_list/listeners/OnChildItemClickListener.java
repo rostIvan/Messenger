@@ -41,6 +41,7 @@ public class OnChildItemClickListener implements View.OnClickListener {
             case "Orange" :     presenter.setThemePrimaryColor(R.color.colorOrange); break;
             case "Violet" :     presenter.setThemePrimaryColor(R.color.colorViolet); break;
             case "Black" :      presenter.setThemePrimaryColor(R.color.colorBlack); break;
+            case "Pick color" : presenter.onPickColorClick(); break;
         }
     }
 
