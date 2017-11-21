@@ -1,6 +1,9 @@
 package trickyquestion.messenger.chat_screen.view;
 
 
+import android.view.View;
+import android.widget.TextView;
+
 public interface IChatView {
     void customizeTheme();
 
@@ -19,4 +22,8 @@ public interface IChatView {
     void showToast(String text);
 
     String getFriendName();
+
+    void setStyleForMyMessage(View container, TextView textMessage, TextView timeMessage);
+
+    void setStyleForFriendMessage(View container, TextView textMessage, TextView timeMessage);
 }
