@@ -14,5 +14,5 @@ public interface IMessageView {
     void setRefreshing(final boolean isRefresh);
 
     void showChatActivity(Message message);
-    void showFriendProfile(String nameSender);
+    void showFriendProfile(String nameSender, boolean b);
 }

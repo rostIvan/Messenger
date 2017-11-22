@@ -1,9 +1,8 @@
 package trickyquestion.messenger.settings_screen.expand_list.list_data;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.content.res.AppCompatResources;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
@@ -64,7 +63,7 @@ public class ExpandedListCreator {
     private SettingParent getThirdParent() {
         final SettingParent parent3 = new SettingParent();
         final Drawable icon = getDrawable(R.drawable.ic_change_name_primary_green, themePreference.getPrimaryColor());
-        parent3.setTitle("Color management");
+        parent3.setTitle("Color theme");
         parent3.setImageDrawable(icon);
         return parent3;
     }
@@ -96,28 +95,31 @@ public class ExpandedListCreator {
     }
 
     private List<Object> getChildrenThirdParent() {
-        final Drawable drawableChild1 = getDrawable(R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor());
-        final Drawable drawableChild2 = getDrawable(R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor());
-        final Drawable drawableChild3 = getDrawable(R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor());
-        final Drawable drawableChild4 = getDrawable(R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor());
-
-        final SettingChild child1 = new SettingChild("Standard", false, drawableChild1, false);
-        final SettingChild child2 = new SettingChild("Red", false, drawableChild2, false);
-        final SettingChild child3 = new SettingChild("Orange", false, drawableChild3, false);
-        final SettingChild child4 = new SettingChild("Black", false, drawableChild4, true);
+        final Drawable drawableChild = getDrawable(
+                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
+        );
+        final SettingChild child1 = new SettingChild("Standard", false, drawableChild, false);
+        final SettingChild child2 = new SettingChild("Dark blue", false, drawableChild, false);
+        final SettingChild child3 = new SettingChild("Red", false, drawableChild, false);
+        final SettingChild child4 = new SettingChild("Orange", false, drawableChild, false);
+        final SettingChild child5 = new SettingChild("Violet", false, drawableChild, false);
+        final SettingChild child6 = new SettingChild("Black", false, drawableChild, false);
+        final SettingChild child7 = new SettingChild("Pick color", false, drawableChild, true);
         final List<Object> children = new ArrayList<>();
         children.add(child1);
         children.add(child2);
         children.add(child3);
         children.add(child4);
+        children.add(child5);
+        children.add(child6);
+        children.add(child7);
         return children;
     }
 
     private Drawable getDrawable(final int res, final int color) {
         final Drawable drawable = AppCompatResources.getDrawable(context, res);
         if (drawable != null) {
-            drawable.mutate();
-            DrawableCompat.setTint(drawable, color);
+            drawable.setColorFilter(color, PorterDuff.Mode.SRC_IN);
         }
         return drawable;
     }

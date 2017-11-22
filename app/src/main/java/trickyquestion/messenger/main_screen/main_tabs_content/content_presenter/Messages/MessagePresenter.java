@@ -124,19 +124,9 @@ public class MessagePresenter implements IMessagePresenter {
         holder.time.setText(message.getTime());
         if (!message.wasRead()) holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
         else holder.message.setBackgroundColor(Color.TRANSPARENT);
-        holder.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.showFriendProfile(message.getNameSender());
-            }
-        });
+        holder.image.setOnClickListener(v -> view.showFriendProfile(message.getNameSender(), true));
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                view.showChatActivity(message);
-            }
-        });
+        holder.itemView.setOnClickListener(v -> view.showChatActivity(message));
     }
 
     public void onEvent(SendMessageEvent event){

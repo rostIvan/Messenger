@@ -11,7 +11,7 @@ public interface IFriendsView {
 
     void notifyRecyclerDataChange();
 
-    void showFriendProfile(String name);
+    void showFriendProfile(String name, boolean online);
 
     String getSearchQuery();
 

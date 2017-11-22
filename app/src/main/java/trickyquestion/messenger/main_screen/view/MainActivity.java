@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     AppBarLayout appBar;
     @BindView(R.id.fab)
     FloatingActionButton fab;
+
     private AccountPopup accountPopup;
     private SearchView searchView;
 
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public void customizeTheme() {
+        appBar.setBackgroundColor(themePreference.getPrimaryColor());
         toolbar.setBackgroundColor(themePreference.getPrimaryColor());
         fab.setColorNormal(themePreference.getPrimaryColor());
         tabLayout.setBackgroundColor(themePreference.getPrimaryColor());
@@ -174,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @Override
     public boolean isSearchViewIconified() {
-        return searchView.isIconified();
+        return searchView == null || searchView.isIconified();
     }
 
     @Override

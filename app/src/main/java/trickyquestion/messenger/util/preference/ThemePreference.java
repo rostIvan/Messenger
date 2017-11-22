@@ -2,6 +2,9 @@ package trickyquestion.messenger.util.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+
+import org.jetbrains.annotations.NotNull;
 
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.util.Constants;
@@ -24,9 +27,16 @@ public class ThemePreference {
         return preferences.getInt(Constants.EXTRA_KEY_SECONDARY_COLOR, context.getResources().getColor(R.color.colorWhite));
     }
 
-    public void setPrimaryColor(int primaryColor) {
+    public void setPrimaryColor(final int primaryColor) {
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putInt(Constants.EXTRA_KEY_PRIMARY_COLOR, context.getResources().getColor(primaryColor));
+        editor.apply();
+        editor.commit();
+    }
+
+    public void setPrimaryColor(@NotNull final String colorHex) {
+        final SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(Constants.EXTRA_KEY_PRIMARY_COLOR, Color.parseColor(colorHex));
         editor.apply();
         editor.commit();
     }

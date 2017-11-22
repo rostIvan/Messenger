@@ -1,12 +1,9 @@
 package trickyquestion.messenger.chat_screen.presenter;
 
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.List;
 import java.util.Random;
@@ -83,27 +80,10 @@ public class ChatPresenter implements IChatPresenter {
     private void bindViewHolder(ChatViewHolder holder, ChatMessage message) {
         holder.textMessage.setText(message.getText());
         holder.timeMessage.setText(message.getTime());
-        if (message.isMy()) setStyleMyMessage(holder.container, holder.textMessage, holder.timeMessage);
-        else setStyleFriendMessage(holder.container, holder.textMessage, holder.timeMessage);
-    }
-
-    private void setStyleMyMessage(final View container, final TextView textMessage, final TextView timeMessage) {
-        final LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(130, 20, 30, 20);
-        container.setLayoutParams(params);
-        container.setBackgroundResource(R.drawable.shape_my_message);
-        textMessage.setTextColor(Color.WHITE);
-        timeMessage.setTextColor(container.getResources().getColor(R.color.colorTransparentGray));
-    }
-    private void setStyleFriendMessage(final View container, final TextView textMessage, final TextView timeMessage) {
-        final LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(30, 20, 130, 20);
-        container.setLayoutParams(params);
-        container.setBackgroundResource(R.drawable.shape_friend_message);
-        textMessage.setTextColor(Color.BLACK);
-        timeMessage.setTextColor(Color.argb(100, 0, 0, 0));
+        if (message.isMy())
+            view.setStyleForMyMessage(holder.container, holder.textMessage, holder.timeMessage);
+        else
+            view.setStyleForFriendMessage(holder.container, holder.textMessage, holder.timeMessage);
     }
 
     private void addMessageToDb(final String message) {
