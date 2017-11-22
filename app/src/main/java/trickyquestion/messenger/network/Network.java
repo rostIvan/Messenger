@@ -70,6 +70,7 @@ public class Network {
     static public boolean StartNetworkListener(Context context){
         if(isStarted) return false;
         NetworkInfo networkInfo = ((ConnectivityManager)context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if(networkInfo!=null)
         if(networkInfo.isConnected())
             networkState=NetworkState.ACTIVE;
         IntentFilter filter = new IntentFilter();

@@ -51,13 +51,17 @@ public class P2PProtocolService extends Service{
 
     private P2PNetwork P2PNetwork;
 
+    private boolean started = false;
+
     public class LocalBinder extends Binder{
         public void Start(){
+            if(started) return;
             host = new Host(getApplicationContext());
             Network.StartNetworkListener(getApplicationContext());
             servicePreference = new NetworkPreference(getApplicationContext());
             P2PNetwork = new P2PNetwork(host, getApplicationContext(),servicePreference);
             P2PNetwork.Start();
+            started = true;
         }
 
         public void Stop(){
