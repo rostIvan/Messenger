@@ -16,11 +16,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.view.ChatActivity;
-import trickyquestion.messenger.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.RecyclerViewAdapters.RecyclerViewMessageAdapter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.IMessagePresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages.MessagePresenter;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
+import trickyquestion.messenger.main_screen.view.MainActivity;
+import trickyquestion.messenger.popup_windows.FriendPhotoDialog;
 
 public class MessagesFragment extends Fragment implements IMessageView {
 
@@ -112,5 +113,10 @@ public class MessagesFragment extends Fragment implements IMessageView {
         bundle.putBoolean("online", online);
         dialog.setArguments(bundle);
         dialog.show(getFragmentManager(), "profile fragment");
+    }
+
+    @Override
+    public void setToolbarTitle(final CharSequence title) {
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(title);
     }
 }

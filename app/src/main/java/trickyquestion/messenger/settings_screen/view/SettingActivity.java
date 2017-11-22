@@ -168,6 +168,8 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
                 .setColorEditTextColor(Color.BLACK)
                 .build();
         picker.show();
+        picker.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(themePreference.getPrimaryColor());
+        picker.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(themePreference.getPrimaryColor());
     }
 
     private List<ParentObject> getParents() {

@@ -1,5 +1,6 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Messages;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +20,9 @@ import trickyquestion.messenger.main_screen.main_tabs_content.repository.Message
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.event_bus_pojo.SendMessageEvent;
+import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class MessagePresenter implements IMessagePresenter {
 
@@ -46,12 +49,9 @@ public class MessagePresenter implements IMessagePresenter {
     public void onStart() {
         if (wasRefreshStarted) {
             view.setRefreshing(true);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    view.setRefreshing(false);
-                    wasRefreshStarted = false;
-                }
+            new Handler().postDelayed(() -> {
+                view.setRefreshing(false);
+                wasRefreshStarted = false;
             }, 2000);
         }
     }
@@ -69,31 +69,29 @@ public class MessagePresenter implements IMessagePresenter {
     /** For Refresh View **/
     @Override
     public SwipeRefreshLayout.OnRefreshListener onRefreshListener() {
-        return new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                wasRefreshStarted = true;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        view.setRefreshing(false);
-                        wasRefreshStarted = false;
-                        updateMessageList();
-                    }
-                }, 1000);
-            }
+        return () -> {
+            wasRefreshStarted = true;
+            view.setToolbarTitle("Updating...");
+            new Handler().postDelayed(() -> {
+                view.setRefreshing(false);
+                wasRefreshStarted = false;
+                updateMessageList();
+                view.setToolbarTitle(view.getFragmentContext().getResources().getString(R.string.app_name));
+            }, 1000);
         };
     }
 
     @Override
     public int getProgressBackgroundColor() {
-        return view.getFragmentContext().getResources().getColor(R.color.colorWhite);
+        return Color.WHITE;
     }
 
     @Override
     public int[] getSchemeColors() {
+        final Context context = view.getFragmentContext();
+        final int primaryColor = new ThemePreference(context).getPrimaryColor();
         return new int[] {
-                view.getFragmentContext().getResources().getColor(R.color.colorPrimaryGreen)
+                primaryColor
         };
     }
 
@@ -125,12 +123,15 @@ public class MessagePresenter implements IMessagePresenter {
         if (!message.wasRead()) holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
         else holder.message.setBackgroundColor(Color.TRANSPARENT);
         holder.image.setOnClickListener(v -> view.showFriendProfile(message.getNameSender(), true));
-
         holder.itemView.setOnClickListener(v -> view.showChatActivity(message));
     }
 
     public void onEvent(SendMessageEvent event){
         updateMessageList();
+    }
+
+    public void onEvent(ChangeThemeEvent event) {
+        view.setupSwipeRefreshLayout();
     }
 
     private void updateMessageList() {
