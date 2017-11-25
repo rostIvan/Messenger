@@ -49,9 +49,11 @@ public class MessagePresenter implements IMessagePresenter {
     public void onStart() {
         if (wasRefreshStarted) {
             view.setRefreshing(true);
+            view.setToolbarTitle("Updating...");
             new Handler().postDelayed(() -> {
                 view.setRefreshing(false);
                 wasRefreshStarted = false;
+                view.setToolbarTitle(view.getAppName());
             }, 2000);
         }
     }
@@ -73,10 +75,10 @@ public class MessagePresenter implements IMessagePresenter {
             wasRefreshStarted = true;
             view.setToolbarTitle("Updating...");
             new Handler().postDelayed(() -> {
-                view.setRefreshing(false);
                 wasRefreshStarted = false;
+                view.setRefreshing(false);
                 updateMessageList();
-                view.setToolbarTitle(view.getFragmentContext().getResources().getString(R.string.app_name));
+                view.setToolbarTitle(view.getAppName());
             }, 1000);
         };
     }

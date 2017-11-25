@@ -17,4 +17,6 @@ public interface IMessageView {
     void showFriendProfile(String nameSender, boolean b);
 
     void setToolbarTitle(CharSequence title);
+
+    CharSequence getAppName();
 }
