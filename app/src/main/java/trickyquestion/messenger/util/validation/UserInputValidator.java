@@ -1,7 +1,11 @@
 package trickyquestion.messenger.util.validation;
 
 
+import android.content.Context;
+
 import java.util.regex.Pattern;
+
+import trickyquestion.messenger.util.preference.AuthPreference;
 
 public class UserInputValidator {
 
@@ -15,4 +19,8 @@ public class UserInputValidator {
         return pattern.matcher(password).matches();
     }
 
+    public static boolean isPreviousPasswordCorrect(final String input, final Context context) {
+        final String password = new AuthPreference(context).getAccountPassword();
+        return password.equals(input);
+    }
 }

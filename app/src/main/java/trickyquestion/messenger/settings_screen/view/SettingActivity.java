@@ -52,8 +52,6 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
     private ThemePreference themePreference;
     private ISettingPresenter presenter;
 
-    private static final String EXTRA_COLOR_PICKER_DIALOG_STATE = "save color picker dialog state";
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,8 +135,10 @@ public class SettingActivity extends AppCompatActivity implements ISettingView {
 
     @Override
     public void showChangePasswordDialog() {
-        final IChangeDialog dialog = new ChangePasswordDialog();
-        dialog.setOnPositiveClickListener((dialogInterface, i) -> presenter.setNewPassword(dialog.getEnteredText()));
+        final ChangePasswordDialog dialog = new ChangePasswordDialog();
+        dialog.setOnPositiveClickListener((dialogInterface, i) ->
+                presenter.setNewPassword(dialog.getPreviousPasswordText(), dialog.getNewPasswordText())
+        );
         dialog.setOnNegativeClickListener((dialogInterface, i) -> dialog.dismiss());
         dialog.show(getSupportFragmentManager(), "change password");
     }

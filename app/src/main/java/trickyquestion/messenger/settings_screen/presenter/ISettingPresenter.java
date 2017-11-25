@@ -26,7 +26,7 @@ public interface ISettingPresenter {
     String  getUserId();
 
     void setNewLogin(String login);
-    void setNewPassword(String password);
+    void setNewPassword(String previousPassword, String newPassword);
     void setThemePrimaryColor(int res);
     void setThemeSecondaryColor(int res);
 
