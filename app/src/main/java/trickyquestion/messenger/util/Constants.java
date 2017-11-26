@@ -6,7 +6,6 @@ import trickyquestion.messenger.R;
 
 public class Constants {
     public static final int MAIN_LAYOUT = R.layout.activity_main;
-    public static final int LOGIN_LAYOUT = R.layout.activity_login;
     public static final int WAS_READ_MESSAGE_BACKGROUND = Color.argb(40, 0, 0, 0);
     public static final int ONLINE_STATUS_TEXT_COLOR = Color.argb(255, 7, 169, 132);
     public static final int OFFLINE_STATUS_TEXT_COLOR = Color.argb(200, 255, 0, 0);

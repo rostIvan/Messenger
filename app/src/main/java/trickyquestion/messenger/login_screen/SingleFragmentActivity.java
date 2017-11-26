@@ -1,30 +1,36 @@
 package trickyquestion.messenger.login_screen;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-
-import trickyquestion.messenger.R;
-import trickyquestion.messenger.util.Constants;
+import android.widget.FrameLayout;
+import trickyquestion.messenger.util.view_id.ViewIdGenerator;
 
 public abstract class SingleFragmentActivity extends FragmentActivity {
+
     public abstract Fragment createFragment();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(Constants.LOGIN_LAYOUT);
+        final FrameLayout frame = getContainer(this);
+        setContentView(frame);
+        updateContentInFrame(frame);
+    }
 
-        final FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.login_container);
+    private FrameLayout getContainer(final Context context) {
+        final FrameLayout container = new FrameLayout(context);
+        container.setId(ViewIdGenerator.generateViewId());
+        return container;
+    }
 
-        if(fragment == null) {
-            fragment = createFragment();
-            fm.beginTransaction()
-                    .add(R.id.login_container, fragment)
-                    .commit();
-        }
+    private void updateContentInFrame(final FrameLayout layout) {
+        final Fragment fragment = createFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(layout.getId(), fragment)
+                .commit();
     }
 }
+
