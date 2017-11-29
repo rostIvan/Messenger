@@ -1,17 +1,15 @@
 package trickyquestion.messenger.add_friend_screen.presenter;
 
 
-import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import io.realm.Realm;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.adapter.AddFriendViewHolder;
 import trickyquestion.messenger.add_friend_screen.model.IFriend;
@@ -20,9 +18,9 @@ import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
-import trickyquestion.messenger.p2p_protocol.P2PNetwork;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
+import trickyquestion.messenger.util.preference.ThemePreference;
 import trickyquestion.messenger.util.temp_impl.FriendsGetter;
 
 public class AddFriendPresenter implements IAddFriendPresenter {
@@ -73,6 +71,27 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
 
+    @Override
+    public void onProgressStart() {
+        view.showToast("Waiting for user answer...");
+    }
+
+    @Override
+    public void onProgressShowing() {
+        // possibly useful, but it isn't accurately
+    }
+
+    @Override
+    public void onProgressFinished() {
+        view.showToast("Adding friend not perform");
+    }
+
+    @Override
+    public void onAlertPositiveButtonPressed() {
+        view.showProgressBar();
+    }
+
+
     private void setViewValue(final AddFriendViewHolder holder, final IFriend friend) {
         holder.name.setText(friend.getName());
         holder.id.setText(friend.getId().toString().substring(0, 25).concat(" ..."));
@@ -82,10 +101,8 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
     private void setupListeners(final AddFriendViewHolder holder, final IFriend friend) {
-
         holder.itemView.setOnTouchListener(new OnHolderItemTouchListener(holder));
         holder.buttonAddFriend.setOnTouchListener(new OnHolderItemTouchListener(holder));
-
         holder.itemView.setOnClickListener(new OnHolderItemClickListener(holder, friend));
         holder.buttonAddFriend.setOnClickListener(new OnHolderItemClickListener(holder, friend));
     }
@@ -102,18 +119,10 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         }
 
         @Override
-        public void onClick(View view) {
-            addFriend(holder, friend);
+        public void onClick(View v) {
+            view.showAddFriendAlertDialog(friend);
+//            addFriend(holder, friend);
         }
-
-
-        private void addFriend(final AddFriendViewHolder holder, final IFriend friend) {
-            final Friend newFriend = new Friend(friend.getName(), friend.getId(),  null, true);
-            FriendsRepository.addFriend(newFriend);
-            friends.remove(holder.getAdapterPosition());
-            view.notifyRecyclerDataChange();
-        }
-
     }
 
     private class OnHolderItemTouchListener implements View.OnTouchListener {
@@ -125,24 +134,26 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
         @Override
         public boolean onTouch(View v, MotionEvent motionEvent) {
+            final ThemePreference themePreference = new ThemePreference(v.getContext());
             switch (motionEvent.getAction()) {
-                case MotionEvent.ACTION_DOWN : {
-                    holder.itemView.setBackgroundColor(v.getResources().getColor(R.color.colorPrimaryGreen));
-                    break;
-                }
-                case MotionEvent.ACTION_UP : {
-                    holder.itemView.setBackgroundColor(v.getResources().getColor(R.color.colorWhite));
-                    break;
-                }
-                case MotionEvent.ACTION_CANCEL : {
-                    holder.itemView.setBackgroundColor(v.getResources().getColor(R.color.colorWhite));
-                    break;
-                }
+                case MotionEvent.ACTION_DOWN :
+                    holder.itemView.setBackgroundColor(themePreference.getPrimaryColor()); break;
+                case MotionEvent.ACTION_UP :
+                    holder.itemView.setBackgroundColor(Color.WHITE); break;
+                case MotionEvent.ACTION_CANCEL :
+                    holder.itemView.setBackgroundColor(Color.WHITE); break;
             }
             return false;
         }
     }
 
+
+    private void addFriend(final AddFriendViewHolder holder, final IFriend friend) {
+        final Friend newFriend = new Friend(friend.getName(), friend.getId(),  null, true);
+        FriendsRepository.addFriend(newFriend);
+        friends.remove(holder.getAdapterPosition());
+        view.notifyRecyclerDataChange();
+    }
 
     public void onEvent(ChangeUserList event){
         this.view.runOnActivityUiThread(this::updateFriendList);

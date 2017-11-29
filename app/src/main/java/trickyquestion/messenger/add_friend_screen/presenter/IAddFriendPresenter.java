@@ -13,4 +13,10 @@ public interface IAddFriendPresenter {
     AddFriendViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType);
     void onBindViewHolder(final AddFriendViewHolder holder, final int position);
     int getCount();
+
+    void onProgressShowing();
+    void onProgressFinished();
+    void onProgressStart();
+
+    void onAlertPositiveButtonPressed();
 }
