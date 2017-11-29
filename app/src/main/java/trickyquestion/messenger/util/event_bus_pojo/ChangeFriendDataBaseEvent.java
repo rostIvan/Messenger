@@ -1,9 +1,9 @@
 package trickyquestion.messenger.util.event_bus_pojo;
 
-public class AddFriendEvent {
+public class ChangeFriendDataBaseEvent {
     private final String message;
 
-    public AddFriendEvent(String message) {
+    public ChangeFriendDataBaseEvent(String message) {
         this.message = message;
     }
 

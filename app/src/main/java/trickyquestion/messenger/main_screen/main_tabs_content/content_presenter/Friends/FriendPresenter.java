@@ -1,37 +1,27 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.content_presenter.Friends;
 
-import android.app.Activity;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
-import io.realm.Realm;
-import io.realm.RealmResults;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_adapter.Holders.FriendViewHolder;
 import trickyquestion.messenger.main_screen.main_tabs_content.content_view.Friends.IFriendsView;
 import trickyquestion.messenger.main_screen.main_tabs_content.interactors.FriendListInteractor;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
-import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
-import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.Constants;
-import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeFriendDataBaseEvent;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
 
 public class FriendPresenter implements IFriendPresenter {
@@ -170,7 +160,7 @@ public class FriendPresenter implements IFriendPresenter {
         }
     }
 
-    public void onEvent(AddFriendEvent event) {
+    public void onEvent(ChangeFriendDataBaseEvent event) {
         view.runOnUiThread(this::updateFriendList);
     }
 

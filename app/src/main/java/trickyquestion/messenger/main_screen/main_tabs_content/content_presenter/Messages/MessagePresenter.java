@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,9 +18,8 @@ import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.MessagesRepository;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.util.Constants;
-import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
-import trickyquestion.messenger.util.event_bus_pojo.SendMessageEvent;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeMessageDataBaseEvent;
 import trickyquestion.messenger.util.preference.ThemePreference;
 
 public class MessagePresenter implements IMessagePresenter {
@@ -128,7 +126,7 @@ public class MessagePresenter implements IMessagePresenter {
         holder.itemView.setOnClickListener(v -> view.showChatActivity(message));
     }
 
-    public void onEvent(SendMessageEvent event){
+    public void onEvent(ChangeMessageDataBaseEvent event){
         updateMessageList();
     }
 

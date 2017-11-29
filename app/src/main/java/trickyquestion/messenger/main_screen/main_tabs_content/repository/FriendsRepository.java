@@ -8,7 +8,7 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
-import trickyquestion.messenger.util.event_bus_pojo.AddFriendEvent;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeFriendDataBaseEvent;
 
 public class FriendsRepository {
 
@@ -64,7 +64,7 @@ public class FriendsRepository {
     }
 
     private static void onChange() {
-        EventBus.getDefault().post(new AddFriendEvent("Friend add to list"));
+        EventBus.getDefault().post(new ChangeFriendDataBaseEvent("Change data in db"));
     }
 
     public static void updateFriendsStatus(List<Friend> friendList, List<IUser> users) {

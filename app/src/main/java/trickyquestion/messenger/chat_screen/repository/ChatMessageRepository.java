@@ -6,7 +6,7 @@ import de.greenrobot.event.EventBus;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import trickyquestion.messenger.chat_screen.model.ChatMessage;
-import trickyquestion.messenger.util.event_bus_pojo.SendMessageEvent;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeMessageDataBaseEvent;
 
 public class ChatMessageRepository implements IChatMessageRepository {
 
@@ -95,6 +95,6 @@ public class ChatMessageRepository implements IChatMessageRepository {
     }
 
     private void onChange() {
-        EventBus.getDefault().post(new SendMessageEvent("Message send"));
+        EventBus.getDefault().post(new ChangeMessageDataBaseEvent("Message send"));
     }
 }

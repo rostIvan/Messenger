@@ -1,9 +1,9 @@
 package trickyquestion.messenger.util.event_bus_pojo;
 
-public class SendMessageEvent {
+public class ChangeMessageDataBaseEvent {
     private final String message;
 
-    public SendMessageEvent(String message) {
+    public ChangeMessageDataBaseEvent(String message) {
         this.message = message;
     }
 
