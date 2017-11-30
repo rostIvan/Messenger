@@ -73,22 +73,30 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     @Override
     public void onProgressStart() {
+        view.showProgressBar();
         view.showToast("Waiting for user answer...");
     }
 
     @Override
-    public void onProgressShowing() {
-        // possibly useful, but it isn't accurately
+    public void onProgress() {
+        // possibly useful
     }
 
     @Override
     public void onProgressFinished() {
+        view.hideProgressBar();
         view.showToast("Adding friend not perform");
     }
 
     @Override
+    public void onCancel() {
+        // possibly useful
+        view.hideProgressBar();
+    }
+
+    @Override
     public void onAlertPositiveButtonPressed() {
-        view.showProgressBar();
+        view.startTimer();
     }
 
 

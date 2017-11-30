@@ -42,6 +42,8 @@
             android:name=".chat_screen.view.ChatActivity"
             android:theme="@style/Theme.Swipe.Back"/>
 
+        <activity android:name=".popup_windows.FriendDialogRequest" />
+
         <service
             android:name=".p2p_protocol.P2PProtocolService"
             android:enabled="true"

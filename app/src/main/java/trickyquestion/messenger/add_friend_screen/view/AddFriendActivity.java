@@ -1,10 +1,8 @@
 package trickyquestion.messenger.add_friend_screen.view;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,8 +36,9 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
     DonutProgress progress;
     private SearchView searchView;
 
-    private IAddFriendPresenter presenter;
     private ThemePreference themePreference;
+    private SimpleCountDownTimer timer;
+    private IAddFriendPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,7 +108,7 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
     public void showAddFriendAlertDialog(IFriend friend) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder
-                .setTitle(String.format("Add user: %s? \nid: %s", friend.getName(), friend.getId().toString().substring(0, 15)))
+                .setTitle(String.format("Add user: %s? \nid: %s", friend.getName(), friend.getId().toString().substring(0, 25)))
                 .setPositiveButton("Yes", (dialog, which) -> presenter.onAlertPositiveButtonPressed())
                 .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                 .create();
@@ -120,10 +118,8 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
     }
 
     @Override
-    public void showProgressBar() {
-        final SimpleCountDownTimer timer = new SimpleCountDownTimer(10_000, 100);
-        recyclerView.setVisibility(View.INVISIBLE);
-        progress.setVisibility(View.VISIBLE);
+    public void startTimer() {
+        timer = new SimpleCountDownTimer(10_000, 100);
         timer.setAction(new SimpleCountDownTimer.CountDownTimerAction() {
             @Override
             public void onStart() {
@@ -132,19 +128,39 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
 
             @Override
             public void onProgress(long progressValue, long secondsUntilFinished) {
-                presenter.onProgressShowing();
+                presenter.onProgress();
                 progress.setText(String.valueOf(secondsUntilFinished));
                 progress.setProgress(progressValue);
             }
 
             @Override
+            public void onCancel() {
+                presenter.onCancel();
+            }
+
+            @Override
             public void onFinish() {
                 presenter.onProgressFinished();
-                progress.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
             }
         });
         timer.startTimer();
+    }
+
+    @Override
+    public void cancelTimer() {
+        timer.cancelTimer();
+    }
+
+    @Override
+    public void showProgressBar() {
+        recyclerView.setVisibility(View.INVISIBLE);
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progress.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override

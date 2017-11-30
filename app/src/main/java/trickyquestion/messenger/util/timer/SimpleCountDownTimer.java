@@ -2,7 +2,6 @@ package trickyquestion.messenger.util.timer;
 
 import android.os.CountDownTimer;
 
-/** Don't use standard method start() if you want call method CountDownTimerAction interface onStart() **/
 public class SimpleCountDownTimer extends CountDownTimer {
 
     private final long millisInFuture;
@@ -18,6 +17,11 @@ public class SimpleCountDownTimer extends CountDownTimer {
     public void startTimer() {
         action.onStart();
         super.start();
+    }
+
+    public void cancelTimer() {
+        action.onCancel();
+        super.cancel();
     }
 
     @Override
@@ -38,6 +42,7 @@ public class SimpleCountDownTimer extends CountDownTimer {
 
     public interface CountDownTimerAction {
         void onStart();
+        void onCancel();
         void onProgress(long progressValue, long secondsUntilFinished);
         void onFinish();
     }

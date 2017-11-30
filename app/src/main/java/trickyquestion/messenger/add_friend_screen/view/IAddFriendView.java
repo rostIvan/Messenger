@@ -20,13 +20,19 @@ public interface IAddFriendView {
 
     void setSearchViewIconified(boolean iconified);
 
+    void cancelTimer();
+
+    void showProgressBar();
+
+    void hideProgressBar();
+
     void showToast(CharSequence text);
 
     void runOnActivityUiThread(Runnable r);
 
     void showAddFriendAlertDialog(IFriend friend);
 
-    void showProgressBar();
+    void startTimer();
 
     Context getContext();
 
