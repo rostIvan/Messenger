@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name=".application.MessengerApplication"
@@ -42,7 +43,7 @@
             android:name=".chat_screen.view.ChatActivity"
             android:theme="@style/Theme.Swipe.Back"/>
 
-        <activity android:name=".popup_windows.FriendDialogRequest" />
+        <activity android:name=".popup_windows.FriendRequestDialog" />
 
         <service
             android:name=".p2p_protocol.P2PProtocolService"
