@@ -63,4 +63,62 @@ public class NetworkPreference {
         if (multicastPort < 1 || multicastPort > 65655)
             throw new RuntimeException("multicast Port is not valid");
     }
+
+    public void setAuthPort(int authPort){
+        checkAuthPort(authPort);
+        final SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(Constants.EXTRA_KEY_AUTH_PORT, authPort);
+        editor.apply();
+        editor.commit();
+    }
+
+    public int getAuthPort(){
+        return preferences.getInt(Constants.EXTRA_KEY_AUTH_PORT, Constants.DEFAULT_AUTH_PORT);
+    }
+    private void checkAuthPort(int authPort) {
+        if (authPort < 1 || authPort > 65655)
+            throw new RuntimeException("auth Port is not valid");
+    }
+
+    public void setAuthKeyBitSize(int authKeyBitSize){
+        checkAuthPort(authKeyBitSize);
+        final SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(Constants.EXTRA_KEY_AUTH_KEY_BIT_SIZE, authKeyBitSize);
+        editor.apply();
+        editor.commit();
+    }
+
+    public int getAuthKeyBitSize(){
+        return preferences.getInt(Constants.EXTRA_KEY_AUTH_KEY_BIT_SIZE, Constants.DEFAULT_AUTH_KEY_BIT_SIZE);
+    }
+    private void checkAuthTimeOut(int timeout) {
+        if (timeout <= 512 || timeout >= 10240)
+            throw new RuntimeException("auth key bit size is not valid");
+    }
+
+    public void setAuthTimeOut(int authTimeOut){
+        checkAuthTimeOut(authTimeOut);
+        final SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(Constants.EXTRA_KEY_AUTH_KEY_BIT_SIZE, authTimeOut);
+        editor.apply();
+        editor.commit();
+    }
+    public int getAuthTimeOut() {
+        return preferences.getInt(Constants.EXTRA_KEY_AUTH_KEY_BIT_SIZE, Constants.DEFAULT_AUTH_KEY_BIT_SIZE);
+    }
+
+    public int getMsgPort(){
+        return preferences.getInt(Constants.EXTRA_KEY_AUTH_PORT, Constants.DEFAULT_AUTH_PORT);
+    }
+    private void checkMsgPort(int authPort) {
+        if (authPort < 1 || authPort > 65655)
+            throw new RuntimeException("Msg port is not valid");
+    }
+    public void setMsgKeyBitSize(int authKeyBitSize){
+        checkAuthPort(authKeyBitSize);
+        final SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(Constants.EXTRA_KEY_AUTH_KEY_BIT_SIZE, authKeyBitSize);
+        editor.apply();
+        editor.commit();
+    }
 }

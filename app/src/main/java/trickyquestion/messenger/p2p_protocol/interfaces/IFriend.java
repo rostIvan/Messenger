@@ -1,16 +1,18 @@
 package trickyquestion.messenger.p2p_protocol.interfaces;
 
+import java.math.BigInteger;
 import java.util.UUID;
 
 /**
  * Created by Zen on 11.10.2017.
  */
 
-public interface IFriend extends IUser {
+public interface IFriend {
     UUID getID();
     String getName();
-    String getNetworkAddress();
-    String getImage();
 
-    void setName(String newName);
+    byte[] encKey();
+    String getNetworkAddress();
+
+    void updateData(IUser user);
 }

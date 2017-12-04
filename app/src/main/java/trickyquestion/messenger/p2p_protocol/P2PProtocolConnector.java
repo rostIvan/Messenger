@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 
-import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
-
 /**
  * Created by Zen on 11.10.2017.
  */

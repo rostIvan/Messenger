@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.UUID;
 
 import trickyquestion.messenger.network.Network;
-import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
+import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
+import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.preference.NetworkPreference;
@@ -22,7 +23,7 @@ import trickyquestion.messenger.util.preference.NetworkPreference;
 
 public class P2PProtocolService extends Service{
     private final LocalBinder mBinder = new LocalBinder();
-    private IClient host;
+    private IHost host;
     private NetworkPreference servicePreference;
 
     public P2PProtocolService(){
@@ -50,6 +51,8 @@ public class P2PProtocolService extends Service{
     }
 
     private P2PNetwork P2PNetwork;
+    private P2PAuth P2PAuth;
+    private P2PMesseges P2PMesseges;
 
     private boolean started = false;
 
@@ -60,26 +63,36 @@ public class P2PProtocolService extends Service{
             Network.StartNetworkListener(getApplicationContext());
             servicePreference = new NetworkPreference(getApplicationContext());
             P2PNetwork = new P2PNetwork(host, getApplicationContext(),servicePreference);
-            P2PNetwork.Start();
+            P2PAuth = new P2PAuth(getApplicationContext(),servicePreference,P2PNetwork,host);
             started = true;
         }
 
         public void Stop(){
             P2PNetwork.Stop();
+            P2PAuth.Stop();
+            started = false;
         }
 
         public List<IUser> getUsers(){
             return P2PNetwork.getUsers();
         }
+
+        public void SendFriendReq(IUser user){
+            P2PAuth.NewAuthReq(user);
+        }
+
+        public void SendMsg(IFriend target, String msg){
+            P2PMesseges.SendMsg(target, msg);
+        }
     }
 
-    class Host implements IClient{
+    class Host implements IHost {
 
         private SharedPreferences preferences;
         private UUID id;
 
 
-        Host(Context context){
+        Host(Context context) {
             id = UUID.fromString("00000000-0000-0000-0000-000000000000");
             preferences = context.getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
         }
@@ -91,12 +104,7 @@ public class P2PProtocolService extends Service{
 
         @Override
         public String getName() {
-            return preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN,"NULL");
-        }
-
-        @Override
-        public String getImage() {
-            return "";
+            return preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "NULL");
         }
 
         @Override
@@ -105,11 +113,6 @@ public class P2PProtocolService extends Service{
 
         @Override
         public void reCreate(UUID id, String name, String network_address) {
-        }
-
-        @Override
-        public String getNetworkAddress() {
-            return "127.0.0.1";
         }
     }
 }

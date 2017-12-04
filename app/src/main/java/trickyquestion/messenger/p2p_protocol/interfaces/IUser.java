@@ -12,4 +12,5 @@ public interface IUser {
     String getNetworkAddress();
 
     void setName(String newName);
+    void setNetworkAddress(String newIP);
 }

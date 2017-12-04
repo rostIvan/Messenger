@@ -6,10 +6,9 @@ import java.util.UUID;
  * Created by Zen on 11.10.2017.
  */
 
-public interface IClient extends IFriend {
+public interface IHost {
     UUID getID();
     String getName();
-    String getImage();
 
     void setName(String new_name);
     void reCreate(UUID id, String name, String network_address);

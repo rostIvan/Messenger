@@ -18,7 +18,7 @@ import trickyquestion.messenger.network.MSocket;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
-import trickyquestion.messenger.p2p_protocol.interfaces.IClient;
+import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.preference.NetworkPreference;
@@ -30,7 +30,7 @@ import trickyquestion.messenger.util.preference.NetworkPreference;
 public class P2PNetwork {
     //Requirements
     private Context context;
-    private IClient host;
+    private IHost host;
     private NetworkPreference networkPreference;
 
     private class HeartbeatRunner implements Runnable{
@@ -197,6 +197,11 @@ public class P2PNetwork {
             this.UName = newName;
         }
 
+        @Override
+        public void setNetworkAddress(String newIP) {
+            IP = newIP;
+        }
+
         public Date getTTL()   {return TTL;}
 
         public void setTTL(Date NewTTL){TTL = NewTTL;}
@@ -264,16 +269,13 @@ public class P2PNetwork {
 
     private AsyncList users = new AsyncList();
 
-    P2PNetwork(IClient host, Context context, NetworkPreference networkPreference){
+    P2PNetwork(IHost host, Context context, NetworkPreference networkPreference){
         this.context = context;
         this.host = host;
         this.networkPreference = networkPreference;
         Heartbeat = new Thread(new HeartbeatRunner());
         Listener = new Thread(new ListenerRunner());
         KeepAlive = new Thread(new CleanerRunner());
-    }
-
-    public void Start(){
         Heartbeat.start();
         Listener.start();
         KeepAlive.start();
@@ -281,6 +283,7 @@ public class P2PNetwork {
 
     public void Stop(){
         Heartbeat.interrupt();
+        KeepAlive.interrupt();
         Listener.interrupt();
     }
 
