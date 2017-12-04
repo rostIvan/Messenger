@@ -77,7 +77,7 @@ public class P2PAuth {
                 datagramPacket = new DatagramPacket(buff, dhPubKey.length() + 69, destAddress);
                 datagramPacket.setData(genAuthReqMsg(dhPubKey, host.getID()).getBytes());
                 return datagramPacket;
-            } catch (SocketException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -194,7 +194,7 @@ public class P2PAuth {
                 datagramPacket = new DatagramPacket(buff, dhPubKey.length() + 69, destAddress);
                 datagramPacket.setData(genAuthConMsg(dhPubKey, host.getID()).getBytes());
                 return datagramPacket;
-            } catch (SocketException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
@@ -209,7 +209,7 @@ public class P2PAuth {
                 datagramPacket = new DatagramPacket(buff, content.length() + 69, destAddress);
                 datagramPacket.setData(genAuthConMsg(content, host.getID()).getBytes());
                 return datagramPacket;
-            } catch (SocketException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;

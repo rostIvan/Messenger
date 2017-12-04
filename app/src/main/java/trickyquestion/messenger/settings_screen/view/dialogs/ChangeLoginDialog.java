@@ -3,10 +3,12 @@ package trickyquestion.messenger.settings_screen.view.dialogs;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -32,7 +34,7 @@ public class ChangeLoginDialog extends DialogFragment implements IChangeDialog {
         builder
                 .setTitle(getCustomizeTitle("New login"))
                 .setView(editText)
-                .setIcon(R.drawable.ic_change_name_primary_green)
+                .setIcon(getDrawable(R.drawable.ic_change_name_primary_green))
                 .setPositiveButton("Apply", onPositiveClickListener)
                 .setNegativeButton("Cancel", onNegativeClickListener);
         return builder.create();
@@ -72,5 +74,14 @@ public class ChangeLoginDialog extends DialogFragment implements IChangeDialog {
         final SpannableString str = new SpannableString(title);
         str.setSpan(new ForegroundColorSpan(color), 0, title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return str;
+    }
+
+    private Drawable getDrawable(final int res) {
+        final Drawable drawable = AppCompatResources.getDrawable(getContext(), res);
+        int primaryColor = new ThemePreference(getContext()).getPrimaryColor();
+        if (drawable != null) {
+            drawable.setColorFilter(primaryColor, PorterDuff.Mode.SRC_IN);
+        }
+        return drawable;
     }
 }
