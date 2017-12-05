@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import trickyquestion.messenger.add_friend_screen.adapter.AddFriendViewHolder;
+import trickyquestion.messenger.add_friend_screen.model.IFriend;
 
 public interface IAddFriendPresenter {
     void onCreate();
@@ -14,10 +15,10 @@ public interface IAddFriendPresenter {
     void onBindViewHolder(final AddFriendViewHolder holder, final int position);
     int getCount();
 
-    void onProgress();
-    void onProgressFinished();
-    void onCancel();
-    void onProgressStart();
+    void onProgressTimer();
+    void onProgressTimerFinished();
+    void onCancelTimer();
+    void onProgressTimerStart();
 
-    void onAlertPositiveButtonPressed();
+    void onAlertPositiveButtonPressed(IFriend friend);
 }

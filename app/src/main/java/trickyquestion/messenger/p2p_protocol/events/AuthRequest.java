@@ -6,9 +6,9 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
  * Created by Zen on 04.12.2017.
  */
 
-public class authRequest {
+public class AuthRequest {
     private IUser from;
-    public authRequest(IUser from){
+    public AuthRequest(IUser from){
         this.from = from;
     }
 

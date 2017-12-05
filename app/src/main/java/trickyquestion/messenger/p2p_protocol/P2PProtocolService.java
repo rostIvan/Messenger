@@ -6,11 +6,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.UUID;
 
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.Network;
+import trickyquestion.messenger.p2p_protocol.events.AuthConfirmed;
+import trickyquestion.messenger.p2p_protocol.events.AuthRequest;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
@@ -48,6 +53,10 @@ public class P2PProtocolService extends Service{
     public boolean onUnbind(Intent intent) {
         //clean listeners before unbinding
         return super.onUnbind(intent);
+    }
+
+    public LocalBinder getBinder() {
+        return mBinder;
     }
 
     private P2PNetwork P2PNetwork;
@@ -114,5 +123,14 @@ public class P2PProtocolService extends Service{
         @Override
         public void reCreate(UUID id, String name, String network_address) {
         }
+    }
+
+
+    public void onEvent(AuthRequest event) {
+        // TODO: 05.12.17 after request add without user answer
+        final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), null, true);
+        FriendsRepository.addFriend(friend);
+        final String text = "User: " + event.getFrom().getName() + " add to your friends";
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }

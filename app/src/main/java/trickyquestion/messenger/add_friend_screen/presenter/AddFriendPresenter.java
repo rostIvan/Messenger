@@ -18,10 +18,15 @@ import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
+import trickyquestion.messenger.p2p_protocol.P2PProtocolService;
+import trickyquestion.messenger.p2p_protocol.events.AuthConfirmed;
+import trickyquestion.messenger.p2p_protocol.events.AuthRejected;
+import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.preference.ThemePreference;
 import trickyquestion.messenger.util.temp_impl.FriendsGetter;
+import trickyquestion.messenger.util.type_cast.TypeCasting;
 
 public class AddFriendPresenter implements IAddFriendPresenter {
 
@@ -72,31 +77,33 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
 
     @Override
-    public void onProgressStart() {
+    public void onProgressTimerStart() {
         view.showProgressBar();
         view.showToast("Waiting for user answer...");
     }
 
     @Override
-    public void onProgress() {
+    public void onProgressTimer() {
         // possibly useful
     }
 
     @Override
-    public void onProgressFinished() {
+    public void onProgressTimerFinished() {
         view.hideProgressBar();
         view.showToast("Adding friend not perform");
     }
 
     @Override
-    public void onCancel() {
+    public void onCancelTimer() {
         // possibly useful
         view.hideProgressBar();
     }
 
     @Override
-    public void onAlertPositiveButtonPressed() {
+    public void onAlertPositiveButtonPressed(IFriend friend) {
         view.startTimer();
+        final IUser user = TypeCasting.castToUser(friend);
+        new P2PProtocolService().getBinder().SendFriendReq(user);
     }
 
 
@@ -171,6 +178,21 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         this.view.runOnActivityUiThread( () ->  onNetworkChanged(event));
     }
 
+    public void onEvent(ChangeThemeEvent event) {
+        view.customizeTheme();
+    }
+
+    public void onEvent(AuthConfirmed event) {
+        final Friend friend = new Friend(event.getFriend().getName(), event.getFriend().getID(), null, true);
+        FriendsRepository.addFriend(friend);
+        view.cancelTimer();
+        view.showToast("User: " + event.getFriend().getName() + " add to your friends");
+    }
+
+    public void onEvent(AuthRejected event) {
+        view.showToast("User: " + event.getFriend().getName() + " reject your request");
+    }
+
     private void updateFriendList() {
         this.friends = FriendsGetter.getFriends();
         this.view.notifyRecyclerDataChange();
@@ -184,9 +206,5 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         else if (event.getNewNetworkState() == NetworkState.ACTIVE) {
             updateFriendList();
         }
-    }
-
-    public void onEvent(ChangeThemeEvent event) {
-        view.customizeTheme();
     }
 }

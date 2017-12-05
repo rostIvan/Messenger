@@ -109,7 +109,7 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder
                 .setTitle(String.format("Add user: %s? \nid: %s", friend.getName(), friend.getId().toString().substring(0, 25)))
-                .setPositiveButton("Yes", (dialog, which) -> presenter.onAlertPositiveButtonPressed())
+                .setPositiveButton("Yes", (dialog, which) -> presenter.onAlertPositiveButtonPressed(friend))
                 .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                 .create();
         alertDialog.show();
@@ -123,24 +123,24 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
         timer.setAction(new SimpleCountDownTimer.CountDownTimerAction() {
             @Override
             public void onStart() {
-                presenter.onProgressStart();
+                presenter.onProgressTimerStart();
             }
 
             @Override
             public void onProgress(long progressValue, long secondsUntilFinished) {
-                presenter.onProgress();
+                presenter.onProgressTimer();
                 progress.setText(String.valueOf(secondsUntilFinished));
                 progress.setProgress(progressValue);
             }
 
             @Override
             public void onCancel() {
-                presenter.onCancel();
+                presenter.onCancelTimer();
             }
 
             @Override
             public void onFinish() {
-                presenter.onProgressFinished();
+                presenter.onProgressTimerFinished();
             }
         });
         timer.startTimer();

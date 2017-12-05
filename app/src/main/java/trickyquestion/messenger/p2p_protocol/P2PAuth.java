@@ -21,9 +21,8 @@ import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
-import trickyquestion.messenger.p2p_protocol.events.authConfirmed;
-import trickyquestion.messenger.p2p_protocol.events.authRejected;
-import trickyquestion.messenger.p2p_protocol.events.authRequest;
+import trickyquestion.messenger.p2p_protocol.events.AuthConfirmed;
+import trickyquestion.messenger.p2p_protocol.events.AuthRejected;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.p2p_protocol.key_gen.ClientSide;
@@ -114,30 +113,30 @@ public class P2PAuth {
                 );
                 String[] packetParts = packetContent.split(":");
                 if (packetParts.length != 6) {
-                    EventBus.getDefault().post(new authRejected(user));
+                    EventBus.getDefault().post(new AuthRejected(user));
                     return;
                 }
                 if (!(packetParts[0].equals("P2PProtocol") &&
                         packetParts[1].equals("AUTH") &&
                         packetParts[2].equals("REQ") &&
                         packetParts[3].equals(user.getID().toString()))) {
-                    EventBus.getDefault().post(new authRejected(user));
+                    EventBus.getDefault().post(new AuthRejected(user));
                     return;
                 }
                 String clientPubKey = FixedString.toDynamicSize(packetParts[4], '$');
                 serverSide.SecondPhase(clientPubKey);
                 EventBus.getDefault().post(
-                        new authConfirmed(
+                        new AuthConfirmed(
                                 new P2PFriend(
                                         user.getName(),
                                         user.getID(),
                                         user.getNetworkAddress(),
                                         serverSide.getCipherKey())));
             } catch (IOException e) {
-                EventBus.getDefault().post(new authRejected(user));
+                EventBus.getDefault().post(new AuthRejected(user));
                 e.printStackTrace();
             } catch (InterruptedException e) {
-                EventBus.getDefault().post(new authRejected(user));
+                EventBus.getDefault().post(new AuthRejected(user));
                 e.printStackTrace();
             }
             finally {
@@ -169,12 +168,12 @@ public class P2PAuth {
             }
         }
 
-        public void onEvent(authConfirmed e){
+        public void onEvent(AuthConfirmed e){
             authConfirmed = true;
             authMutex.release();
         }
 
-        public void onEvent(authRejected e){
+        public void onEvent(AuthRejected e){
             authConfirmed = false;
             authMutex.release();
         }
@@ -264,7 +263,7 @@ public class P2PAuth {
                         continue;
                     }
 
-                    EventBus.getDefault().post(new authRequest(targetUser));
+                    EventBus.getDefault().post(new trickyquestion.messenger.p2p_protocol.events.AuthRequest(targetUser));
                     authMutex.tryAcquire((int)(serviceCfg.getAuthTimeOut()*0.9));
                     authMutex.release();
                     if(!authConfirmed) {
@@ -281,7 +280,7 @@ public class P2PAuth {
                     DatagramPacket authConPacket = genAuthPhase2(clientPubKey,serviceCfg.getAuthPort(),targetUser);
                     socket.send(authConPacket);
                     EventBus.getDefault().post(
-                            new authConfirmed(
+                            new AuthConfirmed(
                                     new P2PFriend(
                                             targetUser.getName(),
                                             targetUser.getID(),
