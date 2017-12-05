@@ -6,33 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.net.DhcpInfo;
 import android.net.NetworkInfo;
-import android.net.sip.SipAudioCall;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.support.annotation.Nullable;
 
 import org.jetbrains.annotations.Contract;
 
-import java.math.BigInteger;
-import java.net.InetAddress;
-import java.net.InterfaceAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-
 import de.greenrobot.event.EventBus;
 
 import static android.content.Context.WIFI_SERVICE;
-import static android.net.NetworkInfo.State.CONNECTED;
-import static android.net.wifi.WifiManager.WIFI_STATE_ENABLED;
 
 public class Network {
+    private static volatile NetworkState networkState = NetworkState.INACTIVE;
 
     private static class Receiver extends BroadcastReceiver{
         @Override
@@ -95,26 +81,10 @@ public class Network {
     }
 
     @Nullable
-    public static String broadcastAdress(Context context) throws SocketException {
-        System.setProperty("java.net.preferIPv4Stack", "true");
-        for (Enumeration<NetworkInterface> niEnum = NetworkInterface.getNetworkInterfaces(); niEnum.hasMoreElements();) {
-            NetworkInterface ni = niEnum.nextElement();
-            if (!ni.isLoopback()) {
-                for (InterfaceAddress interfaceAddress : ni.getInterfaceAddresses()) {
-                    return interfaceAddress.getBroadcast().toString().substring(1);
-                }
-            }
-        }
-        return null;
-    }
-
-    @Nullable
     public static String IPAddress(Context context){
         if(networkState == NetworkState.ACTIVE) return wifiIpAddress(context);
         else return null;
     }
-
-    private static volatile NetworkState networkState = NetworkState.INACTIVE;
 
     @Contract(pure = true)
     public static NetworkState GetCurrentNetworkState(){return networkState;}
