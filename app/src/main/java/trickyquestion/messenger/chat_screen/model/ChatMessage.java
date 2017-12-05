@@ -8,7 +8,8 @@ import io.realm.annotations.RealmClass;
 @RealmClass
 public class ChatMessage implements RealmModel {
 
-    private String table;
+    private String nameFriend;
+    private String idFriend;
     private String text;
     private String time;
     private boolean my;
@@ -21,6 +22,14 @@ public class ChatMessage implements RealmModel {
 
     public String getText() {
         return text;
+    }
+
+    public void setIdFriend(String idFriend) {
+        this.idFriend = idFriend;
+    }
+
+    public String getIdFriend() {
+        return idFriend;
     }
 
     public String getTime() {
@@ -39,11 +48,11 @@ public class ChatMessage implements RealmModel {
         this.my = iOwner;
     }
 
-    public void setTable(@NonNull final String table) {
-        this.table = table;
+    public void setNameFriend(@NonNull final String nameFriend) {
+        this.nameFriend = nameFriend;
     }
 
-    public String getUserTableName() {
-        return table;
+    public String getNameFriend() {
+        return nameFriend;
     }
 }

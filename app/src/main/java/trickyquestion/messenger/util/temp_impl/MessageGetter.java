@@ -12,6 +12,7 @@ public class MessageGetter {
         for (int i = 0; i < size; i++) {
             final Message message = new Message(
                     "Some message: " + (i + 1), "Some name: " + (i + 1),
+                    "Some id: " + (i + 1),
                     null, "12:00",
                     i % 2 != 0
             );

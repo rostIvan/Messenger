@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import trickyquestion.messenger.p2p_protocol.events.AuthRequest;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
+import trickyquestion.messenger.popup_windows.FriendRequestDialog;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.preference.NetworkPreference;
 
@@ -127,10 +129,12 @@ public class P2PProtocolService extends Service{
 
 
     public void onEvent(AuthRequest event) {
-        // TODO: 05.12.17 after request add without user answer
-        final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), null, true);
-        FriendsRepository.addFriend(friend);
-        final String text = "User: " + event.getFrom().getName() + " add to your friends";
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getID().toString());
+        dialog.setOnPositiveButtonClickListener((d, i) -> {
+            final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), null, true);
+            FriendsRepository.addFriend(friend);
+            Toast.makeText(this, "User: " + event.getFrom().getName() + " add to your friends", Toast.LENGTH_SHORT).show();
+        });
+        dialog.show();
     }
 }

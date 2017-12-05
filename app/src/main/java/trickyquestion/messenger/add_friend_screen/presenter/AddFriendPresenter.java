@@ -103,9 +103,9 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     public void onAlertPositiveButtonPressed(IFriend friend) {
         view.startTimer();
         final IUser user = TypeCasting.castToUser(friend);
-        new P2PProtocolService().getBinder().SendFriendReq(user);
+        P2PProtocolService.LocalBinder binder = new P2PProtocolService().getBinder();
+        binder.SendFriendReq(user);
     }
-
 
     private void setViewValue(final AddFriendViewHolder holder, final IFriend friend) {
         holder.name.setText(friend.getName());

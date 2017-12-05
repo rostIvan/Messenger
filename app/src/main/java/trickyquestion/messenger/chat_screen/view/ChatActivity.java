@@ -48,6 +48,8 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     ImageButton attachButton;
 
     public static final String FRIEND_NAME_EXTRA = "friendName";
+    public static final String FRIEND_ID_EXTRA = "friendId";
+
     private ThemePreference themePreference;
 
     private IChatPresenter presenter;
@@ -151,6 +153,11 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     @Override
     public String getFriendName() {
         return getIntent().getStringExtra(FRIEND_NAME_EXTRA);
+    }
+
+    @Override
+    public String getFriendId() {
+        return getIntent().getStringExtra(FRIEND_ID_EXTRA);
     }
 
     @Override

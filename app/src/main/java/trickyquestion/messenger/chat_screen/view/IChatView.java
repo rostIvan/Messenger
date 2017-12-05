@@ -23,6 +23,8 @@ public interface IChatView {
 
     String getFriendName();
 
+    String getFriendId();
+
     void setStyleForMyMessage(View container, TextView textMessage, TextView timeMessage);
 
     void setStyleForFriendMessage(View container, TextView textMessage, TextView timeMessage);

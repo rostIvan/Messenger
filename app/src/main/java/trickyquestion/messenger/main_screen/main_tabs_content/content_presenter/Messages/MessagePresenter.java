@@ -117,12 +117,12 @@ public class MessagePresenter implements IMessagePresenter {
 
 
     private void setViewValue(final MessageViewHolder holder, final Message message) {
-        holder.message.setText(message.getLastMessage());
-        holder.name.setText(message.getNameSender());
+        holder.message.setText(message.getMessage());
+        holder.name.setText(message.getNameFriend());
         holder.time.setText(message.getTime());
         if (!message.wasRead()) holder.message.setBackgroundColor(Constants.WAS_READ_MESSAGE_BACKGROUND);
         else holder.message.setBackgroundColor(Color.TRANSPARENT);
-        holder.image.setOnClickListener(v -> view.showFriendProfile(message.getNameSender(), true));
+        holder.image.setOnClickListener(v -> view.showFriendProfile(message.getNameFriend(), true));
         holder.itemView.setOnClickListener(v -> view.showChatActivity(message));
     }
 

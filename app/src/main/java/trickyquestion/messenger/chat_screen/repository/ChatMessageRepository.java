@@ -14,12 +14,9 @@ public class ChatMessageRepository implements IChatMessageRepository {
     public void addMessage(final ChatMessage message) {
         final Realm realm = Realm.getDefaultInstance();
         try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.copyToRealm(message);
-                    onChange();
-                }
+            realm.executeTransaction(realm1 -> {
+                realm1.copyToRealm(message);
+                onChange();
             });
         } finally {
             realm.close();
@@ -30,18 +27,16 @@ public class ChatMessageRepository implements IChatMessageRepository {
     public void deleteMessage(final ChatMessage message) {
         final Realm realm = Realm.getDefaultInstance();
         final RealmResults results = realm.where(ChatMessage.class)
-                .equalTo("table", message.getUserTableName())
+                .equalTo("nameFriend", message.getNameFriend())
+                .equalTo("idFriend", message.getIdFriend())
                 .equalTo("text", message.getText())
                 .equalTo("time", message.getTime())
                 .equalTo("my", message.isMy())
                 .findAll();
         try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    results.deleteAllFromRealm();
-                    onChange();
-                }
+            realm.executeTransaction(realm1 -> {
+                results.deleteAllFromRealm();
+                onChange();
             });
         } finally {
             realm.close();
@@ -49,18 +44,15 @@ public class ChatMessageRepository implements IChatMessageRepository {
     }
 
     @Override
-    public void deleteMessageTable(String table) {
+    public void deleteMessageTable(String idFriend) {
         final Realm realm = Realm.getDefaultInstance();
         final RealmResults results = realm.where(ChatMessage.class)
-                .equalTo("table", table)
+                .equalTo("idFriend", idFriend)
                 .findAll();
         try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    results.deleteAllFromRealm();
-                    onChange();
-                }
+            realm.executeTransaction(realm1 -> {
+                results.deleteAllFromRealm();
+                onChange();
             });
         } finally {
             realm.close();
@@ -71,12 +63,9 @@ public class ChatMessageRepository implements IChatMessageRepository {
     public void deleteAllMessages() {
         final Realm realm = Realm.getDefaultInstance();
         try {
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    realm.delete(ChatMessage.class);
-                    onChange();
-                }
+            realm.executeTransaction(realm1 -> {
+                realm1.delete(ChatMessage.class);
+                onChange();
             });
         } finally {
             realm.close();
@@ -89,9 +78,9 @@ public class ChatMessageRepository implements IChatMessageRepository {
         return realm.where(ChatMessage.class).findAll();
     }
     @Override
-    public List<ChatMessage> getMessages(final String table) {
+    public List<ChatMessage> getMessages(final String idFriend) {
         final Realm realm = Realm.getDefaultInstance();
-        return realm.where(ChatMessage.class).equalTo("table", table).findAll();
+        return realm.where(ChatMessage.class).equalTo("idFriend", idFriend).findAll();
     }
 
     private void onChange() {

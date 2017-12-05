@@ -26,7 +26,7 @@ public class ChatPresenter implements IChatPresenter {
 
     public ChatPresenter(final IChatView view) {
         this.view = view;
-        this.chatMessages = ChatMessageInteractor.getMessages(view.getFriendName());
+        this.chatMessages = ChatMessageInteractor.getMessages(view.getFriendId());
         this.repository = new ChatMessageRepository();
     }
 
@@ -54,7 +54,7 @@ public class ChatPresenter implements IChatPresenter {
 
     @Override
     public void onClearMessagesItemCLick() {
-        repository.deleteMessageTable(view.getFriendName());
+        repository.deleteMessageTable(view.getFriendId());
         view.refreshRecycler();
     }
 
@@ -91,7 +91,8 @@ public class ChatPresenter implements IChatPresenter {
         chatMessage.setText(message);
         chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
         chatMessage.setMeOwner(new Random().nextBoolean());
-        chatMessage.setTable(view.getFriendName());
+        chatMessage.setNameFriend(view.getFriendName());
+        chatMessage.setIdFriend(view.getFriendId());
         repository.addMessage(chatMessage);
     }
     private void sendMessage(final String message) {
