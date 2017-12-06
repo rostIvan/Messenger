@@ -4,37 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import trickyquestion.messenger.add_friend_screen.model.Friend;
+import trickyquestion.messenger.add_friend_screen.model.User;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
 public class TypeCasting {
-    public static IUser castToUser(final trickyquestion.messenger.add_friend_screen.model.IFriend friend) {
-        final IUser user = new IUser() {
-            @Override
-            public UUID getID() {
-                return friend.getId();
-            }
-            @Override
-            public String getName() {
-                return friend.getName();
-            }
-            @Override
-            public String getNetworkAddress() {return null; }
-            @Override
-            public void setName(String newName) {}
-            @Override
-            public void setNetworkAddress(String newIP) {}
-        };
-        return user;
-    }
-    // put argument like this: FriendRepository.getFriends()
-    public List<IFriend> castToIFriendList(final List<Friend> friends) {
+
+    public List<IFriend> castToIFriendList(final List<IUser> friends) {
         final List<IFriend> friendList = new ArrayList<>();
-        for (Friend friend : friends) {
+        for (IUser friend : friends) {
             friendList.add(new IFriend() {
                 @Override
-                public UUID getID() {return friend.getId();}
+                public UUID getID() {return friend.getID();}
                 @Override
                 public String getName() {return friend.getName();}
                 @Override
@@ -47,4 +28,5 @@ public class TypeCasting {
         }
         return friendList;
     }
+
 }

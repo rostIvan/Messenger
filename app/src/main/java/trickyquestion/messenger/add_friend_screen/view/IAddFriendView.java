@@ -3,7 +3,7 @@ package trickyquestion.messenger.add_friend_screen.view;
 
 import android.content.Context;
 
-import trickyquestion.messenger.add_friend_screen.model.IFriend;
+import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
 public interface IAddFriendView {
     void customizeTheme();
@@ -30,7 +30,7 @@ public interface IAddFriendView {
 
     void runOnActivityUiThread(Runnable r);
 
-    void showAddFriendAlertDialog(IFriend friend);
+    void showAddFriendAlertDialog(IUser user);
 
     void startTimer();
 

@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import trickyquestion.messenger.add_friend_screen.adapter.AddFriendViewHolder;
-import trickyquestion.messenger.add_friend_screen.model.IFriend;
+import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
 public interface IAddFriendPresenter {
     void onCreate();
@@ -20,5 +20,5 @@ public interface IAddFriendPresenter {
     void onCancelTimer();
     void onProgressTimerStart();
 
-    void onAlertPositiveButtonPressed(IFriend friend);
+    void onAlertPositiveButtonPressed(IUser user);
 }

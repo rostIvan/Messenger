@@ -12,7 +12,6 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.add_friend_screen.adapter.AddFriendViewHolder;
-import trickyquestion.messenger.add_friend_screen.model.IFriend;
 import trickyquestion.messenger.add_friend_screen.view.IAddFriendView;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
@@ -26,16 +25,15 @@ import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.preference.ThemePreference;
 import trickyquestion.messenger.util.temp_impl.FriendsGetter;
-import trickyquestion.messenger.util.type_cast.TypeCasting;
 
 public class AddFriendPresenter implements IAddFriendPresenter {
 
     private final IAddFriendView view;
-    private List<IFriend> friends;
+    private List<IUser> users;
 
     public AddFriendPresenter(final IAddFriendView view) {
         this.view = view;
-        this.friends = FriendsGetter.getFriends();
+        this.users = FriendsGetter.getFriends();
     }
 
     @Override
@@ -64,15 +62,15 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     @Override
     public void onBindViewHolder(AddFriendViewHolder holder, int position) {
-        final IFriend friend = friends.get(position);
-        setViewValue(holder, friend);
-        setupListeners(holder, friend);
+        final IUser user = users.get(position);
+        setViewValue(holder, user);
+        setupListeners(holder, user);
     }
 
 
     @Override
     public int getCount() {
-        return friends.size();
+        return users.size();
     }
 
 
@@ -90,7 +88,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     @Override
     public void onProgressTimerFinished() {
         view.hideProgressBar();
-        view.showToast("Adding friend not perform");
+        view.showToast("Adding user not perform");
     }
 
     @Override
@@ -100,43 +98,39 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
     @Override
-    public void onAlertPositiveButtonPressed(IFriend friend) {
+    public void onAlertPositiveButtonPressed(IUser user) {
         view.startTimer();
-        final IUser user = TypeCasting.castToUser(friend);
         P2PProtocolService.LocalBinder binder = new P2PProtocolService().getBinder();
         binder.SendFriendReq(user);
     }
 
-    private void setViewValue(final AddFriendViewHolder holder, final IFriend friend) {
-        holder.name.setText(friend.getName());
-        holder.id.setText(friend.getId().toString().substring(0, 25).concat(" ..."));
-        if (friend.getImage() != null) {
-            holder.image.setImageDrawable(friend.getImage().getDrawable());
-        }
+    private void setViewValue(final AddFriendViewHolder holder, final IUser user) {
+        holder.name.setText(user.getName());
+        holder.id.setText(user.getID().toString().substring(0, 25).concat(" ..."));
     }
 
-    private void setupListeners(final AddFriendViewHolder holder, final IFriend friend) {
+    private void setupListeners(final AddFriendViewHolder holder, final IUser user) {
         holder.itemView.setOnTouchListener(new OnHolderItemTouchListener(holder));
         holder.buttonAddFriend.setOnTouchListener(new OnHolderItemTouchListener(holder));
-        holder.itemView.setOnClickListener(new OnHolderItemClickListener(holder, friend));
-        holder.buttonAddFriend.setOnClickListener(new OnHolderItemClickListener(holder, friend));
+        holder.itemView.setOnClickListener(new OnHolderItemClickListener(holder, user));
+        holder.buttonAddFriend.setOnClickListener(new OnHolderItemClickListener(holder, user));
     }
 
     /** Here is located Holder Listeners **/
 
     private class OnHolderItemClickListener implements View.OnClickListener {
         private final AddFriendViewHolder holder;
-        private final IFriend friend;
+        private final IUser user;
 
-        private OnHolderItemClickListener(final AddFriendViewHolder holder, final IFriend friend) {
+        private OnHolderItemClickListener(final AddFriendViewHolder holder, final IUser user) {
             this.holder = holder;
-            this.friend = friend;
+            this.user = user;
         }
 
         @Override
         public void onClick(View v) {
-            view.showAddFriendAlertDialog(friend);
-//            addFriend(holder, friend);
+            view.showAddFriendAlertDialog(user);
+//            addFriend(holder, user);
         }
     }
 
@@ -163,10 +157,10 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
 
-    private void addFriend(final AddFriendViewHolder holder, final IFriend friend) {
-        final Friend newFriend = new Friend(friend.getName(), friend.getId(),  null, true);
+    private void addFriend(final AddFriendViewHolder holder, final IUser user) {
+        final Friend newFriend = new Friend(user.getName(), user.getID(),  null, true);
         FriendsRepository.addFriend(newFriend);
-        friends.remove(holder.getAdapterPosition());
+        users.remove(holder.getAdapterPosition());
         view.notifyRecyclerDataChange();
     }
 
@@ -186,7 +180,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         final Friend friend = new Friend(event.getFriend().getName(), event.getFriend().getID(), null, true);
         FriendsRepository.addFriend(friend);
         view.cancelTimer();
-        view.showToast("User: " + event.getFriend().getName() + " add to your friends");
+        view.showToast("User: " + event.getFriend().getName() + " add to your users");
     }
 
     public void onEvent(AuthRejected event) {
@@ -194,13 +188,13 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
     private void updateFriendList() {
-        this.friends = FriendsGetter.getFriends();
+        this.users = FriendsGetter.getFriends();
         this.view.notifyRecyclerDataChange();
     }
 
     private void onNetworkChanged(NetworkStateChanged event) {
         if ( event.getNewNetworkState() == NetworkState.INACTIVE ) {
-            friends.clear();
+            users.clear();
             this.view.notifyRecyclerDataChange();
         }
         else if (event.getNewNetworkState() == NetworkState.ACTIVE) {

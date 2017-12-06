@@ -20,10 +20,10 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.add_friend_screen.adapter.RecyclerViewAddFriendAdapter;
-import trickyquestion.messenger.add_friend_screen.model.IFriend;
 import trickyquestion.messenger.add_friend_screen.presenter.AddFriendPresenter;
 import trickyquestion.messenger.add_friend_screen.presenter.IAddFriendPresenter;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.preference.ThemePreference;
 import trickyquestion.messenger.util.timer.SimpleCountDownTimer;
 
@@ -105,11 +105,11 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
     }
 
     @Override
-    public void showAddFriendAlertDialog(IFriend friend) {
+    public void showAddFriendAlertDialog(IUser user) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder
-                .setTitle(String.format("Add user: %s? \nid: %s", friend.getName(), friend.getId().toString().substring(0, 25)))
-                .setPositiveButton("Yes", (dialog, which) -> presenter.onAlertPositiveButtonPressed(friend))
+                .setTitle(String.format("Add user: %s? \nid: %s", user.getName(), user.getID().toString().substring(0, 25)))
+                .setPositiveButton("Yes", (dialog, which) -> presenter.onAlertPositiveButtonPressed(user))
                 .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                 .create();
         alertDialog.show();
