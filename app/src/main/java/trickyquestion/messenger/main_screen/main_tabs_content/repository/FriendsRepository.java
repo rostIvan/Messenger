@@ -7,6 +7,7 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeFriendDataBaseEvent;
 
@@ -22,6 +23,23 @@ public class FriendsRepository {
         try {
             realm.executeTransaction(r -> {
                 r.copyToRealm(friend);
+                onChange();
+            });
+        } finally {
+            realm.close();
+        }
+    }
+    public static void updateFriend(final String id, final IFriend friend) {
+        final Realm realm = Realm.getDefaultInstance();
+        final Friend friendUpdate = realm.where(Friend.class).
+                equalTo("id", id).
+                findFirst();
+//        if (friendUpdate == null) return;
+        try {
+            realm.executeTransaction(r -> {
+                friendUpdate.setName(friend.getName());
+                friendUpdate.setOnline(true);
+                friendUpdate.setId(friend.getID());
                 onChange();
             });
         } finally {
