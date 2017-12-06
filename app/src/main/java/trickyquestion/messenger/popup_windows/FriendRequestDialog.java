@@ -87,13 +87,4 @@ public class FriendRequestDialog {
         str.setSpan(new ForegroundColorSpan(color), 0, title.length(), Spannable.SPAN_USER);
         return str;
     }
-
-    private void addFriend() {
-        final Friend friend = new Friend();
-        friend.setName(friendName);
-        friend.setOnline(true);
-        friend.setId(UUID.fromString(friendId));
-        FriendsRepository.addFriend(friend);
-    }
-
 }

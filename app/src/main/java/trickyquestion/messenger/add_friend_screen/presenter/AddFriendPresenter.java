@@ -156,14 +156,6 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         }
     }
 
-
-    private void addFriend(final AddFriendViewHolder holder, final IUser user) {
-        final Friend newFriend = new Friend(user.getName(), user.getID(),  null, true);
-        FriendsRepository.addFriend(newFriend);
-        users.remove(holder.getAdapterPosition());
-        view.notifyRecyclerDataChange();
-    }
-
     public void onEvent(ChangeUserList event){
         this.view.runOnActivityUiThread(this::updateFriendList);
     }
@@ -177,7 +169,13 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
     public void onEvent(AuthConfirmed event) {
-        final Friend friend = new Friend(event.getFriend().getName(), event.getFriend().getID(), null, true);
+        final Friend friend = new Friend(
+                event.getFriend().getName(),
+                event.getFriend().getID(),
+                event.getFriend().encKey(),
+                null,
+                true
+        );
         FriendsRepository.addFriend(friend);
         view.cancelTimer();
         view.showToast("User: " + event.getFriend().getName() + " add to your users");

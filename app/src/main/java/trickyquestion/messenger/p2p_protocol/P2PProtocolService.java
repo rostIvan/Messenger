@@ -131,7 +131,7 @@ public class P2PProtocolService extends Service{
     public void onEvent(AuthRequest event) {
         final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getID().toString());
         dialog.setOnPositiveButtonClickListener((d, i) -> {
-            final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), null, true);
+            final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), true);
             FriendsRepository.addFriend(friend);
             Toast.makeText(this, "User: " + event.getFrom().getName() + " add to your friends", Toast.LENGTH_SHORT).show();
         });
