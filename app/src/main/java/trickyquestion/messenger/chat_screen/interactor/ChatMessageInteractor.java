@@ -11,7 +11,7 @@ public class ChatMessageInteractor {
     public static List<ChatMessage> getAllMessages() {
         return new ChatMessageRepository().getAllMessagesFromDB();
     }
-    public static List<ChatMessage> getMessages(final String name) {
-        return new ChatMessageRepository().getMessages(name);
+    public static List<ChatMessage> getMessages(final String idFriend) {
+        return new ChatMessageRepository().getMessages(idFriend);
     }
 }

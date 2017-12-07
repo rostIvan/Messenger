@@ -86,17 +86,28 @@ public class ChatPresenter implements IChatPresenter {
             view.setStyleForFriendMessage(holder.container, holder.textMessage, holder.timeMessage);
     }
 
-    private void addMessageToDb(final String message) {
+    private void addMessageToDb(final String message, boolean isMy) {
         final ChatMessage chatMessage = new ChatMessage();
         chatMessage.setText(message);
         chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
-        chatMessage.setMeOwner(new Random().nextBoolean());
+        chatMessage.setMeOwner(isMy);
         chatMessage.setNameFriend(view.getFriendName());
         chatMessage.setIdFriend(view.getFriendId());
         repository.addMessage(chatMessage);
     }
     private void sendMessage(final String message) {
-        addMessageToDb(message);
+        addMessageToDb(message, true);
+        updateRecycler();
+        // TODO: 07.12.17 paste method service to send message
+    }
+
+    private void receiveMessage(final String message) {
+        addMessageToDb(message, false);
+        updateRecycler();
+        // TODO: 07.12.17  paste method service to receive message
+    }
+
+    private void updateRecycler() {
         view.clearMessageText();
         view.refreshRecycler();
         view.scrollRecyclerToPosition(chatMessages.size() - 1);
