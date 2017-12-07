@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        final MenuItem refresh = menu.findItem(R.id.action_refresh);
+        refresh.setVisible(false);
         final MenuItem settingMenuItem = menu.findItem(R.id.action_menu);
         settingMenuItem.setOnMenuItemClickListener(presenter.onSettingClick());
         final MenuItem myAccount = menu.findItem(R.id.action_account);

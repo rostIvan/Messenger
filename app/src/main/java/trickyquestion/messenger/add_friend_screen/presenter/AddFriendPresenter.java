@@ -2,7 +2,9 @@ package trickyquestion.messenger.add_friend_screen.presenter;
 
 
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,6 @@ import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
-import trickyquestion.messenger.p2p_protocol.P2PProtocolService;
 import trickyquestion.messenger.p2p_protocol.events.AuthConfirmed;
 import trickyquestion.messenger.p2p_protocol.events.AuthRejected;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
@@ -47,8 +48,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     @Override
     public View.OnClickListener onNavigationButtonPressed() {
         return v -> {
-            if (!view.isSearchViewIconified()) view.setSearchViewIconified(true);
-            else view.goBack();
+            view.goBack();
         };
     }
 
@@ -100,8 +100,19 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     @Override
     public void onAlertPositiveButtonPressed(IUser user) {
         view.startTimer();
-        P2PProtocolService.LocalBinder binder = new P2PProtocolService().getBinder();
-        binder.SendFriendReq(user);
+        FriendsRepository.addFriend(new Friend(user.getName(), user.getID(), true));
+//        P2PProtocolService.LocalBinder binder = new P2PProtocolService().getBinder();
+//        binder.SendFriendReq(user);
+    }
+
+    @Override
+    public boolean onRefreshItemClick(final MenuItem menuItem) {
+        menuItem.setActionView(view.getProgressView());
+        new Handler().postDelayed(() -> {
+            view.runOnActivityUiThread(this::updateFriendList);
+            menuItem.setActionView(null);
+        }, 1_500);
+        return true;
     }
 
     private void setViewValue(final AddFriendViewHolder holder, final IUser user) {

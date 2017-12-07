@@ -2,6 +2,7 @@ package trickyquestion.messenger.add_friend_screen.view;
 
 
 import android.content.Context;
+import android.view.View;
 
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
@@ -15,10 +16,6 @@ public interface IAddFriendView {
     void showFriendsItems();
 
     void notifyRecyclerDataChange();
-
-    boolean isSearchViewIconified();
-
-    void setSearchViewIconified(boolean iconified);
 
     void cancelTimer();
 
@@ -34,6 +31,7 @@ public interface IAddFriendView {
 
     void startTimer();
 
-    Context getContext();
+    View getProgressView();
 
+    Context getContext();
 }

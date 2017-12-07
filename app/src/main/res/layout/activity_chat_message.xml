@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:theme="@style/AppTheme.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:background="@color/colorPrimaryGreen"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_chat"
@@ -32,7 +33,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="45dp"
         android:hint="@string/message"
-        android:paddingLeft="50dp" />
+        android:paddingLeft="20dp" />
 
     <ImageButton
         android:id="@+id/send_button"
@@ -41,7 +42,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="5dp"
-        android:background="@color/transparent"
+        android:background="@drawable/send_button_selector"
         android:src="@drawable/ic_send" />
 
     <ImageButton
@@ -52,6 +53,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:background="@color/transparent"
+        android:visibility="gone"
         android:src="@drawable/ic_attach_file_black" />
 
 </RelativeLayout>

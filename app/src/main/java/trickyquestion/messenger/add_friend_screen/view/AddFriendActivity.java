@@ -1,5 +1,6 @@
 package trickyquestion.messenger.add_friend_screen.view;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,9 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
@@ -34,7 +38,6 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
     Toolbar toolbar;
     @BindView(R.id.donut_progress)
     DonutProgress progress;
-    private SearchView searchView;
 
     private ThemePreference themePreference;
     private SimpleCountDownTimer timer;
@@ -57,8 +60,10 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
         settingMenuItem.setVisible(false);
         final MenuItem myAccount = menu.findItem(R.id.action_account);
         myAccount.setVisible(false);
-        final MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) searchItem.getActionView();
+        final MenuItem search = menu.findItem(R.id.action_search);
+        search.setVisible(false);
+        final MenuItem refresh = menu.findItem(R.id.action_refresh);
+        refresh.setOnMenuItemClickListener((menuItem) -> presenter.onRefreshItemClick(menuItem));
         return true;
     }
 
@@ -72,7 +77,7 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
 
     @Override
     public void customizeToolbar() {
-        toolbar.setTitle(getTitle());
+        toolbar.setTitle(R.string.add_friend);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(presenter.onNavigationButtonPressed());
@@ -92,16 +97,6 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
     @Override
     public void notifyRecyclerDataChange() {
         recyclerView.getAdapter().notifyDataSetChanged();
-    }
-
-    @Override
-    public boolean isSearchViewIconified() {
-        return searchView.isIconified();
-    }
-
-    @Override
-    public void setSearchViewIconified(final boolean iconified) {
-        searchView.setIconified(iconified);
     }
 
     @Override
@@ -144,6 +139,13 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
             }
         });
         timer.startTimer();
+    }
+
+    @Override
+    public View getProgressView() {
+        final ProgressBar progressBar = new ProgressBar(this);
+        progressBar.setIndeterminate(true);
+        return progressBar;
     }
 
     @Override
