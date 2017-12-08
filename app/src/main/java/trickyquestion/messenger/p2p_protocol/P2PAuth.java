@@ -189,8 +189,7 @@ public class P2PAuth {
             try {
                 byte[] buff = new byte[dhPubKey.length() + 69];
                 InetSocketAddress destAddress = new InetSocketAddress(target.getNetworkAddress(), port);
-                DatagramPacket datagramPacket = null;
-                datagramPacket = new DatagramPacket(buff, dhPubKey.length() + 69, destAddress);
+                DatagramPacket datagramPacket = new DatagramPacket(buff, dhPubKey.length() + 69, destAddress);
                 datagramPacket.setData(genAuthConMsg(dhPubKey, host.getID()).getBytes());
                 return datagramPacket;
             } catch (Exception e) {

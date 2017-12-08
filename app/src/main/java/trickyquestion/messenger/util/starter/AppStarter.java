@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import trickyquestion.messenger.login_screen.ask_password.AskPasswordActivity;
 import trickyquestion.messenger.login_screen.authentication.LoginScreenActivity;
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.util.preference.AuthPreference;
@@ -23,6 +25,7 @@ public class AppStarter implements IStarter {
     public void start() {
         if ( !isAuthenticated() ) {
             startLoginActivity();
+            FriendsRepository.addFriend(new Friend());
         }
         else {
             P2PProtocolConnector.TryStart(context);

@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import trickyquestion.messenger.add_friend_screen.model.User;
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
 public class TypeCasting {
 
-    public List<IFriend> castToIFriendList(final List<IUser> friends) {
+    public static List<IFriend> castToIFriendList(final List<Friend> friends) {
         final List<IFriend> friendList = new ArrayList<>();
-        for (IUser friend : friends) {
+        for (Friend friend : friends) {
             friendList.add(new IFriend() {
                 @Override
-                public UUID getID() {return friend.getID();}
+                public UUID getID() {return UUID.fromString(friend.getId());}
                 @Override
                 public String getName() {return friend.getName();}
                 @Override

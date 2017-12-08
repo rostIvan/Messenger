@@ -47,6 +47,24 @@ public class FriendsRepository {
         }
     }
 
+    public static void updateFriend(final String id, final IUser user) {
+        final Realm realm = Realm.getDefaultInstance();
+        final Friend friendUpdate = realm.where(Friend.class).
+                equalTo("id", id).
+                findFirst();
+//        if (friendUpdate == null) return;
+        try {
+            realm.executeTransaction(r -> {
+                friendUpdate.setName(user.getName());
+                friendUpdate.setOnline(true);
+                friendUpdate.setId(user.getID());
+                onChange();
+            });
+        } finally {
+            realm.close();
+        }
+    }
+
     public static void deleteFriend(final Friend friend) {
         final Realm realm = Realm.getDefaultInstance();
         final RealmResults results = realm.where(Friend.class).equalTo("name", friend.getName()).findAll();

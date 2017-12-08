@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -75,12 +76,15 @@ public class P2PProtocolService extends Service{
             servicePreference = new NetworkPreference(getApplicationContext());
             P2PNetwork = new P2PNetwork(host, getApplicationContext(),servicePreference);
             P2PAuth = new P2PAuth(getApplicationContext(),servicePreference,P2PNetwork,host);
+            P2PMesseges = new P2PMesseges(servicePreference,host,getApplicationContext());
+            Log.d("P2PProtocolService","Service started");
             started = true;
         }
 
         public void Stop(){
             P2PNetwork.Stop();
             P2PAuth.Stop();
+            P2PMesseges.Stop();
             started = false;
         }
 
@@ -89,6 +93,7 @@ public class P2PProtocolService extends Service{
         }
 
         public void SendFriendReq(IUser user){
+            if(P2PAuth==null) throw new NullPointerException();
             P2PAuth.NewAuthReq(user);
         }
 
@@ -120,10 +125,13 @@ public class P2PProtocolService extends Service{
 
         @Override
         public void setName(String new_name) {
+            this.preferences.edit().putString(Constants.EXTRA_KEY_AUTH_LOGIN, new_name).apply();
         }
 
         @Override
-        public void reCreate(UUID id, String name, String network_address) {
+        public void reCreate(UUID id, String name) {
+            this.preferences.edit().putString(Constants.EXTRA_KEY_USER_ID, id.toString()).apply();
+            this.preferences.edit().putString(Constants.EXTRA_KEY_AUTH_LOGIN,name).apply();
         }
     }
 

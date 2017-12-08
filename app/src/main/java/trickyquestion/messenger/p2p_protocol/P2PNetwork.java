@@ -22,6 +22,7 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.preference.NetworkPreference;
+import trickyquestion.messenger.util.string_helper.FixedString;
 
 /**
  * Created by Zen on 17.10.2017.
@@ -38,16 +39,13 @@ public class P2PNetwork {
         }
 
         private String genHeartbeatPacket(String UserName, UUID UserID, String IP){
-            StringBuilder UsrNamePart = new StringBuilder("$$$$$$$$$$$$$$$$$$$");//20
-            UsrNamePart.replace(0,UserName.length(),UserName);
-            StringBuilder UserIDPart = new StringBuilder(UserID.toString());
-            StringBuilder UserIPPart = new StringBuilder("$$$$$$$$$$$$$$$");//15
+            String UsrNamePart = FixedString.fill(UserName,'$',20);
+            String UserIPPart = FixedString.fill(IP,'$',15);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);//19
             String SendTime = sdf.format(Calendar.getInstance().getTime());
-            UserIPPart.replace(0,IP.length(),IP);
             return ("P2P_HEARTBEAT:" +
                     UsrNamePart + ":" +
-                    UserIDPart + ":" +
+                    UserID.toString() + ":" +
                     UserIPPart+ ":" +
                     SendTime +
                     ":P2P_HEARTBEAT");
