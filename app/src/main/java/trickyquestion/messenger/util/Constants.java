@@ -39,6 +39,7 @@ public class Constants {
     public static final String EXTRA_KEY_MSG_PORT = "Msg port";
     public static final int DEFAULT_MSG_PORT = 5002;
 
+    public static final String EXTRA_KEY_USER_SELF_ENC_KEY = "User self generated encKey";
 
     public static final int MAX_MSG_SIZE = 1024;
 }

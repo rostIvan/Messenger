@@ -24,10 +24,11 @@ public class AuthPreference {
         return preferences.getString(Constants.EXTRA_KEY_USER_ID, "_NAN_");
     }
 
-    public void setAccountData(final String login, final String password) {
+    public void setAccountData(final String login, final String password, final String encKey) {
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, login);
         editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);
+        editor.putString(Constants.EXTRA_KEY_USER_SELF_ENC_KEY, encKey);
         editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, true);
         editor.apply();
         editor.commit();

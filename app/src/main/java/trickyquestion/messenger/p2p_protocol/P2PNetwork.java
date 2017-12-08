@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Predicate;
 
 import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.network.MSocket;
@@ -286,6 +287,13 @@ public class P2PNetwork {
     }
 
     public List<IUser> getUsers(){
-        return users.get();
+        List<IUser> userList = users.get();
+        for(IUser user : userList){
+            if(user.getID().equals(host.getID())) {
+                userList.remove(user);
+                break;
+            }
+        }
+        return userList;
     }
 }

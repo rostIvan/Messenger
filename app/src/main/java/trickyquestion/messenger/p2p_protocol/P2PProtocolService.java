@@ -24,6 +24,7 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.popup_windows.FriendRequestDialog;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.preference.NetworkPreference;
+import trickyquestion.messenger.util.string_helper.HexConv;
 
 /**
  * Created by Zen on 17.10.2017.
@@ -107,7 +108,6 @@ public class P2PProtocolService extends Service{
         private SharedPreferences preferences;
         private UUID id;
 
-
         Host(Context context) {
             id = UUID.fromString("00000000-0000-0000-0000-000000000000");
             preferences = context.getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
@@ -121,6 +121,13 @@ public class P2PProtocolService extends Service{
         @Override
         public String getName() {
             return preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "NULL");
+        }
+
+        @Override
+        public byte[] getSelfEncKey() {
+            return HexConv.hexToByte(
+                    this.preferences.getString(Constants.EXTRA_KEY_USER_SELF_ENC_KEY,null)
+            );
         }
 
         @Override
