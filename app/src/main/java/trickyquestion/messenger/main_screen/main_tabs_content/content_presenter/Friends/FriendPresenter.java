@@ -181,13 +181,13 @@ public class FriendPresenter implements IFriendPresenter {
                 break;
             }
         }
+        if (P2PProtocolConnector.isServiceConnected()) {
+            FriendsRepository.updateFriendsStatus(friendList, P2PProtocolConnector.ProtocolInterface().getUsers());
+        }
         if (isReqRefresh) updateFriendList();
     }
 
     private void updateFriendList() {
-        if (P2PProtocolConnector.isServiceConnected()) {
-            FriendsRepository.updateFriendsStatus(friendList, P2PProtocolConnector.ProtocolInterface().getUsers());
-        }
         this.friendList = FriendListInteractor.getFriends();
         this.view.notifyRecyclerDataChange();
     }
