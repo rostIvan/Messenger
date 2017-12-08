@@ -67,7 +67,7 @@ public class FriendsRepository {
 
     public static void deleteFriend(final Friend friend) {
         final Realm realm = Realm.getDefaultInstance();
-        final RealmResults results = realm.where(Friend.class).equalTo("name", friend.getName()).findAll();
+        final RealmResults results = realm.where(Friend.class).equalTo("id", friend.getId()).findAll();
         try {
             realm.executeTransaction(r -> {
                 results.deleteFirstFromRealm();

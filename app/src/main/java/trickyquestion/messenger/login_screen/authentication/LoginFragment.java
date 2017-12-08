@@ -20,6 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.util.preference.AuthPreference;
@@ -62,17 +64,33 @@ public class LoginFragment extends Fragment {
         final String password = passFiled.getText().toString();
 
         if (isValid(login, password)) {
-            authPreference.setAccountData(login, password);
-            authPreference.setAccountId(UUID.randomUUID().toString());
-            getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
-            P2PProtocolConnector.TryStart(this.getContext());
-            getActivity().finish();
+            saveAccountData(login, password);
+            startMainScreen();
         }
         else {
-            nickField.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorRed), PorterDuff.Mode.SRC_ATOP);
-            passFiled.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorRed), PorterDuff.Mode.SRC_ATOP);
+            setEditTextLineColor(getResources().getColor(R.color.colorRed));
             Toast.makeText(this.getContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void saveAccountData(String login, String password) {
+        authPreference.setAccountData(login, password);
+        authPreference.setAccountId(UUID.randomUUID().toString());
+        FriendsRepository.addFriend(
+                new Friend(
+                        authPreference.getAccountLogin(),
+                        UUID.fromString(authPreference.getAccountId()),
+                        new byte[]{1, 2, 3}, // TODO: 08.12.17 paste your enc key
+                        null,
+                        true
+                )
+        );
+    }
+
+    private void startMainScreen() {
+        getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
+        P2PProtocolConnector.TryStart(this.getContext());
+        getActivity().finish();
     }
 
     private boolean isValid(final String login, final String password) {
