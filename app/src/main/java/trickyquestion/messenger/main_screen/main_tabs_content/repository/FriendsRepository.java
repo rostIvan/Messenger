@@ -1,5 +1,6 @@
 package trickyquestion.messenger.main_screen.main_tabs_content.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -15,7 +16,9 @@ public class FriendsRepository {
 
     public static List<Friend> getFriends() {
         final Realm realm = Realm.getDefaultInstance();
-        return realm.where(Friend.class).findAll().sort("name", Sort.ASCENDING);
+        List<Friend> res = new ArrayList<>();
+        res.addAll(realm.where(Friend.class).findAll().sort("name", Sort.ASCENDING));
+        return res;
     }
 
     public static void addFriend(final Friend friend) {

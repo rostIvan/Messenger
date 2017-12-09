@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.adapters.ChatViewHolder;
@@ -15,6 +16,7 @@ import trickyquestion.messenger.chat_screen.model.ChatMessage;
 import trickyquestion.messenger.chat_screen.repository.ChatMessageRepository;
 import trickyquestion.messenger.chat_screen.repository.IChatMessageRepository;
 import trickyquestion.messenger.chat_screen.view.IChatView;
+import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.formatter.TimeFormatter;
 
@@ -98,7 +100,7 @@ public class ChatPresenter implements IChatPresenter {
     private void sendMessage(final String message) {
         addMessageToDb(message, true);
         updateRecycler();
-        // TODO: 07.12.17 paste method service to send message
+        P2PProtocolConnector.ProtocolInterface().SendMsg(UUID.fromString(view.getFriendId()),message);
     }
 
     private void receiveMessage(final String message) {

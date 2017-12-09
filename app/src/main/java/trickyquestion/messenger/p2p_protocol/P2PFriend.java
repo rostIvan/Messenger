@@ -17,7 +17,7 @@ public class P2PFriend implements IFriend {
     private UUID id;
     private byte[] cipherKey;
 
-    P2PFriend(String name, UUID id, String ip, byte[] cipherKey){
+    public P2PFriend(String name, UUID id, String ip, byte[] cipherKey){
         this.name = name; this.id = id; this.ip = ip; this.cipherKey = cipherKey;
     }
 

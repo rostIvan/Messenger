@@ -25,6 +25,7 @@ import trickyquestion.messenger.popup_windows.FriendRequestDialog;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.preference.NetworkPreference;
 import trickyquestion.messenger.util.string_helper.HexConv;
+import trickyquestion.messenger.util.type_cast.TypeCasting;
 
 /**
  * Created by Zen on 17.10.2017.
@@ -98,8 +99,14 @@ public class P2PProtocolService extends Service{
             P2PAuth.NewAuthReq(user);
         }
 
-        public void SendMsg(IFriend target, String msg){
-            P2PMesseges.SendMsg(target, msg);
+        public void SendMsg(UUID targetID, String msg){
+            List<IFriend> friends = TypeCasting.castToIFriendList(FriendsRepository.getFriends());
+            for (IFriend friend : friends) {
+                if (friend.getID().equals(targetID)) {
+                    P2PMesseges.SendMsg(friend, msg);
+                    break;
+                }
+            }
         }
     }
 

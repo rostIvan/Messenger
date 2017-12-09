@@ -112,7 +112,7 @@ public class P2PNetwork {
                 if (received_data == null) continue;
                 //Split packet string
                 //Checking is valid packet string
-                if (received_data.length() != 120) continue;
+                if (received_data.length() != 121) continue;
                 //Parse string
                 received_packet_content = received_data.split("[:]");
                 try {
@@ -287,13 +287,6 @@ public class P2PNetwork {
     }
 
     public List<IUser> getUsers(){
-        List<IUser> userList = users.get();
-        for(IUser user : userList){
-            if(user.getID().equals(host.getID())) {
-                userList.remove(user);
-                break;
-            }
-        }
-        return userList;
+        return users.get();
     }
 }

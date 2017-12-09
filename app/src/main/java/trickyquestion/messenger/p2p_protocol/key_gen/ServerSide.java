@@ -28,11 +28,12 @@ public class ServerSide {
         this.keySize = keySize;
     }
 
-    public String FirstPhase(){
+    public String
+    FirstPhase(){
         String key = null;
         try {
             KeyPairGenerator ServerKPair = KeyPairGenerator.getInstance("DH");
-            ServerKPair.initialize(1024);
+            ServerKPair.initialize(keySize);
             KeyPair ServerKpair = ServerKPair.generateKeyPair();
             ServerKeyAgrre = KeyAgreement.getInstance("DH");
             ServerKeyAgrre.init(ServerKpair.getPrivate());

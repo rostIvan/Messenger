@@ -63,8 +63,7 @@ public class P2PProtocolConnector {
      */
     static public P2PProtocolService.LocalBinder ProtocolInterface() {
         //if service connected return bind
-        if (bound) return bind;
-        else return null;
+        return bind;
     }
 
     public static void TryStart(Context context) {

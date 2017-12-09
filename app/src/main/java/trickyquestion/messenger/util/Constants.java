@@ -31,7 +31,7 @@ public class Constants {
     public static final int DEFAULT_AUTH_PORT = 5001;
 
     public static final String EXTRA_KEY_AUTH_KEY_BIT_SIZE = "DH Pub key size";
-    public static final int DEFAULT_AUTH_KEY_BIT_SIZE = 1024;
+    public static final int DEFAULT_AUTH_KEY_BIT_SIZE = 256;
 
     public static final String EXTRA_KEY_AUTH_TIMEOUT = "auth timeout";
     public static final int DEFAULT_AUTH_TIMEOUT = 2048;
