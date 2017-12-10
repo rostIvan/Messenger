@@ -20,7 +20,7 @@ public class TypeCasting {
         for (Friend friend : friends) {
             ipFound = false;
             for(IUser user : users) {
-                if (user.getID().equals(friend.getId())) {
+                if (user.getID().equals(UUID.fromString(friend.getId()))) {
                     friendList.add(new P2PFriend(friend.getName(), UUID.fromString(friend.getId()), user.getNetworkAddress(), friend.getEncKey()));
                     ipFound = true;
                     break;

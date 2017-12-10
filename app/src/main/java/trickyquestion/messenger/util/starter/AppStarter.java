@@ -25,7 +25,6 @@ public class AppStarter implements IStarter {
     public void start() {
         if ( !isAuthenticated() ) {
             startLoginActivity();
-            FriendsRepository.addFriend(new Friend());
         }
         else {
             P2PProtocolConnector.TryStart(context);

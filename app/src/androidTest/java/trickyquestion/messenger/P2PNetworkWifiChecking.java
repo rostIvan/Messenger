@@ -53,7 +53,6 @@ public class P2PNetworkWifiChecking {
             P2PProtocolService.LocalBinder bind = (P2PProtocolService.LocalBinder)P2PServiceTest.bindService
                     (new Intent(InstrumentationRegistry.getTargetContext(),
                             P2PProtocolService.class));
-
             bind.Start();
             WifiManager wifiManager = (WifiManager)appContext.getSystemService(Context.WIFI_SERVICE);
             wifiManager.setWifiEnabled(true);

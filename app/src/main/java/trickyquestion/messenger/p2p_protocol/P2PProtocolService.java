@@ -95,8 +95,7 @@ public class P2PProtocolService extends Service{
         }
 
         public void SendFriendReq(IUser user){
-            if(P2PAuth==null) throw new NullPointerException();
-            P2PAuth.NewAuthReq(user);
+            if(P2PAuth!=null) P2PAuth.NewAuthReq(user);
         }
 
         public void SendMsg(UUID targetID, String msg){

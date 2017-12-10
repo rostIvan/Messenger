@@ -19,6 +19,7 @@ import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
+import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolService;
 import trickyquestion.messenger.p2p_protocol.events.AuthConfirmed;
 import trickyquestion.messenger.p2p_protocol.events.AuthRejected;
@@ -102,8 +103,9 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     public void onAlertPositiveButtonPressed(IUser user) {
         view.startTimer();
 //        FriendsRepository.addFriend(new Friend(user.getName(), user.getID(), true));
-        P2PProtocolService.LocalBinder binder = new P2PProtocolService().getBinder();
-        binder.SendFriendReq(user);
+//        P2PProtocolService.LocalBinder binder = new P2PProtocolService().getBinder();
+//        binder.SendFriendReq(user);
+        P2PProtocolConnector.ProtocolInterface().SendFriendReq(user);
     }
 
     @Override
