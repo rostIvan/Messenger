@@ -99,16 +99,16 @@ public class NetworkPreference {
     public void setAuthTimeOut(int authTimeOut){
         checkAuthTimeOut(authTimeOut);
         final SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(Constants.EXTRA_KEY_AUTH_KEY_BIT_SIZE, authTimeOut);
+        editor.putInt(Constants.EXTRA_KEY_AUTH_TIMEOUT, authTimeOut);
         editor.apply();
         editor.commit();
     }
     public int getAuthTimeOut() {
-        return preferences.getInt(Constants.EXTRA_KEY_AUTH_KEY_BIT_SIZE, Constants.DEFAULT_AUTH_KEY_BIT_SIZE);
+        return preferences.getInt(Constants.EXTRA_KEY_AUTH_TIMEOUT, Constants.DEFAULT_AUTH_TIMEOUT);
     }
 
     public int getMsgPort(){
-        return preferences.getInt(Constants.EXTRA_KEY_AUTH_PORT, Constants.DEFAULT_AUTH_PORT);
+        return preferences.getInt(Constants.EXTRA_KEY_MSG_PORT, Constants.DEFAULT_MSG_PORT);
     }
     private void checkMsgPort(int authPort) {
         if (authPort < 1 || authPort > 65655)

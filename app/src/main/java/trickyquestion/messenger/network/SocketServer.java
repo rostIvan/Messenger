@@ -27,7 +27,7 @@ public class SocketServer implements Runnable{
     public void run() {
         while (true){
             try {
-                new Thread(new SocketProccedRunnable(serverSocket.accept()));
+                new Thread(new SocketProccedRunnable(serverSocket.accept())).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -53,7 +53,7 @@ public class SocketServer implements Runnable{
         public void run() {
             try {
                 InputStream inputStream = socket.getInputStream();
-                byte[] buf = new byte[1024];
+                byte[] buf = new byte[2048];
                 int sz = inputStream.read(buf);
                 String data = new String(buf, 0, sz);
                 for(ISocketListener listener : listeners)
