@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import trickyquestion.messenger.R;
@@ -17,6 +16,7 @@ import trickyquestion.messenger.chat_screen.repository.ChatMessageRepository;
 import trickyquestion.messenger.chat_screen.repository.IChatMessageRepository;
 import trickyquestion.messenger.chat_screen.view.IChatView;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
+import trickyquestion.messenger.p2p_protocol.events.ReceivedMsg;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.formatter.TimeFormatter;
 
@@ -88,25 +88,35 @@ public class ChatPresenter implements IChatPresenter {
             view.setStyleForFriendMessage(holder.container, holder.textMessage, holder.timeMessage);
     }
 
-    private void addMessageToDb(final String message, boolean isMy) {
+    private void addMyMessageToDb(final String message) {
         final ChatMessage chatMessage = new ChatMessage();
         chatMessage.setText(message);
         chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
-        chatMessage.setMeOwner(isMy);
+        chatMessage.setMeOwner(true);
         chatMessage.setNameFriend(view.getFriendName());
         chatMessage.setIdFriend(view.getFriendId());
         repository.addMessage(chatMessage);
     }
-    private void sendMessage(final String message) {
-        addMessageToDb(message, true);
-        updateRecycler();
-        P2PProtocolConnector.ProtocolInterface().SendMsg(UUID.fromString(view.getFriendId()),message);
+
+    private void addReceiveMessageToDb(final String message, final UUID id, final String name) {
+        final ChatMessage chatMessage = new ChatMessage();
+        chatMessage.setText(message);
+        chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
+        chatMessage.setMeOwner(false);
+        chatMessage.setNameFriend(name);
+        chatMessage.setIdFriend(id.toString());
+        repository.addMessage(chatMessage);
     }
 
-    private void receiveMessage(final String message) {
-        addMessageToDb(message, false);
+    private void sendMessage(final String message) {
+        addMyMessageToDb(message);
         updateRecycler();
-        // TODO: 07.12.17  paste method service to receive message
+        P2PProtocolConnector.ProtocolInterface().SendMsg(UUID.fromString(view.getFriendId()), message);
+    }
+
+    private void receiveMessage(final String message, final UUID fromId, final String fromFirend) {
+        addReceiveMessageToDb(message, fromId, fromFirend);
+        updateRecycler();
     }
 
     private void updateRecycler() {
@@ -117,5 +127,9 @@ public class ChatPresenter implements IChatPresenter {
 
     public void onEvent(ChangeThemeEvent event) {
         view.customizeTheme();
+    }
+
+    public void onEvent(ReceivedMsg event) {
+        receiveMessage(event.getMsg(), event.getFrom().getID(), event.getFrom().getName());
     }
 }
