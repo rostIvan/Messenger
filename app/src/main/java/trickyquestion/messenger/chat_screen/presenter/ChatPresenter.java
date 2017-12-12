@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 import java.util.UUID;
 
+import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.chat_screen.adapters.ChatViewHolder;
 import trickyquestion.messenger.chat_screen.interactor.ChatMessageInteractor;
@@ -39,6 +40,7 @@ public class ChatPresenter implements IChatPresenter {
         view.showMessages();
         view.setupListeners();
         view.scrollRecyclerToPosition(chatMessages.size() - 1);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -131,5 +133,6 @@ public class ChatPresenter implements IChatPresenter {
 
     public void onEvent(ReceivedMsg event) {
         receiveMessage(event.getMsg(), event.getFrom().getID(), event.getFrom().getName());
+        updateRecycler();
     }
 }

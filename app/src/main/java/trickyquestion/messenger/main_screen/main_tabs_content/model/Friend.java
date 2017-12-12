@@ -16,15 +16,13 @@ public class Friend implements RealmModel {
     @Ignore
     private ImageView image;
     private boolean online;
-    private byte[] encKey;
 
     public Friend() {
     }
 
-    public Friend(final String name, final UUID id, final byte[]encKey, final ImageView image, final boolean online) {
+    public Friend(final String name, final UUID id, final ImageView image, final boolean online) {
         this.name = name;
         this.id = id.toString();
-        this.encKey = encKey;
         this.image = image;
         this.online = online;
     }
@@ -44,14 +42,6 @@ public class Friend implements RealmModel {
 
     public void setId(UUID id) {
         this.id = id.toString();
-    }
-
-    public byte[] getEncKey() {
-        return encKey;
-    }
-
-    public void setEncKey(byte[] encKey) {
-        this.encKey = encKey;
     }
 
     public void setImage(ImageView image) {

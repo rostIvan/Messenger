@@ -101,6 +101,7 @@ public class AddFriendActivity extends AppCompatActivity  implements IAddFriendV
 
     @Override
     public void showAddFriendAlertDialog(IUser user) {
+
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog alertDialog = builder
                 .setTitle(String.format("Add user: %s? \nid: %s", user.getName(), user.getID().toString().substring(0, 25)))

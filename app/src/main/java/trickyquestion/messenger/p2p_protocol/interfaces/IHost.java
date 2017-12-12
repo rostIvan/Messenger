@@ -10,8 +10,6 @@ public interface IHost {
     UUID getID();
     String getName();
 
-    byte[] getSelfEncKey();
-
     void setName(String new_name);
     void reCreate(UUID id, String name);
 }

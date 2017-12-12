@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.UUID;
 
+import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.Network;
@@ -37,6 +38,12 @@ public class P2PProtocolService extends Service{
     private NetworkPreference servicePreference;
 
     public P2PProtocolService(){
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        EventBus.getDefault().register(this);
     }
 
     /**
@@ -127,13 +134,6 @@ public class P2PProtocolService extends Service{
         @Override
         public String getName() {
             return preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "NULL");
-        }
-
-        @Override
-        public byte[] getSelfEncKey() {
-            return HexConv.hexToByte(
-                    this.preferences.getString(Constants.EXTRA_KEY_USER_SELF_ENC_KEY,null)
-            );
         }
 
         @Override

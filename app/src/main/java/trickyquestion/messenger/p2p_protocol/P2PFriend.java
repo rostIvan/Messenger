@@ -15,10 +15,9 @@ public class P2PFriend implements IFriend {
 
     private String name,ip;
     private UUID id;
-    private byte[] cipherKey;
 
-    public P2PFriend(String name, UUID id, String ip, byte[] cipherKey){
-        this.name = name; this.id = id; this.ip = ip; this.cipherKey = cipherKey;
+    public P2PFriend(String name, UUID id, String ip){
+        this.name = name; this.id = id; this.ip = ip;
     }
 
     @Override
@@ -34,11 +33,6 @@ public class P2PFriend implements IFriend {
     @Override
     public String getNetworkAddress() {
         return ip;
-    }
-
-    @Override
-    public byte[] encKey() {
-        return cipherKey;
     }
 
     @Override

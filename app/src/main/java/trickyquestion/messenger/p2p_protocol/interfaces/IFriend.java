@@ -11,7 +11,6 @@ public interface IFriend {
     UUID getID();
     String getName();
 
-    byte[] encKey();
     String getNetworkAddress();
 
     void updateData(IUser user);

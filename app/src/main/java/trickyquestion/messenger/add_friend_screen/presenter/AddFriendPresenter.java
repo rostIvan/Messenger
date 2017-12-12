@@ -20,7 +20,6 @@ import trickyquestion.messenger.main_screen.main_tabs_content.repository.Friends
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.NetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
-import trickyquestion.messenger.p2p_protocol.P2PProtocolService;
 import trickyquestion.messenger.p2p_protocol.events.AuthConfirmed;
 import trickyquestion.messenger.p2p_protocol.events.AuthRejected;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
@@ -36,7 +35,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     public AddFriendPresenter(final IAddFriendView view) {
         this.view = view;
-        this.users = FriendsGetter.getFriends();
+        this.users = FriendsGetter.getUsers();
     }
 
     @Override
@@ -144,6 +143,15 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         @Override
         public void onClick(View v) {
             view.showAddFriendAlertDialog(user);
+            final Friend friend = new Friend(
+                    user.getName(),
+                    user.getID(),
+                    null,
+                    true
+            );
+            FriendsRepository.addFriend(friend);
+            //view.cancelTimer();
+            view.showToast("User: " + user.getName() + " add to your users");
 //            addFriend(holder, user);
         }
     }
@@ -186,7 +194,6 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         final Friend friend = new Friend(
                 event.getFriend().getName(),
                 event.getFriend().getID(),
-                event.getFriend().encKey(),
                 null,
                 true
         );
@@ -200,7 +207,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
     }
 
     private void updateFriendList() {
-        this.users = FriendsGetter.getFriends();
+        this.users = FriendsGetter.getUsers();
         this.view.notifyRecyclerDataChange();
     }
 

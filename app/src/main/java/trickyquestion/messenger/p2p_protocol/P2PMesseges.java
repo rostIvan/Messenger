@@ -89,7 +89,6 @@ public class P2PMesseges {
             UUID sender = UUID.fromString(packetContent[2]);
             SecretKeySpec aesKey;
             if(host.getID().equals(sender)){
-                aesKey = new SecretKeySpec(host.getSelfEncKey(),0,16,"AES");
                 for(IFriend friend :friends){
                     if(host.getID().equals(friend.getID())){
                         from = friend;
@@ -104,27 +103,13 @@ public class P2PMesseges {
                     }
                 }
                 if (from == null) return;
-                aesKey = new SecretKeySpec(from.encKey(), 0, 16, "AES");
             }
             try {
-                Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-                //cipher.init(Cipher.DECRYPT_MODE, aesKey);
-                //byte[] uncryptedMsg = cipher.doFinal(HexConv.hexToByte(FixedString.toDynamicSize(packetContent[4], '$')));
                 byte[] uncryptedMsg = HexConv.hexToByte(FixedString.toDynamicSize(packetContent[4],'$'));
                 String msg = new String(uncryptedMsg, "UTF-8");
                 EventBus.getDefault().post(new ReceivedMsg(msg,from));
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-//            } catch (InvalidKeyException e) {
-//                e.printStackTrace();
-            } catch (NoSuchPaddingException e) {
-                e.printStackTrace();
-//            } catch (BadPaddingException e) {
-//                e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-//            } catch (IllegalBlockSizeException e) {
-//                e.printStackTrace();
             }
         }
     }
@@ -139,54 +124,22 @@ public class P2PMesseges {
             this.msg = msg;
         }
 
-        public void SendMsg(IFriend target, String msg){
+        void SendMsg(IFriend target, String msg){
             if(target.getID().equals(host.getID())) {SendSelfMsg(msg); return;}
-            try {
-                SecretKeySpec aesKey = new SecretKeySpec(target.encKey(), 0, 16, "AES");
-                Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-                cipher.init(Cipher.ENCRYPT_MODE, aesKey);
-                //byte[] data = cipher.doFinal(msg.getBytes());
-                byte[] data = msg.getBytes();
-                String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
-                String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + target.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
-                SocketClient socketClient = new SocketClient(target.getNetworkAddress(),serviceCfg.getMsgPort());
-                socketClient.SendData(packet);
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (NoSuchPaddingException e) {
-                e.printStackTrace();
-            } catch (InvalidKeyException e) {
-                e.printStackTrace();
-//            } catch (BadPaddingException e) {
-//                e.printStackTrace();
-//            } catch (IllegalBlockSizeException e) {
-//                e.printStackTrace();
-            }
+            byte[] data = msg.getBytes();
+            String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
+            String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + target.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
+            SocketClient socketClient = new SocketClient(target.getNetworkAddress(),serviceCfg.getMsgPort());
+            socketClient.SendData(packet);
         }
 
-        public void SendSelfMsg(String msg){
-            try {
-                SecretKeySpec aesKey = new SecretKeySpec(host.getSelfEncKey(), 0, 16, "AES");
-                Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-                cipher.init(Cipher.ENCRYPT_MODE, aesKey);
-                //byte[] data = cipher.doFinal(msg.getBytes());
-                byte[] data = msg.getBytes();
-                String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
-                String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + host.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
-                SocketClient socketClient = new SocketClient(target.getNetworkAddress(), serviceCfg.getMsgPort());
-                socketClient.SendData(packet);
-                socketClient.close();
-            } catch (NoSuchAlgorithmException e) {
-                e.printStackTrace();
-            } catch (NoSuchPaddingException e) {
-                e.printStackTrace();
-            } catch (InvalidKeyException e) {
-                e.printStackTrace();
-//            } catch (BadPaddingException e) {
-//                e.printStackTrace();
-//            } catch (IllegalBlockSizeException e) {
-//                e.printStackTrace();
-            }
+        void SendSelfMsg(String msg){
+            byte[] data = msg.getBytes();
+            String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
+            String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + host.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
+            SocketClient socketClient = new SocketClient(target.getNetworkAddress(), serviceCfg.getMsgPort());
+            socketClient.SendData(packet);
+            socketClient.close();
         }
 
         @Override

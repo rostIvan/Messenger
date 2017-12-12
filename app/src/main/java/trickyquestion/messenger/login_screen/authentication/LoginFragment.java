@@ -24,10 +24,7 @@ import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.main_screen.view.MainActivity;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
-import trickyquestion.messenger.p2p_protocol.key_gen.SelfKey;
 import trickyquestion.messenger.util.preference.AuthPreference;
-import trickyquestion.messenger.util.preference.NetworkPreference;
-import trickyquestion.messenger.util.string_helper.HexConv;
 import trickyquestion.messenger.util.validation.RegistrationDataValidator;
 
 public class LoginFragment extends Fragment {
@@ -77,14 +74,13 @@ public class LoginFragment extends Fragment {
     }
 
     private void saveAccountData(String login, String password) {
-        byte[] encKey = new SelfKey(new NetworkPreference(this.getContext()).getAuthKeyBitSize()).getKey();
-        authPreference.setAccountData(login, password, HexConv.bytesToHex(encKey));
         authPreference.setAccountId(UUID.randomUUID().toString());
+        authPreference.setAccountLogin(login);
+        authPreference.setAccountPassword(password);
         FriendsRepository.addFriend(
                 new Friend(
                         authPreference.getAccountLogin(),
                         UUID.fromString(authPreference.getAccountId()),
-                        encKey,
                         null,
                         true
                 )
