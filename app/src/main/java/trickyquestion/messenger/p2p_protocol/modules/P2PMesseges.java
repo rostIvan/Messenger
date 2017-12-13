@@ -57,7 +57,6 @@ public class P2PMesseges {
             List<IFriend> friends = TypeCasting.castToIFriendList(FriendsRepository.getFriends());
             IFriend from = null;
             UUID sender = UUID.fromString(packetContent[2]);
-            SecretKeySpec aesKey;
             if(host.getID().equals(sender)){
                 for(IFriend friend :friends){
                     if(host.getID().equals(friend.getID())){
@@ -99,15 +98,16 @@ public class P2PMesseges {
             byte[] data = msg.getBytes();
             String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
             String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + target.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
-            SocketClient socketClient = new SocketClient(target.getNetworkAddress(),serviceCfg.getMsgPort(), serviceCfg.getAuthTimeOut());
+            SocketClient socketClient = new SocketClient(target.getNetworkAddress(),serviceCfg.getMsgPort(), 0);
             socketClient.SendData(packet);
+            socketClient.close();
         }
 
         void SendSelfMsg(String msg){
             byte[] data = msg.getBytes();
             String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
             String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + host.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
-            SocketClient socketClient = new SocketClient(target.getNetworkAddress(), serviceCfg.getMsgPort(), serviceCfg.getAuthTimeOut());
+            SocketClient socketClient = new SocketClient(target.getNetworkAddress(), serviceCfg.getMsgPort(), 0);
             socketClient.SendData(packet);
             socketClient.close();
         }
