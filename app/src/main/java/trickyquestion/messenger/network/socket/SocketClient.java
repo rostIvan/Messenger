@@ -1,6 +1,7 @@
-package trickyquestion.messenger.network;
+package trickyquestion.messenger.network.socket;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
 
@@ -11,9 +12,10 @@ import java.net.SocketException;
 public class SocketClient {
     Socket socket;
 
-    public SocketClient(String ip, int port) {
+    public SocketClient(String ip, int port, int timeout) {
         try {
-            socket = new Socket(ip,port);
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(ip,port),timeout);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,12 +29,11 @@ public class SocketClient {
         }
     }
 
-    public String ReceiveData(int timeout, int maxPacketSize){
+    public String ReceiveData(int maxPacketSize){
         try {
-            socket.setSoTimeout(timeout);
             byte[] buf = new byte[maxPacketSize];
             int size = socket.getInputStream().read(buf);
-            return new String(buf,size);
+            return new String(buf, 0 ,size);
         } catch (SocketException e) {
             e.printStackTrace();
         } catch (IOException e) {

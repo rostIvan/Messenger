@@ -7,10 +7,10 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
  * Created by Zen on 03.12.2017.
  */
 
-public class AuthConfirmed {
+public class EAddFriendConfirmed {
     private IFriend friend;
 
-    public AuthConfirmed(IFriend friend){
+    public EAddFriendConfirmed(IFriend friend){
         this.friend = friend;
     }
 

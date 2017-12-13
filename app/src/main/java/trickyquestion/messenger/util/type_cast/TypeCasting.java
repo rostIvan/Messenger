@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
-import trickyquestion.messenger.p2p_protocol.P2PFriend;
+import trickyquestion.messenger.p2p_protocol.objects.P2PFriend;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
-import trickyquestion.messenger.p2p_protocol.P2PProtocolService;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 

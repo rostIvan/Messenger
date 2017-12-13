@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import org.jetbrains.annotations.Contract;
 
 import de.greenrobot.event.EventBus;
+import trickyquestion.messenger.network.events.ENetworkStateChanged;
 
 import static android.content.Context.WIFI_SERVICE;
 
@@ -34,7 +35,7 @@ public class Network {
                     if(Network.networkState != NetworkState.INACTIVE) {
                         Network.networkState = NetworkState.INACTIVE;
                     } else return;
-                    EventBus.getDefault().post(new NetworkStateChanged(Network.networkState));
+                    EventBus.getDefault().post(new ENetworkStateChanged(Network.networkState));
             }
 //            if ("android.net.wifi.WIFI_AP_STATE_CHANGED".equals(action)) {
 //                int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);

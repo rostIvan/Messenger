@@ -1,4 +1,4 @@
-package trickyquestion.messenger.p2p_protocol;
+package trickyquestion.messenger.p2p_protocol.objects;
 
 import android.widget.ImageView;
 

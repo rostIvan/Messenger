@@ -6,11 +6,11 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
  * Created by Zen on 06.12.2017.
  */
 
-public class ReceivedMsg {
+public class EReceivedMsg {
     String msg;
     IFriend from;
 
-    public ReceivedMsg(String msg, IFriend from){
+    public EReceivedMsg(String msg, IFriend from){
         this.msg = msg;
         this.from = from;
     }

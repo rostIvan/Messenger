@@ -18,7 +18,7 @@ import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.NetworkState;
-import trickyquestion.messenger.network.NetworkStateChanged;
+import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeFriendDataBaseEvent;
@@ -164,7 +164,7 @@ public class FriendPresenter implements IFriendPresenter {
         view.runOnUiThread(this::updateFriendList);
     }
 
-    public void onEvent(final NetworkStateChanged event) {
+    public void onEvent(final ENetworkStateChanged event) {
         view.runOnUiThread(() -> onNetworkChanged(event));
     }
 
@@ -197,7 +197,7 @@ public class FriendPresenter implements IFriendPresenter {
         view.notifyRecyclerDataChange();
     }
 
-    private void onNetworkChanged(NetworkStateChanged event) {
+    private void onNetworkChanged(ENetworkStateChanged event) {
         for (Friend friend : friendList) {
             FriendsRepository.changeFriendOnlineStatus(friend, event.getNewNetworkState() == NetworkState.ACTIVE);
         }

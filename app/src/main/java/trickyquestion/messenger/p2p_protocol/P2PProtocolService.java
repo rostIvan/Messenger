@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,15 +16,16 @@ import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.Network;
-import trickyquestion.messenger.p2p_protocol.events.AuthConfirmed;
-import trickyquestion.messenger.p2p_protocol.events.AuthRequest;
+import trickyquestion.messenger.p2p_protocol.events.EAuthRequest;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
+import trickyquestion.messenger.p2p_protocol.modules.P2PAddFriends;
+import trickyquestion.messenger.p2p_protocol.modules.P2PMesseges;
+import trickyquestion.messenger.p2p_protocol.modules.P2PNetwork;
 import trickyquestion.messenger.popup_windows.FriendRequestDialog;
 import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.preference.NetworkPreference;
-import trickyquestion.messenger.util.string_helper.HexConv;
 import trickyquestion.messenger.util.type_cast.TypeCasting;
 
 /**
@@ -71,9 +71,9 @@ public class P2PProtocolService extends Service{
         return mBinder;
     }
 
-    private P2PNetwork P2PNetwork;
-    private P2PAuth P2PAuth;
-    private P2PMesseges P2PMesseges;
+    private trickyquestion.messenger.p2p_protocol.modules.P2PNetwork P2PNetwork;
+    private trickyquestion.messenger.p2p_protocol.modules.P2PAddFriends P2PAddFriends;
+    private trickyquestion.messenger.p2p_protocol.modules.P2PMesseges P2PMesseges;
 
     private boolean started = false;
 
@@ -84,7 +84,7 @@ public class P2PProtocolService extends Service{
             Network.StartNetworkListener(getApplicationContext());
             servicePreference = new NetworkPreference(getApplicationContext());
             P2PNetwork = new P2PNetwork(host, getApplicationContext(),servicePreference);
-            P2PAuth = new P2PAuth(getApplicationContext(),servicePreference,P2PNetwork,host);
+            P2PAddFriends = new P2PAddFriends(getApplicationContext(),servicePreference,P2PNetwork,host);
             P2PMesseges = new P2PMesseges(servicePreference,host,getApplicationContext());
             Log.d("P2PProtocolService","Service started");
             started = true;
@@ -92,7 +92,7 @@ public class P2PProtocolService extends Service{
 
         public void Stop(){
             P2PNetwork.Stop();
-            P2PAuth.Stop();
+            P2PAddFriends.Stop();
             P2PMesseges.Stop();
             started = false;
         }
@@ -102,7 +102,7 @@ public class P2PProtocolService extends Service{
         }
 
         public void SendFriendReq(IUser user){
-            if(P2PAuth!=null) P2PAuth.NewAuthReq(user);
+            P2PAddFriends.NewAddFriendReq(user);
         }
 
         public void SendMsg(UUID targetID, String msg){
@@ -149,7 +149,7 @@ public class P2PProtocolService extends Service{
     }
 
 
-    public void onEvent(AuthRequest event) {
+    public void onEvent(EAuthRequest event) {
         final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getID().toString());
         dialog.setOnPositiveButtonClickListener((d, i) -> {
             final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), true);

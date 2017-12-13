@@ -17,7 +17,7 @@ import trickyquestion.messenger.chat_screen.repository.ChatMessageRepository;
 import trickyquestion.messenger.chat_screen.repository.IChatMessageRepository;
 import trickyquestion.messenger.chat_screen.view.IChatView;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
-import trickyquestion.messenger.p2p_protocol.events.ReceivedMsg;
+import trickyquestion.messenger.p2p_protocol.events.EReceivedMsg;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.formatter.TimeFormatter;
 
@@ -131,7 +131,7 @@ public class ChatPresenter implements IChatPresenter {
         view.customizeTheme();
     }
 
-    public void onEvent(ReceivedMsg event) {
+    public void onEvent(EReceivedMsg event) {
         receiveMessage(event.getMsg(), event.getFrom().getID(), event.getFrom().getName());
         updateRecycler();
     }

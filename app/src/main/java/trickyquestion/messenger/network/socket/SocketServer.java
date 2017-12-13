@@ -1,4 +1,4 @@
-package trickyquestion.messenger.network;
+package trickyquestion.messenger.network.socket;
 
 import java.io.IOException;
 import java.io.InputStream;

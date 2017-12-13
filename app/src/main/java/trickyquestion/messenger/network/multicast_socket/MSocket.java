@@ -1,4 +1,4 @@
-package trickyquestion.messenger.network;
+package trickyquestion.messenger.network.multicast_socket;
 
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -8,6 +8,9 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketAddress;
+
+import trickyquestion.messenger.network.Network;
+import trickyquestion.messenger.network.NetworkState;
 
 /**
  * Created by Zen on 27.10.2017.
@@ -42,7 +45,7 @@ public class MSocket {
             byte[] content = new byte[256];
             DatagramPacket packet = new DatagramPacket(content,content.length);
             socket.setSoTimeout(1000);
-            if(Network.GetCurrentNetworkState()==NetworkState.ACTIVE)
+            if(Network.GetCurrentNetworkState()== NetworkState.ACTIVE)
                 socket.receive(packet);
             String data = new String(
                     packet.getData(),

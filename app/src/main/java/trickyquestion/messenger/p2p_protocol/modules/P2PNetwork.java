@@ -1,4 +1,4 @@
-package trickyquestion.messenger.p2p_protocol;
+package trickyquestion.messenger.p2p_protocol.modules;
 
 import android.content.Context;
 
@@ -12,13 +12,12 @@ import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.Predicate;
 
 import de.greenrobot.event.EventBus;
-import trickyquestion.messenger.network.MSocket;
+import trickyquestion.messenger.network.multicast_socket.MSocket;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.network.NetworkState;
-import trickyquestion.messenger.network.NetworkStateChanged;
+import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
@@ -83,7 +82,7 @@ public class P2PNetwork {
             EventBus.getDefault().register(this);
         }
 
-        public void onEvent(NetworkStateChanged event) {
+        public void onEvent(ENetworkStateChanged event) {
             if (event.getNewNetworkState() == NetworkState.INACTIVE) {
                 try {
                     networkAvailability.acquire();
@@ -173,7 +172,7 @@ public class P2PNetwork {
     private Thread Listener;
     private Thread KeepAlive;
 
-    public class User implements IUser {
+    public static class User implements IUser {
         private UUID ID;
         private String UName;
         private String IP;

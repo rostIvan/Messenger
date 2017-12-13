@@ -1,49 +1,19 @@
-package trickyquestion.messenger.p2p_protocol;
+package trickyquestion.messenger.p2p_protocol.modules;
 
 import android.content.Context;
-import android.util.Log;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.nio.channels.DatagramChannel;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
-import java.util.concurrent.Semaphore;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import de.greenrobot.event.EventBus;
-import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
-import trickyquestion.messenger.main_screen.main_tabs_content.model.Message;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
-import trickyquestion.messenger.network.MSocket;
-import trickyquestion.messenger.network.Network;
-import trickyquestion.messenger.network.NetworkState;
-import trickyquestion.messenger.network.NetworkStateChanged;
-import trickyquestion.messenger.network.SocketClient;
-import trickyquestion.messenger.network.SocketServer;
-import trickyquestion.messenger.p2p_protocol.events.ReceivedMsg;
+import trickyquestion.messenger.network.socket.SocketClient;
+import trickyquestion.messenger.network.socket.SocketServer;
+import trickyquestion.messenger.p2p_protocol.events.EReceivedMsg;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.util.Constants;
@@ -107,7 +77,7 @@ public class P2PMesseges {
             try {
                 byte[] uncryptedMsg = HexConv.hexToByte(FixedString.toDynamicSize(packetContent[4],'$'));
                 String msg = new String(uncryptedMsg, "UTF-8");
-                EventBus.getDefault().post(new ReceivedMsg(msg,from));
+                EventBus.getDefault().post(new EReceivedMsg(msg,from));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -129,7 +99,7 @@ public class P2PMesseges {
             byte[] data = msg.getBytes();
             String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
             String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + target.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
-            SocketClient socketClient = new SocketClient(target.getNetworkAddress(),serviceCfg.getMsgPort());
+            SocketClient socketClient = new SocketClient(target.getNetworkAddress(),serviceCfg.getMsgPort(), serviceCfg.getAuthTimeOut());
             socketClient.SendData(packet);
         }
 
@@ -137,7 +107,7 @@ public class P2PMesseges {
             byte[] data = msg.getBytes();
             String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
             String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + host.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
-            SocketClient socketClient = new SocketClient(target.getNetworkAddress(), serviceCfg.getMsgPort());
+            SocketClient socketClient = new SocketClient(target.getNetworkAddress(), serviceCfg.getMsgPort(), serviceCfg.getAuthTimeOut());
             socketClient.SendData(packet);
             socketClient.close();
         }
@@ -150,7 +120,7 @@ public class P2PMesseges {
 
     private Thread MsgSender;
 
-    void SendMsg(IFriend target, String msg){
+    public void SendMsg(IFriend target, String msg){
         MsgSender = new Thread(new MsgSenderRunner(target, msg));
         MsgSender.start();
     }

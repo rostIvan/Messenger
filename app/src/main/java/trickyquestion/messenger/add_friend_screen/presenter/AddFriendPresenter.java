@@ -18,10 +18,10 @@ import trickyquestion.messenger.add_friend_screen.view.IAddFriendView;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.NetworkState;
-import trickyquestion.messenger.network.NetworkStateChanged;
+import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
-import trickyquestion.messenger.p2p_protocol.events.AuthConfirmed;
-import trickyquestion.messenger.p2p_protocol.events.AuthRejected;
+import trickyquestion.messenger.p2p_protocol.events.EAddFriendConfirmed;
+import trickyquestion.messenger.p2p_protocol.events.EAddFriendRejected;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
@@ -182,7 +182,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         this.view.runOnActivityUiThread(this::updateFriendList);
     }
 
-    public void onEvent(final NetworkStateChanged event) {
+    public void onEvent(final ENetworkStateChanged event) {
         this.view.runOnActivityUiThread( () ->  onNetworkChanged(event));
     }
 
@@ -190,7 +190,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         view.customizeTheme();
     }
 
-    public void onEvent(AuthConfirmed event) {
+    public void onEvent(EAddFriendConfirmed event) {
         final Friend friend = new Friend(
                 event.getFriend().getName(),
                 event.getFriend().getID(),
@@ -202,7 +202,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         view.showToast("User: " + event.getFriend().getName() + " add to your users");
     }
 
-    public void onEvent(AuthRejected event) {
+    public void onEvent(EAddFriendRejected event) {
         view.showToast("User: " + event.getFriend().getName() + " reject your request");
     }
 
@@ -211,7 +211,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
         this.view.notifyRecyclerDataChange();
     }
 
-    private void onNetworkChanged(NetworkStateChanged event) {
+    private void onNetworkChanged(ENetworkStateChanged event) {
         if ( event.getNewNetworkState() == NetworkState.INACTIVE ) {
             users.clear();
             this.view.notifyRecyclerDataChange();
