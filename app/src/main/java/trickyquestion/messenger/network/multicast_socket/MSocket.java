@@ -8,6 +8,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.SocketAddress;
+import java.net.SocketTimeoutException;
 
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.network.NetworkState;
@@ -43,18 +44,19 @@ public class MSocket {
             socket.setReuseAddress(true);
             socket.setLoopbackMode(false);
             byte[] content = new byte[256];
-            DatagramPacket packet = new DatagramPacket(content,content.length);
+            DatagramPacket packet = new DatagramPacket(content, content.length);
             socket.setSoTimeout(1000);
-            if(Network.GetCurrentNetworkState()== NetworkState.ACTIVE)
+            if (Network.GetCurrentNetworkState() == NetworkState.ACTIVE)
                 socket.receive(packet);
             String data = new String(
                     packet.getData(),
                     packet.getOffset(),
                     packet.getLength()
             );
-            Log.d("MSocket","Receive packet: " + data);
+            Log.d("MSocket", "Receive packet: " + data);
             socket.leaveGroup(InetAddress.getByName(groupIP));
             return data;
+        } catch (SocketTimeoutException e){
         } catch (IOException e) {
             e.printStackTrace();
         }
