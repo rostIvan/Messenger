@@ -267,7 +267,7 @@ public class P2PNetwork {
 
     private AsyncList users = new AsyncList();
 
-    P2PNetwork(IHost host, Context context, NetworkPreference networkPreference){
+    public P2PNetwork(IHost host, Context context, NetworkPreference networkPreference){
         this.context = context;
         this.host = host;
         this.networkPreference = networkPreference;
