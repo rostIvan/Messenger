@@ -6,6 +6,7 @@ import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -62,6 +63,12 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
         if (presenter == null) presenter = new ChatPresenter(this);
         themePreference = new ThemePreference(this);
         presenter.onCreate();
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.onDestroy();
+        super.onDestroy();
     }
 
     @Override
@@ -164,6 +171,18 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     @Override
     public String getFriendId() {
         return getIntent().getStringExtra(FRIEND_ID_EXTRA);
+    }
+
+    @Override
+    public void hideFields() {
+        messageField.setVisibility(View.INVISIBLE);
+        sendButton.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void showFields() {
+        messageField.setVisibility(View.VISIBLE);
+        sendButton.setVisibility(View.VISIBLE);
     }
 
     @Override

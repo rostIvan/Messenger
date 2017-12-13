@@ -9,6 +9,7 @@ import trickyquestion.messenger.chat_screen.model.ChatMessage;
 
 public interface IChatPresenter {
     void onCreate();
+    void onDestroy();
     View.OnClickListener onNavigationButtonPressed();
     View.OnClickListener onSendButtonClick();
     void onClearMessagesItemCLick();

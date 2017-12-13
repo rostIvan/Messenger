@@ -16,8 +16,14 @@ import trickyquestion.messenger.chat_screen.model.ChatMessage;
 import trickyquestion.messenger.chat_screen.repository.ChatMessageRepository;
 import trickyquestion.messenger.chat_screen.repository.IChatMessageRepository;
 import trickyquestion.messenger.chat_screen.view.IChatView;
+import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
+import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
+import trickyquestion.messenger.network.Network;
+import trickyquestion.messenger.network.NetworkState;
+import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.p2p_protocol.events.EReceivedMsg;
+import trickyquestion.messenger.util.event_bus_pojo.ChangeFriendDataBaseEvent;
 import trickyquestion.messenger.util.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.formatter.TimeFormatter;
 
@@ -40,7 +46,13 @@ public class ChatPresenter implements IChatPresenter {
         view.showMessages();
         view.setupListeners();
         view.scrollRecyclerToPosition(chatMessages.size() - 1);
+        checkSendingPossibility();
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -93,6 +105,18 @@ public class ChatPresenter implements IChatPresenter {
             view.setStyleForFriendMessage(holder.container, holder.textMessage, holder.timeMessage);
     }
 
+    private void checkSendingPossibility() {
+        boolean serviceConnected = P2PProtocolConnector.isServiceConnected();
+        boolean networkIsActive = Network.GetCurrentNetworkState() == NetworkState.ACTIVE;
+        boolean isFriendOnline = FriendsRepository.getFriend(view.getFriendId()).isOnline();
+        if (serviceConnected && networkIsActive && isFriendOnline) {
+            view.showFields();
+        }
+        else {
+            view.hideFields();
+        }
+    }
+
     private void addMyMessageToDb(final String message) {
         final ChatMessage chatMessage = new ChatMessage();
         chatMessage.setText(message);
@@ -129,6 +153,21 @@ public class ChatPresenter implements IChatPresenter {
             view.refreshRecycler();
             view.scrollRecyclerToPosition(chatMessages.size() - 1);
         });
+    }
+
+    public void onEvent(ENetworkStateChanged event) {
+        if (event.getNewNetworkState() == NetworkState.ACTIVE) {
+            view.showFields();
+        }
+        else if (event.getNewNetworkState() == NetworkState.INACTIVE) {
+            view.hideFields();
+        }
+    }
+
+    public void onEvent(ChangeFriendDataBaseEvent event) {
+        final Friend friend = FriendsRepository.getFriend(view.getFriendId());
+        if (friend.isOnline()) view.showFields();
+        else view.hideFields();
     }
 
     public void onEvent(ChangeThemeEvent event) {

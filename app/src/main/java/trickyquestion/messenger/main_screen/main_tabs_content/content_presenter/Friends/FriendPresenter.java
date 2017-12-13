@@ -52,7 +52,8 @@ public class FriendPresenter implements IFriendPresenter {
     }
 
     @Override
-    public void onResume() {
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

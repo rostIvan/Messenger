@@ -13,7 +13,7 @@ public interface IFriendPresenter {
     void onSaveInstanceState(Bundle outState);
     void onActivityCreated(Bundle savedInstanceState);
     void onStart();
-    void onResume();
+    void onDestroy();
 
     int getCount();
     void onBindViewHolder(final FriendViewHolder holder, final int position);

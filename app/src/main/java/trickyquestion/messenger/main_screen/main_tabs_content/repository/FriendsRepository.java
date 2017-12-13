@@ -81,6 +81,13 @@ public class FriendsRepository {
         }
     }
 
+    public static Friend getFriend(final String id) {
+        final Realm realm = Realm.getDefaultInstance();
+        final Friend friend = realm.where(Friend.class).equalTo("id", id).findFirst();
+        realm.close();
+        return friend;
+    }
+
     public static void deleteAllFriends() {
         final Realm realm = Realm.getDefaultInstance();
         try {

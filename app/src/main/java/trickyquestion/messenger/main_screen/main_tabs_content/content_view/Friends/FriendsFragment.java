@@ -59,9 +59,9 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        presenter.onResume();
+    public void onDestroy() {
+        presenter.onDestroy();
+        super.onDestroy();
     }
 
     @Override

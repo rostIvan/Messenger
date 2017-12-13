@@ -28,6 +28,10 @@ public interface IChatView {
 
     String getFriendId();
 
+    void hideFields();
+
+    void showFields();
+
     void setStyleForMyMessage(View container, TextView textMessage, TextView timeMessage);
 
     void setStyleForFriendMessage(View container, TextView textMessage, TextView timeMessage);
