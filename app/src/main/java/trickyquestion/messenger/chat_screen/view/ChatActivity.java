@@ -132,6 +132,12 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     public void refreshRecycler() {
         recyclerView.getAdapter().notifyDataSetChanged();
     }
+
+    @Override
+    public void runOnUIThread(final Runnable r) {
+        super.runOnUiThread(r);
+    }
+
     @Override
     public void scrollRecyclerToPosition(int position) {
         recyclerView.scrollToPosition(position);

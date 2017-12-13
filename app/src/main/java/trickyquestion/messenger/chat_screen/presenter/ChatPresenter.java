@@ -51,7 +51,10 @@ public class ChatPresenter implements IChatPresenter {
     @Override
     public View.OnClickListener onSendButtonClick() {
         return v -> {
-            if (!view.getMessageText().isEmpty()) sendMessage(view.getMessageText());
+            if (!view.getMessageText().isEmpty()) {
+                sendMessage(view.getMessageText());
+                view.clearMessageText();
+            }
             else view.showToast("Message is empty!");
         };
     }
@@ -112,19 +115,20 @@ public class ChatPresenter implements IChatPresenter {
 
     private void sendMessage(final String message) {
         addMyMessageToDb(message);
-        updateRecycler();
+        updateMessages();
         P2PProtocolConnector.ProtocolInterface().SendMsg(UUID.fromString(view.getFriendId()), message);
     }
 
     private void receiveMessage(final String message, final UUID fromId, final String fromFirend) {
         addReceiveMessageToDb(message, fromId, fromFirend);
-        updateRecycler();
+        updateMessages();
     }
 
-    private void updateRecycler() {
-        view.clearMessageText();
-        view.refreshRecycler();
-        view.scrollRecyclerToPosition(chatMessages.size() - 1);
+    private void updateMessages() {
+        view.runOnUIThread(() -> {
+            view.refreshRecycler();
+            view.scrollRecyclerToPosition(chatMessages.size() - 1);
+        });
     }
 
     public void onEvent(ChangeThemeEvent event) {
@@ -133,6 +137,6 @@ public class ChatPresenter implements IChatPresenter {
 
     public void onEvent(EReceivedMsg event) {
         receiveMessage(event.getMsg(), event.getFrom().getID(), event.getFrom().getName());
-        updateRecycler();
+        updateMessages();
     }
 }

@@ -15,6 +15,9 @@ public interface IChatView {
     void goBack();
 
     void refreshRecycler();
+
+    void runOnUIThread(Runnable r);
+
     void scrollRecyclerToPosition(final int position);
 
     String getMessageText();
