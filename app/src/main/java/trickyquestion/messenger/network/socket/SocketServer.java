@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Subaru on 11.12.2017.
  */
 
-public class SocketServer implements Runnable{
+    public class SocketServer implements Runnable{
     List<ISocketListener> listeners = new ArrayList<>();
     ServerSocket serverSocket;
     public SocketServer(int port){

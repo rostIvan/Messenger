@@ -121,6 +121,10 @@ public class P2PMesseges {
     private Thread MsgSender;
 
     public void SendMsg(IFriend target, String msg){
+        if(MsgSender!=null)
+            try {
+                MsgSender.join();
+            } catch (InterruptedException e) {}
         MsgSender = new Thread(new MsgSenderRunner(target, msg));
         MsgSender.start();
     }

@@ -1,9 +1,7 @@
 package trickyquestion.messenger.p2p_protocol;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -16,15 +14,15 @@ import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
 import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
 import trickyquestion.messenger.network.Network;
-import trickyquestion.messenger.p2p_protocol.events.EAuthRequest;
+import trickyquestion.messenger.p2p_protocol.events.EAddFriendRequest;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.p2p_protocol.modules.P2PAddFriends;
 import trickyquestion.messenger.p2p_protocol.modules.P2PMesseges;
 import trickyquestion.messenger.p2p_protocol.modules.P2PNetwork;
+import trickyquestion.messenger.p2p_protocol.objects.OHost;
 import trickyquestion.messenger.popup_windows.FriendRequestDialog;
-import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.preference.NetworkPreference;
 import trickyquestion.messenger.util.type_cast.TypeCasting;
 
@@ -80,7 +78,7 @@ public class P2PProtocolService extends Service{
     public class LocalBinder extends Binder{
         public void Start(){
             if(started) return;
-            host = new Host(getApplicationContext());
+            host = new OHost(getApplicationContext());
             Network.StartNetworkListener(getApplicationContext());
             servicePreference = new NetworkPreference(getApplicationContext());
             P2PNetwork = new P2PNetwork(host, getApplicationContext(),servicePreference);
@@ -116,40 +114,7 @@ public class P2PProtocolService extends Service{
         }
     }
 
-    class Host implements IHost {
-
-        private SharedPreferences preferences;
-        private UUID id;
-
-        Host(Context context) {
-            id = UUID.fromString("00000000-0000-0000-0000-000000000000");
-            preferences = context.getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
-        }
-
-        @Override
-        public UUID getID() {
-            return UUID.fromString(preferences.getString(Constants.EXTRA_KEY_USER_ID, id.toString()));
-        }
-
-        @Override
-        public String getName() {
-            return preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "NULL");
-        }
-
-        @Override
-        public void setName(String new_name) {
-            this.preferences.edit().putString(Constants.EXTRA_KEY_AUTH_LOGIN, new_name).apply();
-        }
-
-        @Override
-        public void reCreate(UUID id, String name) {
-            this.preferences.edit().putString(Constants.EXTRA_KEY_USER_ID, id.toString()).apply();
-            this.preferences.edit().putString(Constants.EXTRA_KEY_AUTH_LOGIN,name).apply();
-        }
-    }
-
-
-    public void onEvent(EAuthRequest event) {
+    public void onEvent(EAddFriendRequest event) {
         final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getID().toString());
         dialog.setOnPositiveButtonClickListener((d, i) -> {
             final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), true);

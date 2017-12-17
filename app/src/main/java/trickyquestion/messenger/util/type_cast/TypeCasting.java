@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
-import trickyquestion.messenger.p2p_protocol.objects.P2PFriend;
+import trickyquestion.messenger.p2p_protocol.objects.OFriend;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
@@ -20,12 +20,12 @@ public class TypeCasting {
             ipFound = false;
             for(IUser user : users) {
                 if (user.getID().equals(UUID.fromString(friend.getId()))) {
-                    friendList.add(new P2PFriend(friend.getName(), UUID.fromString(friend.getId()), user.getNetworkAddress()));
+                    friendList.add(new OFriend(friend.getName(), UUID.fromString(friend.getId()), user.getNetworkAddress()));
                     ipFound = true;
                     break;
                 }
             }
-            if(!ipFound) friendList.add(new P2PFriend(friend.getName(), UUID.fromString(friend.getId()), null));
+            if(!ipFound) friendList.add(new OFriend(friend.getName(), UUID.fromString(friend.getId()), null));
         }
         return friendList;
     }

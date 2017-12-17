@@ -11,12 +11,12 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
  * Created by Zen on 03.12.2017.
  */
 
-public class P2PFriend implements IFriend {
+public class OFriend implements IFriend {
 
     private String name,ip;
     private UUID id;
 
-    public P2PFriend(String name, UUID id, String ip){
+    public OFriend(String name, UUID id, String ip){
         this.name = name; this.id = id; this.ip = ip;
     }
 
