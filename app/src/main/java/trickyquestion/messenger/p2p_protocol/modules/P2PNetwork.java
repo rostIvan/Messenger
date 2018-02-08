@@ -20,9 +20,9 @@ import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
-import trickyquestion.messenger.util.event_bus_pojo.ChangeUserList;
-import trickyquestion.messenger.util.preference.NetworkPreference;
-import trickyquestion.messenger.util.string_helper.FixedString;
+import trickyquestion.messenger.util.android.event_bus_pojo.ChangeUserList;
+import trickyquestion.messenger.util.android.preference.NetworkPreference;
+import trickyquestion.messenger.util.java.string_helper.FixedString;
 
 /**
  * Created by Zen on 17.10.2017.

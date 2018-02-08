@@ -30,8 +30,6 @@ public class P2PNetworkWifiChecking {
     @Rule
     public ServiceTestRule P2PServiceTest;
 
-    public P2PProtocolService.LocalBinder localBinder;
-
     @Test
     public void StartingService() {
         try {

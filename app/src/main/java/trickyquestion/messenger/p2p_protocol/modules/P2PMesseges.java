@@ -10,17 +10,17 @@ import java.util.UUID;
 import javax.crypto.spec.SecretKeySpec;
 
 import de.greenrobot.event.EventBus;
-import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
+import trickyquestion.messenger.screen.main.main_tabs_content.friends.repository.FriendsRepository;
 import trickyquestion.messenger.network.socket.SocketClient;
 import trickyquestion.messenger.network.socket.SocketServer;
 import trickyquestion.messenger.p2p_protocol.events.EReceivedMsg;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.util.Constants;
-import trickyquestion.messenger.util.preference.NetworkPreference;
-import trickyquestion.messenger.util.string_helper.FixedString;
-import trickyquestion.messenger.util.string_helper.HexConv;
-import trickyquestion.messenger.util.type_cast.TypeCasting;
+import trickyquestion.messenger.util.android.preference.NetworkPreference;
+import trickyquestion.messenger.util.java.string_helper.FixedString;
+import trickyquestion.messenger.util.java.string_helper.HexConv;
+import trickyquestion.messenger.util.java.maping.TypeCasting;
 
 /**
  * Created by Zen on 04.12.2017.

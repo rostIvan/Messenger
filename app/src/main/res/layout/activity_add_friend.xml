@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context=".main_screen.view.MainActivity">
+    tools:context=".screen.main.view.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/add_friend_toolbar"

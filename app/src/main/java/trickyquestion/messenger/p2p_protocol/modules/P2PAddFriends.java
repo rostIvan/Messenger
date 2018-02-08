@@ -18,7 +18,7 @@ import trickyquestion.messenger.p2p_protocol.events.EAddFriendRejected;
 import trickyquestion.messenger.p2p_protocol.events.EAuthRequest;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
-import trickyquestion.messenger.util.preference.NetworkPreference;
+import trickyquestion.messenger.util.android.preference.NetworkPreference;
 
 /**
  * Created by Zen on 28.11.2017.

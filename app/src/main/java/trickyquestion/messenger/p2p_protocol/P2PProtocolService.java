@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
-import trickyquestion.messenger.main_screen.main_tabs_content.model.Friend;
-import trickyquestion.messenger.main_screen.main_tabs_content.repository.FriendsRepository;
+import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend;
+import trickyquestion.messenger.screen.main.main_tabs_content.friends.repository.FriendsRepository;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.p2p_protocol.events.EAuthRequest;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
@@ -23,10 +23,10 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.p2p_protocol.modules.P2PAddFriends;
 import trickyquestion.messenger.p2p_protocol.modules.P2PMesseges;
 import trickyquestion.messenger.p2p_protocol.modules.P2PNetwork;
-import trickyquestion.messenger.popup_windows.FriendRequestDialog;
+import trickyquestion.messenger.screen.popup_windows.FriendRequestDialog;
 import trickyquestion.messenger.util.Constants;
-import trickyquestion.messenger.util.preference.NetworkPreference;
-import trickyquestion.messenger.util.type_cast.TypeCasting;
+import trickyquestion.messenger.util.android.preference.NetworkPreference;
+import trickyquestion.messenger.util.java.maping.TypeCasting;
 
 /**
  * Created by Zen on 17.10.2017.
