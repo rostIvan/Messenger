@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-public class EntryPoint extends AppCompatActivity {
+public final class EntryPoint extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -13,7 +13,7 @@ public class EntryPoint extends AppCompatActivity {
     }
 
     private void startApp() {
-        final IStarter starter = new AppStarter(getApplicationContext());
+        final AProgramStarter starter = new AppStarter(getApplicationContext());
         starter.start();
         this.finish();
     }
