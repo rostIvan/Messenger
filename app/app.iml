@@ -119,6 +119,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/builds" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/check-manifest" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes-jar" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-runtime-classes" />
@@ -148,30 +149,44 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.squareup.okhttp3:okhttp:3.7.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test:exposed-instrumentation-api-publish-0.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.ow2.asm:asm-util:5.0.1@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.bouncycastle:bcprov-jdk16:1.46@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="net.bytebuddy:byte-buddy:1.6.11@jar" level="project" />
     <orderEntry type="library" name="io.realm:realm-annotations:3.7.2@jar" level="project" />
     <orderEntry type="library" name="com.github.QuadFlask:colorpicker-0.0.13" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.ow2.asm:asm-tree:5.0.1@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="com.squareup:javawriter:2.1.1@jar" level="project" />
     <orderEntry type="library" name="com.nineoldandroids:library:2.4.0@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.robolectric:shadows-core:3.0@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.apache.ant:ant-launcher:1.8.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-1.0.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="com.ximpleware:vtd-xml:2.11@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.ow2.asm:asm-analysis:5.0.1@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.robolectric:robolectric-annotations:3.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-fragment-25.4.0" level="project" />
     <orderEntry type="library" name="io.realm:realm-android-library-object-server-3.7.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="com.google.android.apps.common.testing.accessibility.framework:accessibility-test-framework:1.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="org.hamcrest:hamcrest-core:1.3@jar" level="project" />
     <orderEntry type="library" name="com.jakewharton:butterknife-annotations:8.8.1@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test.espresso:espresso-core-2.2.2" level="project" />
     <orderEntry type="library" name="com.android.support:animated-vector-drawable-25.4.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.ow2.asm:asm:5.0.1@jar" level="project" />
     <orderEntry type="library" name="me.yokeyword:swipebackfragment-0.3.0" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test:rules-0.5" level="project" />
     <orderEntry type="library" name="com.uphyca:stetho_realm-2.1.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.apache.maven:maven-ant-tasks:2.1.3@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="org.hamcrest:hamcrest-integration:1.3@jar" level="project" />
     <orderEntry type="library" name="com.daasuu:BubbleLayout-1.2.0" level="project" />
     <orderEntry type="library" name="org.jetbrains.kotlin:kotlin-stdlib:1.2.21@jar" level="project" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-25.4.0" level="project" />
     <orderEntry type="library" name="com.google.code.findbugs:jsr305:1.3.9@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.robolectric:robolectric-resources:3.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test.espresso:espresso-idling-resource-2.2.2" level="project" />
     <orderEntry type="library" scope="TEST" name="javax.annotation:javax.annotation-api:1.2@jar" level="project" />
     <orderEntry type="library" name="com.github.lzyzsd:circleprogress-1.2.1" level="project" />
     <orderEntry type="library" name="com.getkeepsafe.relinker:relinker-1.2.2" level="project" />
+    <orderEntry type="library" scope="TEST" name="net.bytebuddy:byte-buddy-agent:1.6.11@jar" level="project" />
     <orderEntry type="library" name="com.melnykov:floatingactionbutton-1.3.0" level="project" />
     <orderEntry type="library" scope="TEST" name="junit:junit:4.12@jar" level="project" />
     <orderEntry type="library" name="de.hdodenhof:circleimageview-2.1.0" level="project" />
@@ -179,7 +194,11 @@
     <orderEntry type="library" scope="TEST" name="javax.inject:javax.inject:1@jar" level="project" />
     <orderEntry type="library" name="com.ogaclejapan.smarttablayout:library-1.6.1" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-ui-25.4.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.robolectric:shadows-support-v4:3.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-25.4.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.objenesis:objenesis:2.5@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.ow2.asm:asm-commons:5.0.1@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.apache.ant:ant:1.8.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-annotations:25.4.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-core-utils-25.4.0" level="project" />
     <orderEntry type="library" name="com.android.support:support-v4-25.4.0" level="project" />
@@ -187,11 +206,16 @@
     <orderEntry type="library" name="com.facebook.stetho:stetho-1.5.0" level="project" />
     <orderEntry type="library" name="org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.21@jar" level="project" />
     <orderEntry type="library" name="com.jakewharton:butterknife-8.8.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.robolectric:robolectric:3.0@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="com.almworks.sqlite4java:sqlite4java:0.282@jar" level="project" />
     <orderEntry type="library" name="commons-cli:commons-cli:1.2@jar" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.robolectric:robolectric-utils:3.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:design-25.4.0" level="project" />
     <orderEntry type="library" name="com.android.support:transition-25.4.0" level="project" />
+    <orderEntry type="library" scope="TEST" name="com.ibm.icu:icu4j:53.1@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="org.hamcrest:hamcrest-library:1.3@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test:runner-0.5" level="project" />
+    <orderEntry type="library" scope="TEST" name="org.mockito:mockito-core:2.7.22@jar" level="project" />
     <orderEntry type="library" name="de.greenrobot:eventbus:2.4.0@jar" level="project" />
     <orderEntry type="library" name="org.jetbrains:annotations:13.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-vector-drawable-25.4.0" level="project" />

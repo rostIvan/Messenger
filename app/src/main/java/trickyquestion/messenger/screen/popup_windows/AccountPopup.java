@@ -38,7 +38,7 @@ public class AccountPopup {
     }
 
     public void show() {
-        final BubbleLayout bubbleLayout = (BubbleLayout) LayoutInflater.from(mContext).inflate(R.layout.account_popup, null);
+        final BubbleLayout bubbleLayout = (BubbleLayout) LayoutInflater.from(mContext).inflate(R.layout.popup_account, null);
         final View v = ((Activity) mContext).findViewById(R.id.action_account);
         popupWindow = BubblePopupHelper.create(mContext, bubbleLayout);
         popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, getX(v), getY(v));

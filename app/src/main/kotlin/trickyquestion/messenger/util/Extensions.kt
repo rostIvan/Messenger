@@ -1,4 +1,4 @@
-package trickyquestion.messenger
+package trickyquestion.messenger.util
 
 import android.app.Activity
 import android.util.Log

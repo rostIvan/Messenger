@@ -70,7 +70,7 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         final MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.chat_menu, menu);
+        inflater.inflate(R.menu.menu_chat, menu);
         return true;
     }
 

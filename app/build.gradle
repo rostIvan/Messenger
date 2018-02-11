@@ -30,6 +30,10 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+    // fix for mock android classes
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     //Fix for Jenkins
     lintOptions {
         // Don't abort if Lint finds an error, otherwise the Jenkins build
@@ -70,6 +74,9 @@ dependencies {
     compile 'com.github.lzyzsd:circleprogress:1.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.7.22'
+    testCompile 'org.robolectric:robolectric:3.0'
+    testCompile 'org.robolectric:shadows-support-v4:3.0'
 }
 
 realm {

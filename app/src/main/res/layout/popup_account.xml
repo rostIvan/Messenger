@@ -24,7 +24,7 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_account_circe_dark" />
+            android:src="@drawable/ic_account_circle_dark" />
 
         <TextView
             android:id="@+id/account_name"

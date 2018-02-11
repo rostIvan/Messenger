@@ -8,7 +8,7 @@
     <ImageView
         android:layout_width="380dp"
         android:layout_height="240dp"
-        android:src="@drawable/login_image"
+        android:src="@drawable/image_login"
         android:layout_marginTop="40dp"
         android:id="@+id/imageView"/>
 
@@ -62,7 +62,7 @@
         android:textSize="22sp"
         android:textAlignment="center"
         android:paddingTop="9dp"
-        android:background="@drawable/radius_shape"
+        android:background="@drawable/shape_radius"
         android:layout_marginTop="490dp"
         android:layout_alignLeft="@+id/pass_field"
         android:layout_alignStart="@+id/pass_field" />
