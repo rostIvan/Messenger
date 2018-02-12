@@ -1,119 +1,89 @@
 package trickyquestion.messenger.screen.login.authentication;
 
-import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend;
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.repository.FriendsRepository;
-import trickyquestion.messenger.screen.main.view.MainActivity;
-import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
-import trickyquestion.messenger.util.android.preference.AuthPreference;
-import trickyquestion.messenger.util.java.validation.RegistrationDataValidator;
+import trickyquestion.messenger.util.java.validation.DataValidator;
+
+import static trickyquestion.messenger.util.ContextExtensionsKt.toast;
+import static trickyquestion.messenger.util.ViewUtilKt.greenColor;
+import static trickyquestion.messenger.util.ViewUtilKt.onTextChanged;
+import static trickyquestion.messenger.util.ViewUtilKt.redColor;
+import static trickyquestion.messenger.util.ViewUtilKt.setLineColor;
 
 public class LoginFragment extends Fragment {
+
     @BindView(R.id.nick_field)
     EditText nickField;
     @BindView(R.id.pass_field)
-    EditText passFiled;
+    EditText passField;
     @BindView(R.id.button_create_account)
     TextView buttonSignIn;
-
-    private AuthPreference authPreference;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_login_account, container, false);
         ButterKnife.bind(this, view);
-        authPreference = new AuthPreference(getContext());
-        setEditTextLineColor(getResources().getColor(R.color.colorPrimaryGreen));
-        setupListeners();
+        init();
         return view;
+    }
+
+    private void init() {
+        setEditTextLineColor(greenColor(getContext()));
+        setupListeners();
     }
 
     @OnClick(R.id.button_create_account)
     public void createAccount() {
         final String login = nickField.getText().toString();
-        final String password = passFiled.getText().toString();
+        final String password = passField.getText().toString();
 
-        if (isValid(login, password))
-            createAccountWithParams(login, password);
+        if (isValid(login, password)) createAccountWithData(login, password);
         else showError();
     }
 
-    private void createAccountWithParams(final String login, final String password) {
-        saveAccountData(login, password);
-        startMainScreen();
+    private boolean isValid(final String login, final String password) {
+        final DataValidator registration = new DataValidator(login, password);
+        return registration.isValid();
+    }
+
+    private void createAccountWithData(final String login, final String password) {
+        getHostActivity().saveAccountData(login, password);
+        getHostActivity().startMainScreen();
     }
 
     private void showError() {
-        setEditTextLineColor(getResources().getColor(R.color.colorRed));
-        Toast.makeText(this.getContext(), "Incorrect input", Toast.LENGTH_SHORT).show();
+        toast(getContext(), "Incorrect input!");
+        setEditTextLineColor(redColor(getContext()));
     }
 
-    private void setEditTextLineColor (final int color) {
-        passFiled.getBackground().mutate().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
-        nickField.getBackground().mutate().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
+    private void setEditTextLineColor(final int color) {
+        setLineColor(nickField, color);
+        setLineColor(passField, color);
     }
 
     private void setupListeners() {
-        nickField.addTextChangedListener(new LoginTextChangeListener());
-        passFiled.addTextChangedListener(new LoginTextChangeListener());
+        onTextChanged(nickField, this::checkEmptyInput);
+        onTextChanged(passField, this::checkEmptyInput);
     }
 
-    private void saveAccountData(String login, String password) {
-        authPreference.setAccountId(UUID.randomUUID().toString());
-        authPreference.setAccountLogin(login);
-        authPreference.setAccountPassword(password);
-        FriendsRepository.addFriend(
-                new Friend(
-                        authPreference.getAccountLogin(),
-                        UUID.fromString(authPreference.getAccountId()),
-                        null,
-                        true
-                )
-        );
+    private void checkEmptyInput(final String changedText) {
+        if(changedText.isEmpty())
+            setEditTextLineColor(greenColor(getContext()));
     }
 
-    private void startMainScreen() {
-        getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
-        P2PProtocolConnector.TryStart(this.getContext());
-        getActivity().finish();
-    }
-
-    private boolean isValid(final String login, final String password) {
-        final RegistrationDataValidator validator = new RegistrationDataValidator(login, password);
-        return validator.isInputValid();
-    }
-
-    private class LoginTextChangeListener implements TextWatcher {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            if (s.length() == 0)
-                setEditTextLineColor(getResources().getColor(R.color.colorPrimaryGreen));
-        }
+    private LoginScreenActivity getHostActivity() {
+        return ((LoginScreenActivity) getActivity());
     }
 }
