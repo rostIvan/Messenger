@@ -6,7 +6,7 @@ import android.support.annotation.NonNull
 import android.support.v7.widget.Toolbar
 
 @SuppressLint("Registered")
-abstract class WithToolbarActivity : BaseActivity() {
+abstract class WithToolbarActivity : ABaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

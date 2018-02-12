@@ -8,7 +8,7 @@ import butterknife.ButterKnife
 import trickyquestion.messenger.util.android.preference.ThemePreference
 
 @SuppressLint("Registered")
-abstract class BaseActivity : AppCompatActivity() {
+abstract class ABaseActivity : AppCompatActivity() {
 
     lateinit var themePreference: ThemePreference
 
