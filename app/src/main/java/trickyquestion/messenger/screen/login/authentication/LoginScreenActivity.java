@@ -2,17 +2,15 @@ package trickyquestion.messenger.screen.login.authentication;
 
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import java.util.UUID;
 
-import trickyquestion.messenger.R;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.screen.login.SingleFragmentActivity;
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend;
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.repository.FriendsRepository;
 import trickyquestion.messenger.screen.main.view.MainActivity;
 import trickyquestion.messenger.util.android.preference.AuthPreference;
 
@@ -32,6 +30,7 @@ public class LoginScreenActivity extends SingleFragmentActivity {
     }
 
     private void init() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         authPreference = new AuthPreference(this);
     }
 

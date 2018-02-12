@@ -1,9 +1,12 @@
 package trickyquestion.messenger.screen.login.authentication;
 
+import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +25,11 @@ public class LoginFragment extends ALoginFragment {
     EditText passField;
     @BindView(R.id.button_create_account)
     TextView buttonSignIn;
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @Override
     public int getLayout() { return R.layout.fragment_login_account; }

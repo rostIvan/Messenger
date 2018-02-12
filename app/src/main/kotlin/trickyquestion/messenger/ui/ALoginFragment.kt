@@ -7,17 +7,24 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import butterknife.ButterKnife
+import butterknife.Unbinder
 import trickyquestion.messenger.util.*
 
 abstract class ALoginFragment : Fragment() {
     abstract fun getLayout() : Int
     abstract fun getAllEditable(): List<EditText>
+    lateinit var bind: Unbinder
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(getLayout(), container, false)
-        ButterKnife.bind(this, view!!)
+        bind = ButterKnife.bind(this, view!!)
         init()
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        bind.unbind()
     }
 
     private fun init() {
@@ -31,12 +38,12 @@ abstract class ALoginFragment : Fragment() {
     }
 
     private fun setEditTextLineColor(color: Int) {
-        getAllEditable().forEach { t -> t.setLineColor(color)}
+        getAllEditable().forEach { editText -> editText.setLineColor(color)}
     }
 
     private fun setupListeners() {
-        getAllEditable().forEach { t ->
-            t.onTextChanged { changedText -> checkEmptyInput(changedText) }
+        getAllEditable().forEach { editText ->
+            editText.onTextChanged { changedText -> checkEmptyInput(changedText) }
         }
     }
 
