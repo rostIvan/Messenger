@@ -1,93 +1,63 @@
 package trickyquestion.messenger.screen.login.ask_password;
 
-import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.screen.main.view.MainActivity;
-import trickyquestion.messenger.util.android.preference.AuthPreference;
-import trickyquestion.messenger.util.android.preference.ThemePreference;
+import trickyquestion.messenger.ui.ALoginFragment;
 
 
-public class AskPasswordFragment extends Fragment {
+public class AskPasswordFragment extends ALoginFragment {
 
     @BindView(R.id.hello_text)
     TextView textViewHello;
     @BindView(R.id.pass_ask_field)
-    EditText pass;
+    EditText passField;
     @BindView(R.id.button_sign_in)
     TextView buttonSignIn;
 
-    private AuthPreference authPreference;
-    private ThemePreference themePreference;
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_ask_pass, container, false);
-        ButterKnife.bind(this, view);
-        authPreference = new AuthPreference(getContext());
-        themePreference = new ThemePreference(getContext());
-        textViewHello.setText(
-                "Hello, "
-                .concat(authPreference.getAccountLogin())
-                .concat(" ")
-                .concat(authPreference.getAccountPassword())
-        );
-        customizeTheme();
-        addPassListeners();
-        return view;
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final String helloMessage = String.format("Hello, %s [%s]",
+                getHostActivity().getUserNick(), getHostActivity().getUserPassword());
+        textViewHello.setText(helloMessage);
     }
 
-    private void customizeTheme() {
-        pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimaryGreen), PorterDuff.Mode.SRC_ATOP);
-    }
+    @Override
+    public int getLayout() { return R.layout.fragment_ask_pass; }
+
+    @NotNull
+    @Override
+    public List<EditText> getAllEditable() { return Collections.singletonList(passField); }
 
     @OnClick(R.id.button_sign_in)
     public void onButtonSignInClick() {
-        if (rightPass()) signInAccount();
-        else {
-            pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorRed), PorterDuff.Mode.SRC_ATOP);
-            Toast.makeText(getContext(), "Incorrect password", Toast.LENGTH_SHORT).show();
-        }
+        if (passIsCorrect()) signInAccount();
+        else showError("Incorrect password, try again!");
     }
 
-    private void addPassListeners() {
-        pass.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() == 0)
-                    pass.getBackground().mutate().setColorFilter(getResources().getColor(R.color.colorPrimaryGreen), PorterDuff.Mode.SRC_ATOP);
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {}
-        });
+    private boolean passIsCorrect() {
+        final String enteredPass = passField.getText().toString();
+        final String realPass = getHostActivity().getUserPassword();
+        return enteredPass.equals(realPass);
     }
 
-    private boolean rightPass() {
-        return pass.getText().toString().equals(authPreference.getAccountPassword());
-    }
     private void signInAccount() {
-        authPreference.setUserAuthenticated(true);
-        getActivity().startActivity(new Intent(this.getContext(), MainActivity.class));
-        getActivity().finish();
+        getHostActivity().signInAccount();
+    }
+
+    private AskPasswordActivity getHostActivity() {
+        return ((AskPasswordActivity) getActivity());
     }
 }

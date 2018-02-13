@@ -13,6 +13,7 @@ import trickyquestion.messenger.util.*
 abstract class ALoginFragment : Fragment() {
     abstract fun getLayout() : Int
     abstract fun getAllEditable(): List<EditText>
+
     lateinit var bind: Unbinder
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
