@@ -154,7 +154,9 @@ public class P2PProtocolService extends Service{
         }
     }
 
-
+    /**
+    * Inform service about adding friend
+    */
     public void onEvent(EAuthRequest event) {
         final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getID().toString());
         dialog.setOnPositiveButtonClickListener((d, i) -> {
