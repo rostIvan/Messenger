@@ -11,6 +11,7 @@ import trickyquestion.messenger.screen.main.view.MainActivity;
 import trickyquestion.messenger.util.android.preference.AuthPreference;
 
 public class AskPasswordActivity extends SingleFragmentActivity {
+
     @Override
     public Fragment createFragment() {
         return new AskPasswordFragment();

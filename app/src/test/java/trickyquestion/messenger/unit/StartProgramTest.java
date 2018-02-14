@@ -42,7 +42,7 @@ public class StartProgramTest {
         assertTrue( MockUtil.isMock(context) );
         assertTrue( MockUtil.isMock(authPreference) );
         assertTrue( MockUtil.isMock(appStarter) );
-        logInfo("objects mock");
+        passed("objects mock");
     }
 
     @Test
@@ -57,7 +57,7 @@ public class StartProgramTest {
         assertEquals(appStarter.isAuthenticated(), false);
         assertEquals(appStarter.isAuthenticated(), false);
         assertEquals(appStarter.isAuthenticated(), true);
-        logInfo("data provided");
+        passed("data provided");
     }
 
     @Test
@@ -70,7 +70,7 @@ public class StartProgramTest {
         verify(appStarter, times(0)).main();
         verify(appStarter, times(0)).connect();
         verify(appStarter, times(1)).login();
-        logInfo("login start");
+        passed("login start");
     }
 
     @Test
@@ -83,7 +83,7 @@ public class StartProgramTest {
         verify(appStarter, times(0)).main();
         verify(appStarter, times(1)).connect();
         verify(appStarter, times(1)).askPassword();
-        logInfo("askPassword start with connection");
+        passed("askPassword start with connection");
     }
 
     @Test
@@ -96,7 +96,7 @@ public class StartProgramTest {
         verify(appStarter, times(0)).askPassword();
         verify(appStarter, times(1)).connect();
         verify(appStarter, times(1)).main();
-        logInfo("main start with connection");
+        passed("main start with connection");
     }
 
     @After
@@ -105,7 +105,7 @@ public class StartProgramTest {
         log(LINE, Color.BLUE);
     }
 
-    private void logInfo(final String text) {
+    private void passed(final String text) {
         log(text + "  ===> ", Mode.WITHOUT_NEW_LINE);
         log("passed", Color.GREEN);
     }

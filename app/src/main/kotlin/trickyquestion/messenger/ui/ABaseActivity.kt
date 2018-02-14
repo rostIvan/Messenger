@@ -14,7 +14,7 @@ abstract class ABaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getContentView())
+        setContentView(getLayout())
         ButterKnife.bind(this)
         init()
     }
@@ -22,5 +22,5 @@ abstract class ABaseActivity : AppCompatActivity() {
     private fun init() {  themePreference = ThemePreference(this) }
 
     @NonNull
-    abstract fun getContentView(): Int
+    abstract fun getLayout(): Int
 }

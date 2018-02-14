@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.ui.ALoginFragment;
+import trickyquestion.messenger.util.java.validation.PassValidator;
 
 
 public class AskPasswordFragment extends ALoginFragment {
@@ -29,7 +30,7 @@ public class AskPasswordFragment extends ALoginFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final String helloMessage = String.format("Hello, %s [%s]",
+        final String helloMessage = String.format("Hello, %s pass[%s]",
                 getHostActivity().getUserNick(), getHostActivity().getUserPassword());
         textViewHello.setText(helloMessage);
     }
@@ -50,7 +51,7 @@ public class AskPasswordFragment extends ALoginFragment {
     private boolean passIsCorrect() {
         final String enteredPass = passField.getText().toString();
         final String realPass = getHostActivity().getUserPassword();
-        return enteredPass.equals(realPass);
+        return PassValidator.isCorrect(enteredPass, realPass);
     }
 
     private void signInAccount() {

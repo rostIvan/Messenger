@@ -16,8 +16,6 @@ import trickyquestion.messenger.BuildConfig;
 import trickyquestion.messenger.util.Color;
 import trickyquestion.messenger.util.Mode;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
 import static trickyquestion.messenger.util.LoggerKt.LINE;
 import static trickyquestion.messenger.util.LoggerKt.log;
 
@@ -34,7 +32,7 @@ public class RobolectricTest {
 
     @Test
     public void test() {
-        logInfo("test");
+        passed("test");
     }
 
     @After
@@ -44,7 +42,7 @@ public class RobolectricTest {
     }
 
 
-    private void logInfo(final String text) {
+    private void passed(final String text) {
         log(text + "  ===> ", Mode.WITHOUT_NEW_LINE);
         log("passed", Color.GREEN);
     }
