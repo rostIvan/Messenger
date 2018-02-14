@@ -121,7 +121,10 @@ public class P2PProtocolService extends Service{
             }
         }
     }
-
+    
+    /**
+    * Client data implement as get\set android preference
+    */
     class Host implements IHost {
 
         private SharedPreferences preferences;
