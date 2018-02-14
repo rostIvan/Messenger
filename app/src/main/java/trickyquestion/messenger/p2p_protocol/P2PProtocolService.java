@@ -66,7 +66,10 @@ public class P2PProtocolService extends Service{
         //clean listeners before unbinding
         return super.onUnbind(intent);
     }
-
+    
+    /**
+    * @return bind object to service
+    */
     public LocalBinder getBinder() {
         return mBinder;
     }
@@ -77,6 +80,9 @@ public class P2PProtocolService extends Service{
 
     private boolean started = false;
 
+    /**
+    * Bind class for P2PService
+    */
     public class LocalBinder extends Binder{
         public void Start(){
             if(started) return;
@@ -148,7 +154,9 @@ public class P2PProtocolService extends Service{
         }
     }
 
-
+    /**
+    * Inform service about adding friend
+    */
     public void onEvent(EAuthRequest event) {
         final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getID().toString());
         dialog.setOnPositiveButtonClickListener((d, i) -> {
