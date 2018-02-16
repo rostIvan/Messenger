@@ -1,8 +1,7 @@
-package trickyquestion.messenger.ui
+package trickyquestion.messenger.ui.abstraction
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.annotation.NonNull
 import android.support.v7.app.AppCompatActivity
 import butterknife.ButterKnife
 import trickyquestion.messenger.util.android.preference.ThemePreference
@@ -14,13 +13,17 @@ abstract class ABaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayout())
+        if (!javaClass.isAnnotationPresent(Layout::class.java)) return
+        val layout = getLayoutFromAnnotation()
+        setContentView(layout.res)
         ButterKnife.bind(this)
         init()
     }
 
     private fun init() {  themePreference = ThemePreference(this) }
 
-    @NonNull
-    abstract fun getLayout(): Int
+    private fun getLayoutFromAnnotation() : Layout {
+        val annotation = javaClass.getAnnotation(Layout::class.java)
+        return annotation as Layout
+    }
 }

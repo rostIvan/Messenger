@@ -14,11 +14,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.ui.ALoginFragment;
+import trickyquestion.messenger.ui.abstraction.AWithFieldFragment;
+import trickyquestion.messenger.ui.abstraction.Layout;
 import trickyquestion.messenger.util.java.validation.PassValidator;
 
-
-public class AskPasswordFragment extends ALoginFragment {
+@Layout(res = R.layout.fragment_ask_pass)
+public class AskPasswordFragment extends AWithFieldFragment {
 
     @BindView(R.id.hello_text)
     TextView textViewHello;
@@ -34,9 +35,6 @@ public class AskPasswordFragment extends ALoginFragment {
                 getHostActivity().getUserNick(), getHostActivity().getUserPassword());
         textViewHello.setText(helloMessage);
     }
-
-    @Override
-    public int getLayout() { return R.layout.fragment_ask_pass; }
 
     @NotNull
     @Override

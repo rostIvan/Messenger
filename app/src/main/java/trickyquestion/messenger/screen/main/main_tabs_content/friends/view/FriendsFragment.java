@@ -124,7 +124,7 @@ public class FriendsFragment extends Fragment implements IFriendsView {
     public void showChatActivity(final Friend friend) {
         final Intent i = new Intent(this.getContext(), ChatActivity.class);
         i.putExtra(ChatActivity.FRIEND_NAME_EXTRA, friend.getName());
-        i.putExtra(ChatActivity.FRIEND_ID_EXTRA, friend.getId());
+        i.putExtra(ChatActivity.FRIEND_ID_EXTRA, friend.getId().toString());
         startActivity(i);
         getActivity().overridePendingTransition(R.anim.translate_left_slide, R.anim.alpha_to_zero);
     }

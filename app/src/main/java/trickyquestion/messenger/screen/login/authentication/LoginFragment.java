@@ -14,10 +14,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.ui.ALoginFragment;
-import trickyquestion.messenger.util.java.validation.DataValidator;
+import trickyquestion.messenger.ui.abstraction.AWithFieldFragment;
+import trickyquestion.messenger.ui.abstraction.Layout;
+import trickyquestion.messenger.util.java.validation.LoginValidator;
 
-public class LoginFragment extends ALoginFragment {
+@Layout(res = R.layout.fragment_login_account)
+public class LoginFragment extends AWithFieldFragment {
 
     @BindView(R.id.nick_field)
     EditText nickField;
@@ -30,9 +32,6 @@ public class LoginFragment extends ALoginFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-
-    @Override
-    public int getLayout() { return R.layout.fragment_login_account; }
 
     @NotNull
     @Override
@@ -48,8 +47,7 @@ public class LoginFragment extends ALoginFragment {
     }
 
     private boolean isValid(final String login, final String password) {
-        final DataValidator registration = new DataValidator(login, password);
-        return registration.isValid();
+        return LoginValidator.isValid(login, password);
     }
 
     private void createAccountWithData(final String login, final String password) {

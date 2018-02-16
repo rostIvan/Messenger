@@ -10,10 +10,9 @@ interface IRepository<T : RealmModel> {
     fun deleteAll(items: Iterable<T>)
     fun deleteAll()
     fun findAll() : List<T>
-    fun find() : T
+    fun first() : T
+    fun last() : T
+    fun count() : Int
 
-    fun update(from: T, to: T)
-    fun updateAll(from: T, to: T)
-
-    fun notifyChanges()
+    fun notifyDataChanged()
 }

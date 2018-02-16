@@ -140,12 +140,12 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
         @Override
         public void onClick(View v) {
-            view.showAddFriendAlertDialog(user);
-            final Friend friend = new Friend(user.getName(),user.getID(),null, true);
+//            view.showAddFriendAlertDialog(user);
+            final Friend friend = new Friend(user.getName(),user.getID(), true);
             FriendsRepository.addFriend(friend);
-            //view.cancelTimer();
+            users.remove(holder.getAdapterPosition());
+            view.notifyRecyclerDataChange();
             view.showToast("User: " + user.getName() + " add to your users");
-//            addFriend(holder, user);
         }
     }
 
@@ -185,10 +185,7 @@ public class AddFriendPresenter implements IAddFriendPresenter {
 
     public void onEvent(EAddFriendConfirmed event) {
         final Friend friend = new Friend(
-                event.getFriend().getName(),
-                event.getFriend().getID(),
-                null,
-                true
+                event.getFriend().getName(),event.getFriend().getID(), true
         );
         FriendsRepository.addFriend(friend);
         view.cancelTimer();

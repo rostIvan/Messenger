@@ -14,6 +14,6 @@ public class PassValidator {
     }
 
     public static boolean isCorrect(final String enteredPass, final String realPass) {
-        return enteredPass.equals(realPass);
+        return new PassValidator(enteredPass, realPass).isCorrect();
     }
 }

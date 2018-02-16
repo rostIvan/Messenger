@@ -176,7 +176,7 @@ public class FriendPresenter implements IFriendPresenter {
     private void onChangeUserList(ChangeUserList event) {
         boolean isReqRefresh = false;
         for (Friend friend : friendList) {
-            if (friend.getId().equals(event.getUser().getID().toString())) {
+            if (friend.getId().equals(event.getUser().getID())) {
                 FriendsRepository.changeFriendOnlineStatus(friend, event.isExist());
                 isReqRefresh = true;
                 break;

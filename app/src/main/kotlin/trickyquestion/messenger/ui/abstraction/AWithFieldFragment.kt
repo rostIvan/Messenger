@@ -1,4 +1,4 @@
-package trickyquestion.messenger.ui
+package trickyquestion.messenger.ui.abstraction
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,24 +10,13 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import trickyquestion.messenger.util.*
 
-abstract class ALoginFragment : Fragment() {
-    abstract fun getLayout() : Int
+abstract class AWithFieldFragment : ABaseFragment() {
     abstract fun getAllEditable(): List<EditText>
 
-    lateinit var bind: Unbinder
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(getLayout(), container, false)
-        bind = ButterKnife.bind(this, view!!)
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
-        return view
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        bind.unbind()
-    }
-
     private fun init() {
         setEditTextLineColor(context.greenColor())
         setupListeners()
