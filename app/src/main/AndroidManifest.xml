@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".StartController">
+        <activity android:name=".application.entry_point.EntryPoint">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -25,26 +25,24 @@
         </activity>
 
         <activity
-            android:name=".main_screen.view.MainActivity"
+            android:name=".screen.main.view.MainActivity"
             android:theme="@style/AppTheme">
         </activity>
 
-        <activity android:name=".add_friend_screen.view.AddFriendActivity"> </activity>
+        <activity android:name=".screen.add_friend.view.AddFriendActivity"> </activity>
 
         <activity
-            android:name=".login_screen.authentication.LoginScreenActivity"
+            android:name=".screen.login.authentication.LoginScreenActivity"
             android:theme="@style/AppTheme">
         </activity>
 
-        <activity android:name=".login_screen.ask_password.AskPasswordActivity" />
+        <activity android:name=".screen.login.ask_password.AskPasswordActivity" />
 
-        <activity android:name=".settings_screen.view.SettingActivity" />
+        <activity android:name=".screen.settings.view.SettingActivity" />
 
         <activity
-            android:name=".chat_screen.view.ChatActivity"
+            android:name=".screen.chat.view.ChatActivity"
             android:theme="@style/Theme.Swipe.Back"/>
-
-        <activity android:name=".popup_windows.FriendRequestDialog" />
 
         <service
             android:name=".p2p_protocol.P2PProtocolService"

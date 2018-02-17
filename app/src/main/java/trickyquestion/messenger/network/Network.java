@@ -11,7 +11,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.support.annotation.Nullable;
 
-import org.jetbrains.annotations.Contract;
+//import org.jetbrains.annotations.Contract;
 
 import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.network.events.ENetworkStateChanged;
@@ -87,7 +87,7 @@ public class Network {
         else return null;
     }
 
-    @Contract(pure = true)
+//    @Contract(pure = true)
     public static NetworkState GetCurrentNetworkState(){return networkState;}
 }
 
