@@ -17,8 +17,6 @@ public class AskPasswordActivity extends SingleFragmentActivity {
         return new AskPasswordFragment();
     }
 
-    private AuthPreference authPreference;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,19 +25,18 @@ public class AskPasswordActivity extends SingleFragmentActivity {
 
     private void init() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        authPreference = new AuthPreference(this);
     }
 
     public String getUserPassword() {
-        return authPreference.getAccountPassword();
+        return getAuthPreference().getAccountPassword();
     }
 
     public String getUserNick() {
-        return authPreference.getAccountLogin();
+        return getAuthPreference().getAccountLogin();
     }
 
     public void signInAccount() {
-        authPreference.setUserAuthenticated(true);
+        getAuthPreference().setUserAuthenticated(true);
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

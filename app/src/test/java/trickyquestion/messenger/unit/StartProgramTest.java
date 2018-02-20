@@ -106,7 +106,7 @@ public class StartProgramTest {
     }
 
     private void passed(final String text) {
-        log(text + "  ===> ", Mode.WITHOUT_NEW_LINE);
+        log(text + "  ==> ", Mode.WITHOUT_NEW_LINE);
         log("passed", Color.GREEN);
     }
 }

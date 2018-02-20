@@ -14,29 +14,35 @@ abstract class CrudRepository<T : RealmModel> : IRepository<T> {
 
     override fun save(item: T) {
         realm.executeTransaction { it.copyToRealm(item) }
+        notifyDataChanged()
     }
 
     override fun delete(item: T) {
         val result = equalsTo(item).findAll()
         realm.executeTransaction { result.deleteFirstFromRealm() }
+        notifyDataChanged()
     }
 
     override fun saveAll(items: Iterable<T>) {
         realm.executeTransaction { it.copyToRealm(items) }
+        notifyDataChanged()
     }
 
     override fun deleteAll(items: Iterable<T>) {
         items.forEach { item -> delete(item) }
+        notifyDataChanged()
     }
 
     override fun deleteAll() {
         realm.executeTransaction { it.delete(clazz) }
+        notifyDataChanged()
     }
 
     override fun findAll(): List<T> = realmQuery().findAll()
     override fun first(): T = findAll().first()
     override fun last(): T = findAll().last()
     override fun count(): Int = findAll().size
+    override fun isEmpty(): Boolean = (count() == 0)
 
     @Suppress("UNCHECKED_CAST")
     private fun getClazzFromGeneric() = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
