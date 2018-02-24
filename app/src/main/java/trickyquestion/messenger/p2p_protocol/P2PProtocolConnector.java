@@ -66,7 +66,7 @@ public class P2PProtocolConnector {
         return bind;
     }
     /**
-    * Try start sevice if service not work
+    * Try start service if service not work
     */
     public static void TryStart(Context context) {
         if (!bound) {
