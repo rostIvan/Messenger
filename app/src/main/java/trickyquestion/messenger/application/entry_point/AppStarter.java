@@ -3,11 +3,10 @@ package trickyquestion.messenger.application.entry_point;
 import android.content.Context;
 
 import trickyquestion.messenger.screen.login.ask_password.AskPasswordActivity;
-import trickyquestion.messenger.screen.login.authentication.LoginScreenActivity;
+import trickyquestion.messenger.screen.login.sign_up.SignUpActivity;
 import trickyquestion.messenger.screen.main.view.MainActivity;
 
 public  class AppStarter extends AProgramStarter {
-
 
     public AppStarter(final Context context) {
         super.applyContext(context);
@@ -24,7 +23,7 @@ public  class AppStarter extends AProgramStarter {
     }
 
     public void login() {
-        super.startActivity(LoginScreenActivity.class);
+        super.startActivity(SignUpActivity.class);
     }
 
     public void askPassword() {

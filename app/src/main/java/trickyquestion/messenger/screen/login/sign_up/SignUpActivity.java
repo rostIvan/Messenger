@@ -1,4 +1,4 @@
-package trickyquestion.messenger.screen.login.authentication;
+package trickyquestion.messenger.screen.login.sign_up;
 
 
 import android.content.Intent;
@@ -12,16 +12,13 @@ import java.util.UUID;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.screen.login.SingleFragmentActivity;
 import trickyquestion.messenger.screen.main.view.MainActivity;
-import trickyquestion.messenger.util.android.preference.AuthPreference;
 
-public class LoginScreenActivity extends SingleFragmentActivity {
+public class SignUpActivity extends SingleFragmentActivity {
 
     @Override
     public Fragment createFragment() {
-        return new LoginFragment();
+        return new SignUpFragment();
     }
-
-    private AuthPreference authPreference;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +28,6 @@ public class LoginScreenActivity extends SingleFragmentActivity {
 
     private void init() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        authPreference = new AuthPreference(this);
     }
 
     public void startMainScreen() {
@@ -41,8 +37,8 @@ public class LoginScreenActivity extends SingleFragmentActivity {
     }
 
     public void saveAccountData(String login, String password) {
-        authPreference.setAccountId(UUID.randomUUID().toString());
-        authPreference.setAccountLogin(login);
-        authPreference.setAccountPassword(password);
+        getAuthPreference().setAccountId(UUID.randomUUID().toString());
+        getAuthPreference().setAccountLogin(login);
+        getAuthPreference().setAccountPassword(password);
     }
 }

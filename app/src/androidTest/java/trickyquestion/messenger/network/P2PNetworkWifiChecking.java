@@ -1,8 +1,7 @@
-package trickyquestion.messenger;
+package trickyquestion.messenger.network;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Network;
 import android.net.wifi.WifiManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ServiceTestRule;
@@ -14,11 +13,9 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeoutException;
 
-import trickyquestion.messenger.network.NetworkState;
-import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolService;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Instrumentation test, which will execute on an Android device.

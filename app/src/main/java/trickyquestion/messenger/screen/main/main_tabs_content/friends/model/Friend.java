@@ -9,18 +9,39 @@ import io.realm.annotations.Required;
 @RealmClass
 public class Friend implements RealmModel {
 
-    private String name;
     @Required
     private String id;
+    private String name;
     private boolean online;
+    private byte[] encryptionKey;
 
     public Friend() {
+    }
+
+    public Friend(final String name, final UUID id, final Status status, final byte[] encryptionKey) {
+        this.name = name;
+        this.id = id.toString();
+        this.online = (status == Status.ONLINE);
+        this.encryptionKey = encryptionKey;
+    }
+
+    public Friend(final String name, final UUID id, final Status status) {
+        this.name = name;
+        this.id = id.toString();
+        this.online = (status == Status.ONLINE);
     }
 
     public Friend(final String name, final UUID id, final boolean online) {
         this.name = name;
         this.id = id.toString();
         this.online = online;
+    }
+
+    public Friend(final String name, final UUID id, final boolean online, final byte[] encryptionKey) {
+        this.name = name;
+        this.id = id.toString();
+        this.online = online;
+        this.encryptionKey = encryptionKey;
     }
 
     public String getName() {
@@ -35,6 +56,10 @@ public class Friend implements RealmModel {
         this.id = id.toString();
     }
 
+    public void setOnline(Status status) {
+        this.online = (status == Status.ONLINE);
+    }
+
     public void setOnline(boolean online) {
         this.online = online;
     }
@@ -45,6 +70,14 @@ public class Friend implements RealmModel {
 
     public boolean isOnline() {
         return online;
+    }
+
+    public byte[] getEncryptionKey() {
+        return encryptionKey;
+    }
+
+    public void setEncryptionKey(byte[] encryptionKey) {
+        this.encryptionKey = encryptionKey;
     }
 
     @Override
@@ -60,4 +93,6 @@ public class Friend implements RealmModel {
     public String toString() {
         return String.format("Friend[id=%s, name=%s, online=%b]", id, name, online);
     }
+
+    public enum Status { ONLINE, OFFLINE }
 }

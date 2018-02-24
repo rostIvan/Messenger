@@ -21,13 +21,17 @@ enum class Color{
     CYAN,
     WHITE
 }
-enum class Mode{
+enum class Mode {
     NEW_LINE,
     WITHOUT_NEW_LINE
 }
 
 fun log(text: Any, color: Color = Color.WHITE) {
     println(getAnsiColor(color) + text.toString() + ANSI_RESET)
+}
+
+fun log(text: Any) {
+    println(text.toString())
 }
 
 fun log(text: Any, color: Color = Color.WHITE, mode: Mode = Mode.NEW_LINE) {

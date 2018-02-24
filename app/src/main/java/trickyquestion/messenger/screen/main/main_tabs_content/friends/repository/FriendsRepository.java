@@ -37,7 +37,7 @@ public class FriendsRepository {
         final Friend friendUpdate = realm.where(Friend.class).
                 equalTo("id", id).
                 findFirst();
-//        if (friendUpdate == null) return;
+        if (friendUpdate == null) return;
         try {
             realm.executeTransaction(r -> {
                 friendUpdate.setName(friend.getName());
@@ -55,7 +55,7 @@ public class FriendsRepository {
         final Friend friendUpdate = realm.where(Friend.class).
                 equalTo("id", id).
                 findFirst();
-//        if (friendUpdate == null) return;
+        if (friendUpdate == null) return;
         try {
             realm.executeTransaction(r -> {
                 friendUpdate.setName(user.getName());
@@ -120,7 +120,7 @@ public class FriendsRepository {
                 for (Friend friend : friendList) {
                     friend.setOnline(false);
                     for (IUser user : users) {
-                        if (friend.getId().equals(user.getID().toString()))
+                        if (friend.getId().equals(user.getID()))
                             friend.setOnline(true);
                     }
                 }

@@ -84,6 +84,9 @@ public class P2PProtocolService extends Service{
     * Bind class for P2PService
     */
     public class LocalBinder extends Binder{
+        /**
+        *Starting service modules, if service alredy started modules not restarted
+        */
         public void Start(){
             if(started) return;
             host = new Host(getApplicationContext());

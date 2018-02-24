@@ -1,6 +1,7 @@
 package trickyquestion.messenger.screen.login.ask_password;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.EditText;
@@ -31,8 +32,7 @@ public class AskPasswordFragment extends AWithFieldFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final String helloMessage = String.format("Hello, %s pass[%s]",
-                getHostActivity().getUserNick(), getHostActivity().getUserPassword());
+        final String helloMessage = String.format("Hello, %s pass[%s]", getUserNick(), getUserPassword());
         textViewHello.setText(helloMessage);
     }
 
@@ -46,16 +46,30 @@ public class AskPasswordFragment extends AWithFieldFragment {
         else showError("Incorrect password, try again!");
     }
 
-    private boolean passIsCorrect() {
-        final String enteredPass = passField.getText().toString();
-        final String realPass = getHostActivity().getUserPassword();
+    public boolean passIsCorrect() {
+        final String enteredPass = getEnteredPass();
+        final String realPass = getUserPassword();
         return PassValidator.isCorrect(enteredPass, realPass);
     }
 
-    private void signInAccount() {
+    public void signInAccount() {
         getHostActivity().signInAccount();
     }
 
+    @NonNull
+    public String getEnteredPass() {
+        return passField.getText().toString();
+    }
+
+    @NonNull
+    private String getUserNick() {
+        return getHostActivity().getUserNick();
+    }
+
+    @NonNull
+    public String getUserPassword() {
+        return getHostActivity().getUserPassword();
+    }
     private AskPasswordActivity getHostActivity() {
         return ((AskPasswordActivity) getActivity());
     }
