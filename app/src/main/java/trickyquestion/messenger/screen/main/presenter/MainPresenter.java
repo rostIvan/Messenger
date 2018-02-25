@@ -30,7 +30,7 @@ public class MainPresenter implements IMainPresenter {
 
     @Override
     public void onFinish() {
-        EventBus.getDefault().unregister(this);
+        //EventBus.getDefault().unregister(this);
     }
 
     @Override

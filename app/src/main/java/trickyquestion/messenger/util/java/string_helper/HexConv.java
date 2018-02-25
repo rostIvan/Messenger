@@ -17,6 +17,7 @@ public final class HexConv {
         }
         return new String(hexChars);
     }
+
     public static byte[] hexToByte(String str){
         int len = str.length();
         byte[] data = new byte[len / 2];

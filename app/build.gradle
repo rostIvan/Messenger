@@ -40,6 +40,7 @@ android {
         // Don't abort if Lint finds an error, otherwise the Jenkins build
         // will be marked as failed, and Jenkins won't analyse the Lint output
         abortOnError false
+        lintConfig file("../lint.xml")
     }
 }
 

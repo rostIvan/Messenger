@@ -12,10 +12,10 @@ import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.network.socket.SocketClient;
 import trickyquestion.messenger.network.socket.SocketServer;
-import trickyquestion.messenger.p2p_protocol.objects.P2PFriend;
+import trickyquestion.messenger.p2p_protocol.objects.OFriend;
 import trickyquestion.messenger.p2p_protocol.events.EAddFriendConfirmed;
 import trickyquestion.messenger.p2p_protocol.events.EAddFriendRejected;
-import trickyquestion.messenger.p2p_protocol.events.EAuthRequest;
+import trickyquestion.messenger.p2p_protocol.events.EAddFriendRequest;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.util.android.preference.NetworkPreference;
@@ -49,24 +49,24 @@ public class P2PAddFriends {
         }
 
         String genConfirmPacket(UUID target){
-            return "P2PProtocol:AUTH:CONFIRM:" + host.getName() + ":" + host.getID() + ":" + target.toString() +":" + "P2PProtocol";
+            return "P2PProtocol:AUTH:CONFIRM:" + host.getID() + ":" + target.toString() +":" + "P2PProtocol";
         }
 
         String genRejectPacket(UUID target){
-            return "P2PProtocol:AUTH:REJECT:" + host.getName() + ":" + host.getID() + ":" + target.toString() +":" + "P2PProtocol";
+            return "P2PProtocol:AUTH:REJECT:" + host.getID() + ":" + target.toString() +":" + "P2PProtocol";
         }
 
         @Override
         public void proceed(String str, Socket socket) {
             String[] parts = str.split(":");
-            if(parts.length != 7)
+            if(parts.length != 6)
                 return;
             if(parts[0].equals("P2PProtocol") &&
                     parts[1].equals("AUTH") &&
                     parts[2].equals("REQ") &&
-                    parts[5].equals(host.getID().toString())){
+                    parts[4].equals(host.getID().toString())){
                 List<IUser> users = network.getUsers();
-                UUID targetID = UUID.fromString(parts[3]);
+                UUID targetID = UUID.fromString(parts[2]);
                 IUser targetUser = null;
                 for(IUser user : users){
                     if(user.getID().equals(targetID)){
@@ -74,7 +74,7 @@ public class P2PAddFriends {
                         break;
                     }
                 }
-                EventBus.getDefault().post(new EAuthRequest(targetUser));
+                EventBus.getDefault().post(new EAddFriendRequest(targetUser));
                 addFriendMutex.tryAcquire((int)(serviceCfg.getAuthTimeOut()*0.9));
                 addFriendMutex.release();
                 if(authConfirmed){
@@ -82,7 +82,7 @@ public class P2PAddFriends {
                         socket.getOutputStream().write(genConfirmPacket(UUID.fromString(parts[4])).getBytes());
                         EventBus.getDefault().post(
                                 new EAddFriendConfirmed(
-                                        new P2PFriend(
+                                        new OFriend(
                                                 targetUser.getName(),
                                                 targetUser.getID(),
                                                 targetUser.getNetworkAddress())
@@ -120,7 +120,7 @@ public class P2PAddFriends {
         }
 
         public String genAddFriendReqPacket(UUID targetUID){
-            return "P2PProtocol:AUTH:REQ:"+ host.getName() + ":" +  host.getID().toString() + ":" + targetUID.toString() + ":" + "P2PProtocol";
+            return "P2PProtocol:AUTH:REQ:" +  host.getID().toString() + ":" + targetUID.toString() + ":" + "P2PProtocol";
         }
 
         @Override
@@ -133,17 +133,17 @@ public class P2PAddFriends {
                 if(packet==null)
                     return;
                 String[] data = packet.split(":");
-                if(data.length!=7)
+                if(data.length!=6)
                     return;
                 if(data[0].equals("P2PProtocol") &&
                         data[1].equals("AUTH") &&
                         data[2].equals("CONFIRM") &&
-                        UUID.fromString(data[4]).equals(user.getID()) &&
-                        UUID.fromString(data[5]).equals(host.getID()) &&
-                        data[6].equals("P2PProtocol")){
+                        UUID.fromString(data[3]).equals(user.getID()) &&
+                        UUID.fromString(data[4]).equals(host.getID()) &&
+                        data[5].equals("P2PProtocol")){
                     EventBus.getDefault().post(
                             new EAddFriendConfirmed(
-                                    new P2PFriend(
+                                    new OFriend(
                                             user.getName(),
                                             user.getID(),
                                             user.getNetworkAddress()
@@ -153,9 +153,9 @@ public class P2PAddFriends {
                 } else if(data[0].equals("P2PProtocol") &&
                         data[1].equals("AUTH") &&
                         data[2].equals("REJECT") &&
-                        UUID.fromString(data[4]).equals(user.getID()) &&
-                        UUID.fromString(data[5]).equals(host.getID()) &&
-                        data[6].equals("P2PProtocol")){
+                        UUID.fromString(data[3]).equals(user.getID()) &&
+                        UUID.fromString(data[4]).equals(host.getID()) &&
+                        data[5].equals("P2PProtocol")){
                     EventBus.getDefault().post(new EAddFriendRejected(user));
                     socketClient.close();
                     return;

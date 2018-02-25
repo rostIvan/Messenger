@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Titanic</string>
+    <string name="app_name">P2P Messenger</string>
     <string name="messages">Messages</string>
     <string name="friends">Friends</string>
     <string name="action_settings">Settings</string>
@@ -9,7 +9,7 @@
     <string name="password">Password</string>
     <string name="message">Message</string>
     <string name="clear_messages">clear messages</string>
-    <string name="welcome">Welcome to Lorem Ipsum</string>
+    <string name="welcome">Welcome to P2P Messenger</string>
     <string name="start_text">Start sending messages in just two steps</string>
     <string name="create_an_account">Create an account</string>
     <string name="add_friend">Add friends</string>

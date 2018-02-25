@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
+import trickyquestion.messenger.p2p_protocol.events.EAddFriendRequest;
 import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend;
 import trickyquestion.messenger.screen.main.main_tabs_content.friends.repository.FriendsRepository;
 import trickyquestion.messenger.network.Network;
-import trickyquestion.messenger.p2p_protocol.events.EAuthRequest;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
@@ -84,6 +84,9 @@ public class P2PProtocolService extends Service{
     * Bind class for P2PService
     */
     public class LocalBinder extends Binder{
+        /**
+        *Starting service modules, if service alredy started modules not restarted
+        */
         public void Start(){
             if(started) return;
             host = new Host(getApplicationContext());
@@ -160,7 +163,7 @@ public class P2PProtocolService extends Service{
     /**
     * Inform service about adding friend
     */
-    public void onEvent(EAuthRequest event) {
+    public void onEvent(EAddFriendRequest event) {
         final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getID().toString());
         dialog.setOnPositiveButtonClickListener((d, i) -> {
             final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), true);
