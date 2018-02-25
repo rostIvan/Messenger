@@ -1,4 +1,4 @@
-package trickyquestion.messenger.screen.add_friend.model;
+package trickyquestion.messenger.screen.add_friend.data;
 
 import java.util.UUID;
 

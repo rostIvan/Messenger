@@ -1,23 +1,21 @@
-package trickyquestion.messenger.ui.abstraction
+package trickyquestion.messenger.ui.abstraction.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
-import butterknife.ButterKnife
-import butterknife.Unbinder
 import trickyquestion.messenger.util.*
+import trickyquestion.messenger.util.android.preference.ThemePreference
 
 abstract class AWithFieldFragment : ABaseFragment() {
     abstract fun getAllEditable(): List<EditText>
+    lateinit var themePreference: ThemePreference
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
     private fun init() {
+        themePreference = ThemePreference(context)
         setEditTextLineColor(context.greenColor())
         setupListeners()
     }

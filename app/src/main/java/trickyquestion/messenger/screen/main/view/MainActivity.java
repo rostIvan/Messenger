@@ -22,7 +22,7 @@ import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.screen.add_friend.view.AddFriendActivity;
+import trickyquestion.messenger.screen.add_friend.ui.AddFriendActivity;
 import trickyquestion.messenger.screen.main.main_tabs_content.friends.view.FriendsFragment;
 import trickyquestion.messenger.screen.main.main_tabs_content.messages.view.MessagesFragment;
 import trickyquestion.messenger.screen.main.presenter.IMainPresenter;

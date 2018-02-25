@@ -1,4 +1,4 @@
-package trickyquestion.messenger.ui.abstraction
+package trickyquestion.messenger.ui.abstraction.interfaces
 
 import android.support.annotation.LayoutRes
 

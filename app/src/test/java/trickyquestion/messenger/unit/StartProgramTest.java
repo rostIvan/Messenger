@@ -18,9 +18,15 @@ import trickyquestion.messenger.util.Color;
 import trickyquestion.messenger.util.Mode;
 import trickyquestion.messenger.util.android.preference.AuthPreference;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static trickyquestion.messenger.util.LoggerKt.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static trickyquestion.messenger.util.LoggerKt.LINE;
+import static trickyquestion.messenger.util.LoggerKt.log;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class StartProgramTest {
@@ -35,6 +41,12 @@ public class StartProgramTest {
     public void before() {
         appStarter = spy(new AppStarter(context));
         MockitoAnnotations.initMocks(this);
+    }
+
+    @After
+    public void after() {
+        Mockito.validateMockitoUsage();
+        log(LINE, Color.BLUE);
     }
 
     @Test
@@ -83,7 +95,7 @@ public class StartProgramTest {
         verify(appStarter, times(0)).main();
         verify(appStarter, times(1)).connect();
         verify(appStarter, times(1)).askPassword();
-        passed("askPassword start with connection");
+        passed("askPassword start from connection");
     }
 
     @Test
@@ -99,11 +111,6 @@ public class StartProgramTest {
         passed("main start with connection");
     }
 
-    @After
-    public void after() {
-        Mockito.validateMockitoUsage();
-        log(LINE, Color.BLUE);
-    }
 
     private void passed(final String text) {
         log(text + "  ==> ", Mode.WITHOUT_NEW_LINE);

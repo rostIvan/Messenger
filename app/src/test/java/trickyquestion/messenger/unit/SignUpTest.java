@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import trickyquestion.messenger.screen.login.sign_up.SignUpActivity;
 import trickyquestion.messenger.screen.login.sign_up.SignUpFragment;
 import trickyquestion.messenger.util.Color;
 import trickyquestion.messenger.util.Mode;
@@ -24,7 +23,7 @@ import static trickyquestion.messenger.util.LoggerKt.LINE;
 import static trickyquestion.messenger.util.LoggerKt.log;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({SignUpFragment.class, SignUpActivity.class})
+@PrepareForTest({SignUpFragment.class})
 public class SignUpTest {
 
     private SignUpFragment signUpFragment;

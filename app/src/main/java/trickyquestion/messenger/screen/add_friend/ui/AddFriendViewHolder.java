@@ -1,4 +1,4 @@
-package trickyquestion.messenger.screen.add_friend.view.adapter;
+package trickyquestion.messenger.screen.add_friend.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

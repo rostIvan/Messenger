@@ -69,10 +69,10 @@ public class P2PNetworkWifiChecking {
                     (new Intent(InstrumentationRegistry.getTargetContext(),
                             P2PProtocolService.class));
             bind.Start();
-            Thread.sleep(2500);
+            Thread.sleep(10000);
             WifiManager wifiManager = (WifiManager)appContext.getSystemService(Context.WIFI_SERVICE);
             wifiManager.setWifiEnabled(false);
-            Thread.sleep(2500);
+            Thread.sleep(10000);
             assertTrue("Wifi enable and list empty", bind.getUsers().isEmpty());
         } catch (TimeoutException e) {
             e.printStackTrace();

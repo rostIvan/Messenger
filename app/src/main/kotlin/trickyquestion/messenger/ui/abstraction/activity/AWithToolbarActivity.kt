@@ -1,26 +1,27 @@
-package trickyquestion.messenger.ui.abstraction
+package trickyquestion.messenger.ui.abstraction.activity
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v7.widget.Toolbar
+import trickyquestion.messenger.R
+import trickyquestion.messenger.ui.abstraction.mvp.MvpView
 
-@SuppressLint("Registered")
-abstract class AWithToolbarActivity : ABaseActivity() {
+abstract class AWithToolbarActivity : MvpView() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         customizeToolbar()
     }
 
-    @NonNull abstract fun getToolbar() : Toolbar
-    @NonNull open fun getToolbarTitle() : CharSequence = "Titanic"
+    @NonNull protected abstract fun getToolbar() : Toolbar
+    @NonNull open fun getToolbarTitle() : CharSequence = resources.getString(R.string.app_name)
 
     private fun customizeToolbar() {
         refreshThemeColor()
         setSupportActionBar(getToolbar())
         supportActionBar?.title = getToolbarTitle()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        getToolbar().setNavigationOnClickListener { ApplicationRouter.from(this).back() }
     }
 
     protected fun refreshThemeColor() {

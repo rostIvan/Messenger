@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="trickyquestion.messenger">
+    package="trickyquestion.messenger">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".application.MessengerApplication"
@@ -19,22 +19,21 @@
 
         <activity android:name=".application.entry_point.EntryPoint">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+
         <activity
             android:name=".screen.main.view.MainActivity"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme" />
 
-        <activity android:name=".screen.add_friend.view.AddFriendActivity"> </activity>
+        <activity android:name=".screen.add_friend.ui.AddFriendActivity" />
 
         <activity
             android:name=".screen.login.sign_up.SignUpActivity"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme" />
 
         <activity android:name=".screen.login.ask_password.AskPasswordActivity" />
 
@@ -42,13 +41,12 @@
 
         <activity
             android:name=".screen.chat.view.ChatActivity"
-            android:theme="@style/Theme.Swipe.Back"/>
+            android:theme="@style/Theme.Swipe.Back" />
 
         <service
             android:name=".p2p_protocol.P2PProtocolService"
             android:enabled="true"
-            android:exported="false">
-        </service>
+            android:exported="false" />
     </application>
 
 </manifest>
