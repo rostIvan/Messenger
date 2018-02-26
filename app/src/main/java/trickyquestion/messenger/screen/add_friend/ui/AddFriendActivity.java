@@ -71,6 +71,10 @@ public class AddFriendActivity extends AWithToolbarActivity implements IAddFrien
     @Override
     protected Toolbar getToolbar() { return toolbar; }
 
+    @NonNull
+    @Override
+    public CharSequence getToolbarTitle() { return "Add friend"; }
+
     @Override
     public void onUiThread(@NonNull Runnable runnable) { super.runOnUiThread(runnable); }
 }

@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_friend_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        tools:text="name"
+        android:layout_alignLeft="@+id/dialog_photo_friend"
+        android:layout_alignStart="@+id/dialog_photo_friend"
+        android:layout_toLeftOf="@+id/dialog_friend_online_status"
+        android:layout_toStartOf="@+id/dialog_friend_online_status"
+        android:layout_above="@+id/dialog_photo_friend"
+        android:textColor="@color/colorWhite"
+        tools:textColor="@color/colorBlack" />
+
+    <TextView
+        android:id="@+id/dialog_friend_online_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/dialog_photo_friend"
+        android:layout_alignEnd="@+id/dialog_photo_friend"
+        android:layout_above="@+id/dialog_photo_friend"
+        android:text="@string/online"
+        tools:text="online"
+        android:textColor="@color/colorGreen" />
 
     <ImageView
         android:id="@+id/dialog_photo_friend"
@@ -11,31 +36,7 @@
         android:layout_height="220dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_user"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/dialog_photo_friend"
-        android:layout_centerHorizontal="true"
-        android:layout_alignLeft="@id/dialog_photo_friend"
-        android:layout_alignRight="@id/dialog_photo_friend"
-        android:layout_marginBottom="10dp">
-        <TextView
-            android:id="@+id/dialog_friend_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textColor="@color/colorWhite"
-            tools:textColor="@color/colorBlack"/>
-
-        <TextView
-            android:id="@+id/dialog_friend_online_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="online"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/colorGreen" />
-    </RelativeLayout>
+        android:contentDescription="@string/image"
+        android:src="@drawable/ic_user" />
 
 </RelativeLayout>

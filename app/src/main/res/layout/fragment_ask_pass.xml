@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:layout_width="380dp"
         android:layout_height="240dp"
         android:src="@drawable/image_login"
         android:layout_marginTop="40dp"
-        android:id="@+id/imageView"/>
+        android:id="@+id/imageView"
+        android:contentDescription="@string/image" />
 
     <TextView
         android:id="@+id/hello_text"
@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="300dp"
         android:textSize="25sp"
-        android:text="Hello, Someone"
+        tools:text="Hello, Someone"
         android:textColor="#07A984"/>
     <EditText
         android:id="@+id/pass_ask_field"
@@ -35,7 +35,7 @@
         android:id="@+id/button_sign_in"
         android:layout_width="350dp"
         android:layout_height="45dp"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         android:layout_marginTop="450dp"
         android:textColor="@color/colorWhite"
         android:textSize="25sp"

@@ -19,14 +19,16 @@
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="60dp"
-                android:src="@drawable/ic_user" />
+                android:src="@drawable/ic_user"
+                android:layout_marginStart="20dp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="62dp"
                 android:layout_marginTop="105dp"
-                android:src="@drawable/ic_add_friend_circle" />
+                android:src="@drawable/ic_add_friend_circle"
+                android:layout_marginStart="62dp" />
 
             <TextView
                 android:id="@+id/setting_login_name"
@@ -34,10 +36,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="100dp"
                 android:layout_marginTop="70dp"
-                android:text="Taras Seniv"
+                tools:text="taras seniv"
                 android:textColor="@color/colorBlack"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginStart="100dp" />
 
             <TextView
                 android:id="@+id/setting_id"
@@ -45,8 +48,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/setting_login_name"
                 android:layout_marginLeft="100dp"
-                android:text="id: 1231255196199"
-                android:textSize="14sp" />
+                tools:text="id: 1231255196199"
+                android:textSize="14sp"
+                android:layout_marginStart="100dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -60,7 +64,6 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/setting_circle_image"
                 android:layout_marginTop="10dp" />
-
         </RelativeLayout>
     </ScrollView>
 

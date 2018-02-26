@@ -36,14 +36,4 @@
         <item name="textAllCaps">false</item>
     </style>
 
-    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowAnimationStyle">@style/CustomDialogAnimation</item>
-        <item name="android:background">@color/colorWhite</item>
-    </style>
-
-    <style name="CustomDialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/translate_top_side</item>
-        <item name="android:windowExitAnimation">@anim/translate_bottom_side</item>
-    </style>
-
 </resources>

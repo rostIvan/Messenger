@@ -1,13 +1,16 @@
 package trickyquestion.messenger.screen.popup_windows;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -28,7 +31,6 @@ public class AccountPopup {
 
     private TextView accountName;
     private TextView accountId;
-    private ImageView changeDataButton;
     private TextView changeDataLink;
 
     public AccountPopup(final Context context) {
@@ -38,6 +40,8 @@ public class AccountPopup {
     }
 
     public void show() {
+        if (mContext == null) throw new RuntimeException("Called window without context");
+        @SuppressLint("InflateParams")
         final BubbleLayout bubbleLayout = (BubbleLayout) LayoutInflater.from(mContext).inflate(R.layout.popup_account, null);
         final View v = ((Activity) mContext).findViewById(R.id.action_account);
         popupWindow = BubblePopupHelper.create(mContext, bubbleLayout);
@@ -52,14 +56,23 @@ public class AccountPopup {
     private void initViews(BubbleLayout bubbleLayout) {
         accountName = (TextView) bubbleLayout.findViewById(R.id.account_name);
         accountId = (TextView) bubbleLayout.findViewById(R.id.account_id);
-        changeDataButton = (ImageView) bubbleLayout.findViewById(R.id.change_data_arrow);
         changeDataLink = (TextView) bubbleLayout.findViewById(R.id.change_data_link);
     }
 
     private void customizeTheme() {
-        changeDataButton.setColorFilter(themePreference.getPrimaryColor());
+        changeColorCompoundDrawable();
         changeDataLink.setTextColor(themePreference.getPrimaryColor());
         changeDataLink.setPaintFlags(changeDataLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+    }
+
+    private void changeColorCompoundDrawable() {
+        for (Drawable drawable : changeDataLink.getCompoundDrawables()) {
+            if (drawable != null) {
+                drawable.mutate().setColorFilter(
+                        new PorterDuffColorFilter(themePreference.getPrimaryColor(), PorterDuff.Mode.SRC_IN));
+                changeDataLink.setCompoundDrawables(null, null, drawable, null);
+            }
+        }
     }
 
     private void setValues() {
@@ -68,7 +81,6 @@ public class AccountPopup {
     }
 
     private void setupListeners() {
-        changeDataButton.setOnClickListener(view -> openSetting());
         changeDataLink.setOnClickListener(view -> openSetting());
     }
 

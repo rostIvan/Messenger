@@ -2,6 +2,7 @@ package trickyquestion.messenger.util.java.maping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend;
 
@@ -10,7 +11,7 @@ public class FriendFilter {
         if (searchValue.isEmpty() || searchValue.length() == 0) return friends;
         final List<Friend> result = new ArrayList<>();
         for (Friend friend : friends) {
-            if (friend.getName().toLowerCase().contains(searchValue.toLowerCase()))
+            if (friend.getName().toLowerCase(Locale.getDefault()).contains(searchValue.toLowerCase(Locale.getDefault())))
                 result.add(friend);
         }
         return result;

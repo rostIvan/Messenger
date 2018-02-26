@@ -9,14 +9,14 @@ import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Frie
 open class DataProviderInteractor : BaseInteractor(), IDataProvider {
 
     private val friendRepository = FriendRepository
+
     override fun getFriendsFromDb(): List<Friend> = friendRepository.findAll()
+    override fun getUsersFromNetwork(): List<IUser> = P2PProtocolConnector.ProtocolInterface().users
 
     @JvmOverloads
     fun subscribeOnUpdates(onUpdate: Consumer<List<Friend>>, t: Consumer<Throwable> = Consumer {}) {
         addDisposable(friendRepository.publishSubject.subscribe(onUpdate, t))
     }
-
-    override fun getUsersFromNetwork(): List<IUser> = P2PProtocolConnector.ProtocolInterface().users
 
 }
 

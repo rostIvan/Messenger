@@ -62,7 +62,7 @@ public class ExpandedListCreator {
 
     private SettingParent getThirdParent() {
         final SettingParent parent3 = new SettingParent();
-        final Drawable icon = getDrawable(R.drawable.ic_change_name_primary_green, themePreference.getPrimaryColor());
+        final Drawable icon = getDrawable(R.drawable.ic_color_managment_primary_green, themePreference.getPrimaryColor());
         parent3.setTitle("Color theme");
         parent3.setImageDrawable(icon);
         return parent3;
@@ -95,9 +95,7 @@ public class ExpandedListCreator {
     }
 
     private List<Object> getChildrenThirdParent() {
-        final Drawable drawableChild = getDrawable(
-                R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor()
-        );
+        final Drawable drawableChild = getDrawable(R.drawable.ic_arrow_forward_black_24dp, themePreference.getPrimaryColor());
         final SettingChild child1 = new SettingChild("Standard", false, drawableChild, false);
         final SettingChild child2 = new SettingChild("Dark blue", false, drawableChild, false);
         final SettingChild child3 = new SettingChild("Red", false, drawableChild, false);

@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginLeft="60dp">
+    android:layout_marginLeft="60dp"
+    android:layout_marginStart="60dp">
 
     <ImageView
         android:id="@+id/child_setting_item_icon"
@@ -12,7 +13,9 @@
         android:layout_height="35dp"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        tools:src="@drawable/ic_add_friend_circle"/>
+        tools:src="@drawable/ic_add_friend_circle"
+        android:layout_marginStart="10dp"
+        android:contentDescription="@string/image" />
 
     <TextView
         android:id="@+id/child_list_item_title"
@@ -22,7 +25,8 @@
         android:textSize="14sp"
         android:layout_marginLeft="50dp"
         android:textStyle="normal"
-        android:text="Setting child Title" />
+        tools:text="Setting child Title"
+        android:layout_marginStart="50dp" />
 
     <android.support.v7.widget.AppCompatCheckBox
         android:id="@+id/child_list_item_check_box"
@@ -31,7 +35,8 @@
         android:layout_alignParentRight="true"
         android:visibility="gone"
         android:clickable="false"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"
+        android:layout_alignParentEnd="true" />
 
     <View
         android:id="@+id/child_separate_small_line"
@@ -39,7 +44,8 @@
         android:layout_height="1dp"
         android:layout_marginLeft="65dp"
         android:layout_below="@id/child_list_item_title"
-        android:background="@color/colorGrey"/>
+        android:background="@color/colorGrey"
+        android:layout_marginStart="65dp" />
     <View
         android:id="@+id/child_separate_big_line"
         android:layout_width="match_parent"
@@ -47,5 +53,6 @@
         android:visibility="gone"
         android:layout_marginLeft="0dp"
         android:layout_below="@id/child_list_item_title"
-        android:background="@color/colorGrey"/>
+        android:background="@color/colorGrey"
+        android:layout_marginStart="0dp" />
 </RelativeLayout>

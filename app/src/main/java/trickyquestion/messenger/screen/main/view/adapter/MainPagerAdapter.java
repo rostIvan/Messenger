@@ -20,7 +20,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         this.titles = new ArrayList<>();
     }
 
-    /** not use it constructor from addFragment() method **/
+    /** not use it constructor with addFragment() method **/
     public MainPagerAdapter(final FragmentManager fm, final List<Fragment> pages, final List<String> titles) {
         super(fm);
         this.pages = pages;

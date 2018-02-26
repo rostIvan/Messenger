@@ -15,7 +15,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="true">
 
         <activity android:name=".application.entry_point.EntryPoint">
             <intent-filter>
@@ -27,7 +28,8 @@
 
         <activity
             android:name=".screen.main.view.MainActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" >
+        </activity>
 
         <activity android:name=".screen.add_friend.ui.AddFriendActivity" />
 
