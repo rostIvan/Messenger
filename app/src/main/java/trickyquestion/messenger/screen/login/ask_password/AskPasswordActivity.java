@@ -7,8 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import trickyquestion.messenger.screen.login.SingleFragmentActivity;
-import trickyquestion.messenger.screen.main.view.MainActivity;
-import trickyquestion.messenger.util.android.preference.AuthPreference;
+import trickyquestion.messenger.screen.main.container.implementation.MainActivity;
 
 public class AskPasswordActivity extends SingleFragmentActivity {
 

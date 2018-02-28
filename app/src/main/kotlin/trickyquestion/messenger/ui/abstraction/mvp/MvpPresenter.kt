@@ -13,4 +13,5 @@ constructor(var view: V, var router: R) : LifecycleCallbacks {
     override fun onStart() {}
     override fun onResume() {}
     override fun onStop() {}
+    override fun onFinish() {}
 }

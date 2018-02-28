@@ -14,8 +14,8 @@ import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.p2p_protocol.events.EAddFriendRequest;
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend;
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.repository.FriendsRepository;
+import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.main.tabs.friends.repository.FriendsRepository;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;

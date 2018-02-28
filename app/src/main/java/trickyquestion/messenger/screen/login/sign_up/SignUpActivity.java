@@ -11,7 +11,7 @@ import java.util.UUID;
 
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.screen.login.SingleFragmentActivity;
-import trickyquestion.messenger.screen.main.view.MainActivity;
+import trickyquestion.messenger.screen.main.container.implementation.MainActivity;
 
 public class SignUpActivity extends SingleFragmentActivity {
 

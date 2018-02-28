@@ -6,7 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import trickyquestion.messenger.screen.add_friend.ui.AddFriendActivity
 import trickyquestion.messenger.screen.chat.view.ChatActivity
-import trickyquestion.messenger.screen.main.view.MainActivity
+import trickyquestion.messenger.screen.main.container.implementation.MainActivity
 import trickyquestion.messenger.screen.settings.view.SettingActivity
 import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter
 
@@ -27,6 +27,16 @@ class ApplicationRouter private constructor(private val context: Context) : Base
         context.startActivity(homeIntent)
     }
 
+    override fun openScreen(screen: BaseRouter.Screen, animatorResource: AnimatorResource) {
+        open(screen)
+        (context as Activity).overridePendingTransition(animatorResource.enterAnim, animatorResource.exitAnim)
+    }
+
+    override fun openScreen(screen: BaseRouter.Screen, bundle: Bundle?, animatorResource: AnimatorResource) {
+        open(screen, bundle)
+        (context as Activity).overridePendingTransition(animatorResource.enterAnim, animatorResource.exitAnim)
+    }
+
     override fun openScreen(screen: BaseRouter.Screen) { open(screen) }
 
     override fun openScreen(screen: BaseRouter.Screen, bundle: Bundle?) { open(screen, bundle) }
@@ -44,4 +54,6 @@ class ApplicationRouter private constructor(private val context: Context) : Base
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
+
+    class AnimatorResource (var enterAnim: Int, var exitAnim: Int)
 }

@@ -4,7 +4,7 @@ import io.reactivex.functions.Consumer
 import trickyquestion.messenger.data.repository.FriendRepository
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend
+import trickyquestion.messenger.screen.main.tabs.friends.model.Friend
 
 open class DataProviderInteractor : BaseInteractor(), IDataProvider {
 

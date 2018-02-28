@@ -22,7 +22,7 @@
         android:id="@+id/friend_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
+        android:layout_marginLeft="60dp"
         android:layout_marginTop="5dp"
         android:layout_alignLeft="@id/friend_photo"
         tools:text="John Lennon"
@@ -36,20 +36,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="70dp"
-        android:layout_alignLeft="@id/friend_photo"
-        android:layout_marginTop="27dp"
-        android:layout_alignTop="@id/friend_name"
+        android:layout_toEndOf="@+id/friend_photo"
+        android:layout_toRightOf="@+id/friend_photo"
+        android:layout_below="@id/friend_name"
         tools:text="online"
         android:textColor="@color/colorPrimaryGreen"
         android:layout_marginStart="70dp"
-        android:layout_alignStart="@id/friend_photo" />
+        android:layout_alignStart="@id/friend_photo"
+        android:layout_alignLeft="@id/friend_photo" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorBlack"
-        android:layout_alignLeft="@id/friend_online_status"
-        android:layout_marginTop="52dp"
-        android:layout_alignStart="@id/friend_online_status" />
+        android:layout_below="@id/friend_online_status"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="3dp"/>
 
 </RelativeLayout>

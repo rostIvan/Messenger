@@ -2,7 +2,7 @@ package trickyquestion.messenger.data.repository
 
 import io.reactivex.subjects.PublishSubject
 import io.realm.RealmQuery
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend
+import trickyquestion.messenger.screen.main.tabs.friends.model.Friend
 import java.util.*
 
 object FriendRepository : CrudRepository<Friend>() {

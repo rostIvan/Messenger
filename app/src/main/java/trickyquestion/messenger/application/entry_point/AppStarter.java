@@ -4,9 +4,9 @@ import android.content.Context;
 
 import trickyquestion.messenger.screen.login.ask_password.AskPasswordActivity;
 import trickyquestion.messenger.screen.login.sign_up.SignUpActivity;
-import trickyquestion.messenger.screen.main.view.MainActivity;
+import trickyquestion.messenger.screen.main.container.implementation.MainActivity;
 
-public  class AppStarter extends AProgramStarter {
+public class AppStarter extends AProgramStarter {
 
     public AppStarter(final Context context) {
         super.applyContext(context);

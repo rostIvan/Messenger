@@ -15,7 +15,7 @@ import java.util.UUID;
 import io.realm.Realm;
 import trickyquestion.messenger.buisness.DataProviderInteractor;
 import trickyquestion.messenger.data.repository.FriendRepository;
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend;
+import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
 import trickyquestion.messenger.util.Color;
 import trickyquestion.messenger.util.LoggerKt;
 

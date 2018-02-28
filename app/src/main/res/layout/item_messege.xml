@@ -74,8 +74,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/message_container"
-        android:layout_marginLeft="70dp"
-        android:layout_marginStart="70dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="5dp"
         android:background="@color/colorBlack" />
 

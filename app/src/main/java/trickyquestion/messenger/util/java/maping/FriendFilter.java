@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.model.Friend;
+import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
 
 public class FriendFilter {
     public static List<Friend> filter(final List<Friend> friends, final String searchValue) {

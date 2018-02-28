@@ -27,7 +27,7 @@
 
 
         <activity
-            android:name=".screen.main.view.MainActivity"
+            android:name=".screen.main.container.implementation.MainActivity"
             android:theme="@style/AppTheme" >
         </activity>
 

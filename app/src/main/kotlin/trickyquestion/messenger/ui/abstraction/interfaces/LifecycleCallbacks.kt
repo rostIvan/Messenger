@@ -8,4 +8,5 @@ interface LifecycleCallbacks {
     fun onStart()
     fun onResume()
     fun onStop()
+    fun onFinish()
 }

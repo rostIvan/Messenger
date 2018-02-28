@@ -7,10 +7,8 @@ import java.net.Socket;
 import java.util.List;
 import java.util.UUID;
 
-import javax.crypto.spec.SecretKeySpec;
-
 import de.greenrobot.event.EventBus;
-import trickyquestion.messenger.screen.main.main_tabs_content.friends.repository.FriendsRepository;
+import trickyquestion.messenger.screen.main.tabs.friends.repository.FriendsRepository;
 import trickyquestion.messenger.network.socket.SocketClient;
 import trickyquestion.messenger.network.socket.SocketServer;
 import trickyquestion.messenger.p2p_protocol.events.EReceivedMsg;

@@ -90,7 +90,7 @@ public class AccountPopup {
     }
 
     public boolean isShowing() {
-        return popupWindow.isShowing();
+        return popupWindow != null && popupWindow.isShowing();
     }
 
     public void dismiss() {

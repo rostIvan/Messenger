@@ -29,5 +29,10 @@ abstract class MvpView : ABaseActivity() {
         getPresenter()?.onDestroy()
     }
 
+    override fun finish() {
+        super.finish()
+        getPresenter()?.onFinish()
+    }
+
     open fun getPresenter(): MvpPresenter<*, *>? = null
 }
