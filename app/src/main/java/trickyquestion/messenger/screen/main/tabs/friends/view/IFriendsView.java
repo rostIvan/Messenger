@@ -2,7 +2,7 @@ package trickyquestion.messenger.screen.main.tabs.friends.view;
 
 import android.content.Context;
 
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 
 public interface IFriendsView {
     Context getFragmentContext();

@@ -5,7 +5,7 @@ import java.util.List;
 import trickyquestion.messenger.buisness.DataProviderInteractor;
 import trickyquestion.messenger.buisness.IDataProvider;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 import trickyquestion.messenger.screen.main.tabs.friends.repository.FriendsRepository;
 
 public class AddFriendInteractor implements IAddFriendInteractor {

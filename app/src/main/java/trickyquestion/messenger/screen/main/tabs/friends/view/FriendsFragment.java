@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.screen.chat.view.ChatActivity;
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 import trickyquestion.messenger.screen.main.tabs.friends.presenter.FriendPresenter;
 import trickyquestion.messenger.screen.main.tabs.friends.presenter.IFriendPresenter;
 import trickyquestion.messenger.screen.main.tabs.friends.view.adapter.RecyclerViewFriendAdapter;

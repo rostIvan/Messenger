@@ -2,6 +2,8 @@ package trickyquestion.messenger.screen.chat.model;
 
 import android.support.annotation.NonNull;
 
+import java.util.UUID;
+
 import io.realm.RealmModel;
 import io.realm.annotations.RealmClass;
 
@@ -12,7 +14,7 @@ public class ChatMessage implements RealmModel {
     private String idFriend;
     private String text;
     private String time;
-    private boolean my;
+    private boolean mine;
 
     public ChatMessage() {}
 
@@ -24,12 +26,12 @@ public class ChatMessage implements RealmModel {
         return text;
     }
 
-    public void setIdFriend(String idFriend) {
-        this.idFriend = idFriend;
+    public void setIdFriend(UUID idFriend) {
+        this.idFriend = idFriend.toString();
     }
 
-    public String getIdFriend() {
-        return idFriend;
+    public UUID getIdFriend() {
+        return UUID.fromString(idFriend);
     }
 
     public String getTime() {
@@ -40,12 +42,12 @@ public class ChatMessage implements RealmModel {
         this.time = time;
     }
 
-    public boolean isMy() {
-        return my;
+    public boolean isMine() {
+        return mine;
     }
 
-    public void setMeOwner(boolean iOwner) {
-        this.my = iOwner;
+    public void setMine(boolean mine) {
+        this.mine = mine;
     }
 
     public void setNameFriend(@NonNull final String nameFriend) {

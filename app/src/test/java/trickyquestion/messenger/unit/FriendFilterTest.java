@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 import trickyquestion.messenger.util.java.maping.FriendFilter;
 
 import static org.junit.Assert.assertFalse;

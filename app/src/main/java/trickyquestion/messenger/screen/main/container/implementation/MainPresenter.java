@@ -11,7 +11,7 @@ import trickyquestion.messenger.screen.main.container.interfaces.IMainPresenter;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainView;
 import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter;
-import trickyquestion.messenger.ui.abstraction.mvp.MvpPresenter;
+import trickyquestion.messenger.ui.abstraction.mvp.activity.MvpPresenter;
 
 public class MainPresenter extends MvpPresenter<MainActivity, BaseRouter> implements IMainPresenter {
     private final IMainView view = getView();

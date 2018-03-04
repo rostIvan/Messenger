@@ -14,7 +14,7 @@ import trickyquestion.messenger.screen.add_friend.buisness.EventManager;
 import trickyquestion.messenger.screen.add_friend.buisness.IAddFriendInteractor;
 import trickyquestion.messenger.screen.add_friend.data.UserUtil;
 import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter;
-import trickyquestion.messenger.ui.abstraction.mvp.MvpPresenter;
+import trickyquestion.messenger.ui.abstraction.mvp.activity.MvpPresenter;
 
 public class AddFriendPresenter extends MvpPresenter<AddFriendActivity, BaseRouter> implements IAddFriendPresenter {
     private final IAddFriendView view = getView();
@@ -33,37 +33,36 @@ public class AddFriendPresenter extends MvpPresenter<AddFriendActivity, BaseRout
 
     @Override
     public void onStart() {
-        update();
+        showUsers();
     }
 
     @Override
     public void onUserItemClick(IUser model, AddFriendViewHolder holder, List<IUser> items) {
         interactor.addToFriends(model);
-        deleteUserItem(model, holder, items);
+        deleteUserItem(holder, items);
+        view.showToast(String.format("User added: %s\nid: %s", UserUtil.getName(model), UserUtil.getId(model)));
     }
 
     @Override
     public void updateUsers() {
-        view.onUiThread(this::update);
+        view.onUiThread(this::showUsers);
     }
 
     @Override
     public void hideUsers() {
         view.showUsers(Collections.emptyList());
-        view.updateUsers();
     }
 
     @Override
     public void changeTheme() { view.refreshTheme(); }
 
-    private void update() {
+    private void showUsers() {
         view.showUsers(interactor.getUsers());
-        view.updateUsers();
     }
 
-    private void deleteUserItem(IUser model, AddFriendViewHolder holder, List<IUser> items) {
-        view.showToast(String.format("User added: %s\nid: %s", UserUtil.getName(model), UserUtil.getId(model)));
-        items.remove(holder.getAdapterPosition());
-        view.updateUsers();
+    private void deleteUserItem(AddFriendViewHolder holder, List<IUser> items) {
+        final int position = holder.getAdapterPosition();
+        items.remove(position);
+        view.removeItem(position, items.size());
     }
 }

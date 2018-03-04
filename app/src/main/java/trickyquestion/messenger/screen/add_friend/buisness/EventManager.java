@@ -1,13 +1,12 @@
 package trickyquestion.messenger.screen.add_friend.buisness;
 
-import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.buisness.BaseEventManager;
 import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.screen.add_friend.ui.IAddFriendPresenter;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeUserList;
 
-public class EventManager extends BaseEventManager{
+public class EventManager extends BaseEventManager {
     private final IAddFriendPresenter presenter;
 
     public EventManager(IAddFriendPresenter presenter) {

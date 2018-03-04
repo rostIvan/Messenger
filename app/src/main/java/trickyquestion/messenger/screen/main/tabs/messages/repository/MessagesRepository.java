@@ -20,7 +20,7 @@ public class MessagesRepository {
             final Message message = new Message(
                     item.getText(),
                     item.getNameFriend(),
-                    item.getIdFriend(),
+                    item.getIdFriend().toString(),
                     null,
                     TimeFormatter.convertTime(item.getTime(), "d MMM yyyy HH:mm:ss", "HH:mm:ss"),
                     true

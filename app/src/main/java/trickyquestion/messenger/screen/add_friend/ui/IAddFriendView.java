@@ -6,7 +6,8 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.ui.abstraction.interfaces.BaseView;
 
 public interface IAddFriendView extends BaseView {
-    void showUsers(List<IUser> userList);
+    void showUsers(List<IUser> users);
     void refreshTheme();
     void updateUsers();
+    void removeItem(int position, int size);
 }

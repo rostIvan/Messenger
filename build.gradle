@@ -1,14 +1,16 @@
+apply plugin: 'com.vanniktech.android.junit.jacoco'
 
 buildscript {
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.30'
     repositories {
         jcenter()
         google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath "io.realm:realm-gradle-plugin:4.3.4"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "io.realm:realm-gradle-plugin:4.3.4"
+        classpath 'com.vanniktech:gradle-android-junit-jacoco-plugin:0.11.0'
     }
 }
 
@@ -22,4 +24,14 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    butterknife_version = "8.8.1"
+    mockito_version = "2.8.9"
+    powermock_version = "1.7.1"
+    junit_version = '4.12'
+    robolectric_version = '3.0'
+    robolectric_shadow_version = '4:3.0'
+    espresso_version = "2.2.2"
 }

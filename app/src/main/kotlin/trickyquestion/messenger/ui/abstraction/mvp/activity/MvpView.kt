@@ -1,4 +1,4 @@
-package trickyquestion.messenger.ui.abstraction.mvp
+package trickyquestion.messenger.ui.abstraction.mvp.activity
 
 import android.os.Bundle
 import trickyquestion.messenger.ui.abstraction.activity.ABaseActivity

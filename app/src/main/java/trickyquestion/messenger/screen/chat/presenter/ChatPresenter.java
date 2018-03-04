@@ -20,9 +20,9 @@ import trickyquestion.messenger.screen.chat.repository.ChatMessageRepository;
 import trickyquestion.messenger.screen.chat.repository.IChatMessageRepository;
 import trickyquestion.messenger.screen.chat.view.IChatView;
 import trickyquestion.messenger.screen.chat.view.adapter.ChatViewHolder;
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 import trickyquestion.messenger.screen.main.tabs.friends.repository.FriendsRepository;
-import trickyquestion.messenger.util.android.event_bus_pojo.ChangeFriendDataBaseEvent;
+import trickyquestion.messenger.util.android.event_bus_pojo.ChangeFriendDbEvent;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeThemeEvent;
 import trickyquestion.messenger.util.java.string_helper.TimeFormatter;
 
@@ -98,7 +98,7 @@ public class ChatPresenter implements IChatPresenter {
     private void bindViewHolder(ChatViewHolder holder, ChatMessage message) {
         holder.textMessage.setText(message.getText());
         holder.timeMessage.setText(message.getTime());
-        if (message.isMy())
+        if (message.isMine())
             view.setStyleForMyMessage(holder.container, holder.textMessage, holder.timeMessage);
         else
             view.setStyleForFriendMessage(holder.container, holder.textMessage, holder.timeMessage);
@@ -120,9 +120,9 @@ public class ChatPresenter implements IChatPresenter {
         final ChatMessage chatMessage = new ChatMessage();
         chatMessage.setText(message);
         chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
-        chatMessage.setMeOwner(true);
+        chatMessage.setMine(true);
         chatMessage.setNameFriend(view.getFriendName());
-        chatMessage.setIdFriend(view.getFriendId());
+        chatMessage.setIdFriend(UUID.fromString(view.getFriendId()));
         repository.addMessage(chatMessage);
     }
 
@@ -130,9 +130,9 @@ public class ChatPresenter implements IChatPresenter {
         final ChatMessage chatMessage = new ChatMessage();
         chatMessage.setText(message);
         chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
-        chatMessage.setMeOwner(false);
+        chatMessage.setMine(false);
         chatMessage.setNameFriend(name);
-        chatMessage.setIdFriend(id.toString());
+        chatMessage.setIdFriend(id);
         repository.addMessage(chatMessage);
     }
 
@@ -161,7 +161,7 @@ public class ChatPresenter implements IChatPresenter {
         }
     }
 
-    public void onEvent(ChangeFriendDataBaseEvent event) {
+    public void onEvent(ChangeFriendDbEvent event) {
         final Friend friend = FriendsRepository.getFriend(view.getFriendId());
         if (friend.isOnline()) view.showFields();
         else view.hideFields();

@@ -4,19 +4,21 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import trickyquestion.messenger.screen.add_friend.ui.AddFriendActivity
 import trickyquestion.messenger.screen.chat.view.ChatActivity
 import trickyquestion.messenger.screen.main.container.implementation.MainActivity
 import trickyquestion.messenger.screen.settings.view.SettingActivity
 import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter
 
-class ApplicationRouter private constructor(private val context: Context) : BaseRouter {
+class ApplicationRouter private constructor(private val context: Context?) : BaseRouter {
 
     companion object {
-        @JvmStatic fun from(context: Context) : ApplicationRouter {
-            return ApplicationRouter(context)
-        }
+        @JvmStatic fun from(context: Context?) = ApplicationRouter(context)
     }
+
+    // for fragments use only this approach
+    override fun from(fragment: Fragment) = ApplicationRouter(fragment.context)
 
     override fun back() {  (context as Activity).onBackPressed()  }
 
@@ -24,7 +26,7 @@ class ApplicationRouter private constructor(private val context: Context) : Base
         val homeIntent = Intent(Intent.ACTION_MAIN)
         homeIntent.addCategory(Intent.CATEGORY_HOME)
         homeIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        context.startActivity(homeIntent)
+        context?.startActivity(homeIntent)
     }
 
     override fun openScreen(screen: BaseRouter.Screen, animatorResource: AnimatorResource) {
@@ -52,7 +54,7 @@ class ApplicationRouter private constructor(private val context: Context) : Base
         val intent = Intent(context, clazz)
         if(bundle != null) intent.putExtras(bundle)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+        context?.startActivity(intent)
     }
 
     class AnimatorResource (var enterAnim: Int, var exitAnim: Int)

@@ -16,7 +16,7 @@ import java.util.UUID;
 
 import io.realm.Realm;
 import trickyquestion.messenger.data.repository.FriendRepository;
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
@@ -215,6 +215,16 @@ public class FriendRepositoryTest {
         final Friend fromDb = repository.findByEncryptionKey(encryptionKey);
         assertNotNull(fromDb);
         assertTrue(Arrays.equals(encryptionKey, fromDb.getEncryptionKey()));
+    }
+
+    @Test
+    public void updateFriendStatus_isCorrect() {
+        final Friend friend = new Friend("mike", UUID.randomUUID(), Friend.Status.ONLINE);
+        repository.save(friend);
+        repository.updateFriendStatus(friend, false);
+        assertFalse(friend.isOnline());
+        repository.updateFriendStatus(friend, true);
+        assertTrue(friend.isOnline());
     }
 
     private void log(final String text) {

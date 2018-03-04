@@ -1,23 +1,23 @@
 package trickyquestion.messenger.buisness
 
-import io.reactivex.functions.Consumer
 import trickyquestion.messenger.data.repository.FriendRepository
+import trickyquestion.messenger.network.Network
+import trickyquestion.messenger.network.NetworkState
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend
+import trickyquestion.messenger.screen.tabs.friends.data.Friend
 
-open class DataProviderInteractor : BaseInteractor(), IDataProvider {
-
+open class DataProviderInteractor :  IDataProvider {
     private val friendRepository = FriendRepository
 
     override fun getFriendsFromDb(): List<Friend> = friendRepository.findAll()
-    override fun getUsersFromNetwork(): List<IUser> = P2PProtocolConnector.ProtocolInterface().users
 
-    @JvmOverloads
-    fun subscribeOnUpdates(onUpdate: Consumer<List<Friend>>, t: Consumer<Throwable> = Consumer {}) {
-        addDisposable(friendRepository.publishSubject.subscribe(onUpdate, t))
+    override fun getUsersFromNetwork(): List<IUser> {
+        return when(Network.GetCurrentNetworkState()) {
+            NetworkState.ACTIVE -> P2PProtocolConnector.ProtocolInterface().users
+            else -> { emptyList() }
+        }
     }
-
 }
 
 interface IDataProvider {

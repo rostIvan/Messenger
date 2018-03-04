@@ -20,9 +20,9 @@ import butterknife.BindView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainPresenter;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainView;
-import trickyquestion.messenger.screen.main.tabs.friends.view.FriendsFragment;
 import trickyquestion.messenger.screen.main.tabs.messages.view.MessagesFragment;
 import trickyquestion.messenger.screen.popup_windows.AccountPopup;
+import trickyquestion.messenger.screen.tabs.friends.ui.FriendsFragment;
 import trickyquestion.messenger.ui.abstraction.activity.AWithToolbarActivity;
 import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.abstraction.interfaces.Layout;
@@ -134,8 +134,7 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
 
     @Override
     public void refreshTheme() {
-        refreshThemeColor();
-        applyThemeColor(listOf(appBar, tabLayout, fab), themePreference.getPrimaryColor());
+        applyThemeColor(listOf(toolbar, appBar, tabLayout, fab), themePreference.getPrimaryColor());
     }
 
     @Nullable

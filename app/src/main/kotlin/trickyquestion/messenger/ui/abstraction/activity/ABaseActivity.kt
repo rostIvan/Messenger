@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import butterknife.ButterKnife
 import trickyquestion.messenger.ui.abstraction.interfaces.Layout
-import trickyquestion.messenger.ui.abstraction.mvp.MvpView
 import trickyquestion.messenger.util.android.preference.ThemePreference
 
 

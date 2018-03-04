@@ -106,6 +106,8 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
         toolbar.setTitle(getFriendName());
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_user_white);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 
     @Override
@@ -161,7 +163,7 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
 
     @Override
     public String getFriendName() {
-        return getIntent().getStringExtra(FRIEND_NAME_EXTRA);
+        return "   " + getIntent().getStringExtra(FRIEND_NAME_EXTRA);
     }
 
     @Override

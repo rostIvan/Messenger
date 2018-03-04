@@ -28,10 +28,10 @@ public class ChatMessageRepository implements IChatMessageRepository {
         final Realm realm = Realm.getDefaultInstance();
         final RealmResults results = realm.where(ChatMessage.class)
                 .equalTo("nameFriend", message.getNameFriend())
-                .equalTo("idFriend", message.getIdFriend())
+                .equalTo("idFriend", message.getIdFriend().toString())
                 .equalTo("text", message.getText())
                 .equalTo("time", message.getTime())
-                .equalTo("my", message.isMy())
+                .equalTo("my", message.isMine())
                 .findAll();
         try {
             realm.executeTransaction(realm1 -> {

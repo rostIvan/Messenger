@@ -3,7 +3,7 @@ package trickyquestion.messenger.util.java.maping;
 import java.util.ArrayList;
 import java.util.List;
 
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 import trickyquestion.messenger.p2p_protocol.objects.OFriend;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;

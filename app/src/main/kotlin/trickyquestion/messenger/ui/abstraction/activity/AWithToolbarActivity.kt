@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.annotation.NonNull
 import android.support.v7.widget.Toolbar
 import trickyquestion.messenger.R
-import trickyquestion.messenger.ui.abstraction.mvp.MvpView
+import trickyquestion.messenger.ui.abstraction.mvp.activity.MvpView
 
 abstract class AWithToolbarActivity : MvpView() {
 

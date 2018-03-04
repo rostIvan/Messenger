@@ -1,10 +1,12 @@
-package trickyquestion.messenger.screen.main.tabs.friends.model;
+package trickyquestion.messenger.screen.tabs.friends.data;
 
 import java.util.UUID;
 
+import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.annotations.RealmClass;
 import io.realm.annotations.Required;
+import trickyquestion.messenger.screen.chat.model.ChatMessage;
 
 @RealmClass
 public class Friend implements RealmModel {
@@ -14,6 +16,7 @@ public class Friend implements RealmModel {
     private String name;
     private boolean online;
     private byte[] encryptionKey;
+    private RealmList<ChatMessage> messages;
 
     public Friend() {
     }
@@ -78,6 +81,14 @@ public class Friend implements RealmModel {
 
     public void setEncryptionKey(byte[] encryptionKey) {
         this.encryptionKey = encryptionKey;
+    }
+
+    public RealmList<ChatMessage> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(RealmList<ChatMessage> messages) {
+        this.messages = messages;
     }
 
     @Override

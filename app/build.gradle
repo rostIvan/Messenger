@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'realm-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: "jacoco"
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 26
@@ -14,8 +14,16 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
@@ -24,14 +32,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            testCoverageEnabled true
+        }
     }
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
-    }
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
+
     // fix for mock android classes
     testOptions {
         unitTests.returnDefaultValues = true
@@ -53,11 +58,8 @@ repositories {
 }
 
 dependencies {
-    def butterknife_version = "8.8.1"
-    def mockito_version = "2.8.9"
-    def powermock_versio = "1.7.1"
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -77,24 +79,70 @@ dependencies {
     implementation 'com.daasuu:BubbleLayout:1.2.0'
     implementation 'com.github.QuadFlask:colorpicker:0.0.13'
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation "com.jakewharton:butterknife:$butterknife_version"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
-    testImplementation "org.powermock:powermock-module-junit4:$powermock_versio"
-    testImplementation "org.powermock:powermock-module-junit4-rule:$powermock_versio"
-    testImplementation "org.powermock:powermock-api-mockito2:$powermock_versio"
-    testImplementation "org.powermock:powermock-classloading-xstream:$powermock_versio"
-    testImplementation 'org.robolectric:robolectric:3.0'
-    testImplementation 'org.robolectric:shadows-support-v4:3.0'
-    // must be here through conflict
-    testImplementation 'io.reactivex:rxjava:1.3.4'
-    androidTestImplementation 'io.reactivex:rxjava:1.3.4'
+    testImplementation "org.powermock:powermock-module-junit4:$powermock_version"
+    testImplementation "org.powermock:powermock-module-junit4-rule:$powermock_version"
+    testImplementation "org.powermock:powermock-api-mockito2:$powermock_version"
+    testImplementation "org.powermock:powermock-classloading-xstream:$powermock_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation "org.robolectric:shadows-support-v$robolectric_shadow_version"
 }
 
 realm {
     syncEnabled = true
+}
+
+// for android instrumental test coverage use task: jacocoAndroidTestReportDebug
+task jacocoAndroidTestReportDebug(type:JacocoReport, dependsOn: "connectedDebugAndroidTest") {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports"
+    def fileFilter = ['**/R.class',
+                      '**/R$*.class',
+                      '**/BuildConfig.*',
+                      "**/realm/**",
+                      '**/Manifest*.*',
+                      'android/**/*.*']
+
+    def debugTree = fileTree(dir:
+            "${project.buildDir}/intermediates/classes/debug",
+            excludes: fileFilter)
+
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+
+    executionData = fileTree(dir: project.projectDir, includes:
+            ['**/*.exec', '**/*.ec'])
+
+    reports {
+        xml.enabled = true
+        csv.enabled = false
+        html.enabled = true
+    }
+}
+
+// for unit test coverage use task: jacocoTestReportDebug
+junitJacoco {
+    excludes = ["**/R*.class",
+                "**/realm/**",
+                "**/android/support/**",
+                "**/ogaclejapan/smarttablayout/**",
+                "**/eftimoff/viewpager/transformators/**",
+                "**/uphyca/stetho_realm/**",
+                "**/getkeepsafe/relinker/**",
+                "**/melnykov/fab/**",
+                "**/butterknife/**",
+                "**/android/arch/lifecycle/**",
+                "**/yokeyword/swipebackfragment/**",
+                "**/ryanbrooks/expandablerecyclerview/**",
+                "**/flask/colorpicker/**",
+                "**/hdodenhof/circleimageview/**",
+                "**/daasuu/bl/**",
+                "**/lzyzsd/circleprogress/**",
+                "**/facebook/stetho/**"]
+    includeNoLocationClasses = false
 }

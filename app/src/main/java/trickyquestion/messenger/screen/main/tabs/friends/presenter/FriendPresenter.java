@@ -16,12 +16,12 @@ import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.screen.main.tabs.friends.interactors.FriendListInteractor;
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 import trickyquestion.messenger.screen.main.tabs.friends.repository.FriendsRepository;
 import trickyquestion.messenger.screen.main.tabs.friends.view.IFriendsView;
 import trickyquestion.messenger.screen.main.tabs.friends.view.adapter.FriendViewHolder;
 import trickyquestion.messenger.util.Constants;
-import trickyquestion.messenger.util.android.event_bus_pojo.ChangeFriendDataBaseEvent;
+import trickyquestion.messenger.util.android.event_bus_pojo.ChangeFriendDbEvent;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeUserList;
 
 public class FriendPresenter implements IFriendPresenter {
@@ -161,7 +161,7 @@ public class FriendPresenter implements IFriendPresenter {
         }
     }
 
-    public void onEvent(ChangeFriendDataBaseEvent event) {
+    public void onEvent(ChangeFriendDbEvent event) {
         view.runOnUiThread(this::updateFriendList);
     }
 
@@ -177,7 +177,7 @@ public class FriendPresenter implements IFriendPresenter {
         boolean isReqRefresh = false;
         for (Friend friend : friendList) {
             if (friend.getId().equals(event.getUser().getID())) {
-                FriendsRepository.changeFriendOnlineStatus(friend, event.isExist());
+                FriendsRepository.changeFriendOnlineStatus(friend, event.exist());
                 isReqRefresh = true;
                 break;
             }

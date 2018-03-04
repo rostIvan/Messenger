@@ -44,6 +44,10 @@ abstract class CrudRepository<T : RealmModel> : IRepository<T> {
     override fun count(): Int = findAll().size
     override fun isEmpty(): Boolean = (count() == 0)
 
+    fun inTransaction(func: () -> Unit) {
+        realm.executeTransaction { func.invoke() }
+    }
+
     @Suppress("UNCHECKED_CAST")
     private fun getClazzFromGeneric() = (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<T>
 }

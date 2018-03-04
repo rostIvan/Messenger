@@ -4,18 +4,18 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
 public class ChangeUserList {
     private final IUser user;
-    private final boolean isExist;
+    private final boolean exit;
 
-    public ChangeUserList(IUser user, boolean isExist) {
+    public ChangeUserList(IUser user, boolean exist) {
         this.user = user;
-        this.isExist = isExist;
+        this.exit = exist;
     }
 
     public IUser getUser() {
         return user;
     }
 
-    public boolean isExist(){
-        return isExist;
+    public boolean exist(){
+        return exit;
     }
 }

@@ -2,7 +2,7 @@ package trickyquestion.messenger.screen.main.tabs.friends.interactors;
 
 import java.util.List;
 
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 import trickyquestion.messenger.screen.main.tabs.friends.repository.FriendsRepository;
 import trickyquestion.messenger.util.java.maping.FriendFilter;
 

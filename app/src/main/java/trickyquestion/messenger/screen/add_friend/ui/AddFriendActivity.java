@@ -33,22 +33,22 @@ public class AddFriendActivity extends AWithToolbarActivity implements IAddFrien
     public AddFriendPresenter getPresenter() { return new AddFriendPresenter(this, ApplicationRouter.from(this)); }
 
     @Override
-    public void showUsers(List<IUser> userList) {
+    public void showUsers(List<IUser> users) {
         recyclerView.setAdapter(new BaseRecyclerAdapter.Builder<IUser, AddFriendViewHolder>()
                 .holder(AddFriendViewHolder.class)
                 .itemView(R.layout.item_add_friend)
-                .items(userList)
+                .items(users)
                 .bind(this::bindRecycler)
                 .build());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private void bindRecycler(IUser model, AddFriendViewHolder holder, List<IUser> items) {
-        setupListValues(model, holder, items);
+        setupListValues(model, holder);
         setupListListeners(model, holder, items);
     }
 
-    private void setupListValues(IUser model, AddFriendViewHolder holder, List<IUser> items) {
+    private void setupListValues(IUser model, AddFriendViewHolder holder) {
         holder.name.setText(UserUtil.getName(model));
         holder.id.setText(UserUtil.getId(model));
     }
@@ -59,7 +59,16 @@ public class AddFriendActivity extends AWithToolbarActivity implements IAddFrien
     }
 
     @Override
-    public void updateUsers() { recyclerView.getAdapter().notifyDataSetChanged(); }
+    public void updateUsers() {
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void removeItem(int position, int size) {
+        recyclerView.removeViewAt(position);
+        recyclerView.getAdapter().notifyItemRemoved(position);
+        recyclerView.getAdapter().notifyItemRangeChanged(position, size);
+    }
 
     @Override
     public void refreshTheme() { refreshThemeColor(); }

@@ -36,6 +36,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/image"
-        android:src="@drawable/ic_user" />
+        android:src="@drawable/ic_user_black" />
 
 </RelativeLayout>

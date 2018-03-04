@@ -9,8 +9,8 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
-import trickyquestion.messenger.screen.main.tabs.friends.model.Friend;
-import trickyquestion.messenger.util.android.event_bus_pojo.ChangeFriendDataBaseEvent;
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
+import trickyquestion.messenger.util.android.event_bus_pojo.ChangeFriendDbEvent;
 
 public class FriendsRepository {
 
@@ -104,13 +104,14 @@ public class FriendsRepository {
         final Realm realm = Realm.getDefaultInstance();
         try {
             realm.executeTransaction(r -> friend.setOnline(isOnline));
+            onChange();
         } finally {
             realm.close();
         }
     }
 
     private static void onChange() {
-        EventBus.getDefault().post(new ChangeFriendDataBaseEvent("Change data in db"));
+        EventBus.getDefault().post(new ChangeFriendDbEvent("Change data in db"));
     }
 
     public static void updateFriendsStatus(List<Friend> friendList, List<IUser> users) {
