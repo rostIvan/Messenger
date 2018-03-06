@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
+import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.add_friend.buisness.AddFriendInteractor;
 import trickyquestion.messenger.screen.add_friend.buisness.EventManager;
@@ -57,7 +58,10 @@ public class AddFriendPresenter extends MvpPresenter<AddFriendActivity, BaseRout
     public void changeTheme() { view.refreshTheme(); }
 
     private void showUsers() {
-        view.showUsers(interactor.getUsers());
+        switch (Network.GetCurrentNetworkState()) {
+            case ACTIVE: view.showUsers(interactor.getUsers()); break;
+            case INACTIVE: view.showToast("You haven't connection"); break;
+        }
     }
 
     private void deleteUserItem(AddFriendViewHolder holder, List<IUser> items) {

@@ -44,6 +44,7 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
     @BindView(R.id.fab)
     FloatingActionButton fab;
     SearchView searchView;
+    AccountPopup accountPopup;
 
     private final IMainPresenter presenter = getPresenter();
 
@@ -88,8 +89,9 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        final boolean keyDown = super.onKeyDown(keyCode, event);
         presenter.onKeyDown(keyCode, event);
-        return super.onKeyDown(keyCode, event);
+        return keyDown;
     }
 
     @Override
@@ -115,7 +117,7 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
 
     @Override
     public void displayAccountPopup(boolean display) {
-        final AccountPopup accountPopup = new AccountPopup(this);
+        accountPopup = new AccountPopup(this);
         if (display) accountPopup.show();
         else if (accountPopup.isShowing()) accountPopup.dismiss();
     }
@@ -129,6 +131,7 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
     @Override
     public void onBackPressed() {
         if (!searchView.isIconified()) searchView.setIconified(true);
+        if (accountPopup != null && accountPopup.isShowing()) accountPopup.dismiss();
         else super.onBackPressed();
     }
 

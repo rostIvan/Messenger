@@ -4,24 +4,25 @@ import java.util.List;
 
 import trickyquestion.messenger.buisness.DataProviderInteractor;
 import trickyquestion.messenger.buisness.IDataProvider;
+import trickyquestion.messenger.data.repository.FriendRepository;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.tabs.friends.data.Friend;
-import trickyquestion.messenger.screen.main.tabs.friends.repository.FriendsRepository;
 
 public class AddFriendInteractor implements IAddFriendInteractor {
     private final IDataProvider dataProvider = new DataProviderInteractor();
+    private final FriendRepository repository = FriendRepository.INSTANCE;
 
     @Override
     public List<IUser> getUsers() {
         final List<IUser> fromNetwork = dataProvider.getUsersFromNetwork();
-        final List<Friend> friends = FriendsRepository.getFriends();
+        final List<Friend> friends = repository.findAll();
         return getUsersWithoutMyFriends(fromNetwork, friends);
     }
 
     @Override
     public void addToFriends(IUser user) {
         final Friend friend = new Friend(user.getName(), user.getID(), Friend.Status.ONLINE);
-        FriendsRepository.addFriend(friend);
+        repository.save(friend);
     }
 
     private List<IUser> getUsersWithoutMyFriends(List<IUser> fromNetwork, List<Friend> friends) {

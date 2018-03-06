@@ -12,6 +12,7 @@ import trickyquestion.messenger.screen.main.container.interfaces.IMainView;
 import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter;
 import trickyquestion.messenger.ui.abstraction.mvp.activity.MvpPresenter;
+import trickyquestion.messenger.util.AnimatorResource;
 
 public class MainPresenter extends MvpPresenter<MainActivity, BaseRouter> implements IMainPresenter {
     private final IMainView view = getView();
@@ -36,8 +37,8 @@ public class MainPresenter extends MvpPresenter<MainActivity, BaseRouter> implem
 
     @Override
     public void onSettingsClick() {
-        router.openScreen(BaseRouter.Screen.SETTINGS, new ApplicationRouter
-                .AnimatorResource(R.anim.translate_top_side, R.anim.alpha_to_zero));
+        router.openScreen(BaseRouter.Screen.SETTINGS,
+                AnimatorResource.with(R.anim.translate_top_side, R.anim.alpha_to_zero));
     }
 
     @Override

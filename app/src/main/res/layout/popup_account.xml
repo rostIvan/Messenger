@@ -47,20 +47,35 @@
             android:textColor="#95989A"
             android:textSize="14sp"
             tools:text="id:32748392647116" />
-
-        <TextView
-            android:id="@+id/change_data_link"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_gravity="center"
-            android:layout_marginTop="0dp"
-            android:text="@string/change_my_data"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryGreen"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:drawableRight="@drawable/ic_arrow_forward_black_24dp"
-            android:drawableEnd="@drawable/ic_arrow_forward_black_24dp" />
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:id="@+id/change_data_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:text="@string/change_my_data"
+                android:textAlignment="center"
+                android:textColor="#07A984"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/change_data_arrow"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/ic_arrow_forward_24dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/image" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </com.daasuu.bl.BubbleLayout>

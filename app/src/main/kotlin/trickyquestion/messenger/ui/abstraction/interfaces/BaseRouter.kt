@@ -2,16 +2,16 @@ package trickyquestion.messenger.ui.abstraction.interfaces
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter
+import trickyquestion.messenger.util.AnimatorResource
 
 interface BaseRouter {
     fun openScreen(screen: Screen) {}
     fun openScreen(screen: Screen, bundle: Bundle?) {}
-    fun openScreen(screen: Screen, bundle: Bundle?, animatorResource: ApplicationRouter.AnimatorResource) {}
-    fun openScreen(screen: Screen, animatorResource: ApplicationRouter.AnimatorResource) {}
+    fun openScreen(screen: Screen, bundle: Bundle?, animatorResource: AnimatorResource) {}
+    fun openScreen(screen: Screen, animatorResource: AnimatorResource) {}
     fun back() {}
     fun exit() {}
-    fun from(fragment: Fragment) : BaseRouter
+    fun use(fragment: Fragment) : BaseRouter
 
     enum class Screen {
         MAIN,

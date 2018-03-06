@@ -10,6 +10,7 @@ import trickyquestion.messenger.screen.chat.view.ChatActivity
 import trickyquestion.messenger.screen.main.container.implementation.MainActivity
 import trickyquestion.messenger.screen.settings.view.SettingActivity
 import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter
+import trickyquestion.messenger.util.AnimatorResource
 
 class ApplicationRouter private constructor(private val context: Context?) : BaseRouter {
 
@@ -18,7 +19,7 @@ class ApplicationRouter private constructor(private val context: Context?) : Bas
     }
 
     // for fragments use only this approach
-    override fun from(fragment: Fragment) = ApplicationRouter(fragment.context)
+    override fun use(fragment: Fragment) = ApplicationRouter(fragment.context)
 
     override fun back() {  (context as Activity).onBackPressed()  }
 
@@ -56,6 +57,4 @@ class ApplicationRouter private constructor(private val context: Context?) : Bas
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context?.startActivity(intent)
     }
-
-    class AnimatorResource (var enterAnim: Int, var exitAnim: Int)
 }

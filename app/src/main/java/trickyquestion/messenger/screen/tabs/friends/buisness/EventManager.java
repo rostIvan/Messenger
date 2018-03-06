@@ -1,15 +1,17 @@
 package trickyquestion.messenger.screen.tabs.friends.buisness;
 
 import trickyquestion.messenger.buisness.BaseEventManager;
+import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.events.ENetworkStateChanged;
-import trickyquestion.messenger.screen.tabs.friends.ui.IFriendPresenter;
+import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
+import trickyquestion.messenger.screen.tabs.friends.ui.IFriendsPresenter;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeFriendDbEvent;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeUserList;
 
 public class EventManager extends BaseEventManager {
-    private final IFriendPresenter presenter;
+    private final IFriendsPresenter presenter;
 
-    public EventManager(IFriendPresenter presenter) {
+    public EventManager(IFriendsPresenter presenter) {
         this.presenter = presenter;
     }
 
@@ -18,11 +20,14 @@ public class EventManager extends BaseEventManager {
     }
 
     public void onEvent(ENetworkStateChanged event) {
-        presenter.onNetworkStateChanged(event);
+        final NetworkState networkState = event.getNewNetworkState();
+        presenter.onNetworkStateChanged(networkState);
     }
 
     public void onEvent(ChangeUserList event) {
-        presenter.onChangeFriendState(event);
+        final IUser user = event.getUser();
+        final boolean online = event.exist();
+        presenter.onChangeFriendState(user, online);
     }
 
 }

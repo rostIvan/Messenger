@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.abstraction.adapter.BaseRecyclerAdapter;
@@ -33,15 +34,15 @@ public class FriendsFragment extends MvpView implements IFriendsView {
     @BindView(R.id.rv_friends)
     RecyclerView recyclerView;
 
-    private IFriendPresenter presenter = getPresenter();
+    private IFriendsPresenter presenter = getPresenter();
 
     public static FriendsFragment newInstance() {
         return new FriendsFragment();
     }
 
     @Override
-    public FriendPresenter getPresenter() {
-        return new FriendPresenter(this, ApplicationRouter.from(getContext()));
+    public FriendsPresenter getPresenter() {
+        return new FriendsPresenter(this, ApplicationRouter.from(getContext()));
     }
 
     @Override
@@ -107,7 +108,12 @@ public class FriendsFragment extends MvpView implements IFriendsView {
 
     @Override
     public void showFriendPhoto(Friend friend) {
-
+        final FriendPhotoDialog dialog = FriendPhotoDialog.newInstance();
+        final Bundle bundle = new Bundle();
+        bundle.putString("name", friend.getName());
+        bundle.putBoolean("online", friend.isOnline());
+        dialog.setArguments(bundle);
+        dialog.show(getFragmentManager(), "profile fragment");
     }
 
     @Override

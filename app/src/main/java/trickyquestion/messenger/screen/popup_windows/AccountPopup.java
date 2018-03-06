@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class AccountPopup {
     private TextView accountName;
     private TextView accountId;
     private TextView changeDataLink;
+    private ImageButton buttonArrow;
 
     public AccountPopup(final Context context) {
         this.mContext = context;
@@ -57,23 +59,15 @@ public class AccountPopup {
         accountName = (TextView) bubbleLayout.findViewById(R.id.account_name);
         accountId = (TextView) bubbleLayout.findViewById(R.id.account_id);
         changeDataLink = (TextView) bubbleLayout.findViewById(R.id.change_data_link);
+        buttonArrow = (ImageButton) bubbleLayout.findViewById(R.id.change_data_arrow);
     }
 
     private void customizeTheme() {
-        changeColorCompoundDrawable();
         changeDataLink.setTextColor(themePreference.getPrimaryColor());
         changeDataLink.setPaintFlags(changeDataLink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        buttonArrow.setColorFilter(themePreference.getPrimaryColor());
     }
 
-    private void changeColorCompoundDrawable() {
-        for (Drawable drawable : changeDataLink.getCompoundDrawables()) {
-            if (drawable != null) {
-                drawable.mutate().setColorFilter(
-                        new PorterDuffColorFilter(themePreference.getPrimaryColor(), PorterDuff.Mode.SRC_IN));
-                changeDataLink.setCompoundDrawables(null, null, drawable, null);
-            }
-        }
-    }
 
     private void setValues() {
         accountName.setText(getAccountName());
@@ -82,6 +76,7 @@ public class AccountPopup {
 
     private void setupListeners() {
         changeDataLink.setOnClickListener(view -> openSetting());
+        buttonArrow.setOnClickListener(view -> openSetting());
     }
 
     private void openSetting() {
