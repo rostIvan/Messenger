@@ -8,7 +8,6 @@ import trickyquestion.messenger.util.android.preference.ThemePreference
 
 abstract class AWithFieldFragment : ABaseFragment() {
     abstract fun getAllEditable(): List<EditText>
-    lateinit var themePreference: ThemePreference
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

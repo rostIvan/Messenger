@@ -26,6 +26,8 @@ fun applyThemeColor(views: List<View>, color: Int) {
 
 fun Context.redColor() : Int = ContextCompat.getColor(this, R.color.colorRed)
 fun Context.greenColor() : Int = ContextCompat.getColor(this, R.color.colorPrimaryGreen)
+fun Context.whiteColor() : Int = ContextCompat.getColor(this, R.color.colorWhite)
+fun Context.blackColor() : Int = ContextCompat.getColor(this, R.color.colorBlack)
 
 fun EditText.onTextChanged(afterTextChange: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher{

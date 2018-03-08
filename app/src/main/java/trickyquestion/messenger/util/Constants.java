@@ -13,11 +13,14 @@ public class Constants {
     public static final int DURATION_ITEM_ANIMATION = 50;
 
     public static final String PREFERENCE_AUTH_DATA = "Auth data";
-    public static final String EXTRA_KEY_AUTH_LOGIN = "Auth trickyquestion.messenger.log";
+    public static final String PREFERENCE_SEARCH_QUERY = "Search query";
+    public static final String EXTRA_KEY_AUTH_LOGIN = "Auth log";
     public static final String EXTRA_KEY_AUTH_PASSWORD = "Auth pass";
     public static final String EXTRA_KEY_USER_ID = "User ID";
     public static final String EXTRA_KEY_IS_AUTHENTICATED = "Ask auth";
     public static final String EXTRA_ASK_PASSWORD = "Ask pass";
+    public static final String EXTRA_LAST_SEARCH_QUERY = "Last search query";
+    public static final String EXTRA_FOCUS_SEARCH = "Show search";
     public static final String EXTRA_SHOW_NOTIFICATIONS = "Show notifications";
     public static final String PREFERENCE_THEME_COLOR = "Theme color";
     public static final String EXTRA_KEY_PRIMARY_COLOR = "Primary color";

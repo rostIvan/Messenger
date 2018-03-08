@@ -13,9 +13,7 @@ object FriendRepository : CrudRepository<Friend>() {
     fun findByEncryptionKey(byteArray: ByteArray) = realmQuery().equalTo("encryptionKey", byteArray).findFirst()
     fun findAllOnline(): List<Friend> = realmQuery().equalTo("online", true).findAll() ?: emptyList()
     fun findAllOffline(): List<Friend> = realmQuery().equalTo("online", false).findAll()
-    fun updateFriendStatus(friend: Friend, online: Boolean) {
-        inTransaction { friend.isOnline = online }
-    }
+    fun updateFriendStatus(friend: Friend, online: Boolean) { closeAfterTransaction{ friend.isOnline = online } }
 
     override fun equalsTo(item: Friend): RealmQuery<Friend> = realmQuery()
             .equalTo("id", item.id.toString())

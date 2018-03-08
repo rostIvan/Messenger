@@ -19,7 +19,7 @@ public class FriendsInteractor implements IFriendsInteractor {
 
     @Override
     public List<Friend> getFriends(String query) {
-        final List<Friend> friends = repository.findAll();
+        final List<Friend> friends = getFriends();
         return FriendFilter.filter(friends, query);
     }
 

@@ -19,10 +19,9 @@ public class FriendPhotoDialog extends DialogFragment {
     private TextView onlineStatus;
     private ImageView photo;
 
-    public static FriendPhotoDialog newInstance() {
-        final Bundle args = new Bundle();
-        FriendPhotoDialog fragment = new FriendPhotoDialog();
-        fragment.setArguments(args);
+    public static FriendPhotoDialog newInstance(Bundle bundle) {
+        final FriendPhotoDialog fragment = new FriendPhotoDialog();
+        fragment.setArguments(bundle);
         return fragment;
     }
 

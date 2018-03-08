@@ -82,6 +82,7 @@ public class AccountPopup {
     private void openSetting() {
         final Intent i = new Intent(mContext, SettingActivity.class);
         mContext.startActivity(i);
+        dismiss();
     }
 
     public boolean isShowing() {

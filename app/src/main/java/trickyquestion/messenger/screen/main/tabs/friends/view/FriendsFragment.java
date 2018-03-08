@@ -107,11 +107,10 @@ public class FriendsFragment extends Fragment implements IFriendsView {
 
     @Override
     public void showFriendProfile(String name, boolean online) {
-        final FriendPhotoDialog dialog = FriendPhotoDialog.newInstance();
         final Bundle bundle = new Bundle();
         bundle.putString("name", name);
         bundle.putBoolean("online", online);
-        dialog.setArguments(bundle);
+        final FriendPhotoDialog dialog = FriendPhotoDialog.newInstance(bundle);
         dialog.show(getFragmentManager(), "profile fragment");
     }
 

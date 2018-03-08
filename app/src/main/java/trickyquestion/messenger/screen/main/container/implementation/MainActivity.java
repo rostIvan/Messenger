@@ -20,17 +20,18 @@ import butterknife.BindView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainPresenter;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainView;
-import trickyquestion.messenger.screen.main.tabs.messages.view.MessagesFragment;
 import trickyquestion.messenger.screen.popup_windows.AccountPopup;
 import trickyquestion.messenger.screen.tabs.friends.ui.FriendsFragment;
+import trickyquestion.messenger.screen.tabs.messages.ui.MessagesFragment;
 import trickyquestion.messenger.ui.abstraction.activity.AWithToolbarActivity;
 import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.abstraction.interfaces.Layout;
+import trickyquestion.messenger.util.Constants;
 
 import static butterknife.internal.Utils.listOf;
 import static trickyquestion.messenger.util.ViewUtilKt.applyThemeColor;
 
-@Layout(res = R.layout.activity_main)
+@Layout(res = Constants.MAIN_LAYOUT)
 public class MainActivity extends AWithToolbarActivity implements IMainView {
 
     @BindView(R.id.header)
@@ -81,10 +82,6 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
             presenter.onAccountClick();
             return true;
         });
-        searchView.setOnQueryTextFocusChangeListener((view, hasFocus) -> {
-            settingMenuItem.setVisible(!hasFocus);
-            accountMenuItem.setVisible(!hasFocus);
-        });
     }
 
     @Override
@@ -130,7 +127,7 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
 
     @Override
     public void onBackPressed() {
-        if (!searchView.isIconified()) searchView.setIconified(true);
+        if (!searchView.isIconified()) searchView.onActionViewCollapsed();
         if (accountPopup != null && accountPopup.isShowing()) accountPopup.dismiss();
         else super.onBackPressed();
     }
@@ -140,9 +137,9 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
         applyThemeColor(listOf(toolbar, appBar, tabLayout, fab), themePreference.getPrimaryColor());
     }
 
-    @Nullable
     @Override
     public MainPresenter getPresenter() { return new MainPresenter(this, ApplicationRouter.from(this)); }
+
     @NonNull
     @Override
     protected Toolbar getToolbar() { return toolbar; }

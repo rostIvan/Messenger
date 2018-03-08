@@ -14,18 +14,18 @@ abstract class CrudRepository<T : RealmModel> : IRepository<T> {
 
 
     override fun save(item: T) {
-        closeAfter { it.copyToRealm(item) }
+        closeAfterTransaction { it.copyToRealm(item) }
     }
 
     override fun delete(item: T) {
-        closeAfter {
+        closeAfterTransaction {
             val result = equalsTo(item).findAll()
             result.deleteFirstFromRealm()
         }
     }
 
     override fun saveAll(items: Iterable<T>) {
-        closeAfter { it.copyToRealm(items) }
+        closeAfterTransaction { it.copyToRealm(items) }
     }
 
     override fun deleteAll(items: Iterable<T>) {
@@ -33,7 +33,7 @@ abstract class CrudRepository<T : RealmModel> : IRepository<T> {
     }
 
     override fun deleteAll() {
-        closeAfter { it.delete(clazz) }
+        closeAfterTransaction { it.delete(clazz) }
     }
 
     override fun findAll(): List<T> = realmQuery().findAll()
@@ -42,12 +42,12 @@ abstract class CrudRepository<T : RealmModel> : IRepository<T> {
     override fun count(): Int = findAll().size
     override fun isEmpty(): Boolean = (count() == 0)
 
-    fun inTransaction(operation: () -> Unit) {
+    private fun inTransaction(operation: () -> Unit) {
         realm().executeTransaction { operation.invoke() }
         notifyDataChanged()
     }
 
-    fun closeAfter(operation: (Realm) -> Unit) {
+    fun closeAfterTransaction(operation: (Realm) -> Unit) {
         realm().use { inTransaction { operation.invoke(it) } }
     }
 

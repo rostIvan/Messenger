@@ -2,17 +2,23 @@ package trickyquestion.messenger.screen.tabs.messages.data;
 
 import java.util.Calendar;
 
+import trickyquestion.messenger.screen.tabs.friends.data.Friend;
+
 public class Message {
     private String text;
-    private String friendName;
+    private Friend friend;
     private Calendar calendar;
 
     public Message() {
     }
 
-    public Message(String text, String friendName, Calendar calendar) {
+    public Message(String text) {
         this.text = text;
-        this.friendName = friendName;
+    }
+
+    public Message(String text, Friend friend, Calendar calendar) {
+        this.text = text;
+        this.friend = friend;
         this.calendar = calendar;
     }
 
@@ -24,12 +30,12 @@ public class Message {
         this.text = text;
     }
 
-    public String getFriendName() {
-        return friendName;
+    public Friend getFriend() {
+        return friend;
     }
 
-    public void setFriendName(String friendName) {
-        this.friendName = friendName;
+    public void setFriend(Friend friend) {
+        this.friend = friend;
     }
 
     public Calendar getCalendar() {
@@ -44,6 +50,6 @@ public class Message {
     public String toString() {
     final String time = calendar.get(Calendar.DAY_OF_WEEK) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR) + "  " +
                 calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE) + ":" + calendar.get(Calendar.SECOND);
-        return String.format("Message[text=%s, friend=%s, time=%s]", text, friendName, time);
+        return String.format("Message[text=%s, friend=%s, time=%s]", text, friend.getName(), time);
     }
 }

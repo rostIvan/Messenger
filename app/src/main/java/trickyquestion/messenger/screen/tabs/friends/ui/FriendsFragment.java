@@ -21,6 +21,7 @@ import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.screen.tabs.friends.data.Friend;
 import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.abstraction.adapter.BaseRecyclerAdapter;
+import trickyquestion.messenger.ui.abstraction.fragment.AWithSearchFragment;
 import trickyquestion.messenger.ui.abstraction.interfaces.Layout;
 import trickyquestion.messenger.ui.abstraction.mvp.fragment.MvpView;
 
@@ -29,7 +30,7 @@ import static trickyquestion.messenger.util.ViewUtilKt.greenColor;
 import static trickyquestion.messenger.util.ViewUtilKt.redColor;
 
 @Layout(res = R.layout.fragment_friends)
-public class FriendsFragment extends MvpView implements IFriendsView {
+public class FriendsFragment extends AWithSearchFragment implements IFriendsView {
 
     @BindView(R.id.rv_friends)
     RecyclerView recyclerView;
@@ -49,6 +50,7 @@ public class FriendsFragment extends MvpView implements IFriendsView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+        addSearchListener(newText -> presenter.onQueryTextChanged(newText.toString()));
     }
 
     @Override
@@ -60,21 +62,6 @@ public class FriendsFragment extends MvpView implements IFriendsView {
                 .bind(this::bindRecycler)
                 .build());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) { return false; }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                presenter.onQueryTextChanged(newText);
-                return false;
-            }
-        });
     }
 
     private void bindRecycler(Friend model, FriendViewHolder holder, List<Friend> items) {
@@ -91,7 +78,7 @@ public class FriendsFragment extends MvpView implements IFriendsView {
     private void setupListListeners(Friend model, FriendViewHolder holder, List<Friend> items) {
         holder.itemView.setOnClickListener( v -> presenter.onFriendItemClick(model, holder, items) );
         holder.itemView.setOnCreateContextMenuListener((contextMenu, view, contextMenuInfo) -> createContextMenu(contextMenu, model));
-        holder.image.setOnClickListener( v -> presenter.onFriendImageClick(model, holder, items) );
+        holder.image.setOnClickListener( v -> presenter.onFriendImageClick(model) );
     }
 
     @Override
@@ -107,12 +94,8 @@ public class FriendsFragment extends MvpView implements IFriendsView {
     }
 
     @Override
-    public void showFriendPhoto(Friend friend) {
-        final FriendPhotoDialog dialog = FriendPhotoDialog.newInstance();
-        final Bundle bundle = new Bundle();
-        bundle.putString("name", friend.getName());
-        bundle.putBoolean("online", friend.isOnline());
-        dialog.setArguments(bundle);
+    public void showFriendPhoto(Bundle bundle) {
+        final FriendPhotoDialog dialog = FriendPhotoDialog.newInstance(bundle);
         dialog.show(getFragmentManager(), "profile fragment");
     }
 

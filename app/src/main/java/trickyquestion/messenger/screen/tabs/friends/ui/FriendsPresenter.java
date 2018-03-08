@@ -2,6 +2,7 @@ package trickyquestion.messenger.screen.tabs.friends.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import org.jetbrains.annotations.NotNull;
@@ -22,10 +23,10 @@ import trickyquestion.messenger.ui.abstraction.mvp.fragment.MvpPresenter;
 import trickyquestion.messenger.util.AnimatorResource;
 
 public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> implements IFriendsPresenter {
-    private IFriendsView view = getView();
-    private IFriendsInteractor interactor = new FriendsInteractor();
-    private EventManager eventManager = new EventManager(this);
-    private BaseRouter router = getRouter();
+    private final IFriendsView view = getView();
+    private final IFriendsInteractor interactor = new FriendsInteractor();
+    private final EventManager eventManager = new EventManager(this);
+    private final BaseRouter router = getRouter();
 
     FriendsPresenter(@NotNull FriendsFragment view, @NotNull BaseRouter router) {
         super(view, router);
@@ -34,6 +35,10 @@ public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> 
     @Override
     public void onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         eventManager.subscribe();
+    }
+
+    @Override
+    public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
         showFriends();
     }
 
@@ -42,7 +47,7 @@ public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> 
 
     @Override
     public void updateFriends() {
-        view.onUiThread(this::showFriends);
+        getView().onUiThread(this::showFriends);
     }
 
     private void showFriends() {
@@ -64,8 +69,11 @@ public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> 
     }
 
     @Override
-    public void onFriendImageClick(Friend model, FriendViewHolder holder, List<Friend> items) {
-        view.showFriendPhoto(model);
+    public void onFriendImageClick(Friend model) {
+        final Bundle bundle = new Bundle();
+        bundle.putString("name", model.getName());
+        bundle.putBoolean("online", model.isOnline());
+        view.showFriendPhoto(bundle);
     }
 
     @Override
