@@ -3,7 +3,7 @@ package trickyquestion.messenger.screen.main.tabs.messages.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import trickyquestion.messenger.screen.chat.model.ChatMessage;
+import trickyquestion.messenger.screen.chat.model.ChatMessageM;
 import trickyquestion.messenger.screen.chat.repository.ChatMessageRepository;
 import trickyquestion.messenger.screen.main.tabs.messages.model.Message;
 import trickyquestion.messenger.util.java.string_helper.TimeFormatter;
@@ -14,9 +14,9 @@ public class MessagesRepository {
 
     public static List<Message> getMessages()  {
         messages.clear();
-        final List<ChatMessage> chatMessages = new ChatMessageRepository().getAllMessagesFromDB();
-        for (int i = chatMessages.size() - 1; i >= 0; i--) {
-            final ChatMessage item = chatMessages.get(i);
+        final List<ChatMessageM> chatMessageMS = new ChatMessageRepository().getAllMessagesFromDB();
+        for (int i = chatMessageMS.size() - 1; i >= 0; i--) {
+            final ChatMessageM item = chatMessageMS.get(i);
             final Message message = new Message(
                     item.getText(),
                     item.getNameFriend(),

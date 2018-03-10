@@ -2,7 +2,7 @@ package trickyquestion.messenger.screen.main.container.interfaces;
 
 import android.support.annotation.NonNull;
 
-import trickyquestion.messenger.ui.abstraction.interfaces.BaseView;
+import trickyquestion.messenger.ui.interfaces.BaseView;
 
 public interface IMainView extends BaseView {
     void showContent();

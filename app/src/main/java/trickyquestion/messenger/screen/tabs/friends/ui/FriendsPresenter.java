@@ -14,13 +14,14 @@ import trickyquestion.messenger.R;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.chat.view.ChatActivity;
+import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.screen.tabs.friends.buisness.EventManager;
 import trickyquestion.messenger.screen.tabs.friends.buisness.FriendsInteractor;
 import trickyquestion.messenger.screen.tabs.friends.buisness.IFriendsInteractor;
 import trickyquestion.messenger.screen.tabs.friends.data.Friend;
-import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter;
-import trickyquestion.messenger.ui.abstraction.mvp.fragment.MvpPresenter;
-import trickyquestion.messenger.util.AnimatorResource;
+import trickyquestion.messenger.ui.interfaces.BaseRouter;
+import trickyquestion.messenger.ui.mvp.fragment.MvpPresenter;
+import trickyquestion.messenger.ui.util.AnimatorResource;
 
 public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> implements IFriendsPresenter {
     private final IFriendsView view = getView();
@@ -59,8 +60,12 @@ public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> 
         final Bundle bundle = new Bundle();
         bundle.putString(ChatActivity.FRIEND_ID_EXTRA, model.getId().toString());
         bundle.putString(ChatActivity.FRIEND_NAME_EXTRA, model.getName());
+        openChat(bundle);
+    }
+
+    private void openChat(Bundle bundle) {
         router.use(getView()).openScreen(BaseRouter.Screen.CHAT, bundle,
-                AnimatorResource.with(R.anim.translate_left_slide, R.anim.translate_right_slide));
+                AnimatorResource.with(R.anim.translate_left_slide, R.anim.alpha_to_zero));
     }
 
     @Override
@@ -71,8 +76,8 @@ public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> 
     @Override
     public void onFriendImageClick(Friend model) {
         final Bundle bundle = new Bundle();
-        bundle.putString("name", model.getName());
-        bundle.putBoolean("online", model.isOnline());
+        bundle.putString(FriendPhotoDialog.FRIEND_NAME_EXTRA, model.getName());
+        bundle.putBoolean(FriendPhotoDialog.FRIEND_ONLINE_EXTRA, model.isOnline());
         view.showFriendPhoto(bundle);
     }
 

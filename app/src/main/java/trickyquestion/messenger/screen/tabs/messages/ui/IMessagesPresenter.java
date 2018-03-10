@@ -7,4 +7,8 @@ public interface IMessagesPresenter {
     void onFriendPhotoClick(Message model);
     void onQueryTextChanged(String newText);
     void onRefresh();
+
+    void updateMessages();
+
+    void clearMessagesDeletedFriend();
 }

@@ -33,7 +33,7 @@ import trickyquestion.messenger.util.android.preference.ThemePreference;
 
 public class ChatActivity extends SwipeBackActivity implements IChatView {
 
-    @BindView(R.id.message_toolbar)
+    @BindView(R.id.chat_toolbar)
     Toolbar toolbar;
     @BindView(R.id.rv_chat)
     RecyclerView recyclerView;
@@ -41,8 +41,6 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
     EditText messageField;
     @BindView(R.id.send_button)
     ImageButton sendButton;
-    @BindView(R.id.attach_button)
-    ImageButton attachButton;
 
     public static final String FRIEND_NAME_EXTRA = "friendName";
     public static final String FRIEND_ID_EXTRA = "friendId";
@@ -128,6 +126,7 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
         super.finish();
         this.overridePendingTransition(R.anim.alpha_to_one, R.anim.translate_right_slide);
     }
+
     @Override
     public void goBack() {
         onBackPressed();
@@ -193,7 +192,7 @@ public class ChatActivity extends SwipeBackActivity implements IChatView {
         container.setLayoutParams(params);
         container.setBackgroundDrawable(shape);
         textMessage.setTextColor(Color.WHITE);
-        timeMessage.setTextColor(getResources().getColor(R.color.colorTransparentGray));
+        timeMessage.setTextColor(getResources().getColor(R.color.colorOpacityGray));
     }
 
     @Override

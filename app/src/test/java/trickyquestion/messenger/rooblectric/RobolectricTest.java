@@ -15,16 +15,12 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import trickyquestion.messenger.BuildConfig;
-import trickyquestion.messenger.util.Color;
-import trickyquestion.messenger.util.Mode;
+import trickyquestion.messenger.data.util.Color;
+import trickyquestion.messenger.data.util.Mode;
 
-import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.when;
-import static trickyquestion.messenger.util.LoggerKt.LINE;
-import static trickyquestion.messenger.util.LoggerKt.log;
+import static trickyquestion.messenger.data.util.LoggerKt.LINE;
+import static trickyquestion.messenger.data.util.LoggerKt.log;
 
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(constants = BuildConfig.class, sdk = 17, application = MockApplication.class)

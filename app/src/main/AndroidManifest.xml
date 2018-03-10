@@ -45,6 +45,10 @@
             android:name=".screen.chat.view.ChatActivity"
             android:theme="@style/Theme.Swipe.Back" />
 
+        <activity
+            android:name=".screen.tabs.chat.ui.ChatActivity"
+            android:theme="@style/Theme.Swipe.Back" />
+
         <service
             android:name=".p2p_protocol.P2PProtocolService"
             android:enabled="true"

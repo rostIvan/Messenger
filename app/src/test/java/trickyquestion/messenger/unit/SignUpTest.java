@@ -7,9 +7,9 @@ import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import trickyquestion.messenger.data.util.Color;
+import trickyquestion.messenger.data.util.Mode;
 import trickyquestion.messenger.screen.login.sign_up.SignUpFragment;
-import trickyquestion.messenger.util.Color;
-import trickyquestion.messenger.util.Mode;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -19,8 +19,8 @@ import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.when;
 import static org.powermock.api.support.membermodification.MemberMatcher.method;
-import static trickyquestion.messenger.util.LoggerKt.LINE;
-import static trickyquestion.messenger.util.LoggerKt.log;
+import static trickyquestion.messenger.data.util.LoggerKt.LINE;
+import static trickyquestion.messenger.data.util.LoggerKt.log;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({SignUpFragment.class})

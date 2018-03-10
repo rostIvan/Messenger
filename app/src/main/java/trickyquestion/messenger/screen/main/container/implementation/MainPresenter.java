@@ -9,10 +9,9 @@ import org.jetbrains.annotations.Nullable;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainPresenter;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainView;
-import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
-import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter;
-import trickyquestion.messenger.ui.abstraction.mvp.activity.MvpPresenter;
-import trickyquestion.messenger.util.AnimatorResource;
+import trickyquestion.messenger.ui.interfaces.BaseRouter;
+import trickyquestion.messenger.ui.mvp.activity.MvpPresenter;
+import trickyquestion.messenger.ui.util.AnimatorResource;
 
 public class MainPresenter extends MvpPresenter<MainActivity, BaseRouter> implements IMainPresenter {
     private final IMainView view = getView();

@@ -11,12 +11,12 @@ import butterknife.BindView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.add_friend.data.UserUtil;
-import trickyquestion.messenger.ui.abstraction.activity.AWithToolbarActivity;
-import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
-import trickyquestion.messenger.ui.abstraction.adapter.BaseRecyclerAdapter;
-import trickyquestion.messenger.ui.abstraction.interfaces.Layout;
+import trickyquestion.messenger.ui.activity.AWithToolbarActivity;
+import trickyquestion.messenger.ui.activity.ApplicationRouter;
+import trickyquestion.messenger.ui.adapter.BaseRecyclerAdapter;
+import trickyquestion.messenger.ui.interfaces.Layout;
 
-import static trickyquestion.messenger.util.ContextExtensionsKt.toast;
+import static trickyquestion.messenger.ui.util.ContextExtensionsKt.toast;
 
 @Layout(res = R.layout.activity_add_friend)
 public class AddFriendActivity extends AWithToolbarActivity implements IAddFriendView {
@@ -26,11 +26,11 @@ public class AddFriendActivity extends AWithToolbarActivity implements IAddFrien
     @BindView(R.id.rv_add_friend)
     RecyclerView recyclerView;
 
-    private final IAddFriendPresenter presenter = getPresenter();
+    private final AddFriendPresenter presenter = new AddFriendPresenter(this, ApplicationRouter.from(this));
 
     @NonNull
     @Override
-    public AddFriendPresenter getPresenter() { return new AddFriendPresenter(this, ApplicationRouter.from(this)); }
+    public AddFriendPresenter getPresenter() { return presenter; }
 
     @Override
     public void showUsers(List<IUser> users) {
@@ -73,9 +73,6 @@ public class AddFriendActivity extends AWithToolbarActivity implements IAddFrien
     @Override
     public void refreshTheme() { refreshThemeColor(); }
 
-    @Override
-    public void showToast(@NonNull final CharSequence text) { toast(this, text); }
-
     @NonNull
     @Override
     protected Toolbar getToolbar() { return toolbar; }
@@ -83,7 +80,4 @@ public class AddFriendActivity extends AWithToolbarActivity implements IAddFrien
     @NonNull
     @Override
     public CharSequence getToolbarTitle() { return "Add friend"; }
-
-    @Override
-    public void onUiThread(@NonNull Runnable runnable) { super.runOnUiThread(runnable); }
 }

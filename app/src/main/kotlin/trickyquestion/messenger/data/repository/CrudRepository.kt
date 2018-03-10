@@ -3,6 +3,7 @@ package trickyquestion.messenger.data.repository
 import io.realm.Realm
 import io.realm.RealmModel
 import io.realm.RealmQuery
+import io.realm.kotlin.where
 import java.lang.reflect.ParameterizedType
 
 abstract class CrudRepository<T : RealmModel> : IRepository<T> {
@@ -12,16 +13,12 @@ abstract class CrudRepository<T : RealmModel> : IRepository<T> {
 
     fun realmQuery(): RealmQuery<T> = realm().where(clazz)
 
-
     override fun save(item: T) {
         closeAfterTransaction { it.copyToRealm(item) }
     }
 
     override fun delete(item: T) {
-        closeAfterTransaction {
-            val result = equalsTo(item).findAll()
-            result.deleteFirstFromRealm()
-        }
+        closeAfterTransaction { equalsTo(item).findAll().deleteFirstFromRealm() }
     }
 
     override fun saveAll(items: Iterable<T>) {

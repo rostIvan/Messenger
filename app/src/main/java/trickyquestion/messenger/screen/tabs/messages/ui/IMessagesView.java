@@ -5,7 +5,7 @@ import android.os.Bundle;
 import java.util.List;
 
 import trickyquestion.messenger.screen.tabs.messages.data.Message;
-import trickyquestion.messenger.ui.abstraction.interfaces.BaseView;
+import trickyquestion.messenger.ui.interfaces.BaseView;
 
 public interface IMessagesView extends BaseView {
     void showMessages(List<Message> messages);

@@ -15,8 +15,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trickyquestion.messenger.R;
-import trickyquestion.messenger.ui.abstraction.fragment.AWithFieldFragment;
-import trickyquestion.messenger.ui.abstraction.interfaces.Layout;
+import trickyquestion.messenger.ui.fragment.AWithFieldFragment;
+import trickyquestion.messenger.ui.interfaces.Layout;
 import trickyquestion.messenger.util.java.validation.PassValidator;
 
 @Layout(res = R.layout.fragment_ask_pass)

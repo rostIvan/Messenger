@@ -5,7 +5,7 @@ import android.os.Bundle;
 import java.util.List;
 
 import trickyquestion.messenger.screen.tabs.friends.data.Friend;
-import trickyquestion.messenger.ui.abstraction.interfaces.BaseView;
+import trickyquestion.messenger.ui.interfaces.BaseView;
 
 public interface IFriendsView extends BaseView {
     void showFriends(List<Friend> friends);

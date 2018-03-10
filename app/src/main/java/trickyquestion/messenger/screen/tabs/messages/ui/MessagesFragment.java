@@ -18,13 +18,13 @@ import trickyquestion.messenger.screen.main.tabs.messages.view.adapter.MessageVi
 import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.screen.tabs.messages.data.Message;
 import trickyquestion.messenger.screen.tabs.messages.data.MessageUtil;
-import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
-import trickyquestion.messenger.ui.abstraction.adapter.BaseRecyclerAdapter;
-import trickyquestion.messenger.ui.abstraction.fragment.AWithSearchFragment;
-import trickyquestion.messenger.ui.abstraction.interfaces.Layout;
+import trickyquestion.messenger.ui.activity.ApplicationRouter;
+import trickyquestion.messenger.ui.adapter.BaseRecyclerAdapter;
+import trickyquestion.messenger.ui.fragment.AWithSearchFragment;
+import trickyquestion.messenger.ui.interfaces.Layout;
 
-import static trickyquestion.messenger.util.ContextExtensionsKt.toast;
-import static trickyquestion.messenger.util.ViewUtilKt.whiteColor;
+import static trickyquestion.messenger.ui.util.ContextExtensionsKt.toast;
+import static trickyquestion.messenger.ui.util.ViewUtilKt.whiteColor;
 
 @Layout(res = R.layout.fragment_messages)
 public class MessagesFragment extends AWithSearchFragment implements IMessagesView {
@@ -34,16 +34,14 @@ public class MessagesFragment extends AWithSearchFragment implements IMessagesVi
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout refreshLayout;
 
-    private IMessagesPresenter presenter = getPresenter();
+    private MessagesPresenter presenter = new MessagesPresenter(this, ApplicationRouter.from(getContext()));
 
     public static MessagesFragment newInstance() {
         return new MessagesFragment();
     }
 
     @Override
-    public MessagesPresenter getPresenter() {
-        return new MessagesPresenter(this, ApplicationRouter.from(getContext()));
-    }
+    public MessagesPresenter getPresenter() { return presenter; }
 
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {
@@ -98,12 +96,6 @@ public class MessagesFragment extends AWithSearchFragment implements IMessagesVi
         final FriendPhotoDialog dialog = FriendPhotoDialog.newInstance(bundle);
         dialog.show(getFragmentManager(), "profile fragment");
     }
-
-    @Override
-    public void onUiThread(@NotNull Runnable runnable) { getActivity().runOnUiThread(runnable); }
-
-    @Override
-    public void showToast(@NotNull CharSequence text) { toast(this, text); }
 
     public void setupSwipeRefreshLayout() {
         refreshLayout.setOnRefreshListener(() -> presenter.onRefresh());

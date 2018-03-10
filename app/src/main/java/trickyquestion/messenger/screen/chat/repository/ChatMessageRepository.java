@@ -5,13 +5,13 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import trickyquestion.messenger.screen.chat.model.ChatMessage;
+import trickyquestion.messenger.screen.chat.model.ChatMessageM;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeMessageDbEvent;
 
 public class ChatMessageRepository implements IChatMessageRepository {
 
     @Override
-    public void addMessage(final ChatMessage message) {
+    public void addMessage(final ChatMessageM message) {
         final Realm realm = Realm.getDefaultInstance();
         try {
             realm.executeTransaction(realm1 -> {
@@ -24,9 +24,9 @@ public class ChatMessageRepository implements IChatMessageRepository {
     }
 
     @Override
-    public void deleteMessage(final ChatMessage message) {
+    public void deleteMessage(final ChatMessageM message) {
         final Realm realm = Realm.getDefaultInstance();
-        final RealmResults results = realm.where(ChatMessage.class)
+        final RealmResults results = realm.where(ChatMessageM.class)
                 .equalTo("nameFriend", message.getNameFriend())
                 .equalTo("idFriend", message.getIdFriend().toString())
                 .equalTo("text", message.getText())
@@ -46,7 +46,7 @@ public class ChatMessageRepository implements IChatMessageRepository {
     @Override
     public void deleteMessages(String idFriend) {
         final Realm realm = Realm.getDefaultInstance();
-        final RealmResults results = realm.where(ChatMessage.class)
+        final RealmResults results = realm.where(ChatMessageM.class)
                 .equalTo("idFriend", idFriend)
                 .findAll();
         try {
@@ -64,7 +64,7 @@ public class ChatMessageRepository implements IChatMessageRepository {
         final Realm realm = Realm.getDefaultInstance();
         try {
             realm.executeTransaction(realm1 -> {
-                realm1.delete(ChatMessage.class);
+                realm1.delete(ChatMessageM.class);
                 onChange();
             });
         } finally {
@@ -73,14 +73,14 @@ public class ChatMessageRepository implements IChatMessageRepository {
     }
 
     @Override
-    public List<ChatMessage> getAllMessagesFromDB() {
+    public List<ChatMessageM> getAllMessagesFromDB() {
         final Realm realm = Realm.getDefaultInstance();
-        return realm.where(ChatMessage.class).findAll();
+        return realm.where(ChatMessageM.class).findAll();
     }
     @Override
-    public List<ChatMessage> getMessages(final String idFriend) {
+    public List<ChatMessageM> getMessages(final String idFriend) {
         final Realm realm = Realm.getDefaultInstance();
-        return realm.where(ChatMessage.class).equalTo("idFriend", idFriend).findAll();
+        return realm.where(ChatMessageM.class).equalTo("idFriend", idFriend).findAll();
     }
 
     private void onChange() {

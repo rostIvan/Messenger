@@ -23,13 +23,13 @@ import trickyquestion.messenger.screen.main.container.interfaces.IMainView;
 import trickyquestion.messenger.screen.popup_windows.AccountPopup;
 import trickyquestion.messenger.screen.tabs.friends.ui.FriendsFragment;
 import trickyquestion.messenger.screen.tabs.messages.ui.MessagesFragment;
-import trickyquestion.messenger.ui.abstraction.activity.AWithToolbarActivity;
-import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
-import trickyquestion.messenger.ui.abstraction.interfaces.Layout;
+import trickyquestion.messenger.ui.activity.AWithToolbarActivity;
+import trickyquestion.messenger.ui.activity.ApplicationRouter;
+import trickyquestion.messenger.ui.interfaces.Layout;
 import trickyquestion.messenger.util.Constants;
 
 import static butterknife.internal.Utils.listOf;
-import static trickyquestion.messenger.util.ViewUtilKt.applyThemeColor;
+import static trickyquestion.messenger.ui.util.ViewUtilKt.applyThemeColor;
 
 @Layout(res = Constants.MAIN_LAYOUT)
 public class MainActivity extends AWithToolbarActivity implements IMainView {

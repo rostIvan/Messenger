@@ -15,7 +15,7 @@ import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.p2p_protocol.events.EReceivedMsg;
-import trickyquestion.messenger.screen.chat.model.ChatMessage;
+import trickyquestion.messenger.screen.chat.model.ChatMessageM;
 import trickyquestion.messenger.screen.chat.repository.ChatMessageRepository;
 import trickyquestion.messenger.screen.chat.repository.IChatMessageRepository;
 import trickyquestion.messenger.screen.chat.view.IChatView;
@@ -29,13 +29,13 @@ import trickyquestion.messenger.util.java.string_helper.TimeFormatter;
 public class ChatPresenter implements IChatPresenter {
 
     private final IChatView view;
-    private final List<ChatMessage> chatMessages;
+    private final List<ChatMessageM> chatMessageMS;
     private final IChatMessageRepository repository;
 
     public ChatPresenter(final IChatView view) {
         this.view = view;
         this.repository = new ChatMessageRepository();
-        this.chatMessages = repository.getMessages(view.getFriendId());
+        this.chatMessageMS = repository.getMessages(view.getFriendId());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ChatPresenter implements IChatPresenter {
         view.customizeToolbar();
         view.showMessages();
         view.setupListeners();
-        view.scrollRecyclerToPosition(chatMessages.size() - 1);
+        view.scrollRecyclerToPosition(chatMessageMS.size() - 1);
         checkSendingPossibility();
         EventBus.getDefault().register(this);
     }
@@ -78,7 +78,7 @@ public class ChatPresenter implements IChatPresenter {
 
     @Override
     public int getCount() {
-        return chatMessages.size();
+        return chatMessageMS.size();
     }
 
     @Override
@@ -91,11 +91,11 @@ public class ChatPresenter implements IChatPresenter {
 
     @Override
     public void onBindViewHolder(ChatViewHolder holder, int position) {
-        final ChatMessage message = chatMessages.get(position);
+        final ChatMessageM message = chatMessageMS.get(position);
         bindViewHolder(holder, message);
     }
 
-    private void bindViewHolder(ChatViewHolder holder, ChatMessage message) {
+    private void bindViewHolder(ChatViewHolder holder, ChatMessageM message) {
         holder.textMessage.setText(message.getText());
         holder.timeMessage.setText(message.getTime());
         if (message.isMine())
@@ -117,23 +117,23 @@ public class ChatPresenter implements IChatPresenter {
     }
 
     private void addMyMessageToDb(final String message) {
-        final ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setText(message);
-        chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
-        chatMessage.setMine(true);
-        chatMessage.setNameFriend(view.getFriendName());
-        chatMessage.setIdFriend(UUID.fromString(view.getFriendId()));
-        repository.addMessage(chatMessage);
+        final ChatMessageM chatMessageM = new ChatMessageM();
+        chatMessageM.setText(message);
+        chatMessageM.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
+        chatMessageM.setMine(true);
+        chatMessageM.setNameFriend(view.getFriendName());
+        chatMessageM.setIdFriend(UUID.fromString(view.getFriendId()));
+        repository.addMessage(chatMessageM);
     }
 
     private void addReceiveMessageToDb(final String message, final UUID id, final String name) {
-        final ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setText(message);
-        chatMessage.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
-        chatMessage.setMine(false);
-        chatMessage.setNameFriend(name);
-        chatMessage.setIdFriend(id);
-        repository.addMessage(chatMessage);
+        final ChatMessageM chatMessageM = new ChatMessageM();
+        chatMessageM.setText(message);
+        chatMessageM.setTime(TimeFormatter.getCurrentTime("d MMM yyyy HH:mm:ss"));
+        chatMessageM.setMine(false);
+        chatMessageM.setNameFriend(name);
+        chatMessageM.setIdFriend(id);
+        repository.addMessage(chatMessageM);
     }
 
     private void sendMessage(final String message) {
@@ -150,7 +150,7 @@ public class ChatPresenter implements IChatPresenter {
     private void updateMessages() {
         view.runOnUIThread(() -> {
             view.refreshRecycler();
-            view.scrollRecyclerToPosition(chatMessages.size() - 1);
+            view.scrollRecyclerToPosition(chatMessageMS.size() - 1);
         });
     }
 

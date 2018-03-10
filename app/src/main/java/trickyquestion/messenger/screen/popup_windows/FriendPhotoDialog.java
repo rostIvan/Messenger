@@ -15,6 +15,9 @@ import trickyquestion.messenger.R;
 
 public class FriendPhotoDialog extends DialogFragment {
 
+    public static final String FRIEND_NAME_EXTRA = "EXTRA NAME";
+    public static final String FRIEND_ONLINE_EXTRA = "EXTRA ONLINE";
+
     private TextView name;
     private TextView onlineStatus;
     private ImageView photo;
@@ -38,8 +41,8 @@ public class FriendPhotoDialog extends DialogFragment {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setView(view);
         initViews(view);
-        setName(getArguments().getString("name"));
-        setOnline(getArguments().getBoolean("online"));
+        setName(getArguments().getString(FRIEND_NAME_EXTRA));
+        setOnline(getArguments().getBoolean(FRIEND_ONLINE_EXTRA));
         return dialog.create();
     }
 

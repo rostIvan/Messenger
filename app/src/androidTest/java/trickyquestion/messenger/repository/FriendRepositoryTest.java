@@ -31,6 +31,7 @@ public class FriendRepositoryTest {
     @Before
     public void before() {
         Realm.init(context);
+        repository.deleteAll();
     }
 
     @After

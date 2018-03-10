@@ -8,7 +8,7 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IUser
 import trickyquestion.messenger.screen.tabs.friends.data.Friend
 
 open class DataProviderInteractor :  IDataProvider {
-    private val friendRepository = FriendRepository
+    private val friendRepository = FriendRepository.INSTANCE
 
     override fun getFriendsFromDb(): List<Friend> = friendRepository.findAll()
 
@@ -18,9 +18,4 @@ open class DataProviderInteractor :  IDataProvider {
             else -> { emptyList() }
         }
     }
-}
-
-interface IDataProvider {
-    fun getFriendsFromDb() : List<Friend>
-    fun getUsersFromNetwork() : List<IUser>
 }

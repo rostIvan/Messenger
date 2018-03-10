@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chat_message_container"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_my_message"
-    android:layout_margin="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp"
     android:orientation="vertical">
-    <TextView
-        android:id="@+id/chat_message_text"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorWhite"
-        tools:text="Hello, my dear friend"/>
-    <TextView
-        android:id="@+id/chat_message_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorTransparentGray"
-        android:layout_gravity="end"
-        tools:text="4:20"/>
+        android:id="@+id/chat_message_container"
+        android:background="@drawable/shape_my_message"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        <TextView
+            android:id="@+id/chat_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            tools:text="Hello, how r you?"/>
+        <TextView
+            android:id="@+id/chat_message_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/colorOpacityGray"
+            android:layout_gravity="end"
+            tools:text="4:20"/>
+    </LinearLayout>
+
 </LinearLayout>

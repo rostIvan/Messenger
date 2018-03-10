@@ -14,8 +14,8 @@ import trickyquestion.messenger.screen.add_friend.buisness.AddFriendInteractor;
 import trickyquestion.messenger.screen.add_friend.buisness.EventManager;
 import trickyquestion.messenger.screen.add_friend.buisness.IAddFriendInteractor;
 import trickyquestion.messenger.screen.add_friend.data.UserUtil;
-import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter;
-import trickyquestion.messenger.ui.abstraction.mvp.activity.MvpPresenter;
+import trickyquestion.messenger.ui.interfaces.BaseRouter;
+import trickyquestion.messenger.ui.mvp.activity.MvpPresenter;
 
 public class AddFriendPresenter extends MvpPresenter<AddFriendActivity, BaseRouter> implements IAddFriendPresenter {
     private final IAddFriendView view = getView();

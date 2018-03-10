@@ -3,11 +3,7 @@ package trickyquestion.messenger.screen.tabs.friends.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import org.jetbrains.annotations.NotNull;
@@ -19,15 +15,14 @@ import butterknife.BindView;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.screen.tabs.friends.data.Friend;
-import trickyquestion.messenger.ui.abstraction.activity.ApplicationRouter;
-import trickyquestion.messenger.ui.abstraction.adapter.BaseRecyclerAdapter;
-import trickyquestion.messenger.ui.abstraction.fragment.AWithSearchFragment;
-import trickyquestion.messenger.ui.abstraction.interfaces.Layout;
-import trickyquestion.messenger.ui.abstraction.mvp.fragment.MvpView;
+import trickyquestion.messenger.ui.activity.ApplicationRouter;
+import trickyquestion.messenger.ui.adapter.BaseRecyclerAdapter;
+import trickyquestion.messenger.ui.fragment.AWithSearchFragment;
+import trickyquestion.messenger.ui.interfaces.Layout;
 
-import static trickyquestion.messenger.util.ContextExtensionsKt.toast;
-import static trickyquestion.messenger.util.ViewUtilKt.greenColor;
-import static trickyquestion.messenger.util.ViewUtilKt.redColor;
+import static trickyquestion.messenger.ui.util.ContextExtensionsKt.toast;
+import static trickyquestion.messenger.ui.util.ViewUtilKt.greenColor;
+import static trickyquestion.messenger.ui.util.ViewUtilKt.redColor;
 
 @Layout(res = R.layout.fragment_friends)
 public class FriendsFragment extends AWithSearchFragment implements IFriendsView {
@@ -35,16 +30,14 @@ public class FriendsFragment extends AWithSearchFragment implements IFriendsView
     @BindView(R.id.rv_friends)
     RecyclerView recyclerView;
 
-    private IFriendsPresenter presenter = getPresenter();
+    private FriendsPresenter presenter = new FriendsPresenter(this, ApplicationRouter.from(getContext()));
 
     public static FriendsFragment newInstance() {
         return new FriendsFragment();
     }
 
     @Override
-    public FriendsPresenter getPresenter() {
-        return new FriendsPresenter(this, ApplicationRouter.from(getContext()));
-    }
+    public FriendsPresenter getPresenter() { return presenter; }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -98,12 +91,6 @@ public class FriendsFragment extends AWithSearchFragment implements IFriendsView
         final FriendPhotoDialog dialog = FriendPhotoDialog.newInstance(bundle);
         dialog.show(getFragmentManager(), "profile fragment");
     }
-
-    @Override
-    public void showToast(@NotNull CharSequence text) { toast(this, text); }
-
-    @Override
-    public void onUiThread(@NotNull Runnable runnable) { getActivity().runOnUiThread(runnable); }
 
     private void createContextMenu(ContextMenu contextMenu, Friend model) {
         contextMenu.setHeaderTitle(model.getName());

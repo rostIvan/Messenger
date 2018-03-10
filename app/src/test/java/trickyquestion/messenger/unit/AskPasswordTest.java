@@ -4,31 +4,21 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.lang.reflect.Method;
-
+import trickyquestion.messenger.data.util.Color;
+import trickyquestion.messenger.data.util.Mode;
 import trickyquestion.messenger.screen.login.ask_password.AskPasswordFragment;
-import trickyquestion.messenger.util.Color;
-import trickyquestion.messenger.util.Mode;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.mock;
-import static org.powermock.api.mockito.PowerMockito.spy;
 import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
 import static org.powermock.api.mockito.PowerMockito.when;
-import static org.powermock.api.support.membermodification.MemberMatcher.method;
-import static org.powermock.api.support.membermodification.MemberModifier.suppress;
-import static trickyquestion.messenger.util.LoggerKt.LINE;
-import static trickyquestion.messenger.util.LoggerKt.log;
+import static trickyquestion.messenger.data.util.LoggerKt.LINE;
+import static trickyquestion.messenger.data.util.LoggerKt.log;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({AskPasswordFragment.class})

@@ -2,42 +2,48 @@ package trickyquestion.messenger.screen.tabs.messages.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.support.v4.content.res.ResourcesCompat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.UUID;
-
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.screen.chat.view.ChatActivity;
-import trickyquestion.messenger.screen.tabs.friends.data.Friend;
+import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
+import trickyquestion.messenger.screen.tabs.messages.buisness.EventManager;
 import trickyquestion.messenger.screen.tabs.messages.buisness.IMessagesInteractor;
 import trickyquestion.messenger.screen.tabs.messages.buisness.MessagesInteractor;
 import trickyquestion.messenger.screen.tabs.messages.data.Message;
-import trickyquestion.messenger.ui.abstraction.interfaces.BaseRouter;
-import trickyquestion.messenger.ui.abstraction.mvp.fragment.MvpPresenter;
-import trickyquestion.messenger.util.AnimatorResource;
+import trickyquestion.messenger.ui.interfaces.BaseRouter;
+import trickyquestion.messenger.ui.mvp.fragment.MvpPresenter;
+import trickyquestion.messenger.ui.util.AnimatorResource;
 
 public class MessagesPresenter extends MvpPresenter<MessagesFragment, BaseRouter> implements IMessagesPresenter {
     private final IMessagesView view = getView();
     private final BaseRouter router = getRouter();
     private final IMessagesInteractor interactor = new MessagesInteractor();
+    private final EventManager eventManager = new EventManager(this);
 
     MessagesPresenter(@NotNull MessagesFragment view, @NotNull BaseRouter router) {
         super(view, router);
     }
 
     @Override
+    public void onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        eventManager.subscribe();
+    }
+
+    @Override
+    public void onDestroyView() {
+        eventManager.unsubscribe();
+    }
+
+    @Override
     public void onViewCreated(@Nullable View v, @Nullable Bundle savedInstanceState) {
         showMessages();
     }
-
 
     @Override
     public void onMessageItemClick(Message model) {
@@ -50,8 +56,8 @@ public class MessagesPresenter extends MvpPresenter<MessagesFragment, BaseRouter
     @Override
     public void onFriendPhotoClick(Message model) {
         final Bundle bundle = new Bundle();
-        bundle.putString("name", model.getFriend().getName());
-        bundle.putBoolean("online", model.getFriend().isOnline());
+        bundle.putString(FriendPhotoDialog.FRIEND_NAME_EXTRA, model.getFriend().getName());
+        bundle.putBoolean(FriendPhotoDialog.FRIEND_ONLINE_EXTRA, model.getFriend().isOnline());
         view.showFriendPhotoDialog(bundle);
     }
 
@@ -65,13 +71,26 @@ public class MessagesPresenter extends MvpPresenter<MessagesFragment, BaseRouter
         view.onUiThread(this::emulateUpdating);
     }
 
+    @Override
+    public void updateMessages() {
+        view.onUiThread(this::showMessages);
+    }
+
+    @Override
+    public void clearMessagesDeletedFriend() {
+        interactor.deleteEmptyTables();
+    }
+
     private void showMessages() {
         view.showMessages(interactor.getMessages());
     }
 
     private void emulateUpdating() {
         view.showProgress(true);
-        new Handler().postDelayed(() -> view.showProgress(false), 1_000);
+        new Handler().postDelayed(() -> {
+            updateMessages();
+            view.showProgress(false);
+        }, 1_000);
     }
 
     private void openChat(Bundle bundle) {
