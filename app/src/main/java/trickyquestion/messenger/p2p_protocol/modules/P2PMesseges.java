@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
-import trickyquestion.messenger.screen.main.tabs.friends.repository.FriendsRepository;
+import trickyquestion.messenger.data.repository.FriendRepository;
 import trickyquestion.messenger.network.socket.SocketClient;
 import trickyquestion.messenger.network.socket.SocketServer;
 import trickyquestion.messenger.p2p_protocol.events.EReceivedMsg;
@@ -52,7 +52,7 @@ public class P2PMesseges {
             String[] packetContent = str.split(":");
             if(packetContent.length != 6) return;
             if(!packetContent[0].equals("P2PProtocol") || !packetContent[1].equals("MSG")) return;
-            List<IFriend> friends = TypeCasting.castToIFriendList(FriendsRepository.getFriends());
+            List<IFriend> friends = TypeCasting.castToIFriendList(FriendRepository.INSTANCE.findAll());
             IFriend from = null;
             UUID sender = UUID.fromString(packetContent[2]);
             if(host.getID().equals(sender)){

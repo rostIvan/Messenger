@@ -2,7 +2,7 @@ package trickyquestion.messenger.data.repository
 
 import de.greenrobot.event.EventBus
 import io.realm.RealmQuery
-import trickyquestion.messenger.screen.tabs.friends.data.Friend
+import trickyquestion.messenger.screen.main.tabs.friends.data.Friend
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeFriendDbEvent
 import java.util.*
 

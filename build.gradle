@@ -18,12 +18,14 @@ allprojects {
     repositories {
         jcenter()
         google()
-        maven { url "https://jitpack.io" }
+        maven {
+            url "http://localhost:8081/nexus/content/repositories/thirdparty/"
+            credentials {
+                username "admin"
+                password "admin123"
+            }
+        }
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }
 
 ext {

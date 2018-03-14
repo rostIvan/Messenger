@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment
 import trickyquestion.messenger.screen.add_friend.ui.AddFriendActivity
 import trickyquestion.messenger.screen.main.container.implementation.MainActivity
 import trickyquestion.messenger.screen.settings.view.SettingActivity
-import trickyquestion.messenger.screen.tabs.chat.ui.ChatActivity
+import trickyquestion.messenger.screen.chat.ui.ChatActivity
 import trickyquestion.messenger.ui.interfaces.BaseRouter
 import trickyquestion.messenger.ui.util.AnimatorResource
 

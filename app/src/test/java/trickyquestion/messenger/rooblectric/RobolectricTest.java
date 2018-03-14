@@ -23,7 +23,7 @@ import static trickyquestion.messenger.data.util.LoggerKt.LINE;
 import static trickyquestion.messenger.data.util.LoggerKt.log;
 
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 17, application = MockApplication.class)
+@Config(constants = BuildConfig.class, sdk = 17, application = MockApplication.class, manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*"})
 @PrepareForTest({Realm.class})
 public class RobolectricTest {

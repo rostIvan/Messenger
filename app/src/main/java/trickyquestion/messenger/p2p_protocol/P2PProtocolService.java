@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
+import trickyquestion.messenger.data.repository.FriendRepository;
 import trickyquestion.messenger.p2p_protocol.events.EAddFriendRequest;
-import trickyquestion.messenger.screen.tabs.friends.data.Friend;
-import trickyquestion.messenger.screen.main.tabs.friends.repository.FriendsRepository;
+import trickyquestion.messenger.screen.main.tabs.friends.data.Friend;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
@@ -115,7 +115,7 @@ public class P2PProtocolService extends Service{
         }
 
         public void SendMsg(UUID targetID, String msg){
-            List<IFriend> friends = TypeCasting.castToIFriendList(FriendsRepository.getFriends());
+            List<IFriend> friends = TypeCasting.castToIFriendList(FriendRepository.INSTANCE.findAll());
             for (IFriend friend : friends) {
                 if (friend.getID().equals(targetID)) {
                     P2PMesseges.SendMsg(friend, msg);
@@ -167,7 +167,7 @@ public class P2PProtocolService extends Service{
         final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getID().toString());
         dialog.setOnPositiveButtonClickListener((d, i) -> {
             final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), true);
-            FriendsRepository.addFriend(friend);
+            FriendRepository.INSTANCE.save(friend);
             Toast.makeText(this, "User: " + event.getFrom().getName() + " add to your friends", Toast.LENGTH_SHORT).show();
         });
         dialog.show();

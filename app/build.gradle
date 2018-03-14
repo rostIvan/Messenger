@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'realm-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'maven'
 apply plugin: 'jacoco'
 
 android {
@@ -51,10 +52,16 @@ android {
 }
 
 repositories {
-    maven {
-        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
-    }
     mavenCentral()
+    maven { url "https://jitpack.io" }
+    maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
+    maven {
+        url "http://localhost:8081/nexus/content/repositories/thirdparty/"
+        credentials {
+            username "admin"
+            password "admin123"
+        }
+    }
 }
 
 dependencies {
@@ -145,4 +152,18 @@ junitJacoco {
                 "**/lzyzsd/circleprogress/**",
                 "**/facebook/stetho/**"]
     includeNoLocationClasses = true
+}
+
+// for nexus snapshots, todo("need test...")
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://localhost:8081/nexus/content/repositories/snapshots/") {
+                authentication(userName: "admin", password: "admin123")
+                pom.version = '0.0.1'
+                pom.groupId = "trickyquestion.messenger"
+                pom.artifactId = "messenger"
+            }
+        }
+    }
 }

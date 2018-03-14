@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import trickyquestion.messenger.screen.tabs.messages.data.Message;
+import trickyquestion.messenger.screen.main.tabs.messages.data.Message;
 
 public class MessageFilter {
     public static List<Message> filter(final List<Message> messages, final String searchValue) {

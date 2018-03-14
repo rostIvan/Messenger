@@ -1,8 +1,8 @@
 package trickyquestion.messenger.ui.util
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.PorterDuff
+import android.os.Build
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
@@ -15,8 +15,8 @@ import android.widget.LinearLayout
 import com.melnykov.fab.FloatingActionButton
 import com.ogaclejapan.smarttablayout.SmartTabLayout
 import trickyquestion.messenger.R
-import trickyquestion.messenger.screen.chat.view.adapter.ChatViewHolder
-import trickyquestion.messenger.screen.tabs.chat.data.ChatMessage
+import trickyquestion.messenger.screen.chat.ui.ChatViewHolder
+import trickyquestion.messenger.screen.chat.data.ChatMessage
 import trickyquestion.messenger.ui.activity.BaseChatActivity
 
 fun EditText.setLineColor(color: Int) {
@@ -61,7 +61,7 @@ fun BaseChatActivity.setMyMessageStyle(message: ChatMessage, holder: ChatViewHol
     params.gravity = Gravity.START
     params.setMargins(0, 0, 60, 0)
     holder.container.layoutParams = params
-    holder.container.setBackgroundDrawable(shape)
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) holder.container.background = shape
     holder.textMessage.setTextColor(ContextCompat.getColor(this, R.color.colorWhite))
     holder.timeMessage.setTextColor(ContextCompat.getColor(this, R.color.colorOpacityGray))
 }

@@ -2,7 +2,7 @@ package trickyquestion.messenger.data.repository
 
 import de.greenrobot.event.EventBus
 import io.realm.RealmQuery
-import trickyquestion.messenger.screen.tabs.chat.data.ChatMessage
+import trickyquestion.messenger.screen.chat.data.ChatMessage
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeMessageDbEvent
 import java.util.*
 

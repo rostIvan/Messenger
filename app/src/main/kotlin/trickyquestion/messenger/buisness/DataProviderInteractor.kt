@@ -5,7 +5,7 @@ import trickyquestion.messenger.network.Network
 import trickyquestion.messenger.network.NetworkState
 import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser
-import trickyquestion.messenger.screen.tabs.friends.data.Friend
+import trickyquestion.messenger.screen.main.tabs.friends.data.Friend
 
 open class DataProviderInteractor :  IDataProvider {
     private val friendRepository = FriendRepository.INSTANCE
