@@ -102,38 +102,39 @@ realm {
     syncEnabled = true
 }
 
-// for android instrumental test coverage use task: jacocoAndroidTestReportDebug
-task jacocoAndroidTestReportDebug(type:JacocoReport, dependsOn: "connectedDebugAndroidTest") {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports"
-    def fileFilter = ['**/R.class',
-                      '**/R$*.class',
-                      '**/BuildConfig.*',
-                      "**/realm/**",
-                      '**/Manifest*.*',
-                      'android/**/*.*']
-
-    def debugTree = fileTree(dir:
-            "${project.buildDir}/intermediates/classes/debug",
-            excludes: fileFilter)
-
-    def mainSrc = "${project.projectDir}/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-
-    executionData = fileTree(dir: project.projectDir, includes:
-            ['**/*.exec', '**/*.ec'])
-
-    reports {
-        xml.enabled = true
-        csv.enabled = false
-        html.enabled = true
-    }
-}
+//// for android instrumental test coverage use task: jacocoAndroidTestReportDebug
+//task jacocoAndroidTestReportDebug(type:JacocoReport, dependsOn: "connectedDebugAndroidTest") {
+//    group = "Reporting"
+//    description = "Generate Jacoco coverage reports"
+//    def fileFilter = ['**/R.class',
+//                      '**/R$*.class',
+//                      '**/BuildConfig.*',
+//                      "**/realm/**",
+//                      '**/Manifest*.*',
+//                      'android/**/*.*']
+//
+//    def debugTree = fileTree(dir:
+//            "${project.buildDir}/intermediates/classes/debug",
+//            excludes: fileFilter)
+//
+//    def mainSrc = "${project.projectDir}/src/main/java"
+//
+//    sourceDirectories = files([mainSrc])
+//    classDirectories = files([debugTree])
+//
+//    executionData = fileTree(dir: project.projectDir, includes:
+//            ['**/*.exec', '**/*.ec'])
+//
+//    reports {
+//        xml.enabled = true
+//        csv.enabled = false
+//        html.enabled = true
+//    }
+//}
 
 // for unit test coverage use task: jacocoTestReportDebug
 junitJacoco {
+    jacocoVersion = '0.7.5.201505241946'
     excludes = ["**/R*.class",
                 "**/realm/**",
                 "**/android/support/**",
@@ -158,7 +159,7 @@ junitJacoco {
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "http://localhost:8081/nexus/content/repositories/snapshots/") {
+            repository(url: "http://central.lugunica.jp:8081/repository/MessengerSnapshot/") {
                 authentication(userName: "admin", password: "admin123")
                 pom.version = '0.0.1'
                 pom.groupId = "trickyquestion.messenger"
