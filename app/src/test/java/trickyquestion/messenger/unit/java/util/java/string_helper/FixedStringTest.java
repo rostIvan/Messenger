@@ -10,7 +10,7 @@ import static junit.framework.Assert.assertTrue;
  * Created by Nadiia Bogoslavets on 24.02.2018.
  */
 
-public class String_helperTest {
+public class FixedStringTest {
     @Test
     public void fixedStringCorrect () {
         assertTrue("FixedString fill not work", FixedString.fill("Anna", '$', 10).equals("Anna$$$$$$"));

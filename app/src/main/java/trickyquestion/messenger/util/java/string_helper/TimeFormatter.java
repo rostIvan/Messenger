@@ -17,7 +17,8 @@ public class TimeFormatter {
 
     public static String convertTime(@NonNull final String date, @NonNull String pattern, @NonNull String toPattern) {
         final DateFormat df1 = new SimpleDateFormat(pattern, Locale.getDefault());
-        final DateFormat df2 = new SimpleDateFormat(toPattern, Locale.getDefault());try {
+        final DateFormat df2 = new SimpleDateFormat(toPattern, Locale.getDefault());
+        try {
             final Date d = df1.parse(date);
             return df2.format(d);
         } catch (ParseException e) {
