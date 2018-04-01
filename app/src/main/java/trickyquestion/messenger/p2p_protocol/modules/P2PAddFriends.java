@@ -1,6 +1,9 @@
 package trickyquestion.messenger.p2p_protocol.modules;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -48,57 +51,62 @@ public class P2PAddFriends {
             addFriendMutex.release();
         }
 
-        String genConfirmPacket(UUID target){
+        @NotNull
+        String genConfirmPacket(@NotNull UUID target){
             return "P2PProtocol:AUTH:CONFIRM:" + host.getID() + ":" + target.toString() +":" + "P2PProtocol";
         }
 
-        String genRejectPacket(UUID target){
+        @NotNull
+        String genRejectPacket(@NotNull UUID target){
             return "P2PProtocol:AUTH:REJECT:" + host.getID() + ":" + target.toString() +":" + "P2PProtocol";
+        }
+
+        IUser FindUser(UUID targetID){
+            List<IUser> users = network.getUsers();
+            IUser targetUser = null;
+            for (IUser user : users) {
+                if (user.getID().equals(targetID)) {
+                    return user;
+                }
+            }
+            return null;
         }
 
         @Override
         public void proceed(String str, Socket socket) {
             String[] parts = str.split(":");
-            if(parts.length != 6)
-                return;
-            if(parts[0].equals("P2PProtocol") &&
-                    parts[1].equals("AUTH") &&
-                    parts[2].equals("REQ") &&
-                    parts[4].equals(host.getID().toString())){
-                List<IUser> users = network.getUsers();
-                UUID targetID = UUID.fromString(parts[2]);
-                IUser targetUser = null;
-                for(IUser user : users){
-                    if(user.getID().equals(targetID)){
-                        targetUser = user;
-                        break;
+            if (parts.length == 6)
+                if (parts[0].equals("P2PProtocol") &&
+                        parts[1].equals("AUTH") &&
+                        parts[2].equals("REQ") &&
+                        parts[4].equals(host.getID().toString())) {
+                    IUser targetUser = FindUser(UUID.fromString(parts[2]));
+                    if(targetUser==null) return;
+                    EventBus.getDefault().post(new EAddFriendRequest(targetUser));
+                    addFriendMutex.tryAcquire((int) (serviceCfg.getAuthTimeOut() * 0.9));
+                    addFriendMutex.release();
+                    if (authConfirmed) {
+                        try {
+                            socket.getOutputStream().write(genConfirmPacket(UUID.fromString(parts[4])).getBytes());
+                            EventBus.getDefault().post(
+                                    new EAddFriendConfirmed(
+                                            new OFriend(
+                                                    targetUser.getName(),
+                                                    targetUser.getID(),
+                                                    targetUser.getNetworkAddress())
+                                    )
+                            );
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            socket.getOutputStream().write(genRejectPacket(UUID.fromString(parts[4])).getBytes());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-                EventBus.getDefault().post(new EAddFriendRequest(targetUser));
-                addFriendMutex.tryAcquire((int)(serviceCfg.getAuthTimeOut()*0.9));
-                addFriendMutex.release();
-                if(authConfirmed){
-                    try {
-                        socket.getOutputStream().write(genConfirmPacket(UUID.fromString(parts[4])).getBytes());
-                        EventBus.getDefault().post(
-                                new EAddFriendConfirmed(
-                                        new OFriend(
-                                                targetUser.getName(),
-                                                targetUser.getID(),
-                                                targetUser.getNetworkAddress())
-                                )
-                        );
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else{
-                    try {
-                        socket.getOutputStream().write(genRejectPacket(UUID.fromString(parts[4])).getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
         }
     }
 

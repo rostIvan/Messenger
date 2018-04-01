@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.TimeoutException;
 
 import trickyquestion.messenger.network.NetworkState;
+import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolService;
 
 import static org.junit.Assert.assertTrue;
@@ -76,6 +77,24 @@ public class P2PNetworkWifiChecking {
             wifiManager.setWifiEnabled(false);
             Thread.sleep(10000);
             assertTrue("Wifi enable and list empty", bind.getUsers().isEmpty());
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void IsServiceStarted(){
+        Context appContext = InstrumentationRegistry.getTargetContext();
+        try {
+            P2PServiceTest = new ServiceTestRule();
+            P2PProtocolService.LocalBinder bind = (P2PProtocolService.LocalBinder)P2PServiceTest.bindService
+                    (new Intent(InstrumentationRegistry.getTargetContext(),
+                            P2PProtocolService.class));
+            assertTrue("Service cant be started before call start", !bind.IsStarted());
+            bind.Start();
+            assertTrue("Service must be started after call start", bind.IsStarted());
+            bind.Stop();
+            assertTrue("Service cant be started after call stop", !bind.IsStarted());
         } catch (TimeoutException e) {
             e.printStackTrace();
         }

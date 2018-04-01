@@ -2,6 +2,8 @@ package trickyquestion.messenger.p2p_protocol.modules;
 
 import android.content.Context;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class P2PNetwork {
         HeartbeatRunner(){
         }
 
-        private String genHeartbeatPacket(String UserName, UUID UserID, String IP){
+        private String genHeartbeatPacket(@NotNull String UserName,@NotNull UUID UserID, @NotNull String IP){
             String UsrNamePart = FixedString.fill(UserName,'$',20);
             String UserIPPart = FixedString.fill(IP,'$',15);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);//19
