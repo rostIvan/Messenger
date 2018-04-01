@@ -84,6 +84,9 @@ public class P2PProtocolService extends Service{
     * Bind class for P2PService
     */
     public class LocalBinder extends Binder{
+
+        public boolean IsStarted() {return started;}
+
         /**
         *Starting service modules, if service alredy started modules not restarted
         */

@@ -55,13 +55,6 @@ repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
     maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
-    maven {
-        url "http://localhost:8081/nexus/content/repositories/thirdparty/"
-        credentials {
-            username "admin"
-            password "admin123"
-        }
-    }
 }
 
 dependencies {
@@ -153,18 +146,4 @@ junitJacoco {
                 "**/lzyzsd/circleprogress/**",
                 "**/facebook/stetho/**"]
     includeNoLocationClasses = true
-}
-
-// for nexus snapshots, todo("need test...")
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "http://central.lugunica.jp:8081/repository/MessengerSnapshot/") {
-                authentication(userName: "admin", password: "admin123")
-                pom.version = '0.0.1'
-                pom.groupId = "trickyquestion.messenger"
-                pom.artifactId = "messenger"
-            }
-        }
-    }
 }
