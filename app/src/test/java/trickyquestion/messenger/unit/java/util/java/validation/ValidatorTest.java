@@ -2,11 +2,15 @@ package trickyquestion.messenger.unit.java.util.java.validation;
 
 import org.junit.Test;
 
+import trickyquestion.messenger.util.android.preference.AuthPreference;
 import trickyquestion.messenger.util.java.validation.PassValidator;
 import trickyquestion.messenger.util.java.validation.SignUpValidator;
 import trickyquestion.messenger.util.java.validation.UserInputValidator;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Nadiia Bogoslavets and Basil Polych on 24.02.2018.
@@ -55,6 +59,15 @@ public class ValidatorTest {
         assertTrue("Password validator work incorrect", PassValidator.isCorrect(validenteredPass,realPass));
         assertTrue("Password validator work incorrect", !PassValidator.isCorrect(tooSmallenteredPass,realPass));
         assertTrue("Password validator work incorrect", !PassValidator.isCorrect(incorrecenteredPass,realPass));
+    }
+
+    @Test
+    public void passValidator_checkPreviousPassword_isCorrect(){
+        final AuthPreference authPreference = mock(AuthPreference.class);
+        when(authPreference.getAccountPassword()).thenReturn("123", "222", "333");
+        assertEquals(UserInputValidator.isPreviousPasswordCorrect("123", authPreference), true);
+        assertEquals(UserInputValidator.isPreviousPasswordCorrect("123", authPreference), false);
+        assertEquals(UserInputValidator.isPreviousPasswordCorrect("333", authPreference), true);
     }
 
 }

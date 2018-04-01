@@ -114,7 +114,7 @@ public class SettingPresenter implements ISettingPresenter {
 
     @Override
     public void setNewPassword(String previousPassword, String newPassword) {
-        if ( !UserInputValidator.isPreviousPasswordCorrect(previousPassword, view.getContext()) ) {
+        if ( !UserInputValidator.isPreviousPasswordCorrect(previousPassword, new AuthPreference(view.getContext())) ) {
             view.showToast("Wrong entered previous password");
             view.showChangePasswordDialog();
         }

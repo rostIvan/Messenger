@@ -4,6 +4,7 @@ apply plugin: 'realm-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
+apply plugin: 'pl.droidsonroids.pitest'
 
 android {
     compileSdkVersion 26
@@ -155,7 +156,7 @@ junitJacoco {
     includeNoLocationClasses = true
 }
 
-// for nexus snapshots, todo("need test...")
+// for nexus snapshots
 uploadArchives {
     repositories {
         mavenDeployer {
@@ -167,4 +168,14 @@ uploadArchives {
             }
         }
     }
+}
+
+pitest {
+    targetClasses = ['trickyquestion.messenger.util.java.*']
+    excludedClasses = ['trickyquestion.messenger.data.*',
+                       'trickyquestion.messenger.ui.*',
+                       'trickyquestion.messenger.buisness.*']
+    pitestVersion = "1.1.0"
+    threads = 4
+    outputFormats = ['XML', 'HTML']
 }
