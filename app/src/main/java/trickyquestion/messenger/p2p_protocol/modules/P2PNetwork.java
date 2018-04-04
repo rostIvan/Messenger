@@ -147,7 +147,6 @@ public class P2PNetwork {
 
         @Override
         public void run() {
-            //TODO: correct end thread
             while (true) {
                 //Get copy of user list
                 List<OUser> users_copy = users.getUser();
@@ -175,7 +174,7 @@ public class P2PNetwork {
     private Thread Listener;
     private Thread KeepAlive;
 
-    class AsyncList{
+    public static class AsyncList{
         private volatile List<OUser> users = new ArrayList<>();
         private ReentrantLock list_lock = new ReentrantLock();
 
