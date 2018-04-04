@@ -16,7 +16,7 @@ public class OUser implements IUser {
     //TTL is time to end which user data is valid
     private Date TTL;
 
-    public OUser(UUID ID, String Name, String IP, Date TTL) {
+    public OUser(UUID ID,String Name, String IP, Date TTL) {
         this.ID = ID;
         this.UName = Name;
         this.IP = IP;
@@ -26,6 +26,7 @@ public class OUser implements IUser {
     public UUID getID()    {return ID;}
     public String getName(){return UName;}
     public String getNetworkAddress()  {return IP;}
+    public Date getTTL()   {return TTL;}
 
     @Override
     public void setName(String newName) {
@@ -37,7 +38,6 @@ public class OUser implements IUser {
         IP = newIP;
     }
 
-    public Date getTTL()   {return TTL;}
 
     public void setTTL(Date NewTTL){TTL = NewTTL;}
 

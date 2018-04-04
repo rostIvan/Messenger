@@ -22,6 +22,7 @@ import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
+import trickyquestion.messenger.p2p_protocol.objects.OUser;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.android.preference.NetworkPreference;
 import trickyquestion.messenger.util.java.string_helper.FixedString;
@@ -130,7 +131,7 @@ public class P2PNetwork {
                     //Adding TTL time
                     cal.add(Calendar.SECOND, 10);
                     users.add(
-                            new User(
+                            new OUser(
                                     UUID.fromString(received_packet_content[2]),
                                     received_packet_content[1].substring(0, received_packet_content[1].indexOf("$")),
                                     received_packet_content[3].substring(0, received_packet_content[3].indexOf("$")),
@@ -149,8 +150,8 @@ public class P2PNetwork {
             //TODO: correct end thread
             while (true) {
                 //Get copy of user list
-                List<User> users_copy = users.getUser();
-                for (User user : users_copy) {
+                List<OUser> users_copy = users.getUser();
+                for (OUser user : users_copy) {
                     //if ttl of user elapsed delete user and signalized flag
                     if (System.currentTimeMillis() > user.getTTL().getTime()) {
                         users.remove(user);
@@ -174,58 +175,14 @@ public class P2PNetwork {
     private Thread Listener;
     private Thread KeepAlive;
 
-    public static class User implements IUser {
-        private UUID ID;
-        private String UName;
-        private String IP;
-        //TTL is time to end which user data is valid
-        private Date TTL;
-
-        public User(UUID ID,String Name, String IP, Date TTL) {
-            this.ID = ID;
-            this.UName = Name;
-            this.IP = IP;
-            this.TTL = TTL;
-        }
-
-        public UUID getID()    {return ID;}
-        public String getName(){return UName;}
-        public String getNetworkAddress()  {return IP;}
-
-        @Override
-        public void setName(String newName) {
-            this.UName = newName;
-        }
-
-        @Override
-        public void setNetworkAddress(String newIP) {
-            IP = newIP;
-        }
-
-        public Date getTTL()   {return TTL;}
-
-        public void setTTL(Date NewTTL){TTL = NewTTL;}
-
-        boolean equal(User second){
-            if((this.ID.equals(second.ID)) && (this.IP.equals(second.IP))) {
-                return true;
-            }
-            else return false;
-        }
-
-        boolean equalUserName(User second) {
-            return ((this.UName.equals(second.UName)));
-        }
-    }
-
     class AsyncList{
-        private volatile List<User> users = new ArrayList<>();
+        private volatile List<OUser> users = new ArrayList<>();
         private ReentrantLock list_lock = new ReentrantLock();
 
-        public void add(User new_user){
+        public void add(OUser new_user){
             list_lock.lock();
             boolean is_new = true;
-            for(User user :  users) {
+            for(OUser user :  users) {
                 if (user.equal(new_user)) {
                     user.setTTL(new_user.getTTL());
                     if(!user.equalUserName(new_user)){
@@ -242,7 +199,7 @@ public class P2PNetwork {
             list_lock.unlock();
         }
 
-        public void remove(User user){
+        public void remove(OUser user){
             list_lock.lock();
             users.remove(user);
             EventBus.getDefault().post(new ChangeUserList(user,false));
@@ -257,11 +214,10 @@ public class P2PNetwork {
             return ret;
         }
 
-        private List<User> getUser(){
+        private List<OUser> getUser(){
             list_lock.lock();
-            List<User> ret = new ArrayList<>();
-            for(User user : users)
-                ret.add(user);
+            List<OUser> ret = new ArrayList<>();
+            ret.addAll(users);
             list_lock.unlock();
             return ret;
         }

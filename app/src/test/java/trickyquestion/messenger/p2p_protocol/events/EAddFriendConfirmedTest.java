@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.UUID;
 
+import trickyquestion.messenger.p2p_protocol.events.EAddFriendConfirmed;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 import trickyquestion.messenger.p2p_protocol.objects.OFriend;
 
