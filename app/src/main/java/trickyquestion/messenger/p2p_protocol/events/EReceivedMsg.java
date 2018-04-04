@@ -9,7 +9,6 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
 public class EReceivedMsg {
     private String msg;
     private IFriend from;
-    private boolean readed = false;
 
     public EReceivedMsg(String msg, IFriend from){
         this.msg = msg;
@@ -23,8 +22,4 @@ public class EReceivedMsg {
     public String getMsg() {
         return msg;
     }
-
-    public boolean getStatus(){return readed;}
-
-    public void setReaded() {readed = true;}
 }
