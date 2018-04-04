@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.UUID;
 
+import trickyquestion.messenger.p2p_protocol.events.EAddFriendRequest;
 import trickyquestion.messenger.p2p_protocol.objects.OUser;
 
 import static junit.framework.Assert.assertTrue;
