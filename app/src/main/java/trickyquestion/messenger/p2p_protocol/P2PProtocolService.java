@@ -15,6 +15,7 @@ import java.util.UUID;
 import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.data.repository.FriendRepository;
 import trickyquestion.messenger.p2p_protocol.events.EAddFriendRequest;
+import trickyquestion.messenger.p2p_protocol.objects.OHost;
 import trickyquestion.messenger.screen.main.tabs.friends.data.Friend;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
@@ -92,7 +93,7 @@ public class P2PProtocolService extends Service{
         */
         public void Start(){
             if(started) return;
-            host = new Host(getApplicationContext());
+            host = new OHost(getApplicationContext());
             Network.StartNetworkListener(getApplicationContext());
             servicePreference = new NetworkPreference(getApplicationContext());
             P2PNetwork = new P2PNetwork(host, getApplicationContext(),servicePreference);
@@ -125,41 +126,6 @@ public class P2PProtocolService extends Service{
                     break;
                 }
             }
-        }
-    }
-    
-    /**
-    * Client data implement as get\set android preference
-    */
-    class Host implements IHost {
-
-        private SharedPreferences preferences;
-        private UUID id;
-
-        Host(Context context) {
-            id = UUID.fromString("00000000-0000-0000-0000-000000000000");
-            preferences = context.getSharedPreferences(Constants.PREFERENCE_AUTH_DATA, Context.MODE_PRIVATE);
-        }
-
-        @Override
-        public UUID getID() {
-            return UUID.fromString(preferences.getString(Constants.EXTRA_KEY_USER_ID, id.toString()));
-        }
-
-        @Override
-        public String getName() {
-            return preferences.getString(Constants.EXTRA_KEY_AUTH_LOGIN, "NULL");
-        }
-
-        @Override
-        public void setName(String new_name) {
-            this.preferences.edit().putString(Constants.EXTRA_KEY_AUTH_LOGIN, new_name).apply();
-        }
-
-        @Override
-        public void reCreate(UUID id, String name) {
-            this.preferences.edit().putString(Constants.EXTRA_KEY_USER_ID, id.toString()).apply();
-            this.preferences.edit().putString(Constants.EXTRA_KEY_AUTH_LOGIN,name).apply();
         }
     }
 
