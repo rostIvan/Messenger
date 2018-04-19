@@ -1,13 +1,10 @@
 package trickyquestion.messenger.screen.login.sign_up;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,11 +25,6 @@ public class SignUpFragment extends AWithFieldFragment {
     EditText passField;
     @BindView(R.id.button_create_account)
     TextView buttonSignIn;
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
 
     @OnClick(R.id.button_create_account)
     public void createAccount() {

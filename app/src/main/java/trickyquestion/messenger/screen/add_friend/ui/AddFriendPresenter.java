@@ -10,27 +10,32 @@ import java.util.List;
 
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
-import trickyquestion.messenger.screen.add_friend.buisness.AddFriendInteractor;
-import trickyquestion.messenger.screen.add_friend.buisness.EventManager;
+import trickyquestion.messenger.screen.add_friend.buisness.AddFriendEventManager;
 import trickyquestion.messenger.screen.add_friend.buisness.IAddFriendInteractor;
 import trickyquestion.messenger.screen.add_friend.data.UserUtil;
 import trickyquestion.messenger.ui.interfaces.BaseRouter;
 import trickyquestion.messenger.ui.mvp.activity.MvpPresenter;
 
-public class AddFriendPresenter extends MvpPresenter<AddFriendActivity, BaseRouter> implements IAddFriendPresenter {
-    private final IAddFriendView view = getView();
-    private final EventManager eventManager = new EventManager(this);
-    private final IAddFriendInteractor interactor = new AddFriendInteractor();
+public class AddFriendPresenter extends MvpPresenter<IAddFriendView, BaseRouter> implements IAddFriendPresenter {
+    private final IAddFriendInteractor interactor;
+    private AddFriendEventManager addFriendEventManager;
 
-    AddFriendPresenter(@NotNull AddFriendActivity view, @NotNull BaseRouter router) {
+    public AddFriendPresenter(@NotNull IAddFriendView view,
+                       @NotNull BaseRouter router,
+                       @NotNull IAddFriendInteractor addFriendInteractor) {
         super(view, router);
+        this.interactor = addFriendInteractor;
+    }
+
+    public void attach(AddFriendEventManager addFriendEventManager) {
+        this.addFriendEventManager = addFriendEventManager;
     }
 
     @Override
-    public void onCreate(@Nullable Bundle bundle) { eventManager.subscribe(); }
+    public void onCreate(@Nullable Bundle bundle) { addFriendEventManager.subscribe(); }
 
     @Override
-    public void onDestroy() { eventManager.unsubscribe(); }
+    public void onDestroy() { addFriendEventManager.unsubscribe(); }
 
     @Override
     public void onStart() {
@@ -41,32 +46,32 @@ public class AddFriendPresenter extends MvpPresenter<AddFriendActivity, BaseRout
     public void onUserItemClick(IUser model, AddFriendViewHolder holder, List<IUser> items) {
         interactor.addToFriends(model);
         deleteUserItem(holder, items);
-        view.showToast(String.format("User added: %s\nid: %s", UserUtil.getName(model), UserUtil.getId(model)));
+        getView().showToast(String.format("User added: %s\nid: %s", UserUtil.getName(model), UserUtil.getId(model)));
     }
 
     @Override
     public void updateUsers() {
-        view.onUiThread(this::showUsers);
+        getView().onUiThread(this::showUsers);
     }
 
     @Override
     public void hideUsers() {
-        view.showUsers(Collections.emptyList());
+        getView().showUsers(Collections.emptyList());
     }
 
     @Override
-    public void changeTheme() { view.refreshTheme(); }
+    public void changeTheme() { getView().refreshTheme(); }
 
     private void showUsers() {
         switch (Network.GetCurrentNetworkState()) {
-            case ACTIVE: view.showUsers(interactor.getUsers()); break;
-            case INACTIVE: view.showToast("You haven't connection"); break;
+            case ACTIVE: getView().showUsers(interactor.getUsers()); break;
+            case INACTIVE: getView().showToast("You haven't connection"); break;
         }
     }
 
     private void deleteUserItem(AddFriendViewHolder holder, List<IUser> items) {
         final int position = holder.getAdapterPosition();
         items.remove(position);
-        view.removeItem(position, items.size());
+        getView().removeItem(position, items.size());
     }
 }

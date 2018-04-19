@@ -14,7 +14,6 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.TimeoutException;
 
 import trickyquestion.messenger.network.NetworkState;
-import trickyquestion.messenger.p2p_protocol.P2PProtocolConnector;
 import trickyquestion.messenger.p2p_protocol.P2PProtocolService;
 
 import static org.junit.Assert.assertTrue;

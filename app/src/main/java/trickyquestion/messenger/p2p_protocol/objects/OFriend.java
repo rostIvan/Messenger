@@ -1,7 +1,5 @@
 package trickyquestion.messenger.p2p_protocol.objects;
 
-import android.widget.ImageView;
-
 import java.util.UUID;
 
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;

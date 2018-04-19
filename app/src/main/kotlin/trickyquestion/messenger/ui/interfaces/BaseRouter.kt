@@ -11,7 +11,7 @@ interface BaseRouter {
     fun openScreen(screen: Screen, animatorResource: AnimatorResource) {}
     fun back() {}
     fun exit() {}
-    fun use(fragment: Fragment) : BaseRouter
+    fun use(view: Any) : BaseRouter
 
     enum class Screen {
         MAIN,

@@ -6,49 +6,53 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import trickyquestion.messenger.ui.fragment.ABaseFragment
+import trickyquestion.messenger.ui.interfaces.BasePresenter
 
 abstract class MvpView : ABaseFragment() {
 
+    private lateinit var iPresenter: BasePresenter
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        getPresenter()?.onAttach(context)
+        iPresenter = getPresenter()
+        iPresenter.onAttach(context)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val onCreateView = super.onCreateView(inflater, container, savedInstanceState)
-        getPresenter()?.onCreateView(inflater, container, savedInstanceState)
+        iPresenter.onCreateView(inflater, container, savedInstanceState)
         return onCreateView
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getPresenter()?.onViewCreated(view, savedInstanceState)
+        iPresenter.onViewCreated(view, savedInstanceState)
     }
 
     override fun onStart() {
         super.onStart()
-        getPresenter()?.onStart()
+        iPresenter.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        getPresenter()?.onResume()
+        iPresenter.onResume()
     }
 
     override fun onStop() {
         super.onStop()
-        getPresenter()?.onStop()
+        iPresenter.onStop()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        getPresenter()?.onDestroyView()
+        iPresenter.onDestroyView()
     }
 
     override fun onDetach() {
         super.onDetach()
-        getPresenter()?.onDetach()
+        iPresenter.onDetach()
     }
 
-    open fun getPresenter(): MvpPresenter<*, *>? = null
+    abstract fun getPresenter(): BasePresenter
 }

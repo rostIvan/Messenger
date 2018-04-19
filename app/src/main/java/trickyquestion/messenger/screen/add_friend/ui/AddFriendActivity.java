@@ -9,12 +9,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.di.PresentationFactory;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.add_friend.data.UserUtil;
 import trickyquestion.messenger.ui.activity.AWithToolbarActivity;
-import trickyquestion.messenger.ui.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.adapter.BaseRecyclerAdapter;
 import trickyquestion.messenger.ui.interfaces.Layout;
+import trickyquestion.messenger.ui.interfaces.BasePresenter;
 
 import static trickyquestion.messenger.ui.util.ContextExtensionsKt.toast;
 
@@ -26,11 +27,14 @@ public class AddFriendActivity extends AWithToolbarActivity implements IAddFrien
     @BindView(R.id.rv_add_friend)
     RecyclerView recyclerView;
 
-    private final AddFriendPresenter presenter = new AddFriendPresenter(this, ApplicationRouter.from(this));
+    private IAddFriendPresenter presenter;
 
     @NonNull
     @Override
-    public AddFriendPresenter getPresenter() { return presenter; }
+    public BasePresenter getPresenter() {
+        presenter = PresentationFactory.INSTANCE.create(this);
+        return presenter;
+    }
 
     @Override
     public void showUsers(List<IUser> users) {

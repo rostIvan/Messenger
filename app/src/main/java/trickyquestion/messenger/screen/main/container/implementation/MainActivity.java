@@ -18,14 +18,15 @@ import org.jetbrains.annotations.Nullable;
 
 import butterknife.BindView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.di.PresentationFactory;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainPresenter;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainView;
 import trickyquestion.messenger.screen.popup_windows.AccountPopup;
 import trickyquestion.messenger.screen.main.tabs.friends.ui.FriendsFragment;
 import trickyquestion.messenger.screen.main.tabs.messages.ui.MessagesFragment;
 import trickyquestion.messenger.ui.activity.AWithToolbarActivity;
-import trickyquestion.messenger.ui.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.interfaces.Layout;
+import trickyquestion.messenger.ui.interfaces.BasePresenter;
 import trickyquestion.messenger.util.Constants;
 
 import static butterknife.internal.Utils.listOf;
@@ -47,7 +48,7 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
     SearchView searchView;
     AccountPopup accountPopup;
 
-    private final IMainPresenter presenter = getPresenter();
+    private IMainPresenter presenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,8 +138,12 @@ public class MainActivity extends AWithToolbarActivity implements IMainView {
         applyThemeColor(listOf(toolbar, appBar, tabLayout, fab), themePreference.getPrimaryColor());
     }
 
+    @NonNull
     @Override
-    public MainPresenter getPresenter() { return new MainPresenter(this, ApplicationRouter.from(this)); }
+    public BasePresenter getPresenter() {
+        presenter = PresentationFactory.INSTANCE.create(this);
+        return presenter;
+    }
 
     @NonNull
     @Override

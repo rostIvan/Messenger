@@ -1,6 +1,7 @@
 package trickyquestion.messenger.screen.main.tabs.messages.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +13,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.di.PresentationFactory;
 import trickyquestion.messenger.screen.main.container.implementation.MainActivity;
 import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.screen.main.tabs.messages.data.Message;
 import trickyquestion.messenger.screen.main.tabs.messages.data.MessageUtil;
-import trickyquestion.messenger.ui.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.adapter.BaseRecyclerAdapter;
 import trickyquestion.messenger.ui.fragment.AWithSearchFragment;
 import trickyquestion.messenger.ui.interfaces.Layout;
+import trickyquestion.messenger.ui.interfaces.BasePresenter;
 
 import static trickyquestion.messenger.ui.util.ContextExtensionsKt.toast;
 import static trickyquestion.messenger.ui.util.ViewUtilKt.whiteColor;
@@ -31,15 +33,18 @@ public class MessagesFragment extends AWithSearchFragment implements IMessagesVi
     RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout refreshLayout;
-
-    private MessagesPresenter presenter = new MessagesPresenter(this, ApplicationRouter.from(getContext()));
+    private IMessagesPresenter presenter;
 
     public static MessagesFragment newInstance() {
         return new MessagesFragment();
     }
 
+    @NonNull
     @Override
-    public MessagesPresenter getPresenter() { return presenter; }
+    public BasePresenter getPresenter() {
+        presenter = PresentationFactory.INSTANCE.create(this);
+        return presenter;
+    }
 
     @Override
     public void onViewCreated(@Nullable View view, @Nullable Bundle savedInstanceState) {

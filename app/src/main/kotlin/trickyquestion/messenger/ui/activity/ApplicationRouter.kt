@@ -19,7 +19,7 @@ class ApplicationRouter private constructor(private val context: Context?) : Bas
     }
 
     // for fragments use only this approach
-    override fun use(fragment: Fragment) = ApplicationRouter(fragment.context)
+    override fun use(view: Any) = ApplicationRouter((view as Fragment).context)
 
     override fun back() {  (context as Activity).onBackPressed()  }
 
