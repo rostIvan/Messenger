@@ -5,12 +5,12 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="380dp"
         android:layout_height="240dp"
-        android:src="@drawable/image_login"
         android:layout_marginTop="40dp"
-        android:id="@+id/imageView"
-        android:contentDescription="@string/image" />
+        android:contentDescription="@string/image"
+        android:src="@drawable/image_login" />
 
     <TextView
         android:layout_width="320dp"
@@ -18,8 +18,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="280dp"
         android:text="@string/welcome"
-        android:textColor="#07A984"
         android:textAlignment="center"
+        android:textColor="#07A984"
         android:textSize="25sp" />
 
     <TextView
