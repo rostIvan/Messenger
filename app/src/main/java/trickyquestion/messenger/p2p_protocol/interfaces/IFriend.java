@@ -1,6 +1,5 @@
 package trickyquestion.messenger.p2p_protocol.interfaces;
 
-import java.math.BigInteger;
 import java.util.UUID;
 
 /**

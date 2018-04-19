@@ -2,7 +2,9 @@ package trickyquestion.messenger.screen.main.container.interfaces;
 
 import android.view.KeyEvent;
 
-public interface IMainPresenter {
+import trickyquestion.messenger.ui.interfaces.BasePresenter;
+
+public interface IMainPresenter extends BasePresenter {
     void onFabClick();
     void onAccountClick();
     void onPageSelected(int position);

@@ -10,21 +10,26 @@ import java.util.List;
 import trickyquestion.messenger.network.Network;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.p2p_protocol.interfaces.IFriend;
-import trickyquestion.messenger.screen.chat.buisness.ChatInteractor;
-import trickyquestion.messenger.screen.chat.buisness.EventManager;
+import trickyquestion.messenger.screen.chat.buisness.ChatEventManager;
 import trickyquestion.messenger.screen.chat.buisness.IChatInteractor;
 import trickyquestion.messenger.screen.chat.data.ChatMessage;
 import trickyquestion.messenger.screen.main.tabs.friends.data.Friend;
 import trickyquestion.messenger.ui.interfaces.BaseRouter;
 import trickyquestion.messenger.ui.mvp.activity.MvpPresenter;
 
-public class ChatPresenter extends MvpPresenter<ChatActivity, BaseRouter> implements IChatPresenter {
-    private final IChatView view = getView();
-    private final EventManager eventManager = new EventManager(this);
-    private final IChatInteractor interactor = new ChatInteractor();
+public class ChatPresenter extends MvpPresenter<IChatView, BaseRouter> implements IChatPresenter {
+    private final IChatInteractor interactor;
+    private ChatEventManager eventManager;
 
-    public ChatPresenter(@NotNull ChatActivity view, @NotNull BaseRouter router) {
+    public ChatPresenter(@NotNull IChatView view,
+                         @NotNull BaseRouter router,
+                         @NotNull IChatInteractor chatInteractor) {
         super(view, router);
+        this.interactor = chatInteractor;
+    }
+
+    public void attach(ChatEventManager eventManager) {
+        this.eventManager = eventManager;
     }
 
     @Override
@@ -47,12 +52,12 @@ public class ChatPresenter extends MvpPresenter<ChatActivity, BaseRouter> implem
     @Override
     public void onSendMessageClick(String message) {
         if (message.isEmpty()) {
-            view.showToast("Message is empty!");
+            getView().showToast("Message is empty!");
             return;
         }
         interactor.saveMessage(message);
         interactor.sendMessage(message);
-        view.clearInputText();
+        getView().clearInputText();
     }
 
     @Override
@@ -68,15 +73,15 @@ public class ChatPresenter extends MvpPresenter<ChatActivity, BaseRouter> implem
     @Override
     public void onChangeNetwork(NetworkState newNetworkState) {
         switch (newNetworkState) {
-            case ACTIVE: view.showSendButton(); break;
-            case INACTIVE: view.hideSendButton(); break;
+            case ACTIVE: getView().showSendButton(); break;
+            case INACTIVE: getView().hideSendButton(); break;
         }
     }
 
     @Override
     public void updateMessages() {
-        view.onUiThread(this::showChatMessages);
-        view.updateMessages();
+        getView().onUiThread(this::showChatMessages);
+        getView().updateMessages();
     }
 
     @Override
@@ -86,16 +91,16 @@ public class ChatPresenter extends MvpPresenter<ChatActivity, BaseRouter> implem
 
     private void checkTalkPossibility() {
         switch (Network.GetCurrentNetworkState()) {
-            case ACTIVE: view.showSendButton(); break;
-            case INACTIVE: view.hideSendButton(); break;
+            case ACTIVE: getView().showSendButton(); break;
+            case INACTIVE: getView().hideSendButton(); break;
         }
         final Friend friend = interactor.getFriend();
-        if (!friend.isOnline()) view.hideSendButton();
-        else view.showSendButton();
+        if (!friend.isOnline()) getView().hideSendButton();
+        else getView().showSendButton();
     }
 
     private void showChatMessages() {
         final List<ChatMessage> chatMessages = interactor.getChatMessages();
-        view.showChatMessages(chatMessages);
+        getView().showChatMessages(chatMessages);
     }
 }

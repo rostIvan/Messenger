@@ -14,23 +14,27 @@ import trickyquestion.messenger.R;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.chat.ui.ChatActivity;
-import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
-import trickyquestion.messenger.screen.main.tabs.friends.buisness.EventManager;
-import trickyquestion.messenger.screen.main.tabs.friends.buisness.FriendsInteractor;
+import trickyquestion.messenger.screen.main.tabs.friends.buisness.FriendsEventManager;
 import trickyquestion.messenger.screen.main.tabs.friends.buisness.IFriendsInteractor;
 import trickyquestion.messenger.screen.main.tabs.friends.data.Friend;
+import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.ui.interfaces.BaseRouter;
 import trickyquestion.messenger.ui.mvp.fragment.MvpPresenter;
 import trickyquestion.messenger.ui.util.AnimatorResource;
 
-public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> implements IFriendsPresenter {
-    private final IFriendsView view = getView();
-    private final IFriendsInteractor interactor = new FriendsInteractor();
-    private final EventManager eventManager = new EventManager(this);
-    private final BaseRouter router = getRouter();
+public class FriendsPresenter extends MvpPresenter<IFriendsView, BaseRouter> implements IFriendsPresenter {
+    private final IFriendsInteractor interactor;
+    private FriendsEventManager eventManager;
 
-    FriendsPresenter(@NotNull FriendsFragment view, @NotNull BaseRouter router) {
+    public FriendsPresenter(@NotNull IFriendsView view,
+                            @NotNull BaseRouter router,
+                            @NotNull IFriendsInteractor friendsInteractor) {
         super(view, router);
+        this.interactor = friendsInteractor;
+    }
+
+    public void attach(FriendsEventManager eventManager) {
+        this.eventManager = eventManager;
     }
 
     @Override
@@ -44,7 +48,9 @@ public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> 
     }
 
     @Override
-    public void onDestroyView() { eventManager.unsubscribe(); }
+    public void onDestroyView() {
+        eventManager.unsubscribe();
+    }
 
     @Override
     public void updateFriends() {
@@ -52,7 +58,7 @@ public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> 
     }
 
     private void showFriends() {
-        view.showFriends(interactor.getFriends());
+        getView().showFriends(interactor.getFriends());
     }
 
     @Override
@@ -64,7 +70,7 @@ public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> 
     }
 
     private void openChat(Bundle bundle) {
-        router.use(getView()).openScreen(BaseRouter.Screen.CHAT, bundle,
+        getRouter().use(getView()).openScreen(BaseRouter.Screen.CHAT, bundle,
                 AnimatorResource.with(R.anim.translate_left_slide, R.anim.alpha_to_zero));
     }
 
@@ -78,19 +84,19 @@ public class FriendsPresenter extends MvpPresenter<FriendsFragment, BaseRouter> 
         final Bundle bundle = new Bundle();
         bundle.putString(FriendPhotoDialog.FRIEND_NAME_EXTRA, model.getName());
         bundle.putBoolean(FriendPhotoDialog.FRIEND_ONLINE_EXTRA, model.isOnline());
-        view.showFriendPhoto(bundle);
+        getView().showFriendPhoto(bundle);
     }
 
     @Override
     public void onQueryTextChanged(String query) {
-        view.showFriends(interactor.getFriends(query));
+        getView().showFriends(interactor.getFriends(query));
     }
 
     @Override
     public void onNetworkStateChanged(NetworkState state) {
         switch (state) {
-            case ACTIVE:  updateFriends(); break;
-            case INACTIVE: view.showToast("You haven't connection"); break;
+            case ACTIVE:   updateFriends(); break;
+            case INACTIVE: getView().showToast("You haven't connection"); break;
         }
     }
 

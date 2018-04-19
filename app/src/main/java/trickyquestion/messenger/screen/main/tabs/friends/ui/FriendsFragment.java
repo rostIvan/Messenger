@@ -1,6 +1,7 @@
 package trickyquestion.messenger.screen.main.tabs.friends.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -12,12 +13,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.di.PresentationFactory;
 import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.screen.main.tabs.friends.data.Friend;
-import trickyquestion.messenger.ui.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.adapter.BaseRecyclerAdapter;
 import trickyquestion.messenger.ui.fragment.AWithSearchFragment;
 import trickyquestion.messenger.ui.interfaces.Layout;
+import trickyquestion.messenger.ui.interfaces.BasePresenter;
 
 import static trickyquestion.messenger.ui.util.ContextExtensionsKt.toast;
 import static trickyquestion.messenger.ui.util.ViewUtilKt.greenColor;
@@ -29,14 +31,18 @@ public class FriendsFragment extends AWithSearchFragment implements IFriendsView
     @BindView(R.id.rv_friends)
     RecyclerView recyclerView;
 
-    private FriendsPresenter presenter = new FriendsPresenter(this, ApplicationRouter.from(getContext()));
+    private IFriendsPresenter presenter;
 
     public static FriendsFragment newInstance() {
         return new FriendsFragment();
     }
 
+    @NonNull
     @Override
-    public FriendsPresenter getPresenter() { return presenter; }
+    public BasePresenter getPresenter() {
+        presenter = PresentationFactory.INSTANCE.create(this);
+        return presenter;
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

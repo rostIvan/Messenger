@@ -9,7 +9,11 @@ import trickyquestion.messenger.util.java.maping.FriendFilter;
 
 public class FriendsInteractor implements IFriendsInteractor {
 
-    private final FriendRepository repository = FriendRepository.INSTANCE;
+    private final FriendRepository repository;
+
+    public FriendsInteractor(FriendRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<Friend> getFriends() {

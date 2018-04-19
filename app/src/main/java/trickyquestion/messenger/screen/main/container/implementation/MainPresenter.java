@@ -13,51 +13,54 @@ import trickyquestion.messenger.ui.interfaces.BaseRouter;
 import trickyquestion.messenger.ui.mvp.activity.MvpPresenter;
 import trickyquestion.messenger.ui.util.AnimatorResource;
 
-public class MainPresenter extends MvpPresenter<MainActivity, BaseRouter> implements IMainPresenter {
-    private final IMainView view = getView();
-    private final BaseRouter router = getRouter();
-    private final EventManager eventManager = new EventManager(this);
+public class MainPresenter extends MvpPresenter<IMainView, BaseRouter> implements IMainPresenter {
+    private MainEventManager eventManager;
 
-    public MainPresenter(@NotNull MainActivity view, @NotNull BaseRouter router) {
+    public MainPresenter(@NotNull IMainView view,
+                         @NotNull BaseRouter router) {
         super(view, router);
+    }
+
+    public void attach(MainEventManager eventManager) {
+        this.eventManager = eventManager;
     }
 
     @Override
     public void onCreate(@Nullable Bundle bundle) {
         eventManager.subscribe();
-        view.showContent();
+        getView().showContent();
     }
 
     @Override
     public void onDestroy() { eventManager.unsubscribe(); }
 
     @Override
-    public void onFabClick() { router.openScreen(BaseRouter.Screen.ADD_FRIEND); }
+    public void onFabClick() { getRouter().openScreen(BaseRouter.Screen.ADD_FRIEND); }
 
     @Override
     public void onSettingsClick() {
-        router.openScreen(BaseRouter.Screen.SETTINGS,
+        getRouter().openScreen(BaseRouter.Screen.SETTINGS,
                 AnimatorResource.with(R.anim.translate_top_side, R.anim.alpha_to_zero));
     }
 
     @Override
     public void onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
-            case KeyEvent.KEYCODE_MENU: router.openScreen(BaseRouter.Screen.SETTINGS); break;
+            case KeyEvent.KEYCODE_MENU: getRouter().openScreen(BaseRouter.Screen.SETTINGS); break;
         }
     }
 
     @Override
-    public void changeTheme() { view.refreshTheme(); }
+    public void changeTheme() { getView().refreshTheme(); }
 
     @Override
     public void onAccountClick() {
-        view.displayAccountPopup(true);
+        getView().displayAccountPopup(true);
     }
 
     @Override
     public void onPageSelected(int position) {
-        if (position == 0) view.displayFab(true);
-        else view.displayFab(false);
+        if (position == 0) getView().displayFab(true);
+        else getView().displayFab(false);
     }
 }

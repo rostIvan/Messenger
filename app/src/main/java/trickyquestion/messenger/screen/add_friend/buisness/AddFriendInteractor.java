@@ -2,15 +2,19 @@ package trickyquestion.messenger.screen.add_friend.buisness;
 
 import java.util.List;
 
-import trickyquestion.messenger.buisness.DataProviderInteractor;
 import trickyquestion.messenger.buisness.IDataProvider;
 import trickyquestion.messenger.data.repository.FriendRepository;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.main.tabs.friends.data.Friend;
 
 public class AddFriendInteractor implements IAddFriendInteractor {
-    private final IDataProvider dataProvider = new DataProviderInteractor();
-    private final FriendRepository repository = FriendRepository.INSTANCE;
+    private final IDataProvider dataProvider;
+    private final FriendRepository repository;
+
+    public AddFriendInteractor(IDataProvider dataProvider, FriendRepository repository) {
+        this.dataProvider = dataProvider;
+        this.repository = repository;
+    }
 
     @Override
     public List<IUser> getUsers() {

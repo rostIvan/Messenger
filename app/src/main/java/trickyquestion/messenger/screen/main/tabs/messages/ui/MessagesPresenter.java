@@ -2,6 +2,7 @@ package trickyquestion.messenger.screen.main.tabs.messages.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,32 +13,36 @@ import org.jetbrains.annotations.Nullable;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.screen.chat.ui.ChatActivity;
 import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
-import trickyquestion.messenger.screen.main.tabs.messages.buisness.EventManager;
+import trickyquestion.messenger.screen.main.tabs.messages.buisness.MessagesEventManager;
 import trickyquestion.messenger.screen.main.tabs.messages.buisness.IMessagesInteractor;
-import trickyquestion.messenger.screen.main.tabs.messages.buisness.MessagesInteractor;
 import trickyquestion.messenger.screen.main.tabs.messages.data.Message;
 import trickyquestion.messenger.ui.interfaces.BaseRouter;
 import trickyquestion.messenger.ui.mvp.fragment.MvpPresenter;
 import trickyquestion.messenger.ui.util.AnimatorResource;
 
-public class MessagesPresenter extends MvpPresenter<MessagesFragment, BaseRouter> implements IMessagesPresenter {
-    private final IMessagesView view = getView();
-    private final BaseRouter router = getRouter();
-    private final IMessagesInteractor interactor = new MessagesInteractor();
-    private final EventManager eventManager = new EventManager(this);
+public class MessagesPresenter extends MvpPresenter<IMessagesView, BaseRouter> implements IMessagesPresenter {
+    private final IMessagesInteractor interactor;
+    private MessagesEventManager messagesEventManager;
 
-    MessagesPresenter(@NotNull MessagesFragment view, @NotNull BaseRouter router) {
+    public MessagesPresenter(@NotNull IMessagesView view,
+                             @NotNull BaseRouter router,
+                             @NotNull IMessagesInteractor messagesInteractor) {
         super(view, router);
+        this.interactor = messagesInteractor;
+    }
+
+    public void attach(MessagesEventManager messagesEventManager) {
+        this.messagesEventManager = messagesEventManager;
     }
 
     @Override
     public void onCreateView(@Nullable LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        eventManager.subscribe();
+        messagesEventManager.subscribe();
     }
 
     @Override
     public void onDestroyView() {
-        eventManager.unsubscribe();
+        messagesEventManager.unsubscribe();
     }
 
     @Override
@@ -58,22 +63,22 @@ public class MessagesPresenter extends MvpPresenter<MessagesFragment, BaseRouter
         final Bundle bundle = new Bundle();
         bundle.putString(FriendPhotoDialog.FRIEND_NAME_EXTRA, model.getFriend().getName());
         bundle.putBoolean(FriendPhotoDialog.FRIEND_ONLINE_EXTRA, model.getFriend().isOnline());
-        view.showFriendPhotoDialog(bundle);
+        getView().showFriendPhotoDialog(bundle);
     }
 
     @Override
     public void onQueryTextChanged(String query) {
-        view.showMessages(interactor.getMessages(query));
+        getView().showMessages(interactor.getMessages(query));
     }
 
     @Override
     public void onRefresh() {
-        view.onUiThread(this::emulateUpdating);
+        getView().onUiThread(this::emulateUpdating);
     }
 
     @Override
     public void updateMessages() {
-        view.onUiThread(this::showMessages);
+        getView().onUiThread(this::showMessages);
     }
 
     @Override
@@ -82,19 +87,20 @@ public class MessagesPresenter extends MvpPresenter<MessagesFragment, BaseRouter
     }
 
     private void showMessages() {
-        view.showMessages(interactor.getMessages());
+        getView().showMessages(interactor.getMessages());
     }
 
     private void emulateUpdating() {
-        view.showProgress(true);
+        getView().showProgress(true);
         new Handler().postDelayed(() -> {
             updateMessages();
-            view.showProgress(false);
+            getView().showProgress(false);
         }, 1_000);
     }
 
     private void openChat(Bundle bundle) {
-        router.use(getView()).openScreen(BaseRouter.Screen.CHAT, bundle,
-                AnimatorResource.with(R.anim.translate_left_slide, R.anim.translate_right_slide));
+        getRouter().use((Fragment) getView())
+                .openScreen(BaseRouter.Screen.CHAT, bundle,
+                        AnimatorResource.with(R.anim.translate_left_slide, R.anim.translate_right_slide));
     }
 }

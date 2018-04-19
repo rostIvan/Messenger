@@ -21,13 +21,14 @@ import java.util.UUID;
 
 import butterknife.BindView;
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.di.PresentationFactory;
 import trickyquestion.messenger.screen.chat.data.ChatMessage;
 import trickyquestion.messenger.screen.main.tabs.friends.data.Friend;
 import trickyquestion.messenger.screen.main.tabs.messages.data.MessageUtil;
-import trickyquestion.messenger.ui.activity.ApplicationRouter;
 import trickyquestion.messenger.ui.activity.BaseChatActivity;
 import trickyquestion.messenger.ui.adapter.BaseRecyclerAdapter;
 import trickyquestion.messenger.ui.interfaces.Layout;
+import trickyquestion.messenger.ui.interfaces.BasePresenter;
 import trickyquestion.messenger.ui.util.ViewUtilKt;
 
 @Layout(res = R.layout.activity_chat_message)
@@ -44,10 +45,12 @@ public class ChatActivity extends BaseChatActivity implements IChatView {
     public static final String FRIEND_NAME_EXTRA = "friendName";
     public static final String FRIEND_ID_EXTRA = "friendId";
 
-    final ChatPresenter presenter = new ChatPresenter(this, ApplicationRouter.from(this));
+    private IChatPresenter presenter;
 
+    @NonNull
     @Override
-    public ChatPresenter getPresenter() {
+    public BasePresenter getPresenter() {
+        presenter = PresentationFactory.INSTANCE.create(this);
         return presenter;
     }
 

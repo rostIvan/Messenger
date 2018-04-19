@@ -1,9 +1,7 @@
 package trickyquestion.messenger.p2p_protocol;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -25,7 +23,6 @@ import trickyquestion.messenger.p2p_protocol.modules.P2PAddFriends;
 import trickyquestion.messenger.p2p_protocol.modules.P2PMesseges;
 import trickyquestion.messenger.p2p_protocol.modules.P2PNetwork;
 import trickyquestion.messenger.screen.popup_windows.FriendRequestDialog;
-import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.android.preference.NetworkPreference;
 import trickyquestion.messenger.util.java.maping.TypeCasting;
 

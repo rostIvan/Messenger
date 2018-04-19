@@ -14,8 +14,13 @@ import trickyquestion.messenger.screen.main.tabs.messages.data.Message;
 import trickyquestion.messenger.util.java.maping.MessageFilter;
 
 public class MessagesInteractor implements IMessagesInteractor {
-    private FriendRepository friendRepository = FriendRepository.INSTANCE;
-    private ChatMessageRepository chatRepository = ChatMessageRepository.INSTANCE;
+    private final FriendRepository friendRepository;
+    private final ChatMessageRepository chatRepository;
+
+    public MessagesInteractor(FriendRepository friendRepository, ChatMessageRepository chatRepository) {
+        this.friendRepository = friendRepository;
+        this.chatRepository = chatRepository;
+    }
 
     @Override
     public List<Message> getMessages() {

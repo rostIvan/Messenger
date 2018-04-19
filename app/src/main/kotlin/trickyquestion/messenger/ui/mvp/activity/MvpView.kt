@@ -2,37 +2,42 @@ package trickyquestion.messenger.ui.mvp.activity
 
 import android.os.Bundle
 import trickyquestion.messenger.ui.activity.ABaseActivity
+import trickyquestion.messenger.ui.interfaces.BasePresenter
 
 abstract class MvpView : ABaseActivity() {
+
+    private lateinit var presenter: BasePresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getPresenter()?.onCreate(bundle = savedInstanceState)
+        presenter = getPresenter()
+        presenter.onCreate(savedInstanceState)
     }
 
     override fun onStart() {
         super.onStart()
-        getPresenter()?.onStart()
+        presenter.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        getPresenter()?.onResume()
+        presenter.onResume()
     }
 
     override fun onStop() {
         super.onStop()
-        getPresenter()?.onStop()
+        presenter.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        getPresenter()?.onDestroy()
+        presenter.onDestroy()
     }
 
     override fun finish() {
         super.finish()
-        getPresenter()?.onFinish()
+        presenter.onFinish()
     }
 
-    open fun getPresenter(): MvpPresenter<*, *>? = null
+    abstract fun getPresenter(): BasePresenter
 }
