@@ -4,6 +4,7 @@ apply plugin: 'realm-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
+apply plugin: 'pl.droidsonroids.pitest'
 
 android {
     compileSdkVersion 26
@@ -95,36 +96,6 @@ realm {
     syncEnabled = true
 }
 
-//// for android instrumental test coverage use task: jacocoAndroidTestReportDebug
-//task jacocoAndroidTestReportDebug(type:JacocoReport, dependsOn: "connectedDebugAndroidTest") {
-//    group = "Reporting"
-//    description = "Generate Jacoco coverage reports"
-//    def fileFilter = ['**/R.class',
-//                      '**/R$*.class',
-//                      '**/BuildConfig.*',
-//                      "**/realm/**",
-//                      '**/Manifest*.*',
-//                      'android/**/*.*']
-//
-//    def debugTree = fileTree(dir:
-//            "${project.buildDir}/intermediates/classes/debug",
-//            excludes: fileFilter)
-//
-//    def mainSrc = "${project.projectDir}/src/main/java"
-//
-//    sourceDirectories = files([mainSrc])
-//    classDirectories = files([debugTree])
-//
-//    executionData = fileTree(dir: project.projectDir, includes:
-//            ['**/*.exec', '**/*.ec'])
-//
-//    reports {
-//        xml.enabled = true
-//        csv.enabled = false
-//        html.enabled = true
-//    }
-//}
-
 // for unit test coverage use task: jacocoTestReportDebug
 junitJacoco {
     jacocoVersion = '0.7.5.201505241946'
@@ -146,4 +117,15 @@ junitJacoco {
                 "**/lzyzsd/circleprogress/**",
                 "**/facebook/stetho/**"]
     includeNoLocationClasses = true
+}
+
+
+pitest {
+    targetClasses = ['trickyquestion.messenger.*']
+    excludedClasses = ['trickyquestion.messenger.data.*',
+                       'trickyquestion.messenger.ui.*',
+                       'trickyquestion.messenger.buisness.*']
+    pitestVersion = "1.1.0"
+    threads = 4
+    outputFormats = ['XML', 'HTML']
 }
