@@ -39,7 +39,7 @@ ext {
 
 sonarqube {
     properties {
-//        property "sonar.pitest.reportsDirectory", "app/build/reports/pitest"
+        property "sonar.pitest.reportsDirectory", "app/build/reports/pitest/release"
         property "sonar.jacoco.reportPaths", "app/build/jacoco"
         property "sonar.junit.reportPaths", "app/build/test-results/testReleaseUnitTest"
     }
