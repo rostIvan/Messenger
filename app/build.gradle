@@ -119,13 +119,13 @@ junitJacoco {
     includeNoLocationClasses = true
 }
 
-
 pitest {
     targetClasses = ['trickyquestion.messenger.*']
     excludedClasses = ['trickyquestion.messenger.data.*',
                        'trickyquestion.messenger.ui.*',
                        'trickyquestion.messenger.buisness.*']
-    pitestVersion = "1.1.0"
     threads = 4
     outputFormats = ['XML', 'HTML']
+    timeoutConstInMillis = 20000
+    verbose = true
 }
