@@ -1,4 +1,5 @@
 apply plugin: 'com.vanniktech.android.junit.jacoco'
+apply plugin: "org.sonarqube"
 
 buildscript {
     ext.kotlin_version = '1.2.30'
@@ -17,13 +18,18 @@ buildscript {
     }
 }
 
-apply plugin: "org.sonarqube"
 
 allprojects {
     repositories {
         jcenter()
         google()
         mavenCentral()
+    }
+    sonarqube {
+        properties {
+            property "sonar.language", "java"
+            property "sonar.sources", "src/main"
+        }
     }
 }
 
@@ -35,12 +41,4 @@ ext {
     robolectric_version = '3.0'
     robolectric_shadow_version = '4:3.0'
     espresso_version = "2.2.2"
-}
-
-sonarqube {
-    properties {
-        property "sonar.pitest.reportsDirectory", "app/build/reports/pitest/release"
-        property "sonar.jacoco.reportPaths", "app/build/jacoco"
-        property "sonar.junit.reportPaths", "app/build/test-results/testReleaseUnitTest"
-    }
 }
