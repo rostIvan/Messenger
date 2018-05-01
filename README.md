@@ -9,13 +9,13 @@ It's a simple P2P-messenger
 If you want help or upgrade our app, you can following the next steps:
 
 ```
-1. git clone https://github.com/rostIvan/Messenger   
+1. git clone https://central.lugunica.jp/Projects/Android%20Messenger/_git/Messenger   
 
 ```
 or clone my branch
 
 ```
-git clone -b rost https://github.com/rostIvan/Messenger 
+git clone -b rost https://central.lugunica.jp/Projects/Android%20Messenger/_git/Messenger 
 ```
 
 ```
