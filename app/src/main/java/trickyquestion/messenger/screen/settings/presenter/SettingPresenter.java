@@ -9,6 +9,7 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import io.realm.Realm;
 import trickyquestion.messenger.screen.settings.expand_list.data.ExpandedListCreator;
 import trickyquestion.messenger.screen.settings.view.ISettingView;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeThemeEvent;
@@ -78,7 +79,7 @@ public class SettingPresenter implements ISettingPresenter {
     @Override
     public void onLogOutItemClick() {
         authPreference.clearAccountData();
-        authPreference.setUserAuthenticated(false);
+        Realm.getDefaultInstance().executeTransaction(realm -> realm.deleteAll());
         restartApp(view.getContext());
     }
 

@@ -18,15 +18,9 @@ public class MessengerApplication extends Application {
     }
 
     @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        Realm.getDefaultInstance().close();
-    }
-
-    @Override
     public void onTerminate() {
-        super.onTerminate();
         Realm.getDefaultInstance().close();
+        super.onTerminate();
     }
 
     private void initRealm() {

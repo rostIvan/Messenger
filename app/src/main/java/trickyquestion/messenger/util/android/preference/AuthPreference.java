@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.constraint.ConstraintLayout;
 
+import io.realm.Realm;
 import trickyquestion.messenger.util.Constants;
 
 public class AuthPreference {

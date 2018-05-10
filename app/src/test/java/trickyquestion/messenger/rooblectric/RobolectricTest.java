@@ -6,33 +6,31 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.robolectric.RobolectricGradleTestRunner;
-import org.robolectric.RuntimeEnvironment;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.robolectric.annotation.Config;
 
-import io.realm.Realm;
 import trickyquestion.messenger.BuildConfig;
 import trickyquestion.messenger.data.util.Color;
 import trickyquestion.messenger.data.util.Mode;
 
+import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 import static trickyquestion.messenger.data.util.LoggerKt.LINE;
 import static trickyquestion.messenger.data.util.LoggerKt.log;
 
-@RunWith(RobolectricGradleTestRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 @Config(constants = BuildConfig.class, sdk = 17, application = MockApplication.class, manifest = "src/main/AndroidManifest.xml")
-@PowerMockIgnore({"org.mockito.*", "org.robolectric.*", "android.*"})
-@PrepareForTest({Realm.class})
 public class RobolectricTest {
 
-    private final Context context = RuntimeEnvironment.application.getApplicationContext();
+    @Mock Context context;
 
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
+        when(context.getPackageCodePath()).thenReturn("Hello");
     }
 
     @After
