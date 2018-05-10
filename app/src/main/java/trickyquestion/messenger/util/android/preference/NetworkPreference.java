@@ -37,7 +37,7 @@ public class NetworkPreference {
     }
 
     public int getHeartbeatFrequency() {
-        return preferences.getInt(Constants.EXTRA_KEY_HEARTBEAT_FREQUENCY, Constants.DEFAULT_HEARTBEAT_FREQUENCY);
+        return preferences.getInt(Constants.EXTRA_KEY_HEARTBEAT_FREQUENCY, Constants.DEFAULT_USER_TTL);
     }
 
     public String getMulticastGroupIp() {
