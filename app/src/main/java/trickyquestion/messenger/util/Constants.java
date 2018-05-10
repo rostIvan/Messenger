@@ -30,7 +30,8 @@ public class Constants {
     public static final String EXTRA_KEY_MULTICAST_PORT = "Multicast port";
     public static final String EXTRA_KEY_MULTICAST_GROUP_IP = "Multicast group Ip";
 
-    public static final int DEFAULT_HEARTBEAT_FREQUENCY = 2500;
+    public static final int DEFAULT_USER_TTL = 5000;
+    public static final int DEFAULT_HEARTBEAT_PACKET_FREQUENCY = DEFAULT_USER_TTL / 8;
     public static final String DEFAULT_MULTICAST_GROUP_IP = "239.0.0.1";
     public static final int DEFAULT_MULTICAST_PORT = 5000;
 

@@ -22,12 +22,15 @@ import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.p2p_protocol.objects.OUser;
+import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.android.preference.NetworkPreference;
 import trickyquestion.messenger.util.java.string_helper.FixedString;
 
+import static trickyquestion.messenger.util.Constants.DEFAULT_HEARTBEAT_PACKET_FREQUENCY;
+
 /**
- * Created by Zen on 17.10.2017.
+ * Created by Subaru@Lugunica.jp on 17.10.2017.
  */
 
 public class P2PNetwork {
@@ -59,16 +62,19 @@ public class P2PNetwork {
                 try {
                     if(Network.GetCurrentNetworkState()==NetworkState.ACTIVE)
                     {
-                        String packet_data = genHeartbeatPacket(
-                                host.getName(),host.getID(), Network.IPAddress(context));
-                        MSocket.SendMsg(
-                                Network.IPAddress(context),
-                                packet_data,
-                                networkPreference.getMulticastGroupIp(),
-                                networkPreference.getMulticastPort()
-                        );
+                        String CurrentIP = Network.IPAddress(context);
+                        if(CurrentIP!=null){
+                            String packet_data = genHeartbeatPacket(
+                                    host.getName(),host.getID(), CurrentIP);
+                            MSocket.SendMsg(
+                                    Network.IPAddress(context),
+                                    packet_data,
+                                    networkPreference.getMulticastGroupIp(),
+                                    networkPreference.getMulticastPort()
+                            );
+                        }
                     }
-                    Thread.sleep(2500);
+                    Thread.sleep(DEFAULT_HEARTBEAT_PACKET_FREQUENCY);
                 } catch (InterruptedException e) {
                     break;
                 }
@@ -128,15 +134,14 @@ public class P2PNetwork {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(sdf.parse(received_packet_content[4]));
                     //Adding TTL time
-                    cal.add(Calendar.SECOND, 10);
+                    cal.add(Calendar.MILLISECOND, Constants.DEFAULT_USER_TTL);
                     users.add(
                             new OUser(
                                     UUID.fromString(received_packet_content[2]),
                                     received_packet_content[1].substring(0, received_packet_content[1].indexOf("$")),
                                     received_packet_content[3].substring(0, received_packet_content[3].indexOf("$")),
                                     cal.getTime()));
-                } catch (ParseException e) {
-                    continue;
+                } catch (ParseException ignored) {
                 }
             }
         }
@@ -159,9 +164,9 @@ public class P2PNetwork {
                 //if flag signalized inform listener by exec NetworkChanged
                 //if (network_changed) NetworkChanged();
                 try {
-                    //delay execution thread by HEARTBEAT_FREQUENCY / 2
+                    //delay execution thread by USER_TTL / 2
                     //because user registering is async process
-                    Thread.sleep(networkPreference.getHeartbeatFrequency() / 2);
+                    Thread.sleep(Constants.DEFAULT_USER_TTL / 2);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -197,14 +202,14 @@ public class P2PNetwork {
             list_lock.unlock();
         }
 
-        public void remove(OUser user){
+        void remove(OUser user){
             list_lock.lock();
             users.remove(user);
             EventBus.getDefault().post(new ChangeUserList(user,false));
             list_lock.unlock();
         }
 
-        public List<IUser> get(){
+        List<IUser> get(){
             list_lock.lock();
             List<IUser> ret = new ArrayList<>();
             ret.addAll(users);
