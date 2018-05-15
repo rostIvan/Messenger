@@ -33,7 +33,7 @@ ext {
     powermock_version = "1.7.1"
     junit_version = '4.8'
     robolectric_version = '3.0'
-    robolectric_shadow_version = '4:3.0'
+    robolectric_shadow_version = '3.3.2'
     espresso_version = "2.2.2"
 }
 

@@ -88,7 +88,7 @@ dependencies {
     testImplementation "org.powermock:powermock-api-mockito2:$powermock_version"
     testImplementation "org.powermock:powermock-classloading-xstream:$powermock_version"
     testImplementation "org.robolectric:robolectric:$robolectric_version"
-    testImplementation "org.robolectric:shadows-support-v$robolectric_shadow_version"
+    testImplementation "org.robolectric:shadows-support-v4:$robolectric_shadow_version"
 }
 
 realm {

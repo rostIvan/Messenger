@@ -14,6 +14,8 @@ interface BaseRouter {
     fun use(view: Any) : BaseRouter
 
     enum class Screen {
+        SIGN_UP,
+        ASK_PASSWORD,
         MAIN,
         CHAT,
         ADD_FRIEND,

@@ -26,8 +26,11 @@ public class AskPasswordFragment extends AWithFieldFragment {
     TextView textViewHello;
     @BindView(R.id.pass_ask_field)
     EditText passField;
-    @BindView(R.id.button_sign_in)
-    TextView buttonSignIn;
+
+    private AskPasswordViewModel viewModel;
+    public void attach(AskPasswordViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -35,10 +38,6 @@ public class AskPasswordFragment extends AWithFieldFragment {
         final String helloMessage = String.format("Hello, %s pass[%s]", getUserNick(), getUserPassword());
         textViewHello.setText(helloMessage);
     }
-
-    @NotNull
-    @Override
-    public List<EditText> getAllEditable() { return Collections.singletonList(passField); }
 
     @OnClick(R.id.button_sign_in)
     public void onButtonSignInClick() {
@@ -52,25 +51,20 @@ public class AskPasswordFragment extends AWithFieldFragment {
         return PassValidator.isCorrect(enteredPass, realPass);
     }
 
-    public void signInAccount() {
-        getHostActivity().signInAccount();
+    private void signInAccount() {
+        viewModel.signInAccount();
     }
 
-    @NonNull
-    public String getEnteredPass() {
+    @NonNull private String getEnteredPass() {
         return passField.getText().toString();
     }
-
-    @NonNull
-    private String getUserNick() {
-        return getHostActivity().getUserNick();
+    @NonNull private String getUserNick() {
+        return viewModel.getUserNick();
+    }
+    @NonNull private String getUserPassword() {
+        return viewModel.getUserPassword();
     }
 
-    @NonNull
-    public String getUserPassword() {
-        return getHostActivity().getUserPassword();
-    }
-    private AskPasswordActivity getHostActivity() {
-        return ((AskPasswordActivity) getActivity());
-    }
+    @NotNull @Override
+    public List<EditText> getAllEditable() { return Collections.singletonList(passField); }
 }
