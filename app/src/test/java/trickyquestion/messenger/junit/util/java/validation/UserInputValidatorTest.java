@@ -1,7 +1,5 @@
 package trickyquestion.messenger.junit.util.java.validation;
 
-import android.content.Context;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -12,7 +10,6 @@ import trickyquestion.messenger.util.java.validation.UserInputValidator;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.when;
 
 /**

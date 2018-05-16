@@ -82,7 +82,7 @@ public class P2PNetworkWifiChecking {
     }
 
     @Test
-    void IsServiceStarted(){
+    public void IsServiceStarted(){
         Context appContext = InstrumentationRegistry.getTargetContext();
         try {
             P2PServiceTest = new ServiceTestRule();
