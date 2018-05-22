@@ -1,6 +1,7 @@
 package trickyquestion.messenger.p2p_protocol.modules;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -89,7 +90,7 @@ public class P2PNetwork {
                 try {
                     networkAvailability.acquire();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.d("P2PNetwork", e.getMessage());
                     throw e;
                 }
             } else {
@@ -141,11 +142,11 @@ public class P2PNetwork {
                                         received_packet_content[3].substring(0, received_packet_content[3].indexOf('$')),
                                         cal.getTime()));
                     } catch (ParseException e) {
-                        e.printStackTrace();
+                        Log.d("P2PNetwork", e.getMessage());
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.d("P2PNetwork", e.getMessage());
             }
         }
     }
@@ -168,7 +169,7 @@ public class P2PNetwork {
                     //because user registering is async process
                     Thread.sleep(networkPreference.getHeartbeatFrequency() / 2);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.d("P2PNetwork", e.getMessage());
                 }
             }
         }

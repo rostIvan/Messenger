@@ -8,7 +8,9 @@ import trickyquestion.messenger.screen.main.tabs.messages.data.Message;
 
 public class MessageFilter {
     public static List<Message> filter(final List<Message> messages, final String searchValue) {
-        if (searchValue.isEmpty() || searchValue.length() == 0) return messages;
+        if (searchValue == null) throw new IllegalArgumentException("Search value should be not null");
+        if (searchValue.isEmpty()) return messages;
+
         final List<Message> result = new ArrayList<>();
         for (Message message : messages) {
             final String name = message.getFriend().getName().toLowerCase(Locale.getDefault());

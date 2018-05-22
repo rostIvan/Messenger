@@ -1,5 +1,7 @@
 package trickyquestion.messenger.network.socket;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -10,14 +12,14 @@ import java.net.SocketException;
  */
 
 public class SocketClient {
-    Socket socket;
+    private Socket socket;
 
     public SocketClient(String ip, int port, int timeout) {
         try {
             socket = new Socket();
             socket.connect(new InetSocketAddress(ip,port),timeout);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("SocketClient", e.getMessage());
         }
     }
 
@@ -25,7 +27,7 @@ public class SocketClient {
         try {
             socket.getOutputStream().write(msg.getBytes());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("SocketClient", e.getMessage());
         }
     }
 
@@ -35,9 +37,9 @@ public class SocketClient {
             int size = socket.getInputStream().read(buf);
             return new String(buf, 0 ,size);
         } catch (SocketException e) {
-            e.printStackTrace();
+            Log.d("SocketClient", e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("SocketClient", e.getMessage());
         }
         return null;
     }
@@ -46,7 +48,7 @@ public class SocketClient {
         try {
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("SocketClient", e.getMessage());
         }
     }
 }

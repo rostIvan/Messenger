@@ -31,7 +31,7 @@ public class MSocket {
             socket.leaveGroup(InetAddress.getByName(groupIP));
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("MSocket", e.getMessage());
         }
     }
 
@@ -60,7 +60,7 @@ public class MSocket {
             return data;
         } catch (SocketTimeoutException e){
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("MSocket", e.getMessage());
         }
         return null;
     }

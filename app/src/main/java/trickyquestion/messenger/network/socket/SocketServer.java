@@ -1,5 +1,7 @@
 package trickyquestion.messenger.network.socket;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -11,41 +13,42 @@ import java.util.List;
  * Created by Subaru on 11.12.2017.
  */
 
-    public class SocketServer implements Runnable{
+public class SocketServer implements Runnable {
     List<ISocketListener> listeners = new ArrayList<>();
     ServerSocket serverSocket;
-    public SocketServer(int port){
+
+    public SocketServer(int port) {
         try {
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("SocketServer", e.getMessage());
         }
     }
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             try {
                 new Thread(new SocketProccedRunnable(serverSocket.accept())).start();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d("SocketServer", e.getMessage());
             }
         }
     }
 
-    public interface ISocketListener{
+    public interface ISocketListener {
         void proceed(String str, Socket socket);
     }
 
-    public void registerListener(ISocketListener listener){
+    public void registerListener(ISocketListener listener) {
         listeners.add(listener);
     }
 
-    private class SocketProccedRunnable implements Runnable{
+    private class SocketProccedRunnable implements Runnable {
         Socket socket;
 
-        SocketProccedRunnable(Socket socket){
+        SocketProccedRunnable(Socket socket) {
             this.socket = socket;
         }
 
@@ -56,20 +59,20 @@ import java.util.List;
                 byte[] buf = new byte[2048];
                 int sz = inputStream.read(buf);
                 String data = new String(buf, 0, sz);
-                for(ISocketListener listener : listeners)
-                    if(listener!=null) listener.proceed(data, socket);
+                for (ISocketListener listener : listeners)
+                    if (listener != null) listener.proceed(data, socket);
                 socket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d("SocketServer", e.getMessage());
             }
         }
     }
 
-    public void close(){
+    public void close() {
         try {
             serverSocket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("SocketServer", e.getMessage());
         }
     }
 }
