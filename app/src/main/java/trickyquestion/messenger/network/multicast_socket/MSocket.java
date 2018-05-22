@@ -29,6 +29,7 @@ public class MSocket {
             Log.d("MSocket", "Send packet: " + msg);
             socket.send(new DatagramPacket(msg.getBytes(),msg.getBytes().length, InetAddress.getByName(groupIP),port));
             socket.leaveGroup(InetAddress.getByName(groupIP));
+            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,6 +56,7 @@ public class MSocket {
             );
             Log.d("MSocket", "Receive packet: " + data);
             socket.leaveGroup(InetAddress.getByName(groupIP));
+            socket.close();
             return data;
         } catch (SocketTimeoutException e){
         } catch (IOException e) {

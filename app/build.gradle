@@ -128,13 +128,3 @@ pitest {
     timeoutConstInMillis = 20000
     verbose = true
 }
-
-
-sonarqube {
-    properties {
-        property "sonar.junit.reportPaths", "build/test-results/testDebugUnitTest"
-        property "sonar.jacoco.reportPaths", "build/jacoco/testDebugUnitTest.exec"
-        property "sonar.java.binaries", "build/intermediates/classes/debug"
-//        property "sonar.pitest.reportsDirectory", "app/build/reports/pitest"
-    }
-}

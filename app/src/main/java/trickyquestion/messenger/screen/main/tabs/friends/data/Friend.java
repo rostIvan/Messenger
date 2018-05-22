@@ -94,6 +94,11 @@ public class Friend implements RealmModel {
     }
 
     @Override
+    public int hashCode() {
+        return this.id.hashCode();
+    }
+
+    @Override
     public String toString() {
         return String.format("Friend[id=%s, name=%s, online=%b]", id, name, online);
     }

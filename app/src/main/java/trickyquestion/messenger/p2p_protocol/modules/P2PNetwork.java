@@ -186,7 +186,7 @@ public class P2PNetwork {
             list_lock.lock();
             boolean is_new = true;
             for(OUser user :  users) {
-                if (user.equal(new_user)) {
+                if (user.equals(new_user)) {
                     user.setTTL(new_user.getTTL());
                     if(!user.equalUserName(new_user)){
                         user.setName(new_user.getName());
