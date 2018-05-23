@@ -5,6 +5,10 @@ import android.graphics.Color;
 import trickyquestion.messenger.R;
 
 public class Constants {
+    private Constants(){
+        throw new IllegalStateException("Utils class");
+    }
+
     public static final int MAIN_LAYOUT = R.layout.activity_main;
     public static final int WAS_READ_MESSAGE_BACKGROUND = Color.argb(40, 0, 0, 0);
     public static final int ONLINE_STATUS_TEXT_COLOR = Color.argb(255, 7, 169, 132);
