@@ -9,10 +9,12 @@ import trickyquestion.messenger.screen.add_friend.ui.AddFriendActivity
 import trickyquestion.messenger.screen.main.container.implementation.MainActivity
 import trickyquestion.messenger.screen.settings.view.SettingActivity
 import trickyquestion.messenger.screen.chat.ui.ChatActivity
+import trickyquestion.messenger.screen.login.ask_password.AskPasswordActivity
+import trickyquestion.messenger.screen.login.sign_up.SignUpActivity
 import trickyquestion.messenger.ui.interfaces.BaseRouter
 import trickyquestion.messenger.ui.util.AnimatorResource
 
-class ApplicationRouter private constructor(private val context: Context?) : BaseRouter {
+open class ApplicationRouter private constructor(val context: Context?) : BaseRouter {
 
     companion object {
         @JvmStatic fun from(context: Context?) = ApplicationRouter(context)
@@ -30,6 +32,10 @@ class ApplicationRouter private constructor(private val context: Context?) : Bas
         context?.startActivity(homeIntent)
     }
 
+    open fun finishActivity() {
+        (context as Activity).finish()
+    }
+
     override fun openScreen(screen: BaseRouter.Screen, animatorResource: AnimatorResource) {
         open(screen)
         (context as Activity).overridePendingTransition(animatorResource.enterAnim, animatorResource.exitAnim)
@@ -45,6 +51,8 @@ class ApplicationRouter private constructor(private val context: Context?) : Bas
     override fun openScreen(screen: BaseRouter.Screen, bundle: Bundle?) { open(screen, bundle) }
 
     private fun open(screen: BaseRouter.Screen, bundle: Bundle? = null) = when(screen) {
+        BaseRouter.Screen.SIGN_UP -> showActivity(SignUpActivity::class.java, bundle)
+        BaseRouter.Screen.ASK_PASSWORD -> showActivity(AskPasswordActivity::class.java, bundle)
         BaseRouter.Screen.CHAT -> showActivity(ChatActivity::class.java, bundle)
         BaseRouter.Screen.ADD_FRIEND -> showActivity(AddFriendActivity::class.java, bundle)
         BaseRouter.Screen.SETTINGS -> showActivity(SettingActivity::class.java, bundle)

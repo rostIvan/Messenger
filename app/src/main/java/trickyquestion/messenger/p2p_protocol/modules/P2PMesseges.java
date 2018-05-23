@@ -1,6 +1,7 @@
 package trickyquestion.messenger.p2p_protocol.modules;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
@@ -76,7 +77,7 @@ public class P2PMesseges {
                 String msg = new String(uncryptedMsg, "UTF-8");
                 EventBus.getDefault().post(new EReceivedMsg(msg,from));
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                Log.d("P2PMesseges", e.getMessage());
             }
         }
     }

@@ -19,8 +19,8 @@ public class UserInputValidator {
         return pattern.matcher(password).matches();
     }
 
-    public static boolean isPreviousPasswordCorrect(final String input, final Context context) {
-        final String password = new AuthPreference(context).getAccountPassword();
+    public static boolean isPreviousPasswordCorrect(final String input, final AuthPreference authPreference) {
+        final String password = authPreference.getAccountPassword();
         return password.equals(input);
     }
 }

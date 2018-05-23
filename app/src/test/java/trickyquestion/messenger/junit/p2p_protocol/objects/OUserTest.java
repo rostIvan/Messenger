@@ -37,8 +37,8 @@ public class OUserTest {
         assertTrue(user.getTTL().equals(newTime));
 
         OUser secondUser = new OUser(UUID.randomUUID(), "bob", "1.1.1.2", time);
-        assertTrue(user.equal(user));
-        assertFalse(user.equal(secondUser));
+        assertTrue(user.equals(user));
+        assertFalse(user.equals(secondUser));
 
         assertTrue(user.equalUserName(user));
         assertFalse(user.equalUserName(secondUser));

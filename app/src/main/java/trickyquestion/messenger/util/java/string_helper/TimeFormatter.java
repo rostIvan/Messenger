@@ -1,6 +1,7 @@
 package trickyquestion.messenger.util.java.string_helper;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,7 +23,7 @@ public class TimeFormatter {
             final Date d = df1.parse(date);
             return df2.format(d);
         } catch (ParseException e) {
-            e.printStackTrace();
+            Log.d("TimeFormatter", e.getMessage());
         }
         return null;
     }

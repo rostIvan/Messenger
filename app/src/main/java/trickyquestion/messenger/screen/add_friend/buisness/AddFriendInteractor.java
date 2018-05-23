@@ -32,6 +32,7 @@ public class AddFriendInteractor implements IAddFriendInteractor {
     private List<IUser> getUsersWithoutMyFriends(List<IUser> fromNetwork, List<Friend> friends) {
         if (friends.isEmpty()) return fromNetwork;
         for (int i = 0; i < fromNetwork.size(); i++) {
+            if (friends.size() < i) return fromNetwork;
             final IUser userFromNetwork = fromNetwork.get(i);
             final Friend friendFromDb = friends.get(i);
             if (userFromNetwork.getID().equals(friendFromDb.getId()))

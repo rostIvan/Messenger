@@ -1,6 +1,7 @@
 package trickyquestion.messenger.p2p_protocol.modules;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -96,13 +97,13 @@ public class P2PAddFriends {
                                     )
                             );
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Log.d("P2PAddFriends", e.getMessage());
                         }
                     } else {
                         try {
                             socket.getOutputStream().write(genRejectPacket(UUID.fromString(parts[4])).getBytes());
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            Log.d("P2PAddFriends", e.getMessage());
                         }
                     }
                 }
@@ -171,7 +172,7 @@ public class P2PAddFriends {
                 socketClient.close();
             } catch (InterruptedException e) {
                 EventBus.getDefault().post(new EAddFriendRejected(user));
-                e.printStackTrace();
+                Log.d("P2PAddFriends", e.getMessage());
             }
             finally {
                 addFriendProcedureInitialized.release();
@@ -186,7 +187,7 @@ public class P2PAddFriends {
             addFriendThread.start();
             addFriendProcedureInitialized.release();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.d("P2PAddFriends", e.getMessage());
         }
     }
 

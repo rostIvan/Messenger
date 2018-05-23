@@ -1,8 +1,6 @@
 package trickyquestion.messenger.screen.login.sign_up;
 
-import android.support.annotation.NonNull;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -14,51 +12,30 @@ import butterknife.OnClick;
 import trickyquestion.messenger.R;
 import trickyquestion.messenger.ui.fragment.AWithFieldFragment;
 import trickyquestion.messenger.ui.interfaces.Layout;
-import trickyquestion.messenger.util.java.validation.SignUpValidator;
+
+import static trickyquestion.messenger.data.util.TextUtilKt.textOf;
 
 @Layout(res = R.layout.fragment_sign_up)
 public class SignUpFragment extends AWithFieldFragment {
 
-    @BindView(R.id.nick_field)
-    EditText nickField;
-    @BindView(R.id.pass_field)
-    EditText passField;
-    @BindView(R.id.button_create_account)
-    TextView buttonSignIn;
+    @BindView(R.id.nick_field) EditText nickField;
+    @BindView(R.id.pass_field) EditText passField;
+    private SignUpViewModel viewModel;
+
+    public void attach(SignUpViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
     @OnClick(R.id.button_create_account)
-    public void createAccount() {
-        final String login = getEnteredLogin();
-        final String password = getEnteredPassword();
-
-        if (isEnteredCorrect(login, password)) createAccountWithData(login, password);
-        else showError("Incorrect input");
+    public void tryCreateAccount() {
+        final String login = textOf(nickField);
+        final String password = textOf(passField);
+        viewModel.onSignUpButtonClick(login, password, new SignUpViewModel.SignUpCallback() {
+            @Override public void onSuccess() { viewModel.createAccount(login, password); }
+            @Override public void onError() { showError("Incorrect input"); }
+        });
     }
 
-    @NonNull
-    private String getEnteredPassword() {
-        return passField.getText().toString();
-    }
-
-    @NonNull
-    private String getEnteredLogin() {
-        return nickField.getText().toString();
-    }
-
-    private boolean isEnteredCorrect(final String login, final String password) {
-        return SignUpValidator.isCorrect(login, password);
-    }
-
-    private void createAccountWithData(final String login, final String password) {
-        getHostActivity().saveAccountData(login, password);
-        getHostActivity().startMainScreen();
-    }
-
-    @NotNull
-    @Override
+    @NotNull @Override
     public List<EditText> getAllEditable() { return Arrays.asList(nickField, passField); }
-
-    private SignUpActivity getHostActivity() {
-        return ((SignUpActivity) getActivity());
-    }
 }

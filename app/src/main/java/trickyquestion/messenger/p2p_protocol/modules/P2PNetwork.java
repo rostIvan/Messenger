@@ -1,6 +1,7 @@
 package trickyquestion.messenger.p2p_protocol.modules;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -22,15 +23,12 @@ import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.p2p_protocol.objects.OUser;
-import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.android.preference.NetworkPreference;
 import trickyquestion.messenger.util.java.string_helper.FixedString;
 
-import static trickyquestion.messenger.util.Constants.DEFAULT_HEARTBEAT_PACKET_FREQUENCY;
-
 /**
- * Created by Subaru@Lugunica.jp on 17.10.2017.
+ * Created by Zen on 17.10.2017.
  */
 
 public class P2PNetwork {
@@ -62,19 +60,16 @@ public class P2PNetwork {
                 try {
                     if(Network.GetCurrentNetworkState()==NetworkState.ACTIVE)
                     {
-                        String CurrentIP = Network.IPAddress(context);
-                        if(CurrentIP!=null){
-                            String packet_data = genHeartbeatPacket(
-                                    host.getName(),host.getID(), CurrentIP);
-                            MSocket.SendMsg(
-                                    Network.IPAddress(context),
-                                    packet_data,
-                                    networkPreference.getMulticastGroupIp(),
-                                    networkPreference.getMulticastPort()
-                            );
-                        }
+                        String packet_data = genHeartbeatPacket(
+                                host.getName(),host.getID(), Network.IPAddress(context));
+                        MSocket.SendMsg(
+                                Network.IPAddress(context),
+                                packet_data,
+                                networkPreference.getMulticastGroupIp(),
+                                networkPreference.getMulticastPort()
+                        );
                     }
-                    Thread.sleep(DEFAULT_HEARTBEAT_PACKET_FREQUENCY);
+                    Thread.sleep(2500);
                 } catch (InterruptedException e) {
                     break;
                 }
@@ -90,59 +85,68 @@ public class P2PNetwork {
             EventBus.getDefault().register(this);
         }
 
-        public void onEvent(ENetworkStateChanged event) {
+        public void onEvent(ENetworkStateChanged event) throws InterruptedException {
             if (event.getNewNetworkState() == NetworkState.INACTIVE) {
                 try {
                     networkAvailability.acquire();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.d("P2PNetwork", e.getMessage());
+                    throw e;
                 }
             } else {
                 networkAvailability.release();
             }
         }
 
+        boolean IsValidPacketContent(String[] packet){
+            //Check is valid data
+            if (packet.length != 6) return false;
+            //Check is valid header
+            return packet[0].equals("P2P_HEARTBEAT") &&
+                    packet[5].equals("P2P_HEARTBEAT");
+        }
+
         @Override
         public void run() {
             String[] received_packet_content;
-            for (;;) {
-                if (networkAvailability.availablePermits() == 0) {
-                    networkAvailability.tryAcquire();
-                    networkAvailability.release();
+            try {
+                for (; ; ) {
+                    if (networkAvailability.availablePermits() == 0) {
+                        networkAvailability.tryAcquire();
+                        networkAvailability.release();
+                    }
+                    if (Network.GetCurrentNetworkState() != NetworkState.ACTIVE) continue;
+                    String received_data = MSocket.Receive(
+                            Network.IPAddress(context),
+                            networkPreference.getMulticastGroupIp(),
+                            networkPreference.getMulticastPort()
+                    );
+                    if (received_data == null) continue;
+                    //Split packet string
+                    //Checking is valid packet string
+                    if (received_data.length() != 121) continue;
+                    //Parse string
+                    received_packet_content = received_data.split("[:]");
+                    try {
+                        if(!IsValidPacketContent(received_packet_content)) continue;
+                        //Creating parser for time
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(sdf.parse(received_packet_content[4]));
+                        //Adding TTL time
+                        cal.add(Calendar.SECOND, 10);
+                        users.add(
+                                new OUser(
+                                        UUID.fromString(received_packet_content[2]),
+                                        received_packet_content[1].substring(0, received_packet_content[1].indexOf('$')),
+                                        received_packet_content[3].substring(0, received_packet_content[3].indexOf('$')),
+                                        cal.getTime()));
+                    } catch (ParseException e) {
+                        Log.d("P2PNetwork", e.getMessage());
+                    }
                 }
-                if(Network.GetCurrentNetworkState()!=NetworkState.ACTIVE) continue;
-                String received_data = MSocket.Receive(
-                        Network.IPAddress(context),
-                        networkPreference.getMulticastGroupIp(),
-                        networkPreference.getMulticastPort()
-                );
-                if (received_data == null) continue;
-                //Split packet string
-                //Checking is valid packet string
-                if (received_data.length() != 121) continue;
-                //Parse string
-                received_packet_content = received_data.split("[:]");
-                try {
-                    //Check is valid data
-                    if (received_packet_content.length != 6) continue;
-                    //Check is valid header
-                    if (!(received_packet_content[0].equals("P2P_HEARTBEAT") &&
-                            received_packet_content[5].equals("P2P_HEARTBEAT")))
-                        continue;
-                    //Creating parser for time
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(sdf.parse(received_packet_content[4]));
-                    //Adding TTL time
-                    cal.add(Calendar.MILLISECOND, Constants.DEFAULT_USER_TTL);
-                    users.add(
-                            new OUser(
-                                    UUID.fromString(received_packet_content[2]),
-                                    received_packet_content[1].substring(0, received_packet_content[1].indexOf("$")),
-                                    received_packet_content[3].substring(0, received_packet_content[3].indexOf("$")),
-                                    cal.getTime()));
-                } catch (ParseException ignored) {
-                }
+            } catch (Exception e) {
+                Log.d("P2PNetwork", e.getMessage());
             }
         }
     }
@@ -158,17 +162,14 @@ public class P2PNetwork {
                     //if ttl of user elapsed delete user and signalized flag
                     if (System.currentTimeMillis() > user.getTTL().getTime()) {
                         users.remove(user);
-                        //network_changed = true;
                     }
                 }
-                //if flag signalized inform listener by exec NetworkChanged
-                //if (network_changed) NetworkChanged();
                 try {
-                    //delay execution thread by USER_TTL / 2
+                    //delay execution thread by HEARTBEAT_FREQUENCY / 2
                     //because user registering is async process
-                    Thread.sleep(Constants.DEFAULT_USER_TTL / 2);
+                    Thread.sleep(networkPreference.getHeartbeatFrequency() / 2);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.d("P2PNetwork", e.getMessage());
                 }
             }
         }
@@ -186,7 +187,7 @@ public class P2PNetwork {
             list_lock.lock();
             boolean is_new = true;
             for(OUser user :  users) {
-                if (user.equal(new_user)) {
+                if (user.equals(new_user)) {
                     user.setTTL(new_user.getTTL());
                     if(!user.equalUserName(new_user)){
                         user.setName(new_user.getName());
@@ -202,14 +203,14 @@ public class P2PNetwork {
             list_lock.unlock();
         }
 
-        void remove(OUser user){
+        public void remove(OUser user){
             list_lock.lock();
             users.remove(user);
             EventBus.getDefault().post(new ChangeUserList(user,false));
             list_lock.unlock();
         }
 
-        List<IUser> get(){
+        public List<IUser> get(){
             list_lock.lock();
             List<IUser> ret = new ArrayList<>();
             ret.addAll(users);
@@ -240,7 +241,7 @@ public class P2PNetwork {
         KeepAlive.start();
     }
 
-    public void Stop(){
+    public void stop(){
         Heartbeat.interrupt();
         KeepAlive.interrupt();
         Listener.interrupt();

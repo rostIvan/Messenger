@@ -8,6 +8,13 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true"
+        android:resizeable="true"/>
+
     <application
         android:name=".application.MessengerApplication"
         android:allowBackup="true"
@@ -18,7 +25,7 @@
         android:theme="@style/AppTheme"
         android:fullBackupContent="true">
 
-        <activity android:name=".application.entry_point.EntryPoint">
+        <activity android:name=".application.EntryPoint">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

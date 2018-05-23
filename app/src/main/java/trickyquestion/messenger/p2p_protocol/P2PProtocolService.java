@@ -101,7 +101,7 @@ public class P2PProtocolService extends Service{
         }
 
         public void Stop(){
-            P2PNetwork.Stop();
+            P2PNetwork.stop();
             P2PAddFriends.Stop();
             P2PMesseges.Stop();
             started = false;

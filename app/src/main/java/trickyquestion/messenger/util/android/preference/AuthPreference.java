@@ -2,7 +2,6 @@ package trickyquestion.messenger.util.android.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.constraint.ConstraintLayout;
 
 import trickyquestion.messenger.util.Constants;
 
@@ -23,7 +22,7 @@ public class AuthPreference {
         return preferences.getString(Constants.EXTRA_KEY_USER_ID, "_NAN_");
     }
 
-    public void setAccountData(final String login, final String password, final String encKey) {
+    public void setAccountData(final String login, final String password) {
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, login);
         editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);

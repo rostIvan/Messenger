@@ -16,17 +16,28 @@ public class OUser implements IUser {
     //TTL is time to end which user data is valid
     private Date TTL;
 
-    public OUser(UUID ID,String Name, String IP, Date TTL) {
+    public OUser(UUID ID, String Name, String IP, Date TTL) {
         this.ID = ID;
         this.UName = Name;
         this.IP = IP;
         this.TTL = TTL;
     }
 
-    public UUID getID()    {return ID;}
-    public String getName(){return UName;}
-    public String getNetworkAddress()  {return IP;}
-    public Date getTTL()   {return TTL;}
+    public UUID getID() {
+        return ID;
+    }
+
+    public String getName() {
+        return UName;
+    }
+
+    public String getNetworkAddress() {
+        return IP;
+    }
+
+    public Date getTTL() {
+        return TTL;
+    }
 
     @Override
     public void setName(String newName) {
@@ -38,14 +49,19 @@ public class OUser implements IUser {
         IP = newIP;
     }
 
+    public void setTTL(Date NewTTL) {
+        TTL = NewTTL;
+    }
 
-    public void setTTL(Date NewTTL){TTL = NewTTL;}
-
-    public boolean equal(OUser second){
-        if((this.ID.equals(second.ID)) && (this.IP.equals(second.IP))) {
-            return true;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof OUser) {
+            OUser second = (OUser) obj;
+            if ((this.ID.equals(second.ID)) && (this.IP.equals(second.IP))) {
+                return true;
+            } else return false;
         }
-        else return false;
+        return super.equals(obj);
     }
 
     public boolean equalUserName(OUser second) {
