@@ -23,6 +23,7 @@ import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import trickyquestion.messenger.p2p_protocol.interfaces.IHost;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.p2p_protocol.objects.OUser;
+import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.android.event_bus_pojo.ChangeUserList;
 import trickyquestion.messenger.util.android.preference.NetworkPreference;
 import trickyquestion.messenger.util.java.string_helper.FixedString;
@@ -60,14 +61,17 @@ public class P2PNetwork {
                 try {
                     if(Network.GetCurrentNetworkState()==NetworkState.ACTIVE)
                     {
-                        String packet_data = genHeartbeatPacket(
-                                host.getName(),host.getID(), Network.IPAddress(context));
-                        MSocket.SendMsg(
-                                Network.IPAddress(context),
-                                packet_data,
-                                networkPreference.getMulticastGroupIp(),
-                                networkPreference.getMulticastPort()
-                        );
+                        String ipAddress = Network.IPAddress(context);
+                        if(ipAddress!=null) {
+                            String packet_data = genHeartbeatPacket(
+                                    host.getName(), host.getID(), ipAddress);
+                            MSocket.SendMsg(
+                                    Network.IPAddress(context),
+                                    packet_data,
+                                    networkPreference.getMulticastGroupIp(),
+                                    networkPreference.getMulticastPort()
+                            );
+                        }
                     }
                     Thread.sleep(2500);
                 } catch (InterruptedException e) {
@@ -134,7 +138,7 @@ public class P2PNetwork {
                         Calendar cal = Calendar.getInstance();
                         cal.setTime(sdf.parse(received_packet_content[4]));
                         //Adding TTL time
-                        cal.add(Calendar.SECOND, 10);
+                        cal.add(Calendar.MILLISECOND, Constants.DEFAULT_USER_TTL);
                         users.add(
                                 new OUser(
                                         UUID.fromString(received_packet_content[2]),
@@ -167,7 +171,7 @@ public class P2PNetwork {
                 try {
                     //delay execution thread by HEARTBEAT_FREQUENCY / 2
                     //because user registering is async process
-                    Thread.sleep(networkPreference.getHeartbeatFrequency() / 2);
+                    Thread.sleep(Constants.DEFAULT_HEARTBEAT_PACKET_FREQUENCY);
                 } catch (InterruptedException e) {
                     Log.d("P2PNetwork", e.getMessage());
                 }
@@ -203,7 +207,7 @@ public class P2PNetwork {
             list_lock.unlock();
         }
 
-        public void remove(OUser user){
+        void remove(OUser user){
             list_lock.lock();
             users.remove(user);
             EventBus.getDefault().post(new ChangeUserList(user,false));

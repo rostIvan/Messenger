@@ -136,8 +136,8 @@ public class P2PAddFriends {
             try {
                 addFriendProcedureInitialized.acquire();
                 SocketClient socketClient = new SocketClient(Network.IPAddress(serviceContext),serviceCfg.getAuthPort(), serviceCfg.getAuthTimeOut());
-                socketClient.SendData(genAddFriendReqPacket(user.getID()));
-                String packet = socketClient.ReceiveData(2048);
+                socketClient.sendData(genAddFriendReqPacket(user.getID()));
+                String packet = socketClient.receiveData(2048);
                 if(packet==null)
                     return;
                 String[] data = packet.split(":");

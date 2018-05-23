@@ -98,7 +98,7 @@ public class P2PMesseges {
             String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
             String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + target.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
             SocketClient socketClient = new SocketClient(target.getNetworkAddress(),serviceCfg.getMsgPort(), 0);
-            socketClient.SendData(packet);
+            socketClient.sendData(packet);
             socketClient.close();
         }
 
@@ -107,7 +107,7 @@ public class P2PMesseges {
             String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
             String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + host.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
             SocketClient socketClient = new SocketClient(target.getNetworkAddress(), serviceCfg.getMsgPort(), 0);
-            socketClient.SendData(packet);
+            socketClient.sendData(packet);
             socketClient.close();
         }
 

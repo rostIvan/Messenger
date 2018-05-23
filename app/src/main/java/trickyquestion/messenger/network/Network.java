@@ -13,6 +13,8 @@ import android.support.annotation.Nullable;
 
 //import org.jetbrains.annotations.Contract;
 
+import javax.annotation.CheckForNull;
+
 import de.greenrobot.event.EventBus;
 import trickyquestion.messenger.network.events.ENetworkStateChanged;
 
@@ -37,17 +39,6 @@ public class Network {
                     } else return;
                 EventBus.getDefault().post(new ENetworkStateChanged(Network.networkState));
             }
-//            if ("android.net.wifi.WIFI_AP_STATE_CHANGED".equals(action)) {
-//                int state = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, 0);
-//                if (state == 13) {
-//                    WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(WIFI_SERVICE);
-//                    SendToast(context, "Wifi hot-spot connected, ip: " + intToInetAddress(wifiManager.getDhcpInfo().ipAddress).getHostAddress());
-//                    getLocalIpAddress();
-//                } else{
-//                    SendToast(context, "Wifi hot-spot not connected");
-//                }
-//                return;
-//            }
         }
     }
 
@@ -81,7 +72,7 @@ public class Network {
                 (ip >> 24 & 0xff));
     }
 
-    @Nullable
+    @CheckForNull
     public static String IPAddress(Context context){
         if(networkState == NetworkState.ACTIVE) return wifiIpAddress(context);
         else return null;
