@@ -38,7 +38,7 @@ public class P2PNetwork {
     private IHost host;
     private NetworkPreference networkPreference;
 
-    private final String logTag = "P2PNetwork";
+    private final static String logTag = "P2PNetwork";
 
     private class HeartbeatRunner implements Runnable{
         HeartbeatRunner(){
@@ -144,10 +144,11 @@ public class P2PNetwork {
                         networkPreference.getMulticastGroupIp(),
                         networkPreference.getMulticastPort()
                 );
-                if (receivedData == null || receivedData.length() != 121) continue;
-                receivedPacketContent = receivedData.split("[:]");
-                if(!validPacketContent(receivedPacketContent)) continue;
-                addUserDataToList(receivedPacketContent);
+                if (receivedData != null && receivedData.length() == 121) {
+                    receivedPacketContent = receivedData.split("[:]");
+                    if (validPacketContent(receivedPacketContent))
+                        addUserDataToList(receivedPacketContent);
+                }
             }
         }
     }

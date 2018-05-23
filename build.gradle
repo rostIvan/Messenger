@@ -40,7 +40,22 @@ ext {
 sonarqube {
     properties {
         property "sonar.pitest.reportsDirectory", "${project.buildDir}/reports/pitest/release"
-        property "sonar.jacoco.reportPaths", "${project.buildDir}/reports/jacoco/release"
         property "sonar.junit.reportPaths", "${project.buildDir}/reports/tests/testDebugUnitTest"
+        property "sonar.sources", "./src/main/"
+        property "sonar.binaries", "/intermediates/classes/debug"
+        property "sonar.java.binaries", "${project.buildDir}/intermediates/classes/debug"
+        property "sonar.exclusions", "build/**,**/*.png,*.iml, **/*generated*, "
+        property "sonar.import_unknown_files", true
+        property "sonar.android.lint.report", "./build/reports/lint-results.xml"
+        property "sonar.tests", "./src/test/, ./src/androidTest/"
+        property "sonar.jacoco.reportPath", fileTree(dir: project.projectDir, includes: ['**/*.exec'])
+        property "sonar.java.test.binaries", "${project.buildDir}/intermediates/classes/debug"
+        property "sonar.jacoco.itReportPath", fileTree(dir: project.projectDir, includes: ['**/*.ec'])
+//        property "sonar.login", "admin"
+//        property "sonar.password", "-0Serena0-"
+//        property "sonar.projectName", "AndroidMessenger"
+//        property "sonar.projectKey", "AndroidMessenger"
+//        property "sonar.projectVersion", "1.0"
+//        property "sonar.host.url", "http://25.38.196.76:9000"
     }
 }

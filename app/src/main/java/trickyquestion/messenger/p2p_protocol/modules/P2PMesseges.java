@@ -43,13 +43,13 @@ public class P2PMesseges {
         serverSocket.close();
     }
 
-    private boolean verifyMsgPacket(String[] packetContent){
-        return packetContent.length != 6 &&
-                packetContent[0].equals("P2PProtocol") &&
-                packetContent[1].equals("MSG");
-    }
-
     private class MessagesReceiverListener implements SocketServer.ISocketListener{
+        private boolean verifyMsgPacket(String[] packetContent){
+            return packetContent.length != 6 &&
+                    packetContent[0].equals("P2PProtocol") &&
+                    packetContent[1].equals("MSG");
+        }
+
         @Override
         public void proceed(String str, Socket socket) {
             String[] packetContent = str.split(":");

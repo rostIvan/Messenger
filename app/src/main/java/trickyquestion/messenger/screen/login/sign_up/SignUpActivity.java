@@ -25,10 +25,10 @@ public class SignUpActivity extends SingleFragmentActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        init();
+        initialize();
     }
 
-    private void init() {
+    private void initialize() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 

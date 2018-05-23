@@ -38,7 +38,7 @@ public class P2PAddFriends {
 
     private volatile Semaphore addFriendProcedureInitialized = new Semaphore(1);
 
-    private final String logTag = "P2PAddFriends";
+    private final static String logTag = "P2PAddFriends";
 
     class AddFriendListener implements SocketServer.ISocketListener {
         volatile Semaphore addFriendMutex = new Semaphore(1);
