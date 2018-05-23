@@ -38,7 +38,7 @@ public class P2PNetwork {
     private IHost host;
     private NetworkPreference networkPreference;
 
-    private final static String logTag = "P2PNetwork";
+    private static final String LOG_TAG = "P2PNetwork";
 
     private class HeartbeatRunner implements Runnable{
         HeartbeatRunner(){
@@ -97,7 +97,7 @@ public class P2PNetwork {
                 try {
                     networkAvailability.acquire();
                 } catch (InterruptedException e) {
-                    Log.d(logTag, e.getMessage());
+                    Log.d(LOG_TAG, e.getMessage());
                     throw e;
                 }
             } else {
@@ -127,7 +127,7 @@ public class P2PNetwork {
                                 packetData[3].substring(0, packetData[3].indexOf('$')),
                                 cal.getTime()));
             } catch (ParseException e) {
-                Log.d(logTag, e.getMessage());
+                Log.d(LOG_TAG, e.getMessage());
             }
         }
 
@@ -171,7 +171,7 @@ public class P2PNetwork {
                     //because user registering is async process
                     Thread.sleep(Constants.DEFAULT_HEARTBEAT_PACKET_FREQUENCY);
                 } catch (InterruptedException e) {
-                    Log.d(logTag, e.getMessage());
+                    Log.d(LOG_TAG, e.getMessage());
                     Thread.currentThread().interrupt();
                 }
             }

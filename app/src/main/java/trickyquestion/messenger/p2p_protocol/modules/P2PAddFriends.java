@@ -38,7 +38,7 @@ public class P2PAddFriends {
 
     private volatile Semaphore addFriendProcedureInitialized = new Semaphore(1);
 
-    private final static String logTag = "P2PAddFriends";
+    private static final String LOG_TAG = "P2PAddFriends";
 
     class AddFriendListener implements SocketServer.ISocketListener {
         volatile Semaphore addFriendMutex = new Semaphore(1);
@@ -116,7 +116,7 @@ public class P2PAddFriends {
                     } else
                         socket.getOutputStream().write(genRejectPacket(UUID.fromString(parts[4])).getBytes());
                 } catch (IOException e) {
-                    Log.d(logTag, e.getMessage());
+                    Log.d(LOG_TAG, e.getMessage());
                 }
             }
         }
@@ -184,7 +184,7 @@ public class P2PAddFriends {
                 socketClient.close();
             } catch (InterruptedException e) {
                 EventBus.getDefault().post(new EAddFriendRejected(user));
-                Log.d(logTag, e.getMessage());
+                Log.d(LOG_TAG, e.getMessage());
                 Thread.currentThread().interrupt();
             }
             finally {
@@ -200,7 +200,7 @@ public class P2PAddFriends {
             addFriendThread.start();
             addFriendProcedureInitialized.release();
         } catch (InterruptedException e) {
-            Log.d("P2PAddFriends", e.getMessage());
+            Log.d(LOG_TAG, e.getMessage());
             Thread.currentThread().interrupt();
         }
     }

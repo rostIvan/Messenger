@@ -56,19 +56,44 @@ public class MessagesInteractor implements IMessagesInteractor {
         Collections.sort(messages, (t1, t2) -> {
             final MessageDate date1 = t1.getDate();
             final MessageDate date2 = t2.getDate();
-            return date1.getYear() > date2.getYear() ? -1 :
-                    date1.getMonth() > date2.getMonth() ? -1 :
-                    date1.getDay() > date2.getDay() ? -1 :
-                    date1.getHour() > date2.getHour() ? -1 :
-                    date1.getMinute() > date2.getMinute() ? -1 :
-                    date1.getSecond() > date2.getSecond() ? -1 :
 
-                    date1.getYear() == date2.getYear() ? 0 :
-                    date1.getMonth() == date2.getMonth() ? 0 :
-                    date1.getDay() == date2.getDay() ? 0 :
-                    date1.getHour() == date2.getHour() ? 0 :
-                    date1.getMinute() == date2.getMinute() ? 0 :
-                    date1.getSecond() == date2.getSecond() ? 0 : 1;
+            if(date1.getYear() > date2.getYear())
+                return -1;
+            else
+                if(date1.getYear()< date2.getYear())
+                    return 1;
+            else
+            if(date1.getMonth() > date2.getMonth())
+                return -1;
+            else
+                if(date1.getMonth() < date2.getMonth())
+                    return 1;
+            else
+            if(date1.getDay() > date2.getDay())
+                return -1;
+            else
+                if(date1.getDay() < date2.getDay())
+                    return 1;
+            else
+            if(date1.getHour() > date2.getHour())
+                return -1;
+            else
+                if(date1.getHour() < date2.getHour())
+                    return 1;
+            else
+            if(date1.getMinute() > date2.getMinute())
+                return -1;
+            else
+                if(date1.getMinute() < date2.getMinute())
+                    return 1;
+            else
+            if(date1.getSecond() > date2.getSecond())
+                return -1;
+            else
+                if(date1.getSecond() < date2.getSecond())
+                    return 1;
+            else
+                return 0;
         });
         return messages;
     }

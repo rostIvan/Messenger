@@ -18,7 +18,7 @@ import trickyquestion.messenger.network.NetworkState;
  */
 
 public class MSocket {
-    private static String logTag = "MSocket";
+    private static final String LOG_TAG = "MSocket";
 
     private MSocket(){
         throw new IllegalStateException("Utility class");
@@ -31,11 +31,11 @@ public class MSocket {
             socket.setBroadcast(true);
             socket.setReuseAddress(true);
             socket.setLoopbackMode(false);
-            Log.d(logTag, "Send packet: " + msg);
+            Log.d(LOG_TAG, "Send packet: " + msg);
             socket.send(new DatagramPacket(msg.getBytes(),msg.getBytes().length, InetAddress.getByName(groupIP),port));
             socket.leaveGroup(InetAddress.getByName(groupIP));
         } catch (IOException e) {
-            Log.d(logTag, e.getMessage());
+            Log.d(LOG_TAG, e.getMessage());
         }
     }
 
@@ -57,13 +57,13 @@ public class MSocket {
                     packet.getOffset(),
                     packet.getLength()
             );
-            Log.d(logTag, "Receive packet: " + data);
+            Log.d(LOG_TAG, "Receive packet: " + data);
             socket.leaveGroup(InetAddress.getByName(groupIP));
             return data;
         } catch (SocketTimeoutException ignored){
-            Log.d(logTag, "Receiving packet timeout");
+            Log.d(LOG_TAG, "Receiving packet timeout");
         } catch (IOException e) {
-            Log.d(logTag, e.getMessage());
+            Log.d(LOG_TAG, e.getMessage());
         }
         return null;
     }

@@ -14,14 +14,14 @@ import javax.annotation.CheckForNull;
 
 public class SocketClient {
     private Socket socket;
-    private String logTag = "SocketClient";
+    private static final String LOG_TAG = "SocketClient";
 
     public SocketClient(String ip, int port, int timeout) {
         try {
             socket = new Socket();
             socket.connect(new InetSocketAddress(ip,port),timeout);
         } catch (IOException e) {
-            Log.d(logTag, e.getMessage());
+            Log.d(LOG_TAG, e.getMessage());
         }
     }
 
@@ -29,7 +29,7 @@ public class SocketClient {
         try {
             socket.getOutputStream().write(msg.getBytes());
         } catch (IOException e) {
-            Log.d(logTag, e.getMessage());
+            Log.d(LOG_TAG, e.getMessage());
         }
     }
 
@@ -40,7 +40,7 @@ public class SocketClient {
             int size = socket.getInputStream().read(buf);
             return new String(buf, 0, size);
         } catch (IOException e) {
-            Log.d(logTag, e.getMessage());
+            Log.d(LOG_TAG, e.getMessage());
         }
         return null;
     }
