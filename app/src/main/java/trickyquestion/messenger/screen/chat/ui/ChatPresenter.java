@@ -90,7 +90,7 @@ public class ChatPresenter extends MvpPresenter<IChatView, BaseRouter> implement
     }
 
     private void checkTalkPossibility() {
-        switch (Network.GetCurrentNetworkState()) {
+        switch (Network.getCurrentNetworkState()) {
             case ACTIVE: getView().showSendButton(); break;
             case INACTIVE: getView().hideSendButton(); break;
         }

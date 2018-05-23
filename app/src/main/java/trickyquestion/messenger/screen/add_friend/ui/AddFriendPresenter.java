@@ -63,7 +63,7 @@ public class AddFriendPresenter extends MvpPresenter<IAddFriendView, BaseRouter>
     public void changeTheme() { getView().refreshTheme(); }
 
     private void showUsers() {
-        switch (Network.GetCurrentNetworkState()) {
+        switch (Network.getCurrentNetworkState()) {
             case ACTIVE: getView().showUsers(interactor.getUsers()); break;
             case INACTIVE: getView().showToast("You haven't connection"); break;
         }

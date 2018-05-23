@@ -35,7 +35,7 @@ public class FriendsInteractor implements IFriendsInteractor {
     public void updateFriendStatus(IUser user, boolean online) {
         final List<Friend> friends = repository.findAll();
         for (Friend friend : friends) {
-            if (user.getID().equals(friend.getId()))
+            if (user.getId().equals(friend.getId()))
                 repository.updateFriendStatus(friend, online);
         }
     }

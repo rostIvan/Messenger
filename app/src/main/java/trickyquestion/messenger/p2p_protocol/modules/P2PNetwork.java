@@ -38,36 +38,38 @@ public class P2PNetwork {
     private IHost host;
     private NetworkPreference networkPreference;
 
+    private final String logTag = "P2PNetwork";
+
     private class HeartbeatRunner implements Runnable{
         HeartbeatRunner(){
         }
 
-        private String genHeartbeatPacket(@NotNull String UserName,@NotNull UUID UserID, @NotNull String IP){
-            String UsrNamePart = FixedString.fill(UserName,'$',20);
-            String UserIPPart = FixedString.fill(IP,'$',15);
+        private String genHeartbeatPacket(@NotNull String userName, @NotNull UUID userID, @NotNull String ip){
+            String usrNamePart = FixedString.fill(userName,'$',20);
+            String userIPPart = FixedString.fill(ip,'$',15);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);//19
-            String SendTime = sdf.format(Calendar.getInstance().getTime());
+            String sendTime = sdf.format(Calendar.getInstance().getTime());
             return ("P2P_HEARTBEAT:" +
-                    UsrNamePart + ":" +
-                    UserID.toString() + ":" +
-                    UserIPPart+ ":" +
-                    SendTime +
+                    usrNamePart + ":" +
+                    userID.toString() + ":" +
+                    userIPPart+ ":" +
+                    sendTime +
                     ":P2P_HEARTBEAT");
         }
 
         @Override
         public void run() {
-            for(;;) {
+            while(!Thread.interrupted()) {
                 try {
-                    if(Network.GetCurrentNetworkState()==NetworkState.ACTIVE)
+                    if(Network.getCurrentNetworkState()==NetworkState.ACTIVE)
                     {
-                        String ipAddress = Network.IPAddress(context);
+                        String ipAddress = Network.ipAddress(context);
                         if(ipAddress!=null) {
-                            String packet_data = genHeartbeatPacket(
+                            String packetData = genHeartbeatPacket(
                                     host.getName(), host.getID(), ipAddress);
-                            MSocket.SendMsg(
-                                    Network.IPAddress(context),
-                                    packet_data,
+                            MSocket.sendMsg(
+                                    Network.ipAddress(context),
+                                    packetData,
                                     networkPreference.getMulticastGroupIp(),
                                     networkPreference.getMulticastPort()
                             );
@@ -75,6 +77,7 @@ public class P2PNetwork {
                     }
                     Thread.sleep(2500);
                 } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     break;
                 }
             }
@@ -94,7 +97,7 @@ public class P2PNetwork {
                 try {
                     networkAvailability.acquire();
                 } catch (InterruptedException e) {
-                    Log.d("P2PNetwork", e.getMessage());
+                    Log.d(logTag, e.getMessage());
                     throw e;
                 }
             } else {
@@ -102,7 +105,7 @@ public class P2PNetwork {
             }
         }
 
-        boolean IsValidPacketContent(String[] packet){
+        boolean validPacketContent(String[] packet){
             //Check is valid data
             if (packet.length != 6) return false;
             //Check is valid header
@@ -110,47 +113,41 @@ public class P2PNetwork {
                     packet[5].equals("P2P_HEARTBEAT");
         }
 
+        private void addUserDataToList(String[] packetData) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(sdf.parse(packetData[4]));
+                //Adding TTL time
+                cal.add(Calendar.MILLISECOND, Constants.DEFAULT_USER_TTL);
+                users.add(
+                        new OUser(
+                                UUID.fromString(packetData[2]),
+                                packetData[1].substring(0, packetData[1].indexOf('$')),
+                                packetData[3].substring(0, packetData[3].indexOf('$')),
+                                cal.getTime()));
+            } catch (ParseException e) {
+                Log.d(logTag, e.getMessage());
+            }
+        }
+
         @Override
         public void run() {
-            String[] received_packet_content;
-            try {
-                for (; ; ) {
-                    if (networkAvailability.availablePermits() == 0) {
-                        networkAvailability.tryAcquire();
-                        networkAvailability.release();
-                    }
-                    if (Network.GetCurrentNetworkState() != NetworkState.ACTIVE) continue;
-                    String received_data = MSocket.Receive(
-                            Network.IPAddress(context),
-                            networkPreference.getMulticastGroupIp(),
-                            networkPreference.getMulticastPort()
-                    );
-                    if (received_data == null) continue;
-                    //Split packet string
-                    //Checking is valid packet string
-                    if (received_data.length() != 121) continue;
-                    //Parse string
-                    received_packet_content = received_data.split("[:]");
-                    try {
-                        if(!IsValidPacketContent(received_packet_content)) continue;
-                        //Creating parser for time
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.US);
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(sdf.parse(received_packet_content[4]));
-                        //Adding TTL time
-                        cal.add(Calendar.MILLISECOND, Constants.DEFAULT_USER_TTL);
-                        users.add(
-                                new OUser(
-                                        UUID.fromString(received_packet_content[2]),
-                                        received_packet_content[1].substring(0, received_packet_content[1].indexOf('$')),
-                                        received_packet_content[3].substring(0, received_packet_content[3].indexOf('$')),
-                                        cal.getTime()));
-                    } catch (ParseException e) {
-                        Log.d("P2PNetwork", e.getMessage());
-                    }
+            String[] receivedPacketContent;
+            while(!Thread.interrupted()){
+                if (networkAvailability.availablePermits() == 0) {
+                    if(networkAvailability.tryAcquire()) continue;
+                    networkAvailability.release();
                 }
-            } catch (Exception e) {
-                Log.d("P2PNetwork", e.getMessage());
+                String receivedData = MSocket.receive(
+                        Network.ipAddress(context),
+                        networkPreference.getMulticastGroupIp(),
+                        networkPreference.getMulticastPort()
+                );
+                if (receivedData == null || receivedData.length() != 121) continue;
+                receivedPacketContent = receivedData.split("[:]");
+                if(!validPacketContent(receivedPacketContent)) continue;
+                addUserDataToList(receivedPacketContent);
             }
         }
     }
@@ -159,10 +156,10 @@ public class P2PNetwork {
 
         @Override
         public void run() {
-            while (true) {
+            while (!Thread.interrupted()) {
                 //Get copy of user list
-                List<OUser> users_copy = users.getUser();
-                for (OUser user : users_copy) {
+                List<OUser> usersCopy = users.getUser();
+                for (OUser user : usersCopy) {
                     //if ttl of user elapsed delete user and signalized flag
                     if (System.currentTimeMillis() > user.getTTL().getTime()) {
                         users.remove(user);
@@ -173,60 +170,61 @@ public class P2PNetwork {
                     //because user registering is async process
                     Thread.sleep(Constants.DEFAULT_HEARTBEAT_PACKET_FREQUENCY);
                 } catch (InterruptedException e) {
-                    Log.d("P2PNetwork", e.getMessage());
+                    Log.d(logTag, e.getMessage());
+                    Thread.currentThread().interrupt();
                 }
             }
         }
     }
 
-    private Thread Heartbeat;
-    private Thread Listener;
-    private Thread KeepAlive;
+    private Thread heartbeatThread;
+    private Thread listenerThread;
+    private Thread keepAliveThread;
 
     public static class AsyncList{
         private volatile List<OUser> users = new ArrayList<>();
-        private ReentrantLock list_lock = new ReentrantLock();
+        private ReentrantLock listLock = new ReentrantLock();
 
-        public void add(OUser new_user){
-            list_lock.lock();
-            boolean is_new = true;
+        public void add(OUser newUser){
+            listLock.lock();
+            boolean isNew = true;
             for(OUser user :  users) {
-                if (user.equals(new_user)) {
-                    user.setTTL(new_user.getTTL());
-                    if(!user.equalUserName(new_user)){
-                        user.setName(new_user.getName());
+                if (user.equals(newUser)) {
+                    user.setTTL(newUser.getTTL());
+                    if(!user.equalUserName(newUser)){
+                        user.setName(newUser.getName());
                     }
-                    is_new = false;
+                    isNew = false;
                     break;
                 }
             }
-            if(is_new) {
-                users.add(new_user);
-                EventBus.getDefault().post(new ChangeUserList(new_user,true));
+            if(isNew) {
+                users.add(newUser);
+                EventBus.getDefault().post(new ChangeUserList(newUser,true));
             }
-            list_lock.unlock();
+            listLock.unlock();
         }
 
         void remove(OUser user){
-            list_lock.lock();
+            listLock.lock();
             users.remove(user);
             EventBus.getDefault().post(new ChangeUserList(user,false));
-            list_lock.unlock();
+            listLock.unlock();
         }
 
         public List<IUser> get(){
-            list_lock.lock();
+            listLock.lock();
             List<IUser> ret = new ArrayList<>();
             ret.addAll(users);
-            list_lock.unlock();
+            listLock.unlock();
             return ret;
         }
 
         private List<OUser> getUser(){
-            list_lock.lock();
+            listLock.lock();
             List<OUser> ret = new ArrayList<>();
             ret.addAll(users);
-            list_lock.unlock();
+            listLock.unlock();
             return ret;
         }
     }
@@ -237,18 +235,18 @@ public class P2PNetwork {
         this.context = context;
         this.host = host;
         this.networkPreference = networkPreference;
-        Heartbeat = new Thread(new HeartbeatRunner());
-        Listener = new Thread(new ListenerRunner());
-        KeepAlive = new Thread(new CleanerRunner());
-        Heartbeat.start();
-        Listener.start();
-        KeepAlive.start();
+        heartbeatThread = new Thread(new HeartbeatRunner());
+        listenerThread = new Thread(new ListenerRunner());
+        keepAliveThread = new Thread(new CleanerRunner());
+        heartbeatThread.start();
+        listenerThread.start();
+        keepAliveThread.start();
     }
 
     public void stop(){
-        Heartbeat.interrupt();
-        KeepAlive.interrupt();
-        Listener.interrupt();
+        heartbeatThread.interrupt();
+        keepAliveThread.interrupt();
+        listenerThread.interrupt();
     }
 
     public List<IUser> getUsers(){

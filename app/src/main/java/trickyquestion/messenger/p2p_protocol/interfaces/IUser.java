@@ -7,7 +7,7 @@ import java.util.UUID;
  */
 
 public interface IUser {
-    UUID getID();
+    UUID getId();
     String getName();
     String getNetworkAddress();
 

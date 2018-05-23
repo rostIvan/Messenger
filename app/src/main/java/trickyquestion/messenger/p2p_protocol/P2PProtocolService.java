@@ -36,6 +36,7 @@ public class P2PProtocolService extends Service{
     private NetworkPreference servicePreference;
 
     public P2PProtocolService(){
+        //For starting service use start method of LocalBinder
     }
 
     @Override
@@ -60,7 +61,7 @@ public class P2PProtocolService extends Service{
      * @return is UnBinder successfully
      */
     @Override
-    public boolean onUnbind(Intent intent) {
+    public final boolean onUnbind(Intent intent) {
         //clean listeners before unbinding
         return super.onUnbind(intent);
     }
@@ -72,9 +73,9 @@ public class P2PProtocolService extends Service{
         return mBinder;
     }
 
-    private trickyquestion.messenger.p2p_protocol.modules.P2PNetwork P2PNetwork;
-    private trickyquestion.messenger.p2p_protocol.modules.P2PAddFriends P2PAddFriends;
-    private trickyquestion.messenger.p2p_protocol.modules.P2PMesseges P2PMesseges;
+    private trickyquestion.messenger.p2p_protocol.modules.P2PNetwork p2pNetwork;
+    private trickyquestion.messenger.p2p_protocol.modules.P2PAddFriends p2pAddFriends;
+    private trickyquestion.messenger.p2p_protocol.modules.P2PMesseges p2pMesseges;
 
     private boolean started = false;
 
@@ -83,43 +84,43 @@ public class P2PProtocolService extends Service{
     */
     public class LocalBinder extends Binder{
 
-        public boolean IsStarted() {return started;}
+        public boolean isStarted() {return started;}
 
         /**
         *Starting service modules, if service alredy started modules not restarted
         */
-        public void Start(){
+        public void start(){
             if(started) return;
             host = new OHost(getApplicationContext());
-            Network.StartNetworkListener(getApplicationContext());
+            Network.startNetworkListener(getApplicationContext());
             servicePreference = new NetworkPreference(getApplicationContext());
-            P2PNetwork = new P2PNetwork(host, getApplicationContext(),servicePreference);
-            P2PAddFriends = new P2PAddFriends(getApplicationContext(),servicePreference,P2PNetwork,host);
-            P2PMesseges = new P2PMesseges(servicePreference,host,getApplicationContext());
+            p2pNetwork = new P2PNetwork(host, getApplicationContext(),servicePreference);
+            p2pAddFriends = new P2PAddFriends(getApplicationContext(),servicePreference, p2pNetwork,host);
+            p2pMesseges = new P2PMesseges(servicePreference,host);
             Log.d("P2PProtocolService","Service started");
             started = true;
         }
 
-        public void Stop(){
-            P2PNetwork.stop();
-            P2PAddFriends.Stop();
-            P2PMesseges.Stop();
+        public void stop(){
+            p2pNetwork.stop();
+            p2pAddFriends.stop();
+            p2pMesseges.stop();
             started = false;
         }
 
         public List<IUser> getUsers(){
-            return P2PNetwork.getUsers();
+            return p2pNetwork.getUsers();
         }
 
-        public void SendFriendReq(IUser user){
-            P2PAddFriends.NewAddFriendReq(user);
+        public void sendFriendReq(IUser user){
+            p2pAddFriends.newAddFriendReq(user);
         }
 
-        public void SendMsg(UUID targetID, String msg){
+        public void sendMsg(UUID targetID, String msg){
             List<IFriend> friends = TypeCasting.castToIFriendList(FriendRepository.INSTANCE.findAll());
             for (IFriend friend : friends) {
                 if (friend.getID().equals(targetID)) {
-                    P2PMesseges.SendMsg(friend, msg);
+                    p2pMesseges.sendMsg(friend, msg);
                     break;
                 }
             }
@@ -130,9 +131,9 @@ public class P2PProtocolService extends Service{
     * Inform service about adding friend
     */
     public void onEvent(EAddFriendRequest event) {
-        final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getID().toString());
+        final FriendRequestDialog dialog = new FriendRequestDialog(this, event.getFrom().getName(), event.getFrom().getId().toString());
         dialog.setOnPositiveButtonClickListener((d, i) -> {
-            final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getID(), true);
+            final Friend friend = new Friend(event.getFrom().getName(), event.getFrom().getId(), true);
             FriendRepository.INSTANCE.save(friend);
             Toast.makeText(this, "User: " + event.getFrom().getName() + " add to your friends", Toast.LENGTH_SHORT).show();
         });

@@ -1,6 +1,5 @@
 package trickyquestion.messenger.network.multicast_socket;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.IOException;
@@ -19,30 +18,29 @@ import trickyquestion.messenger.network.NetworkState;
  */
 
 public class MSocket {
-    private static String LOG_TAG = "MSocket";
+    private static String logTag = "MSocket";
 
     private MSocket(){
         throw new IllegalStateException("Utility class");
     }
 
-    public static void SendMsg(String ip, String msg, String groupIP, int port){
+    public static void sendMsg(String ip, String msg, String groupIP, int port){
         try(MulticastSocket socket = new MulticastSocket(port)) {
             socket.setInterface(InetAddress.getByName(ip));
             socket.joinGroup(InetAddress.getByName(groupIP));
             socket.setBroadcast(true);
             socket.setReuseAddress(true);
             socket.setLoopbackMode(false);
-            Log.d(LOG_TAG, "Send packet: " + msg);
+            Log.d(logTag, "Send packet: " + msg);
             socket.send(new DatagramPacket(msg.getBytes(),msg.getBytes().length, InetAddress.getByName(groupIP),port));
             socket.leaveGroup(InetAddress.getByName(groupIP));
-            socket.close();
         } catch (IOException e) {
-            Log.d(LOG_TAG, e.getMessage());
+            Log.d(logTag, e.getMessage());
         }
     }
 
     @CheckForNull
-    public static String Receive(String ip, String groupIP, int port){
+    public static String receive(String ip, String groupIP, int port){
         try (MulticastSocket socket = new MulticastSocket(port)) {
             socket.setInterface(InetAddress.getByName(ip));
             socket.joinGroup(InetAddress.getByName(groupIP));
@@ -52,22 +50,20 @@ public class MSocket {
             byte[] content = new byte[256];
             DatagramPacket packet = new DatagramPacket(content, content.length);
             socket.setSoTimeout(1000);
-            if (Network.GetCurrentNetworkState() == NetworkState.ACTIVE)
+            if (Network.getCurrentNetworkState() == NetworkState.ACTIVE)
                 socket.receive(packet);
             String data = new String(
                     packet.getData(),
                     packet.getOffset(),
                     packet.getLength()
             );
-            Log.d(LOG_TAG, "Receive packet: " + data);
+            Log.d(logTag, "Receive packet: " + data);
             socket.leaveGroup(InetAddress.getByName(groupIP));
-            socket.close();
             return data;
-        } catch (SocketTimeoutException ignored){{
-            Log.d(LOG_TAG, "Receiving packet timeout");
-        }
+        } catch (SocketTimeoutException ignored){
+            Log.d(logTag, "Receiving packet timeout");
         } catch (IOException e) {
-            Log.d(LOG_TAG, e.getMessage());
+            Log.d(logTag, e.getMessage());
         }
         return null;
     }

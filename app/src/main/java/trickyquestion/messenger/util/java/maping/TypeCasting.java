@@ -13,12 +13,12 @@ public class TypeCasting {
 
     public static List<IFriend> castToIFriendList(final List<Friend> friends) {
         final List<IFriend> friendList = new ArrayList<>();
-        final List<IUser> users = P2PProtocolConnector.ProtocolInterface().getUsers();
+        final List<IUser> users = P2PProtocolConnector.protocolInterface().getUsers();
         boolean ipFound;
         for (Friend friend : friends) {
             ipFound = false;
             for(IUser user : users) {
-                if (user.getID().equals(friend.getId())) {
+                if (user.getId().equals(friend.getId())) {
                     friendList.add(new OFriend(friend.getName(), friend.getId(), user.getNetworkAddress()));
                     ipFound = true;
                     break;
@@ -27,6 +27,15 @@ public class TypeCasting {
             if(!ipFound) friendList.add(new OFriend(friend.getName(), friend.getId(), null));
         }
         return friendList;
+    }
+
+    public static IFriend castToIFriend(final Friend friend){
+        final List<IUser> users = P2PProtocolConnector.protocolInterface().getUsers();
+        for(IUser user : users){
+            if(user.getId().equals(friend.getId()))
+                return new OFriend(friend.getName(), friend.getId(), user.getNetworkAddress());
+        }
+        return new OFriend(friend.getName(),friend.getId(), null);
     }
 
 }

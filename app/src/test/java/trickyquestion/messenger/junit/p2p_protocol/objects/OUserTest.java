@@ -22,7 +22,7 @@ public class OUserTest {
         UUID id = UUID.randomUUID();
         Date time = Calendar.getInstance().getTime();
         OUser user = new OUser(id, "name", "1.1.1.1", time);
-        assertTrue(user.getID().equals(id));
+        assertTrue(user.getId().equals(id));
         assertTrue(user.getName().equals("name"));
         assertTrue(user.getNetworkAddress().equals("1.1.1.1"));
         assertTrue(user.getTTL().equals(time));

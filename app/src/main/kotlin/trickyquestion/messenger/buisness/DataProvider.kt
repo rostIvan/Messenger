@@ -13,8 +13,8 @@ open class DataProvider :  IDataProvider {
     override fun getFriendsFromDb(): List<Friend> = friendRepository.findAll()
 
     override fun getUsersFromNetwork(): List<IUser> {
-        return when(Network.GetCurrentNetworkState()) {
-            NetworkState.ACTIVE -> P2PProtocolConnector.ProtocolInterface().users
+        return when(Network.getCurrentNetworkState()) {
+            NetworkState.ACTIVE -> P2PProtocolConnector.protocolInterface().users
             else -> { emptyList() }
         }
     }

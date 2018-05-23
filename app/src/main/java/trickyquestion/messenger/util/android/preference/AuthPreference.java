@@ -25,7 +25,7 @@ public class AuthPreference {
     public void setAccountData(final String login, final String password) {
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, login);
-        editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);
+        editor.putString(Constants.EXTRA_KEY_AUTH_PSWD, password);
         editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, true);
         editor.apply();
         editor.commit();
@@ -41,7 +41,7 @@ public class AuthPreference {
 
     public void setAccountPassword(final String password) {
         final SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, password);
+        editor.putString(Constants.EXTRA_KEY_AUTH_PSWD, password);
         editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, true);
         editor.apply();
         editor.commit();
@@ -50,25 +50,25 @@ public class AuthPreference {
     public void clearAccountData() {
         final SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Constants.EXTRA_KEY_AUTH_LOGIN, null);
-        editor.putString(Constants.EXTRA_KEY_AUTH_PASSWORD, null);
+        editor.putString(Constants.EXTRA_KEY_AUTH_PSWD, null);
         editor.putBoolean(Constants.EXTRA_KEY_IS_AUTHENTICATED, false);
         editor.apply();
         editor.commit();
     }
 
     public boolean askPassword() {
-        return preferences.getBoolean(Constants.EXTRA_ASK_PASSWORD, false);
+        return preferences.getBoolean(Constants.EXTRA_ASK_PSWD, false);
     }
 
     public void setAskingPassword(boolean askingPassword) {
         final SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(Constants.EXTRA_ASK_PASSWORD, askingPassword);
+        editor.putBoolean(Constants.EXTRA_ASK_PSWD, askingPassword);
         editor.apply();
         editor.commit();
     }
 
     public String getAccountPassword() {
-        return preferences.getString(Constants.EXTRA_KEY_AUTH_PASSWORD, "someone pass");
+        return preferences.getString(Constants.EXTRA_KEY_AUTH_PSWD, "someone pass");
     }
 
     public void setUserAuthenticated(boolean userAuthenticated) {

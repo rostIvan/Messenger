@@ -11,7 +11,7 @@ public class User implements IUser {
     private String networkAddress;
 
     @Override
-    public UUID getID() {
+    public UUID getId() {
         return id;
     }
 

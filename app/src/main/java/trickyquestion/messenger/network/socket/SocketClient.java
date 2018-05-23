@@ -5,24 +5,23 @@ import android.util.Log;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
 
 import javax.annotation.CheckForNull;
 
 /**
- * Created by Subaru on 11.12.2017.
+ * Created by Natsuki Subaru on 11.12.2017.
  */
 
 public class SocketClient {
     private Socket socket;
-    private String LOG_TAG = "SocketClient";
+    private String logTag = "SocketClient";
 
     public SocketClient(String ip, int port, int timeout) {
         try {
             socket = new Socket();
             socket.connect(new InetSocketAddress(ip,port),timeout);
         } catch (IOException e) {
-            Log.d(LOG_TAG, e.getMessage());
+            Log.d(logTag, e.getMessage());
         }
     }
 
@@ -30,7 +29,7 @@ public class SocketClient {
         try {
             socket.getOutputStream().write(msg.getBytes());
         } catch (IOException e) {
-            Log.d(LOG_TAG, e.getMessage());
+            Log.d(logTag, e.getMessage());
         }
     }
 
@@ -39,9 +38,9 @@ public class SocketClient {
         try {
             byte[] buf = new byte[maxPacketSize];
             int size = socket.getInputStream().read(buf);
-            return new String(buf, 0 ,size);
-        } catch (Throwable e) {
-            Log.d(LOG_TAG, e.getMessage());
+            return new String(buf, 0, size);
+        } catch (IOException e) {
+            Log.d(logTag, e.getMessage());
         }
         return null;
     }

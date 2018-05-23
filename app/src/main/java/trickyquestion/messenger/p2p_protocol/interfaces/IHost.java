@@ -10,6 +10,6 @@ public interface IHost {
     UUID getID();
     String getName();
 
-    void setName(String new_name);
+    void setName(String newName);
     void reCreate(UUID id, String name);
 }

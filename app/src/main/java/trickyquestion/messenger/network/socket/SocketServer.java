@@ -17,14 +17,14 @@ public class SocketServer implements Runnable {
     List<ISocketListener> listeners = new ArrayList<>();
     ServerSocket serverSocket;
 
-    private static String TAG_LOG = "SocketServer";
+    private static String tagLog = "SocketServer";
 
     public SocketServer(int port) {
         try {
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
         } catch (IOException e) {
-            Log.d(TAG_LOG, e.getMessage());
+            Log.d(tagLog, e.getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ public class SocketServer implements Runnable {
             try {
                 new Thread(new SocketProccedRunnable(serverSocket.accept())).start();
             } catch (IOException e) {
-                Log.d(TAG_LOG, e.getMessage());
+                Log.d(tagLog, e.getMessage());
             }
         }
     }
@@ -65,7 +65,7 @@ public class SocketServer implements Runnable {
                     if (listener != null) listener.proceed(data, socket);
                 socket.close();
             } catch (IOException e) {
-                Log.d(TAG_LOG, e.getMessage());
+                Log.d(tagLog, e.getMessage());
             }
         }
     }
@@ -74,7 +74,7 @@ public class SocketServer implements Runnable {
         try {
             serverSocket.close();
         } catch (IOException e) {
-            Log.d(TAG_LOG, e.getMessage());
+            Log.d(tagLog, e.getMessage());
         }
     }
 }

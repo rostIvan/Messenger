@@ -10,61 +10,59 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
  */
 
 public class OUser implements IUser {
-    private UUID ID;
-    private String UName;
-    private String IP;
+    private UUID id;
+    private String name;
+    private String ip;
     //TTL is time to end which user data is valid
-    private Date TTL;
+    private Date ttl;
 
-    public OUser(UUID ID, String Name, String IP, Date TTL) {
-        this.ID = ID;
-        this.UName = Name;
-        this.IP = IP;
-        this.TTL = TTL;
+    public OUser(UUID id, String name, String ip, Date ttl) {
+        this.id = id;
+        this.name = name;
+        this.ip = ip;
+        this.ttl = ttl;
     }
 
-    public UUID getID() {
-        return ID;
+    public UUID getId() {
+        return id;
     }
 
     public String getName() {
-        return UName;
+        return name;
     }
 
     public String getNetworkAddress() {
-        return IP;
+        return ip;
     }
 
     public Date getTTL() {
-        return TTL;
+        return ttl;
     }
 
     @Override
     public void setName(String newName) {
-        this.UName = newName;
+        this.name = newName;
     }
 
     @Override
     public void setNetworkAddress(String newIP) {
-        IP = newIP;
+        ip = newIP;
     }
 
-    public void setTTL(Date NewTTL) {
-        TTL = NewTTL;
+    public void setTTL(Date newTTL) {
+        ttl = newTTL;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof OUser) {
             OUser second = (OUser) obj;
-            if ((this.ID.equals(second.ID)) && (this.IP.equals(second.IP))) {
-                return true;
-            } else return false;
+            return (this.id.equals(second.id)) && (this.ip.equals(second.ip));
         }
         return super.equals(obj);
     }
 
     public boolean equalUserName(OUser second) {
-        return ((this.UName.equals(second.UName)));
+        return (this.name.equals(second.name));
     }
 }

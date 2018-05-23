@@ -32,7 +32,7 @@ public class ChatInteractor implements IChatInteractor {
 
     @Override
     public void sendMessage(String message) {
-        P2PProtocolConnector.ProtocolInterface().SendMsg(friend.getId(), message);
+        P2PProtocolConnector.protocolInterface().sendMsg(friend.getId(), message);
     }
 
     @Override

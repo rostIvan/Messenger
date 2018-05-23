@@ -1,11 +1,9 @@
 package trickyquestion.messenger.p2p_protocol.modules;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-import java.util.List;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
@@ -28,53 +26,39 @@ import trickyquestion.messenger.util.java.maping.TypeCasting;
 public class P2PMesseges {
     private NetworkPreference serviceCfg;
     private IHost host;
-    private Context context;
     private SocketServer serverSocket;
 
-    private Thread MessagesListener;
+    private Thread messagesListener;
 
-    public P2PMesseges(NetworkPreference serviceCfg, IHost host, Context context){
+    public P2PMesseges(NetworkPreference serviceCfg, IHost host){
         this.serviceCfg = serviceCfg;
         this.host = host;
-        this.context = context;
         this.serverSocket = new SocketServer(serviceCfg.getMsgPort());
         this.serverSocket.registerListener(new MessagesReceiverListener());
-        this.MessagesListener = new Thread(serverSocket);
-        this.MessagesListener.start();
+        this.messagesListener = new Thread(serverSocket);
+        this.messagesListener.start();
     }
 
-    public void Stop(){
+    public void stop(){
         serverSocket.close();
+    }
+
+    private boolean verifyMsgPacket(String[] packetContent){
+        return packetContent.length != 6 &&
+                packetContent[0].equals("P2PProtocol") &&
+                packetContent[1].equals("MSG");
     }
 
     private class MessagesReceiverListener implements SocketServer.ISocketListener{
         @Override
         public void proceed(String str, Socket socket) {
             String[] packetContent = str.split(":");
-            if(packetContent.length != 6) return;
-            if(!packetContent[0].equals("P2PProtocol") || !packetContent[1].equals("MSG")) return;
-            List<IFriend> friends = TypeCasting.castToIFriendList(FriendRepository.INSTANCE.findAll());
-            IFriend from = null;
+            if(!verifyMsgPacket(packetContent)) return;
             UUID sender = UUID.fromString(packetContent[2]);
-            if(host.getID().equals(sender)){
-                for(IFriend friend :friends){
-                    if(host.getID().equals(friend.getID())){
-                        from = friend;
-                        break;
-                    }
-                }
-            }else {
-                for (IFriend friend : friends) {
-                    if (friend.getID().equals(sender)) {
-                        from = friend;
-                        break;
-                    }
-                }
-                if (from == null) return;
-            }
+            IFriend from  = TypeCasting.castToIFriend(FriendRepository.INSTANCE.findById(sender));
             try {
-                byte[] uncryptedMsg = HexConv.hexToByte(FixedString.toDynamicSize(packetContent[4],'$'));
-                String msg = new String(uncryptedMsg, "UTF-8");
+                byte[] unencryptedMsg = HexConv.hexToByte(FixedString.toDynamicSize(packetContent[4],'$'));
+                String msg = new String(unencryptedMsg, "UTF-8");
                 EventBus.getDefault().post(new EReceivedMsg(msg,from));
             } catch (UnsupportedEncodingException e) {
                 Log.d("P2PMesseges", e.getMessage());
@@ -92,8 +76,9 @@ public class P2PMesseges {
             this.msg = msg;
         }
 
-        void SendMsg(IFriend target, String msg){
-            if(target.getID().equals(host.getID())) {SendSelfMsg(msg); return;}
+        void sendMsg(IFriend target, String msg){
+            if(target.getID().equals(host.getID())) {
+                sendSelfMsg(msg); return;}
             byte[] data = msg.getBytes();
             String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
             String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + target.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
@@ -102,7 +87,7 @@ public class P2PMesseges {
             socketClient.close();
         }
 
-        void SendSelfMsg(String msg){
+        void sendSelfMsg(String msg){
             byte[] data = msg.getBytes();
             String fixedMsg = FixedString.fill(HexConv.bytesToHex(data),'$', Constants.MAX_MSG_SIZE);
             String packet = "P2PProtocol:MSG:" + host.getID().toString() + ":" + host.getID().toString() + ":" + fixedMsg + ":P2PProtocol";
@@ -113,18 +98,20 @@ public class P2PMesseges {
 
         @Override
         public void run() {
-            SendMsg(target, msg);
+            sendMsg(target, msg);
         }
     }
 
-    private Thread MsgSender;
+    private Thread msgSender;
 
-    public void SendMsg(IFriend target, String msg){
-        if(MsgSender!=null)
+    public void sendMsg(IFriend target, String msg){
+        if(msgSender !=null)
             try {
-                MsgSender.join();
-            } catch (InterruptedException e) {}
-        MsgSender = new Thread(new MsgSenderRunner(target, msg));
-        MsgSender.start();
+                msgSender.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        msgSender = new Thread(new MsgSenderRunner(target, msg));
+        msgSender.start();
     }
 }

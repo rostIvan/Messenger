@@ -33,8 +33,8 @@ public class OHost implements IHost {
     }
 
     @Override
-    public void setName(String new_name) {
-        this.preferences.edit().putString(Constants.EXTRA_KEY_AUTH_LOGIN, new_name).apply();
+    public void setName(String newName) {
+        this.preferences.edit().putString(Constants.EXTRA_KEY_AUTH_LOGIN, newName).apply();
     }
 
     @Override

@@ -14,19 +14,23 @@ import android.os.IBinder;
  * Represent client side for protocol, simple binding service
  */
 public class P2PProtocolConnector {
-    static private P2PProtocolService.LocalBinder bind;
-    static private boolean bound;
+    private P2PProtocolConnector(){
+        throw new IllegalStateException("Cant create P2PProtocolConnector class");
+    }
+
+    private static P2PProtocolService.LocalBinder bind;
+    private static boolean bound;
 
     /**
      * Service connector object for connecting P2PProtocolService
      */
-    static private ServiceConnection sConn = new ServiceConnection() {
+    private static ServiceConnection sConn = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName name, IBinder binder) {
             //get binder
             bind = (P2PProtocolService.LocalBinder) binder;
             //start service
-            bind.Start();
+            bind.start();
             //signalize that service connected
             bound = true;
         }
@@ -40,7 +44,7 @@ public class P2PProtocolConnector {
     /**
      * @return service status
      */
-    static public boolean isServiceConnected() {
+    public static boolean isServiceConnected() {
         return bound;
     }
 
@@ -49,7 +53,7 @@ public class P2PProtocolConnector {
      *
      * @param context from caller
      */
-    static private void ConnectService(Context context) {
+    private static void connectService(Context context) {
         //bind service
         context.bindService(new Intent(context, P2PProtocolService.class), sConn, Context.BIND_AUTO_CREATE);
         //start service
@@ -61,16 +65,16 @@ public class P2PProtocolConnector {
      *
      * @return binder which represent service or NULL if service not connected
      */
-    static public P2PProtocolService.LocalBinder ProtocolInterface() {
+    public static P2PProtocolService.LocalBinder protocolInterface() {
         //if service connected return bind
         return bind;
     }
     /**
     * Try start service if service not work
     */
-    public static void TryStart(Context context) {
+    public static void tryStart(Context context) {
         if (!bound) {
-            ConnectService(context);
+            connectService(context);
         }
     }
 }

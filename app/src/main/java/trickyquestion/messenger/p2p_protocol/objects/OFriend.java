@@ -11,7 +11,8 @@ import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 
 public class OFriend implements IFriend {
 
-    private String name,ip;
+    private String name;
+    private String ip;
     private UUID id;
 
     public OFriend(String name, UUID id, String ip){
@@ -35,7 +36,7 @@ public class OFriend implements IFriend {
 
     @Override
     public void updateData(IUser user) {
-        if(id == user.getID()){
+        if(id == user.getId()){
             name = user.getName();
             ip = user.getNetworkAddress();
         }

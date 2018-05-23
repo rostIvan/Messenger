@@ -35,7 +35,7 @@ public class P2PNetworkWifiChecking {
             P2PProtocolService.LocalBinder bind = (P2PProtocolService.LocalBinder)P2PServiceTest.bindService
                     (new Intent(InstrumentationRegistry.getTargetContext(),
                             P2PProtocolService.class));
-            bind.Start();
+            bind.start();
         } catch (TimeoutException e) {
             e.printStackTrace();
         }
@@ -50,10 +50,10 @@ public class P2PNetworkWifiChecking {
             P2PProtocolService.LocalBinder bind = (P2PProtocolService.LocalBinder)P2PServiceTest.bindService
                     (new Intent(InstrumentationRegistry.getTargetContext(),
                             P2PProtocolService.class));
-            bind.Start();
+            bind.start();
             WifiManager wifiManager = (WifiManager)appContext.getSystemService(Context.WIFI_SERVICE);
             wifiManager.setWifiEnabled(true);
-            while(trickyquestion.messenger.network.Network.GetCurrentNetworkState()!= NetworkState.ACTIVE) Thread.sleep(2500);
+            while(trickyquestion.messenger.network.Network.getCurrentNetworkState()!= NetworkState.ACTIVE) Thread.sleep(2500);
             Thread.sleep(2500);
             assertTrue("Wifi enable and list not empty", !bind.getUsers().isEmpty());
         } catch (TimeoutException e) {
@@ -70,7 +70,7 @@ public class P2PNetworkWifiChecking {
             P2PProtocolService.LocalBinder bind = (P2PProtocolService.LocalBinder)P2PServiceTest.bindService
                     (new Intent(InstrumentationRegistry.getTargetContext(),
                             P2PProtocolService.class));
-            bind.Start();
+            bind.start();
             Thread.sleep(10000);
             WifiManager wifiManager = (WifiManager)appContext.getSystemService(Context.WIFI_SERVICE);
             wifiManager.setWifiEnabled(false);
@@ -89,11 +89,11 @@ public class P2PNetworkWifiChecking {
             P2PProtocolService.LocalBinder bind = (P2PProtocolService.LocalBinder)P2PServiceTest.bindService
                     (new Intent(InstrumentationRegistry.getTargetContext(),
                             P2PProtocolService.class));
-            assertTrue("Service cant be started before call start", !bind.IsStarted());
-            bind.Start();
-            assertTrue("Service must be started after call start", bind.IsStarted());
-            bind.Stop();
-            assertTrue("Service cant be started after call stop", !bind.IsStarted());
+            assertTrue("Service cant be started before call start", !bind.isStarted());
+            bind.start();
+            assertTrue("Service must be started after call start", bind.isStarted());
+            bind.stop();
+            assertTrue("Service cant be started after call stop", !bind.isStarted());
         } catch (TimeoutException e) {
             e.printStackTrace();
         }

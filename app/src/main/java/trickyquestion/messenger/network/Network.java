@@ -9,9 +9,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.support.annotation.Nullable;
-
-//import org.jetbrains.annotations.Contract;
 
 import javax.annotation.CheckForNull;
 
@@ -21,7 +18,11 @@ import trickyquestion.messenger.network.events.ENetworkStateChanged;
 import static android.content.Context.WIFI_SERVICE;
 
 public class Network {
-    private static volatile NetworkState networkState = NetworkState.INACTIVE;
+    private Network(){
+        throw new IllegalStateException("Static class");
+    }
+
+    private static NetworkState networkState = NetworkState.INACTIVE;
 
     private static class Receiver extends BroadcastReceiver{
         @Override
@@ -42,20 +43,19 @@ public class Network {
         }
     }
 
-    static private boolean isStarted = false;
-    static private Receiver receiver = new Receiver();
+    private static boolean isStarted = false;
+    private static Receiver receiver = new Receiver();
 
-    static public boolean StartNetworkListener(Context context){
-        if(isStarted) return false;
+    public static void startNetworkListener(Context context){
+        if(isStarted) return;
         NetworkInfo networkInfo = ((ConnectivityManager)context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        if(networkInfo!=null)
-        if(networkInfo.isConnected())
+        if(networkInfo!=null && networkInfo.isConnected())
             networkState=NetworkState.ACTIVE;
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.wifi.WIFI_AP_STATE_CHANGED");
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
         context.registerReceiver(receiver,filter);
-        return true;
+        isStarted = true;
     }
 
     @SuppressLint("DefaultLocale")
@@ -73,12 +73,12 @@ public class Network {
     }
 
     @CheckForNull
-    public static String IPAddress(Context context){
+    public static String ipAddress(Context context){
         if(networkState == NetworkState.ACTIVE) return wifiIpAddress(context);
         else return null;
     }
 
 //    @Contract(pure = true)
-    public static NetworkState GetCurrentNetworkState(){return networkState;}
+    public static NetworkState getCurrentNetworkState(){return networkState;}
 }
 

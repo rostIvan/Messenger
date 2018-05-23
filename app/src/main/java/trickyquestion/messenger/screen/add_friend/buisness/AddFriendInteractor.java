@@ -25,7 +25,7 @@ public class AddFriendInteractor implements IAddFriendInteractor {
 
     @Override
     public void addToFriends(IUser user) {
-        final Friend friend = new Friend(user.getName(), user.getID(), Friend.Status.ONLINE);
+        final Friend friend = new Friend(user.getName(), user.getId(), Friend.Status.ONLINE);
         repository.save(friend);
     }
 
@@ -35,7 +35,7 @@ public class AddFriendInteractor implements IAddFriendInteractor {
             if (friends.size() < i) return fromNetwork;
             final IUser userFromNetwork = fromNetwork.get(i);
             final Friend friendFromDb = friends.get(i);
-            if (userFromNetwork.getID().equals(friendFromDb.getId()))
+            if (userFromNetwork.getId().equals(friendFromDb.getId()))
                 fromNetwork.remove(i);
         }
         return fromNetwork;

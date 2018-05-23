@@ -41,7 +41,7 @@ public class NetworkPreference {
     }
 
     public String getMulticastGroupIp() {
-        return preferences.getString(Constants.EXTRA_KEY_MULTICAST_GROUP_IP, Constants.DEFAULT_MULTICAST_GROUP_IP);
+        return preferences.getString(Constants.EXTRA_KEY_MULTICAST_GROUP_IP, "239.0.0.1");
     }
 
     public int getMulticastPort() {
