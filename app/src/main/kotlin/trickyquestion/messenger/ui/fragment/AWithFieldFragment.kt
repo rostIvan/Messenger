@@ -19,7 +19,7 @@ abstract class AWithFieldFragment : ABaseFragment() {
         setupListeners()
     }
 
-    fun showError(text: CharSequence) {
+    open fun showError(text: CharSequence) {
         toast(text)
         setEditTextLineColor(context.redColor())
     }

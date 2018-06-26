@@ -1,6 +1,7 @@
 package trickyquestion.messenger.screen.main.tabs.friends.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.buisness.BaseEventManager;
 import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.chat.ui.ChatActivity;
@@ -22,9 +24,12 @@ import trickyquestion.messenger.ui.interfaces.BaseRouter;
 import trickyquestion.messenger.ui.mvp.fragment.MvpPresenter;
 import trickyquestion.messenger.ui.util.AnimatorResource;
 
+import static trickyquestion.messenger.network.NetworkState.ACTIVE;
+import static trickyquestion.messenger.network.NetworkState.INACTIVE;
+
 public class FriendsPresenter extends MvpPresenter<IFriendsView, BaseRouter> implements IFriendsPresenter {
     private final IFriendsInteractor interactor;
-    private FriendsEventManager eventManager;
+    private BaseEventManager eventManager;
 
     public FriendsPresenter(@NotNull IFriendsView view,
                             @NotNull BaseRouter router,
@@ -33,7 +38,8 @@ public class FriendsPresenter extends MvpPresenter<IFriendsView, BaseRouter> imp
         this.interactor = friendsInteractor;
     }
 
-    public void attach(FriendsEventManager eventManager) {
+    @Override
+    public void attach(@NonNull BaseEventManager eventManager) {
         this.eventManager = eventManager;
     }
 
@@ -62,7 +68,7 @@ public class FriendsPresenter extends MvpPresenter<IFriendsView, BaseRouter> imp
     }
 
     @Override
-    public void onFriendItemClick(Friend model, FriendViewHolder holder, List<Friend> items) {
+    public void onFriendItemClick(Friend model, List<Friend> items) {
         final Bundle bundle = new Bundle();
         bundle.putString(ChatActivity.FRIEND_ID_EXTRA, model.getId().toString());
         bundle.putString(ChatActivity.FRIEND_NAME_EXTRA, model.getName());
@@ -70,7 +76,7 @@ public class FriendsPresenter extends MvpPresenter<IFriendsView, BaseRouter> imp
     }
 
     private void openChat(Bundle bundle) {
-        getRouter().use(getView()).openScreen(BaseRouter.Screen.CHAT, bundle,
+        getRouter().openScreen(BaseRouter.Screen.CHAT, bundle,
                 AnimatorResource.with(R.anim.translate_left_slide, R.anim.alpha_to_zero));
     }
 
@@ -94,10 +100,8 @@ public class FriendsPresenter extends MvpPresenter<IFriendsView, BaseRouter> imp
 
     @Override
     public void onNetworkStateChanged(NetworkState state) {
-        switch (state) {
-            case ACTIVE:   updateFriends(); break;
-            case INACTIVE: getView().showToast("You haven't connection"); break;
-        }
+        if (state == ACTIVE) updateFriends();
+        else if (state == INACTIVE) getView().showToast("You haven't connection");
     }
 
     @Override

@@ -74,7 +74,7 @@ public class FriendsFragment extends AWithSearchFragment implements IFriendsView
     }
 
     private void setupListListeners(Friend model, FriendViewHolder holder, List<Friend> items) {
-        holder.itemView.setOnClickListener( v -> presenter.onFriendItemClick(model, holder, items) );
+        holder.itemView.setOnClickListener( v -> presenter.onFriendItemClick(model, items) );
         holder.itemView.setOnCreateContextMenuListener((contextMenu, view, contextMenuInfo) -> createContextMenu(contextMenu, model));
         holder.image.setOnClickListener( v -> presenter.onFriendImageClick(model) );
     }

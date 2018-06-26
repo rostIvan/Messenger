@@ -11,7 +11,7 @@ import trickyquestion.messenger.screen.chat.data.ChatMessage;
 import trickyquestion.messenger.screen.chat.data.MessageDate;
 import trickyquestion.messenger.screen.main.tabs.friends.data.Friend;
 import trickyquestion.messenger.screen.main.tabs.messages.data.Message;
-import trickyquestion.messenger.util.java.maping.MessageFilter;
+import trickyquestion.messenger.util.java.maping.Filter;
 
 public class MessagesInteractor implements IMessagesInteractor {
     private final FriendRepository friendRepository;
@@ -37,7 +37,7 @@ public class MessagesInteractor implements IMessagesInteractor {
     @Override
     public List<Message> getMessages(String query) {
         final List<Message> messages = getMessages();
-        return MessageFilter.filter(messages, query);
+        return Filter.messages(messages, query);
     }
 
     @Override

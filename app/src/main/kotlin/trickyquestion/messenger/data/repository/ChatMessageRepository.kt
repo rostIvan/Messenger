@@ -10,9 +10,9 @@ import java.util.*
 open class ChatMessageRepository : CrudRepository<ChatMessage>() {
     companion object { @JvmField val INSTANCE = ChatMessageRepository() }
 
-    fun findFriendMessages(id: UUID) = findAll().filter { message -> message.friendId == id }
-    fun findLastFriendMessage(id: UUID) = findFriendMessages(id).lastOrNull()
-    fun deleteFriendMessages(id: UUID) {
+    open fun findFriendMessages(id: UUID) = findAll().filter { message -> message.friendId == id }
+    open fun findLastFriendMessage(id: UUID) = findFriendMessages(id).lastOrNull()
+    open fun deleteFriendMessages(id: UUID) {
         deleteAll(findFriendMessages(id))
     }
 

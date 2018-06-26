@@ -114,15 +114,14 @@ junitJacoco {
                 "**/hdodenhof/circleimageview/**",
                 "**/daasuu/bl/**",
                 "**/lzyzsd/circleprogress/**",
-                "**/facebook/stetho/**"]
+                "**/facebook/stetho/**",
+                '**/*_ViewBinding**']
     includeNoLocationClasses = true
 }
 
 pitest {
     targetClasses = ['trickyquestion.messenger.*']
-    excludedClasses = ['trickyquestion.messenger.data.*',
-                       'trickyquestion.messenger.ui.*',
-                       'trickyquestion.messenger.buisness.*']
+    excludedClasses = ['**/*_ViewBinding']
     threads = 4
     outputFormats = ['XML', 'HTML']
     timeoutConstInMillis = 20000

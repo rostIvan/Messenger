@@ -23,6 +23,8 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     /** not use it constructor with addFragment() method **/
     public MainPagerAdapter(final FragmentManager fm, final List<Fragment> pages, final List<String> titles) {
         super(fm);
+        if (pages.size() != titles.size())
+            throw new IllegalArgumentException("Size pages and titles must be equals");
         this.pages = pages;
         this.titles = titles;
     }

@@ -1,6 +1,7 @@
 package trickyquestion.messenger.screen.add_friend.ui;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -8,7 +9,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.List;
 
+import trickyquestion.messenger.buisness.BaseEventManager;
 import trickyquestion.messenger.network.Network;
+import trickyquestion.messenger.network.NetworkState;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.add_friend.buisness.AddFriendEventManager;
 import trickyquestion.messenger.screen.add_friend.buisness.IAddFriendInteractor;
@@ -18,7 +21,7 @@ import trickyquestion.messenger.ui.mvp.activity.MvpPresenter;
 
 public class AddFriendPresenter extends MvpPresenter<IAddFriendView, BaseRouter> implements IAddFriendPresenter {
     private final IAddFriendInteractor interactor;
-    private AddFriendEventManager addFriendEventManager;
+    private BaseEventManager addFriendEventManager;
 
     public AddFriendPresenter(@NotNull IAddFriendView view,
                        @NotNull BaseRouter router,
@@ -27,7 +30,8 @@ public class AddFriendPresenter extends MvpPresenter<IAddFriendView, BaseRouter>
         this.interactor = addFriendInteractor;
     }
 
-    public void attach(AddFriendEventManager addFriendEventManager) {
+    @Override
+    public void attach(@NonNull BaseEventManager addFriendEventManager) {
         this.addFriendEventManager = addFriendEventManager;
     }
 
@@ -63,10 +67,10 @@ public class AddFriendPresenter extends MvpPresenter<IAddFriendView, BaseRouter>
     public void changeTheme() { getView().refreshTheme(); }
 
     private void showUsers() {
-        switch (Network.getCurrentNetworkState()) {
-            case ACTIVE: getView().showUsers(interactor.getUsers()); break;
-            case INACTIVE: getView().showToast("You haven't connection"); break;
-        }
+        if (Network.getCurrentNetworkState() == NetworkState.ACTIVE)
+            getView().showUsers(interactor.getUsers());
+        else if(Network.getCurrentNetworkState() == NetworkState.INACTIVE)
+            getView().showToast("You haven't connection");
     }
 
     private void deleteUserItem(AddFriendViewHolder holder, List<IUser> items) {

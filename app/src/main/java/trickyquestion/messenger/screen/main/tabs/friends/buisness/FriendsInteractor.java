@@ -5,7 +5,7 @@ import java.util.List;
 import trickyquestion.messenger.data.repository.FriendRepository;
 import trickyquestion.messenger.p2p_protocol.interfaces.IUser;
 import trickyquestion.messenger.screen.main.tabs.friends.data.Friend;
-import trickyquestion.messenger.util.java.maping.FriendFilter;
+import trickyquestion.messenger.util.java.maping.Filter;
 
 public class FriendsInteractor implements IFriendsInteractor {
 
@@ -23,7 +23,7 @@ public class FriendsInteractor implements IFriendsInteractor {
     @Override
     public List<Friend> getFriends(String query) {
         final List<Friend> friends = getFriends();
-        return FriendFilter.filter(friends, query);
+        return Filter.friend(friends, query);
     }
 
     @Override

@@ -10,6 +10,20 @@ public class User implements IUser {
     private UUID id;
     private String networkAddress;
 
+    public User() {
+    }
+
+    public User(String name, UUID id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public User(String name, UUID id, String networkAddress) {
+        this.name = name;
+        this.id = id;
+        this.networkAddress = networkAddress;
+    }
+
     @Override
     public UUID getId() {
         return id;

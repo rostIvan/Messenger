@@ -1,5 +1,7 @@
 package trickyquestion.messenger.screen.add_friend.buisness;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import trickyquestion.messenger.buisness.IDataProvider;
@@ -19,7 +21,7 @@ public class AddFriendInteractor implements IAddFriendInteractor {
     @Override
     public List<IUser> getUsers() {
         final List<IUser> fromNetwork = dataProvider.getUsersFromNetwork();
-        final List<Friend> friends = repository.findAll();
+        final List<Friend> friends = dataProvider.getFriendsFromDb();
         return getUsersWithoutMyFriends(fromNetwork, friends);
     }
 
@@ -31,13 +33,15 @@ public class AddFriendInteractor implements IAddFriendInteractor {
 
     private List<IUser> getUsersWithoutMyFriends(List<IUser> fromNetwork, List<Friend> friends) {
         if (friends.isEmpty()) return fromNetwork;
-        for (int i = 0; i < fromNetwork.size(); i++) {
-            if (friends.size() < i) return fromNetwork;
-            final IUser userFromNetwork = fromNetwork.get(i);
-            final Friend friendFromDb = friends.get(i);
-            if (userFromNetwork.getId().equals(friendFromDb.getId()))
-                fromNetwork.remove(i);
+        final List<IUser> list = new LinkedList<>(fromNetwork);
+        final Iterator<IUser> iterator = list.iterator();
+        while(iterator.hasNext()) {
+            final IUser next = iterator.next();
+            for (Friend friend : friends) {
+                if(next.getId().equals(friend.getId()))
+                    iterator.remove();
+            }
         }
-        return fromNetwork;
+        return list;
     }
 }

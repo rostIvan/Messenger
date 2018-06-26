@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
+import trickyquestion.messenger.buisness.DataProvider;
 import trickyquestion.messenger.data.repository.FriendRepository;
 import trickyquestion.messenger.network.socket.SocketClient;
 import trickyquestion.messenger.network.socket.SocketServer;
@@ -17,7 +18,7 @@ import trickyquestion.messenger.util.Constants;
 import trickyquestion.messenger.util.android.preference.NetworkPreference;
 import trickyquestion.messenger.util.java.string_helper.FixedString;
 import trickyquestion.messenger.util.java.string_helper.HexConv;
-import trickyquestion.messenger.util.java.maping.TypeCasting;
+import trickyquestion.messenger.util.java.maping.TypeMapping;
 
 /**
  * Created by Zen on 04.12.2017.
@@ -55,7 +56,8 @@ public class P2PMesseges {
             String[] packetContent = str.split(":");
             if(!verifyMsgPacket(packetContent)) return;
             UUID sender = UUID.fromString(packetContent[2]);
-            IFriend from  = TypeCasting.castToIFriend(FriendRepository.INSTANCE.findById(sender));
+            IFriend from  = TypeMapping.toIFriend(
+                    FriendRepository.INSTANCE.findById(sender), new DataProvider());
             try {
                 byte[] unencryptedMsg = HexConv.hexToByte(FixedString.toDynamicSize(packetContent[4],'$'));
                 String msg = new String(unencryptedMsg, "UTF-8");

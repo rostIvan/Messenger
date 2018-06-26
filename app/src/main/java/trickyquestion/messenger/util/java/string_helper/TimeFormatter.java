@@ -11,7 +11,10 @@ import java.util.Date;
 import java.util.Locale;
 
 public class TimeFormatter {
-    public static String getCurrentTime(@NonNull  final String pattern) {
+
+    private TimeFormatter() {}
+
+    public static String getCurrentTime(@NonNull final String pattern) {
         final DateFormat dateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
         return dateFormat.format(Calendar.getInstance().getTime());
     }
@@ -23,7 +26,7 @@ public class TimeFormatter {
             final Date d = df1.parse(date);
             return df2.format(d);
         } catch (ParseException e) {
-            Log.d("TimeFormatter", e.getMessage());
+            Log.d("TimeFormatter: ", e.getMessage());
         }
         return null;
     }

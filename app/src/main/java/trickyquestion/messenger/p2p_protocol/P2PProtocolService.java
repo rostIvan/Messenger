@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
+import trickyquestion.messenger.buisness.DataProvider;
 import trickyquestion.messenger.data.repository.FriendRepository;
 import trickyquestion.messenger.p2p_protocol.events.EAddFriendRequest;
 import trickyquestion.messenger.p2p_protocol.objects.OHost;
@@ -24,7 +25,7 @@ import trickyquestion.messenger.p2p_protocol.modules.P2PMesseges;
 import trickyquestion.messenger.p2p_protocol.modules.P2PNetwork;
 import trickyquestion.messenger.screen.popup_windows.FriendRequestDialog;
 import trickyquestion.messenger.util.android.preference.NetworkPreference;
-import trickyquestion.messenger.util.java.maping.TypeCasting;
+import trickyquestion.messenger.util.java.maping.TypeMapping;
 
 /**
  * Created by Zen on 17.10.2017.
@@ -117,7 +118,8 @@ public class P2PProtocolService extends Service{
         }
 
         public void sendMsg(UUID targetID, String msg){
-            List<IFriend> friends = TypeCasting.castToIFriendList(FriendRepository.INSTANCE.findAll());
+            List<IFriend> friends = TypeMapping.toIFriendList(
+                    FriendRepository.INSTANCE.findAll(), new DataProvider());
             for (IFriend friend : friends) {
                 if (friend.getID().equals(targetID)) {
                     p2pMesseges.sendMsg(friend, msg);

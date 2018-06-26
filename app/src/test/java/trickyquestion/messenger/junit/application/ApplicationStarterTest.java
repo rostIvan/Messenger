@@ -27,6 +27,7 @@ import static trickyquestion.messenger.data.util.LoggerKt.log;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class ApplicationStarterTest {
+
     @Mock private ApplicationRouter router;
     @Mock private AuthPreference authPreference;
     @Mock private P2PConnector p2pConnector;

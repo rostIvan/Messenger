@@ -1,13 +1,13 @@
 package trickyquestion.messenger.util.java.validation;
 
 
-import android.content.Context;
-
 import java.util.regex.Pattern;
 
 import trickyquestion.messenger.util.android.preference.AuthPreference;
 
 public class UserInputValidator {
+
+    private UserInputValidator() {}
 
     public static boolean isLoginValid(final String login) {
         final Pattern pattern = Pattern.compile("^[0-9a-zA-Z]{3,}$");

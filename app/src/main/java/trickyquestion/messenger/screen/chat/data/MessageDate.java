@@ -16,6 +16,15 @@ public class MessageDate extends RealmObject {
     public MessageDate() {
     }
 
+    public MessageDate(int year, int month, int day, int hour, int minute, int second) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.second = second;
+        this.minute = minute;
+        this.hour = hour;
+    }
+
     public int getDay() {
         return day;
     }

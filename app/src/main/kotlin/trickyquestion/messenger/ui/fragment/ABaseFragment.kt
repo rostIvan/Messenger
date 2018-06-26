@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import butterknife.ButterKnife
 import butterknife.Unbinder
+import trickyquestion.messenger.ui.activity.ApplicationRouter
 import trickyquestion.messenger.ui.interfaces.BaseView
 import trickyquestion.messenger.ui.interfaces.Layout
 import trickyquestion.messenger.ui.util.toast
@@ -24,6 +25,8 @@ abstract class ABaseFragment : Fragment(), BaseView {
         themePreference = ThemePreference(view.context)
         return view
     }
+
+    open fun router() = ApplicationRouter.from(context)
 
     override fun onDestroyView() {
         bind.unbind()

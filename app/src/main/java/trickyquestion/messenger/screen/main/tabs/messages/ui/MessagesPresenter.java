@@ -2,6 +2,7 @@ package trickyquestion.messenger.screen.main.tabs.messages.ui;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.buisness.BaseEventManager;
 import trickyquestion.messenger.screen.chat.ui.ChatActivity;
 import trickyquestion.messenger.screen.popup_windows.FriendPhotoDialog;
 import trickyquestion.messenger.screen.main.tabs.messages.buisness.MessagesEventManager;
@@ -22,7 +24,7 @@ import trickyquestion.messenger.ui.util.AnimatorResource;
 
 public class MessagesPresenter extends MvpPresenter<IMessagesView, BaseRouter> implements IMessagesPresenter {
     private final IMessagesInteractor interactor;
-    private MessagesEventManager messagesEventManager;
+    private BaseEventManager messagesEventManager;
 
     public MessagesPresenter(@NotNull IMessagesView view,
                              @NotNull BaseRouter router,
@@ -31,7 +33,8 @@ public class MessagesPresenter extends MvpPresenter<IMessagesView, BaseRouter> i
         this.interactor = messagesInteractor;
     }
 
-    public void attach(MessagesEventManager messagesEventManager) {
+    @Override
+    public void attach(@NonNull BaseEventManager messagesEventManager) {
         this.messagesEventManager = messagesEventManager;
     }
 
@@ -99,8 +102,7 @@ public class MessagesPresenter extends MvpPresenter<IMessagesView, BaseRouter> i
     }
 
     private void openChat(Bundle bundle) {
-        getRouter().use((Fragment) getView())
-                .openScreen(BaseRouter.Screen.CHAT, bundle,
+        getRouter().openScreen(BaseRouter.Screen.CHAT, bundle,
                         AnimatorResource.with(R.anim.translate_left_slide, R.anim.translate_right_slide));
     }
 }

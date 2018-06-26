@@ -1,12 +1,14 @@
 package trickyquestion.messenger.screen.main.container.implementation;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.KeyEvent;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import trickyquestion.messenger.R;
+import trickyquestion.messenger.buisness.BaseEventManager;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainPresenter;
 import trickyquestion.messenger.screen.main.container.interfaces.IMainView;
 import trickyquestion.messenger.ui.interfaces.BaseRouter;
@@ -14,14 +16,15 @@ import trickyquestion.messenger.ui.mvp.activity.MvpPresenter;
 import trickyquestion.messenger.ui.util.AnimatorResource;
 
 public class MainPresenter extends MvpPresenter<IMainView, BaseRouter> implements IMainPresenter {
-    private MainEventManager eventManager;
+    private BaseEventManager eventManager;
 
-    public MainPresenter(@NotNull IMainView view,
-                         @NotNull BaseRouter router) {
+    public MainPresenter(@NonNull IMainView view,
+                         @NonNull BaseRouter router) {
         super(view, router);
     }
 
-    public void attach(MainEventManager eventManager) {
+    @Override
+    public void attach(@NonNull BaseEventManager eventManager) {
         this.eventManager = eventManager;
     }
 

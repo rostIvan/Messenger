@@ -9,12 +9,12 @@ import java.util.*
 open class FriendRepository : CrudRepository<Friend>() {
     companion object { @JvmField val INSTANCE = FriendRepository() }
 
-    fun findById(uuid: UUID) = realmQuery().equalTo("id", uuid.toString()).findFirst()
-    fun findAllByName(name: String): List<Friend> = realmQuery().equalTo("name", name).findAll() ?: emptyList()
-    fun findByEncryptionKey(byteArray: ByteArray) = realmQuery().equalTo("encryptionKey", byteArray).findFirst()
-    fun findAllOnline(): List<Friend> = realmQuery().equalTo("online", true).findAll() ?: emptyList()
-    fun findAllOffline(): List<Friend> = realmQuery().equalTo("online", false).findAll()
-    fun updateFriendStatus(friend: Friend, online: Boolean) {
+    open fun findById(uuid: UUID) = realmQuery().equalTo("id", uuid.toString()).findFirst()
+    open fun findAllByName(name: String): List<Friend> = realmQuery().equalTo("name", name).findAll() ?: emptyList()
+    open fun findByEncryptionKey(byteArray: ByteArray) = realmQuery().equalTo("encryptionKey", byteArray).findFirst()
+    open fun findAllOnline(): List<Friend> = realmQuery().equalTo("online", true).findAll() ?: emptyList()
+    open fun findAllOffline(): List<Friend> = realmQuery().equalTo("online", false).findAll()
+    open fun updateFriendStatus(friend: Friend, online: Boolean) {
         closeAfterTransaction{ friend.isOnline = online }
     }
 

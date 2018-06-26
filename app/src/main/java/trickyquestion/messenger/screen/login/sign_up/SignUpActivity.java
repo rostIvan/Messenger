@@ -16,9 +16,10 @@ public class SignUpActivity extends SingleFragmentActivity {
     @Override
     public Fragment createFragment() {
         final SignUpFragment signUpFragment = new SignUpFragment();
-        final SignUpViewModel viewModel = new SignUpViewModel(
-                ApplicationRouter.from(this), new AuthPreference(this), new P2PConnector(this));
-        signUpFragment.attach(viewModel);
+        final SignUpInteractor interactor = new SignUpInteractor(signUpFragment,
+                new AuthPreference(this),
+                new P2PConnector(this));
+        signUpFragment.attach(interactor);
         return signUpFragment;
     }
 
@@ -31,5 +32,4 @@ public class SignUpActivity extends SingleFragmentActivity {
     private void initialize() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
-
 }

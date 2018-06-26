@@ -7,64 +7,49 @@ import trickyquestion.messenger.screen.chat.data.MessageDate;
 
 public class MessageUtil {
 
+    private MessageUtil() {}
+
     public static String getTime(Message message) {
-        return getTimeStr(message.getDate());
+        return formattedTime(message.getDate(), Calendar.getInstance());
     }
-
     public static String getTime(ChatMessage message) {
-        return getTimeStr(message.getDate());
+        return formattedTime(message.getDate(), Calendar.getInstance());
     }
 
-    private static String getTimeStr(MessageDate message) {
-        final Calendar calendar = Calendar.getInstance();
+    public static String formattedTime(MessageDate message, Calendar calendar) {
         if (calendar.get(Calendar.YEAR) == getYear(message)
                 && calendar.get(Calendar.MONTH) == getMonth(message)
                 && calendar.get(Calendar.DAY_OF_MONTH) == getDayOfMonth(message)) {
             return getHoursStr(message) + ":" + getMinutesStr(message) + ":" + getSecondsStr(message);
         }
         return String.format("%s:%s %s.%s.%s",
-                getHoursStr(message), getMinutesStr(message), getDayOfMonth(message), getMonth(message), getYear(message));
+                getHoursStr(message),
+                getMinutesStr(message),
+                getDayOfMonth(message),
+                getMonth(message),
+                getYear(message));
     }
 
     private static String getSecondsStr(MessageDate messageDate) {
-        final int seconds = getSeconds(messageDate);
-        if (seconds < 10) return "0" + seconds;
-        return "" + seconds;
+        return formattedTimeValue(messageDate.getSecond());
     }
-
     private static String getMinutesStr(MessageDate messageDate) {
-        final int minutes = getMinutes(messageDate);
-        if (minutes < 10) return "0" + minutes;
-        return "" + minutes;
+        return formattedTimeValue(messageDate.getMinute());
     }
-
     private static String getHoursStr(MessageDate messageDate) {
-        final int hours = getHours(messageDate);
-        if (hours < 10) return "0" + hours;
-        return "" + hours;
+        return formattedTimeValue(messageDate.getHour());
     }
-
     private static int getYear(MessageDate messageDate) {
         return messageDate.getYear();
     }
-
     private static int getMonth(MessageDate messageDate) {
         return messageDate.getMonth();
     }
-
     private static int getDayOfMonth(MessageDate messageDate) {
         return messageDate.getDay();
     }
 
-    private static int getHours(MessageDate messageDate) {
-        return messageDate.getHour();
-    }
-
-    private static int getMinutes(MessageDate messageDate) {
-        return messageDate.getMinute();
-    }
-
-    private static int getSeconds(MessageDate messageDate) {
-        return messageDate.getSecond();
+    public static String formattedTimeValue(int value) {
+        return value < 10 ? "0" + value : "" + value;
     }
 }

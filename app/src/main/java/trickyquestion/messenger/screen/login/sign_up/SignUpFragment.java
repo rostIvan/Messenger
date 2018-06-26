@@ -20,22 +20,20 @@ public class SignUpFragment extends AWithFieldFragment {
 
     @BindView(R.id.nick_field) EditText nickField;
     @BindView(R.id.pass_field) EditText passField;
-    private SignUpViewModel viewModel;
 
-    public void attach(SignUpViewModel viewModel) {
-        this.viewModel = viewModel;
+    private SignUpInteractor interactor;
+    public void attach(SignUpInteractor signUpInteractor) {
+        this.interactor = signUpInteractor;
     }
 
     @OnClick(R.id.button_create_account)
     public void tryCreateAccount() {
         final String login = textOf(nickField);
         final String password = textOf(passField);
-        viewModel.onSignUpButtonClick(login, password, new SignUpViewModel.SignUpCallback() {
-            @Override public void onSuccess() { viewModel.createAccount(login, password); }
-            @Override public void onError() { showError("Incorrect input"); }
-        });
+        interactor.dataProcess(login, password);
     }
 
     @NotNull @Override
     public List<EditText> getAllEditable() { return Arrays.asList(nickField, passField); }
+
 }
